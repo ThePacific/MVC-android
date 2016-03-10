@@ -2,8 +2,6 @@
 A pure MVC base library on android . By using it , your code can be very clean in MVC pattern .
 <p>
 ![](https://github.com/ThePacific/MVC-android/blob/master/art/mvc.png)
-<p>
-![](https://github.com/ThePacific/MVC-android/blob/master/art/device.png)
 
 # Features
 * Activity and Fragment as controllers
