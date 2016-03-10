@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.pacific.example.widget.SquareFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/match_match"
+    android:clickable="true"
+    android:background="@drawable/bg_item_menu">
+
+    <ImageView
+        android:id="@+id/img_menu_icon"
+        style="@style/wrap_wrap"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/tv_menu_desc"
+        style="@style/match_wrap"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="@dimen/margin_item_menu"
+        android:gravity="center"
+        android:textColor="@color/color_item_menu_desc" />
+</com.pacific.example.widget.SquareFrameLayout>
+

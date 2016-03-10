@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/match_wrap"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/margin_item_explore">
+
+    <ImageView
+        android:id="@+id/img_explore_icon"
+        style="@style/wrap_wrap"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        style="@style/wrap_wrap"
+        android:layout_marginLeft="@dimen/margin_item_explore"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_explore_name"
+            style="@style/style_setting_item_title" />
+
+        <TextView
+            android:id="@+id/tv_explore_desc"
+            style="@style/style_setting_text"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/margin_item_explore"
+            android:textColor="@color/secondary_text"
+            android:textSize="@dimen/f_14" />
+    </LinearLayout>
+</LinearLayout>
