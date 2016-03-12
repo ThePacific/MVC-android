@@ -2,9 +2,6 @@ buildscript {
     repositories {
         jcenter()
     }
-    repositories {
-        maven { url 'http://192.168.50.24:8081/nexus/content/repositories/central/' }
-    }
 
 
     dependencies {
@@ -15,8 +12,7 @@ buildscript {
 allprojects {
 
     repositories {
-        //        jcenter()
-        maven { url 'http://192.168.50.24:8081/nexus/content/repositories/central/' }
+        jcenter()
     }
 }
 
