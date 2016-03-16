@@ -11,7 +11,9 @@ A pure MVC base library on android . By using it , your code can be very clean i
 * Just wait for a moment~
 
 # Dependencies
-* compile 'io.reactivex:rxjava:1.1.1'
-* compile 'io.reactivex:rxandroid:1.1.0'
-* compile 'com.trello:rxlifecycle:0.5.0'
-* compile 'com.trello:rxlifecycle-components:0.5.0'
+```groovy
+compile 'io.reactivex:rxjava:1.1.1'
+compile 'io.reactivex:rxandroid:1.1.0'
+compile 'com.trello:rxlifecycle:0.5.0'
+compile 'com.trello:rxlifecycle-components:0.5.0'
+```
