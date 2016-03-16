@@ -2,8 +2,8 @@ package com.pacific.example.mvc.model;
 
 import android.view.View;
 
-import com.pacific.example.adapter.QuickAdapter2;
-import com.pacific.example.adapter.AdapterHelper2;
+import com.pacific.adapter.RecyclerAdapter;
+import com.pacific.adapter.RecyclerAdapterHelper;
 import com.pacific.example.bean.ExploreBean;
 import com.pacific.example.mvc.view.ExploreView;
 import com.pacific.example.R;
@@ -22,13 +22,13 @@ import rx.schedulers.Schedulers;
 
 public class ExploreModel extends FragmentMVCModel<ExploreView> {
 
-    private QuickAdapter2<ExploreBean> quickAdapter;
+    private RecyclerAdapter<ExploreBean> adapter;
 
     public ExploreModel(ExploreView fragment) {
         super(fragment);
-        quickAdapter = new QuickAdapter2<ExploreBean>(mvcView.getContext(), R.layout.item_explore) {
+        adapter = new RecyclerAdapter<ExploreBean>(mvcView.getContext(), R.layout.item_explore) {
             @Override
-            protected void convert(final AdapterHelper2 helper, ExploreBean exploreBean) {
+            protected void convert(final RecyclerAdapterHelper helper, ExploreBean exploreBean) {
                 helper.setImageResource(R.id.img_explore_icon, exploreBean.getIconResId());
                 helper.setText(R.id.tv_explore_name, exploreBean.getName());
                 helper.setText(R.id.tv_explore_desc, exploreBean.getDescription());
@@ -42,8 +42,8 @@ public class ExploreModel extends FragmentMVCModel<ExploreView> {
         };
     }
 
-    public QuickAdapter2<ExploreBean> getQuickAdapter() {
-        return quickAdapter;
+    public RecyclerAdapter<ExploreBean> getAdapter() {
+        return adapter;
     }
 
     public void setRefreshing(final boolean refreshing) {
@@ -60,7 +60,7 @@ public class ExploreModel extends FragmentMVCModel<ExploreView> {
                 .map(new Func1<Integer, List<ExploreBean>>() {
                     @Override
                     public List<ExploreBean> call(Integer integer) {
-                        if (quickAdapter.getItemCount() > integer) return null;
+                        if (adapter.getItemCount() > integer) return null;
                         List<ExploreBean> list = new ArrayList<>();
                         list.add(new ExploreBean(R.drawable.web, "web work", "start：2016.01.01，end: 2016.02.01"));
                         list.add(new ExploreBean(R.drawable.smart_ticket, "PC work", "start：2016.01.01，end: 2016.02.01"));
@@ -74,7 +74,7 @@ public class ExploreModel extends FragmentMVCModel<ExploreView> {
                     @Override
                     public void call(List<ExploreBean> list) {
                         if (list != null) {
-                            quickAdapter.addAll(list);
+                            adapter.addAll(list);
                         }
                         setRefreshing(false);
                     }

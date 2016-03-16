@@ -1,8 +1,9 @@
 apply plugin: 'com.android.library'
+//apply from: "../gradle/bintray_push.gradle"
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "24.0.0 rc1"
 
     defaultConfig {
         minSdkVersion 14

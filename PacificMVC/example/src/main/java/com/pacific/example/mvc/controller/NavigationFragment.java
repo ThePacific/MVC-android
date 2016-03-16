@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.pacific.example.adapter.QuickAdapter2;
+import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.example.bean.MenuBean;
 import com.pacific.example.mvc.model.NavigationModel;
 import com.pacific.example.mvc.view.NavigationView;
@@ -51,8 +51,8 @@ public class NavigationFragment extends Fragment<NavigationModel> {
         mvcModel.setViewVisible(false);
     }
 
-    public QuickAdapter2<MenuBean> getQuickAdapter() {
-        return mvcModel.getQuickAdapter();
+    public RecyclerAdapter<MenuBean> getQuickAdapter() {
+        return mvcModel.getAdapter();
     }
 
     public void loadMenu() {

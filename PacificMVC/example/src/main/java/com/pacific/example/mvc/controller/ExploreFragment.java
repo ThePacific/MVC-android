@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.pacific.example.adapter.QuickAdapter2;
+import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.example.bean.ExploreBean;
 import com.pacific.example.mvc.model.ExploreModel;
 import com.pacific.example.mvc.view.ExploreView;
@@ -51,7 +51,7 @@ public class ExploreFragment extends Fragment<ExploreModel> {
         mvcModel.fetchNavigationExtra();
     }
 
-    public QuickAdapter2<ExploreBean> getQuickAdapter() {
-        return mvcModel.getQuickAdapter();
+    public RecyclerAdapter<ExploreBean> getQuickAdapter() {
+        return mvcModel.getAdapter();
     }
 }
