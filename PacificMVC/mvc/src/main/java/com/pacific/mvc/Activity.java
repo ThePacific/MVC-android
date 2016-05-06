@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
-public abstract class Activity<T extends ActivityMVCModel> extends RxAppCompatActivity implements Fragment.Callback, MVCController {
+public abstract class Activity<T extends ActivityModel> extends RxAppCompatActivity implements Fragment.Callback, MVCController {
 
     protected T mvcModel;
 
@@ -88,7 +88,7 @@ public abstract class Activity<T extends ActivityMVCModel> extends RxAppCompatAc
     @Override
     public void startIntent(Class clazz, @Nullable Bundle bundle) {
         Intent intent = new Intent();
-        intent.setClass(Activity.this, clazz);
+        intent.setClass(this, clazz);
         if (bundle != null) {
             intent.putExtras(bundle);
         }

@@ -8,9 +8,9 @@ import android.view.MenuItem;
 import com.pacific.example.mvc.controller.ExploreFragment;
 import com.pacific.example.mvc.controller.NavigationFragment;
 import com.pacific.example.mvc.view.MainView;
-import com.pacific.mvc.ActivityMVCModel;
+import com.pacific.mvc.ActivityModel;
 
-public class MainModel extends ActivityMVCModel<MainView> {
+public class MainModel extends ActivityModel<MainView> {
 
     private PagerAdapter pagerAdapter;
 

@@ -4,12 +4,6 @@ import android.view.View;
 
 public abstract class MVCView implements View.OnClickListener {
 
-    protected View view;
-
-    protected <V extends View> V retrieveView(int viewId) {
-        return (V) view.findViewById(viewId);
-    }
-
     public abstract MVCController getController();
 
     protected abstract void findView();
@@ -19,4 +13,6 @@ public abstract class MVCView implements View.OnClickListener {
     protected abstract void setAdapter();
 
     protected abstract void initialize();
+    
+    protected abstract <V extends View> V retrieveView(int viewId);
 }

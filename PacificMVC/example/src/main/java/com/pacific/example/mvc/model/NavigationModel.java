@@ -5,9 +5,9 @@ import com.pacific.adapter.RecyclerAdapterHelper;
 import com.pacific.example.bean.MenuBean;
 import com.pacific.example.mvc.view.NavigationView;
 import com.pacific.example.R;
-import com.pacific.mvc.FragmentMVCModel;
+import com.pacific.mvc.FragmentModel;
 
-public class NavigationModel extends FragmentMVCModel<NavigationView> {
+public class NavigationModel extends FragmentModel<NavigationView> {
     private RecyclerAdapter<MenuBean> adapter;
 
     public NavigationModel(NavigationView mvcView) {

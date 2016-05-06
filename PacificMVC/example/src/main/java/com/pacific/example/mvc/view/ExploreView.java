@@ -9,9 +9,9 @@ import android.view.View;
 import com.pacific.example.R;
 import com.pacific.example.mvc.controller.ExploreFragment;
 import com.pacific.example.decoration.HorizontalItemDecoration;
-import com.pacific.mvc.FragmentMVCView;
+import com.pacific.mvc.FragmentView;
 
-public class ExploreView extends FragmentMVCView<ExploreFragment> {
+public class ExploreView extends FragmentView<ExploreFragment> {
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;

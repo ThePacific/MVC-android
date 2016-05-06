@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.trello.rxlifecycle.components.support.RxFragment;
 
-public abstract class Fragment<T extends FragmentMVCModel> extends RxFragment implements MVCController {
+public abstract class Fragment<T extends FragmentModel> extends RxFragment implements MVCController {
 
     protected Callback callback;
     protected T mvcModel;

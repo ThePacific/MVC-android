@@ -7,7 +7,7 @@ import com.pacific.adapter.RecyclerAdapterHelper;
 import com.pacific.example.bean.ExploreBean;
 import com.pacific.example.mvc.view.ExploreView;
 import com.pacific.example.R;
-import com.pacific.mvc.FragmentMVCModel;
+import com.pacific.mvc.FragmentModel;
 import com.trello.rxlifecycle.FragmentEvent;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class ExploreModel extends FragmentMVCModel<ExploreView> {
+public class ExploreModel extends FragmentModel<ExploreView> {
 
     private RecyclerAdapter<ExploreBean> adapter;
 

@@ -6,9 +6,9 @@ import android.view.View;
 
 import com.pacific.example.R;
 import com.pacific.example.mvc.controller.NavigationFragment;
-import com.pacific.mvc.FragmentMVCView;
+import com.pacific.mvc.FragmentView;
 
-public class NavigationView extends FragmentMVCView<NavigationFragment> {
+public class NavigationView extends FragmentView<NavigationFragment> {
     private RecyclerView recyclerView;
     private final int spanNum = 3;
 

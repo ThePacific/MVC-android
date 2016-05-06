@@ -9,9 +9,9 @@ import android.view.View;
 
 import com.pacific.example.R;
 import com.pacific.example.mvc.controller.MainActivity;
-import com.pacific.mvc.ActivityMVCView;
+import com.pacific.mvc.ActivityView;
 
-public class MainView extends ActivityMVCView<MainActivity> {
+public class MainView extends ActivityView<MainActivity> {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
