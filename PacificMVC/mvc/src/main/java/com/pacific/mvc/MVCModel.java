@@ -1,9 +1,9 @@
 package com.pacific.mvc;
 
 public abstract class MVCModel<T extends MVCView> {
-    protected T mvcView;
+    protected T view;
 
-    public MVCModel(T mvcView) {
-        this.mvcView = mvcView;
+    public MVCModel(T view) {
+        this.view = view;
     }
 }

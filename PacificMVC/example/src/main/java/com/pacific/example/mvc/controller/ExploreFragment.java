@@ -26,7 +26,7 @@ public class ExploreFragment extends Fragment<ExploreModel> {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
-        mvcModel = new ExploreModel(new ExploreView(this));
+        model = new ExploreModel(new ExploreView(this));
     }
 
     @Override
@@ -37,21 +37,21 @@ public class ExploreFragment extends Fragment<ExploreModel> {
     @Override
     public void onResume() {
         super.onResume();
-        mvcModel.setViewVisible(true);
+        model.setViewVisible(true);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mvcModel.setRefreshing(false);
-        mvcModel.setViewVisible(false);
+        model.setRefreshing(false);
+        model.setViewVisible(false);
     }
 
     public void fetchNavigationExtra() {
-        mvcModel.fetchNavigationExtra();
+        model.fetchNavigationExtra();
     }
 
     public RecyclerAdapter<ExploreBean> getQuickAdapter() {
-        return mvcModel.getAdapter();
+        return model.getAdapter();
     }
 }

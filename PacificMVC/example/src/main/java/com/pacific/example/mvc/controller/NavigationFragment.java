@@ -26,7 +26,7 @@ public class NavigationFragment extends Fragment<NavigationModel> {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
-        mvcModel = new NavigationModel(new NavigationView(this));
+        model = new NavigationModel(new NavigationView(this));
     }
 
     @Override
@@ -42,20 +42,20 @@ public class NavigationFragment extends Fragment<NavigationModel> {
     @Override
     public void onResume() {
         super.onResume();
-        mvcModel.setViewVisible(true);
+        model.setViewVisible(true);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mvcModel.setViewVisible(false);
+        model.setViewVisible(false);
     }
 
     public RecyclerAdapter<MenuBean> getQuickAdapter() {
-        return mvcModel.getAdapter();
+        return model.getAdapter();
     }
 
     public void loadMenu() {
-        mvcModel.loadMenu();
+        model.loadMenu();
     }
 }

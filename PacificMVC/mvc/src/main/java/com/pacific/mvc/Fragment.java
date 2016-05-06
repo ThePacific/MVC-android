@@ -15,7 +15,7 @@ import com.trello.rxlifecycle.components.support.RxFragment;
 public abstract class Fragment<T extends FragmentModel> extends RxFragment implements MVCController {
 
     protected Callback callback;
-    protected T mvcModel;
+    protected T model;
     private boolean isNew = false;
 
     @Override
@@ -27,7 +27,7 @@ public abstract class Fragment<T extends FragmentModel> extends RxFragment imple
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mvcModel == null) {
+        if (model == null) {
             throw new RuntimeException("must instantiate Model in onCreate().");
         }
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -42,7 +42,7 @@ public abstract class Fragment<T extends FragmentModel> extends RxFragment imple
                 return false;
             }
         });
-        mvcModel.onCreatedView(view);
+        model.onCreatedView(view);
         isNew = false;
     }
 

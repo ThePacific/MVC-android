@@ -12,12 +12,12 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 public abstract class Activity<T extends ActivityModel> extends RxAppCompatActivity implements Fragment.Callback, MVCController {
 
-    protected T mvcModel;
+    protected T model;
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (mvcModel == null) {
+        if (model == null) {
             throw new RuntimeException("must instantiate Model in onCreate().");
         }
     }

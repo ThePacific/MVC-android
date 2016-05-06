@@ -1,15 +1,12 @@
 package com.pacific.mvc;
 
-import android.support.annotation.CallSuper;
-
 public abstract class ActivityModel<T extends ActivityView> extends MVCModel<T> {
 
-    public ActivityModel(T mvcView) {
-        super(mvcView);
+    public ActivityModel(T view) {
+        super(view);
     }
 
-    @CallSuper
     public void onCreate() {
-        mvcView.onCreate();
+        view.onCreate();
     }
 }

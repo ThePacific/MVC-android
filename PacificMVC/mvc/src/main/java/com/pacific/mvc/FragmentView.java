@@ -30,8 +30,8 @@ public abstract class FragmentView<T extends Fragment> extends MVCView {
         return fragment.getContext();
     }
 
-    final void onCreatedView(View view) {
-        this.view = view;
+    final void onCreatedView(View rootView) {
+        this.view = rootView;
         findView();
         setListener();
         setAdapter();

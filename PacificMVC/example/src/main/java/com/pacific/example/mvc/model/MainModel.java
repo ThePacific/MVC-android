@@ -16,11 +16,11 @@ public class MainModel extends ActivityModel<MainView> {
 
     public MainModel(MainView mvcView) {
         super(mvcView);
-        pagerAdapter = new PagerAdapter(mvcView.getController().getSupportFragmentManager(), 2);
+        pagerAdapter = new PagerAdapter(view.getController().getSupportFragmentManager(), 2);
     }
 
     public void setNotify(MenuItem notify) {
-        mvcView.setNotify(notify);
+        view.setNotify(notify);
     }
 
     public boolean hasNotify() {
@@ -28,15 +28,15 @@ public class MainModel extends ActivityModel<MainView> {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        return mvcView.onOptionsItemSelected(item);
+        return view.onOptionsItemSelected(item);
     }
 
     public void onUserInteraction() {
-        mvcView.onUserInteraction();
+        view.onUserInteraction();
     }
 
     public boolean onBackPressed() {
-        return mvcView.onBackPressed();
+        return view.onBackPressed();
     }
 
     public PagerAdapter getPagerAdapter() {

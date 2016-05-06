@@ -15,22 +15,22 @@ public class MainActivity extends Activity<MainModel> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mvcModel = new MainModel(new MainView(this));
+        model = new MainModel(new MainView(this));
         /** we need to call onCreate() manually*/
-        mvcModel.onCreate();
+        model.onCreate();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        mvcModel.setNotify(menu.findItem(R.id.action_notify));
+        model.setNotify(menu.findItem(R.id.action_notify));
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mvcModel.onOptionsItemSelected(item)) {
+        if (model.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -39,21 +39,21 @@ public class MainActivity extends Activity<MainModel> {
     @Override
     public void onUserInteraction() {
         super.onUserInteraction();
-        mvcModel.onUserInteraction();
+        model.onUserInteraction();
     }
 
     @Override
     public void onBackPressed() {
-        if (!mvcModel.onBackPressed()) {
+        if (!model.onBackPressed()) {
             super.onBackPressed();
         }
     }
 
     public MainModel.PagerAdapter getPagerAdapter() {
-        return mvcModel.getPagerAdapter();
+        return model.getPagerAdapter();
     }
 
     public boolean hasNotify() {
-        return mvcModel.hasNotify();
+        return model.hasNotify();
     }
 }

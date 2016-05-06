@@ -26,7 +26,7 @@ public class ExploreModel extends FragmentModel<ExploreView> {
 
     public ExploreModel(ExploreView fragment) {
         super(fragment);
-        adapter = new RecyclerAdapter<ExploreBean>(mvcView.getContext(), R.layout.item_explore) {
+        adapter = new RecyclerAdapter<ExploreBean>(view.getContext(), R.layout.item_explore) {
             @Override
             protected void convert(final RecyclerAdapterHelper helper, ExploreBean exploreBean) {
                 helper.setImageResource(R.id.img_explore_icon, exploreBean.getIconResId());
@@ -35,7 +35,7 @@ public class ExploreModel extends FragmentModel<ExploreView> {
                 helper.getItemView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mvcView.clickSnack(helper.getAdapterPosition());
+                        view.clickSnack(helper.getAdapterPosition());
                     }
                 });
             }
@@ -47,11 +47,11 @@ public class ExploreModel extends FragmentModel<ExploreView> {
     }
 
     public void setRefreshing(final boolean refreshing) {
-        mvcView.setRefreshing(refreshing);
+        view.setRefreshing(refreshing);
     }
 
     public void setViewVisible(boolean visible) {
-        mvcView.setViewVisible(visible);
+        view.setViewVisible(visible);
     }
 
     public void fetchNavigationExtra() {
@@ -67,7 +67,7 @@ public class ExploreModel extends FragmentModel<ExploreView> {
                         return list;
                     }
                 })
-                .compose(mvcView.getController().<List<ExploreBean>>bindUntilEvent(FragmentEvent.PAUSE))
+                .compose(view.getController().<List<ExploreBean>>bindUntilEvent(FragmentEvent.PAUSE))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<ExploreBean>>() {
