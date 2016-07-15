@@ -142,6 +142,8 @@ public class StartModel extends ActivityModel<StartView> {
 ```java
 public class StartView extends ActivityView<StartActivity> {
 
+    // Also , you can use ButterKnife
+    //@BindView(R.id.toolbar) Toolbar toolbar
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -155,6 +157,7 @@ public class StartView extends ActivityView<StartActivity> {
 
     public StartView(StartActivity activity) {
         super(activity);
+        //ButterKnife.bind(this,activity);
     }
 
     @Override
