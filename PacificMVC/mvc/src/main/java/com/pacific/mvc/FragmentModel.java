@@ -8,6 +8,6 @@ public abstract class FragmentModel<T extends FragmentView> extends MVCModel<T> 
     }
 
     public void onCreatedView(View rootView) {
-        view.onCreatedView(rootView);
+        view.onCreatedView(rootView, getAdapters());
     }
 }

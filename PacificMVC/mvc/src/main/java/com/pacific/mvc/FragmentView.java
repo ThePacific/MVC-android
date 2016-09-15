@@ -22,19 +22,15 @@ public abstract class FragmentView<T extends Fragment> extends MVCView {
         return (V) view.findViewById(viewId);
     }
 
-    public Activity getActivity() {
-        return (Activity) fragment.getActivity();
-    }
-
     public Context getContext() {
-        return fragment.getContext();
+        return fragment.getActivity();
     }
 
-    final void onCreatedView(View rootView) {
+    final void onCreatedView(View rootView, Object... adapters) {
         this.view = rootView;
         findView();
         setListener();
-        setAdapter();
+        setAdapter(adapters);
         initialize();
     }
 }

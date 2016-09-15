@@ -1,7 +1,6 @@
 package com.pacific.mvc;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -70,15 +69,5 @@ public abstract class Fragment<T extends FragmentModel> extends RxFragment imple
         void showFragment(Fragment Fragment);
 
         void hideFragment(Fragment Fragment);
-
-        void startIntent(Class clazz, @Nullable Bundle bundle);
-
-        void startIntent(Intent intent);
-
-        void startIntents(Intent[] intents);
-
-        void startIntentForResult(Intent intent, int requestCode, @Nullable Bundle bundle);
-
-        void startIntentForResult(Class clazz, int requestCode, @Nullable Bundle bundle);
     }
 }

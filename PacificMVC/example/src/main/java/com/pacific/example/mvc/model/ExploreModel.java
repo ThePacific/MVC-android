@@ -8,7 +8,7 @@ import com.pacific.example.bean.ExploreBean;
 import com.pacific.example.mvc.view.ExploreView;
 import com.pacific.example.R;
 import com.pacific.mvc.FragmentModel;
-import com.trello.rxlifecycle.FragmentEvent;
+import com.trello.rxlifecycle.android.FragmentEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +42,9 @@ public class ExploreModel extends FragmentModel<ExploreView> {
         };
     }
 
-    public RecyclerAdapter<ExploreBean> getAdapter() {
-        return adapter;
+    @Override
+    protected Object[] getAdapters() {
+        return new Object[]{adapter};
     }
 
     public void setRefreshing(final boolean refreshing) {

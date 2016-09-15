@@ -60,22 +60,22 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 
 // Configure artifactory (for publishing snapshots)
 // Based on NebulaOJOPublishingPlugin (from nebula-bintray-plugin)
-artifactory {
-    contextUrl = 'https://oss.jfrog.org'
-    publish {
-        repository {
-            repoKey = 'oss-snapshot-local'
-            if (properties.hasProperty("bintray.user")) {
-                username = properties.getProperty("bintray.user")
-                password = properties.getProperty("bintray.apikey")
-            }
-        }
-
-        defaults {
-            publishConfigs('archives')
-        }
-    }
-}
+//artifactory {
+//    contextUrl = 'https://oss.jfrog.org'
+//    publish {
+//        repository {
+//            repoKey = 'oss-snapshot-local'
+//            if (properties.hasProperty("bintray.user")) {
+//                username = properties.getProperty("bintray.user")
+//                password = properties.getProperty("bintray.apikey")
+//            }
+//        }
+//
+//        defaults {
+//            publishConfigs('archives')
+//        }
+//    }
+//}
 
 // Configure gradle-bintray-plugin (for publishing releases)
 bintray {
@@ -96,12 +96,12 @@ bintray {
                 sign = true
                 passphrase = properties.getProperty("bintray.gpg.password")
             }
-            mavenCentralSync {
-                sync = true
-                user = properties.getProperty("bintray.oss.user")
-                password = properties.getProperty("bintray.oss.password")
-                close = '1'
-            }
+//            mavenCentralSync {
+//                sync = true
+//                user = properties.getProperty("bintray.oss.user")
+//                password = properties.getProperty("bintray.oss.password")
+//                close = '1'
+//            }
         }
     }
 }

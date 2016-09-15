@@ -2,7 +2,9 @@ package com.pacific.example.mvc.view;
 
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,8 +43,8 @@ public class MainView extends ActivityView<MainActivity> {
     }
 
     @Override
-    protected void setAdapter() {
-        viewPager.setAdapter(activity.getPagerAdapter());
+    protected void setAdapter(Object... adapters) {
+        viewPager.setAdapter((PagerAdapter) adapters[0]);
     }
 
     @Override

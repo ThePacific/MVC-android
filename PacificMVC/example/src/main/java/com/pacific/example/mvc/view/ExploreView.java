@@ -36,8 +36,8 @@ public class ExploreView extends FragmentView<ExploreFragment> {
     }
 
     @Override
-    protected void setAdapter() {
-        recyclerView.setAdapter(fragment.getQuickAdapter());
+    protected void setAdapter(Object... adapters) {
+        recyclerView.setAdapter((RecyclerView.Adapter) adapters[0]);
     }
 
     @Override

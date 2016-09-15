@@ -39,9 +39,11 @@ public class MainModel extends ActivityModel<MainView> {
         return view.onBackPressed();
     }
 
-    public PagerAdapter getPagerAdapter() {
-        return pagerAdapter;
+    @Override
+    protected Object[] getAdapters() {
+        return new Object[]{pagerAdapter};
     }
+
 
     public static class PagerAdapter extends FragmentPagerAdapter {
         private int count;

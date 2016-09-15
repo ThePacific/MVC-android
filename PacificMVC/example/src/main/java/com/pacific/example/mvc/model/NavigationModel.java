@@ -21,8 +21,9 @@ public class NavigationModel extends FragmentModel<NavigationView> {
         };
     }
 
-    public RecyclerAdapter<MenuBean> getAdapter() {
-        return adapter;
+    @Override
+    protected Object[] getAdapters() {
+        return new Object[]{adapter};
     }
 
     public void loadMenu() {

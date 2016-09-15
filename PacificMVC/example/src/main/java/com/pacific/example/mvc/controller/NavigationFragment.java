@@ -51,10 +51,6 @@ public class NavigationFragment extends Fragment<NavigationModel> {
         model.setViewVisible(false);
     }
 
-    public RecyclerAdapter<MenuBean> getQuickAdapter() {
-        return model.getAdapter();
-    }
-
     public void loadMenu() {
         model.loadMenu();
     }

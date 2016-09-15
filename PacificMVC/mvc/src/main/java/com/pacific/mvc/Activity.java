@@ -1,10 +1,6 @@
 package com.pacific.mvc;
 
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
@@ -77,46 +73,6 @@ public abstract class Activity<T extends ActivityModel> extends RxAppCompatActiv
         if (Fragment.isAdded()) {
             ft.hide(Fragment);
             ft.commit();
-        }
-    }
-
-    @Override
-    public void startIntent(Intent intent) {
-        startActivity(intent);
-    }
-
-    @Override
-    public void startIntent(Class clazz, @Nullable Bundle bundle) {
-        Intent intent = new Intent();
-        intent.setClass(this, clazz);
-        if (bundle != null) {
-            intent.putExtras(bundle);
-        }
-        startActivity(intent);
-    }
-
-    @Override
-    public void startIntents(Intent[] intents) {
-        startActivities(intents);
-    }
-
-    @Override
-    public void startIntentForResult(Intent intent, int requestCode, @Nullable Bundle bundle) {
-        if (bundle != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            startActivityForResult(intent, requestCode, bundle);
-        } else {
-            startActivityForResult(intent, requestCode);
-        }
-    }
-
-    @Override
-    public void startIntentForResult(Class clazz, int requestCode, @Nullable Bundle bundle) {
-        Intent intent = new Intent();
-        intent.setClass(Activity.this, clazz);
-        if (bundle != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            startActivityForResult(intent, requestCode, bundle);
-        } else {
-            startActivityForResult(intent, requestCode);
         }
     }
 }

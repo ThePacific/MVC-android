@@ -15,10 +15,8 @@ if (project.plugins.hasPlugin('com.android.library')) {
             String packageListRef = "${android.sdkDirectory}/docs/reference/"
             options.linksOffline 'http://d.android.com/reference/', packageListRef
 
-            // Additional links for any glide references
-//            options.links 'https://github.com/bumptech/glide/wiki/'
-
-            // Additional links for any other references...
+            // Additional links for any RxJava references
+            options.links 'http://reactivex.io/RxJava/javadoc/'
 
             // Exclude generated files
             exclude '**/BuildConfig.java'
@@ -26,9 +24,13 @@ if (project.plugins.hasPlugin('com.android.library')) {
 
             // Output to a unique javadoc folder per variant
             destinationDir = new File(project.docsDir, "javadoc-$variant.name")
+
+            if (JavaVersion.current().isJava8Compatible()) {
+                options.addStringOption('Xdoclint:none', '-quiet')
+            }
         }
 
-        // For official release, don't prefix the name so the artifact is published correctly
+        // For official releasese, don't prefix the name so the artifact is published correctly
         // (Can't seem to modify it for publishing, for whatever reason...)
         String classifierPrefix = (variant.name == 'release') ? '' : "$variant.name-"
 
@@ -54,7 +56,8 @@ if (project.plugins.hasPlugin('com.android.library')) {
             artifacts {
                 archives javadocJarTask, sourcesJarTask
             }
-        } else {
+        }
+        else {
             // Create a configuration we can publish from for each variant
             String configurationName = "archives${variant.name.capitalize()}"
             configurations.create(configurationName)

@@ -4,6 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.example.R;
 import com.pacific.example.mvc.controller.NavigationFragment;
 import com.pacific.mvc.FragmentView;
@@ -26,8 +27,8 @@ public class NavigationView extends FragmentView<NavigationFragment> {
     }
 
     @Override
-    protected void setAdapter() {
-        recyclerView.setAdapter(fragment.getQuickAdapter());
+    protected void setAdapter(Object... adapters) {
+        recyclerView.setAdapter((RecyclerAdapter)adapters[0]);
     }
 
     @Override

@@ -49,10 +49,6 @@ public class MainActivity extends Activity<MainModel> {
         }
     }
 
-    public MainModel.PagerAdapter getPagerAdapter() {
-        return model.getPagerAdapter();
-    }
-
     public boolean hasNotify() {
         return model.hasNotify();
     }

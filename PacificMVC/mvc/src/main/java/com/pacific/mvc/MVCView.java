@@ -10,9 +10,9 @@ public abstract class MVCView implements View.OnClickListener {
 
     protected abstract void setListener();
 
-    protected abstract void setAdapter();
+    protected abstract void setAdapter(Object... adapters);
 
     protected abstract void initialize();
-    
+
     protected abstract <V extends View> V retrieveView(int viewId);
 }
