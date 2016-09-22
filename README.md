@@ -252,8 +252,9 @@ compile 'com.github.thepacific:mvc:0.0.1'
 
 # Dependencies
 ```groovy
-compile 'io.reactivex:rxjava:1.1.1'
-compile 'io.reactivex:rxandroid:1.1.0'
-compile 'com.trello:rxlifecycle:0.5.0'
-compile 'com.trello:rxlifecycle-components:0.5.0'
+compile 'com.android.support:appcompat-v7:24.2.1'
+compile 'io.reactivex:rxjava:1.2.0'
+compile 'io.reactivex:rxandroid:1.2.1'
+compile 'com.trello:rxlifecycle:0.8.0'
+compile 'com.trello:rxlifecycle-components:0.8.0'
 ```
