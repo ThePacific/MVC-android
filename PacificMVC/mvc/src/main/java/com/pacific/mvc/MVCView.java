@@ -2,17 +2,11 @@ package com.pacific.mvc;
 
 import android.view.View;
 
-public abstract class MVCView implements View.OnClickListener {
+public abstract class MVCView {
 
     public abstract MVCController getController();
 
-    protected abstract void findView();
-
-    protected abstract void setListener();
-
-    protected abstract void setAdapter(Object... adapters);
-
-    protected abstract void initialize();
+    protected abstract void initialize(Object... args);
 
     protected abstract <V extends View> V retrieveView(int viewId);
 }

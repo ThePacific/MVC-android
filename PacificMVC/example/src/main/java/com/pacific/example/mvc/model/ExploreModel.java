@@ -43,7 +43,7 @@ public class ExploreModel extends FragmentModel<ExploreView> {
     }
 
     @Override
-    protected Object[] getAdapters() {
+    protected Object[] getArgs() {
         return new Object[]{adapter};
     }
 

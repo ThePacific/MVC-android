@@ -40,7 +40,7 @@ public class MainModel extends ActivityModel<MainView> {
     }
 
     @Override
-    protected Object[] getAdapters() {
+    protected Object[] getArgs() {
         return new Object[]{pagerAdapter};
     }
 

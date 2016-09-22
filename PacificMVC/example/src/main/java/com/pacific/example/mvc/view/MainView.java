@@ -13,11 +13,17 @@ import com.pacific.example.R;
 import com.pacific.example.mvc.controller.MainActivity;
 import com.pacific.mvc.ActivityView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainView extends ActivityView<MainActivity> {
 
-    private Toolbar toolbar;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
     private MenuItem notify;
 
     private final int NONE_BACK_VALUE = 6;
@@ -29,26 +35,12 @@ public class MainView extends ActivityView<MainActivity> {
 
     public MainView(MainActivity activity) {
         super(activity);
+        ButterKnife.bind(this, activity);
     }
 
     @Override
-    protected void findView() {
-        toolbar = retrieveView(R.id.toolbar);
-        tabLayout = retrieveView(R.id.tab_layout);
-        viewPager = retrieveView(R.id.view_pager);
-    }
-
-    @Override
-    protected void setListener() {
-    }
-
-    @Override
-    protected void setAdapter(Object... adapters) {
-        viewPager.setAdapter((PagerAdapter) adapters[0]);
-    }
-
-    @Override
-    protected void initialize() {
+    protected void initialize(Object... args) {
+        viewPager.setAdapter((PagerAdapter) args[0]);
         activity.setSupportActionBar(toolbar);
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
@@ -80,11 +72,6 @@ public class MainView extends ActivityView<MainActivity> {
             }
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 
     public void onUserInteraction() {

@@ -20,10 +20,7 @@ public abstract class ActivityView<T extends Activity> extends MVCView {
         return (V) activity.findViewById(viewId);
     }
 
-    final void onCreate(Object... adapters){
-        findView();
-        setListener();
-        setAdapter(adapters);
-        initialize();
+    final void onCreate(Object... args) {
+        initialize(args);
     }
 }

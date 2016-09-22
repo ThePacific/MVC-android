@@ -22,7 +22,7 @@ public class NavigationModel extends FragmentModel<NavigationView> {
     }
 
     @Override
-    protected Object[] getAdapters() {
+    protected Object[] getArgs() {
         return new Object[]{adapter};
     }
 

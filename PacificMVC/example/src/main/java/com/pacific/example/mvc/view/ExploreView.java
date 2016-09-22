@@ -11,37 +11,29 @@ import com.pacific.example.mvc.controller.ExploreFragment;
 import com.pacific.example.decoration.HorizontalItemDecoration;
 import com.pacific.mvc.FragmentView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ExploreView extends FragmentView<ExploreFragment> {
 
-    private RecyclerView recyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.rv_explore)
+    RecyclerView recyclerView;
+    @BindView(R.id.wrl_explore)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public ExploreView(ExploreFragment fragment) {
         super(fragment);
     }
 
     @Override
-    protected void findView() {
-        recyclerView = retrieveView(R.id.rv_explore);
-        swipeRefreshLayout = retrieveView(R.id.wrl_explore);
-    }
-
-    @Override
-    protected void setListener() {
+    protected void initialize(Object... args) {
+        ButterKnife.bind(this, view);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
             }
         });
-    }
-
-    @Override
-    protected void setAdapter(Object... adapters) {
-        recyclerView.setAdapter((RecyclerView.Adapter) adapters[0]);
-    }
-
-    @Override
-    protected void initialize() {
+        recyclerView.setAdapter((RecyclerView.Adapter) args[0]);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_dark, R.color.holo_red, R.color.holo_green);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new HorizontalItemDecoration
@@ -58,10 +50,6 @@ public class ExploreView extends FragmentView<ExploreFragment> {
         if (fragment.isNew()) {
             fragment.fetchNavigationExtra();
         }
-    }
-
-    @Override
-    public void onClick(View v) {
     }
 
     public void setRefreshing(final boolean refreshing) {
