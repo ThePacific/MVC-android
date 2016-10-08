@@ -16,7 +16,7 @@ public class MainActivity extends Activity<MainModel> {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         model = new MainModel(new MainView(this));
-        /** we need to call onCreate() manually*/
+        /** we need to call onCreate() manually */
         model.onCreate();
     }
 

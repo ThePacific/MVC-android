@@ -25,7 +25,7 @@ public class NavigationView extends FragmentView<NavigationFragment> {
     protected void initialize(Object... args) {
         ButterKnife.bind(this, view);
         recyclerView.setAdapter((RecyclerAdapter) args[0]);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), spanNum);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context(), spanNum);
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
         fragment.loadMenu();

@@ -19,59 +19,59 @@ public abstract class Activity<T extends ActivityModel> extends RxAppCompatActiv
     }
 
     @Override
-    public void addFragment(@IdRes int container, Fragment Fragment, boolean isAddBack) {
-        if (Fragment == null)
+    public void addFragment(@IdRes int container, Fragment f, boolean isAddBack) {
+        if (f == null)
             return;
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        if (fm.findFragmentByTag(Fragment.getClass().getSimpleName()) != null) {
-            ft.show(fm.findFragmentByTag(Fragment.getClass().getSimpleName())).commit();
+        if (fm.findFragmentByTag(f.getClass().getSimpleName()) != null) {
+            ft.show(fm.findFragmentByTag(f.getClass().getSimpleName())).commit();
             return;
         }
-        ft.add(container, Fragment, Fragment.getClass().getSimpleName());
+        ft.add(container, f, f.getClass().getSimpleName());
         if (isAddBack) {
-            ft.addToBackStack(Fragment.getClass().getSimpleName());
+            ft.addToBackStack(f.getClass().getSimpleName());
         }
         ft.commit();
     }
 
     @Override
-    public void replaceFragment(@IdRes int container, Fragment Fragment, boolean isAddBack) {
-        if (Fragment == null)
+    public void replaceFragment(@IdRes int container, Fragment f, boolean isAddBack) {
+        if (f == null)
             return;
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        if (fm.findFragmentByTag(Fragment.getClass().getSimpleName()) != null) {
-            ft.show(fm.findFragmentByTag(Fragment.getClass().getSimpleName())).commit();
+        if (fm.findFragmentByTag(f.getClass().getSimpleName()) != null) {
+            ft.show(fm.findFragmentByTag(f.getClass().getSimpleName())).commit();
             return;
         }
-        ft.replace(container, Fragment, Fragment.getClass().getSimpleName());
+        ft.replace(container, f, f.getClass().getSimpleName());
         if (isAddBack) {
-            ft.addToBackStack(Fragment.getClass().getSimpleName());
+            ft.addToBackStack(f.getClass().getSimpleName());
         }
         ft.commit();
     }
 
     @Override
-    public void showFragment(Fragment Fragment) {
-        if (Fragment == null || !Fragment.isHidden())
+    public void showFragment(Fragment f) {
+        if (f == null || !f.isHidden())
             return;
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        if (Fragment.isAdded()) {
-            ft.show(Fragment);
+        if (f.isAdded()) {
+            ft.show(f);
             ft.commit();
         }
     }
 
     @Override
-    public void hideFragment(Fragment Fragment) {
-        if (Fragment == null || Fragment.isHidden())
+    public void hideFragment(Fragment f) {
+        if (f == null || f.isHidden())
             return;
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        if (Fragment.isAdded()) {
-            ft.hide(Fragment);
+        if (f.isAdded()) {
+            ft.hide(f);
             ft.commit();
         }
     }

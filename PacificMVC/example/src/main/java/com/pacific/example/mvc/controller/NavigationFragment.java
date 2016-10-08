@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.pacific.adapter.RecyclerAdapter;
-import com.pacific.example.bean.MenuBean;
 import com.pacific.example.mvc.model.NavigationModel;
 import com.pacific.example.mvc.view.NavigationView;
 import com.pacific.example.R;

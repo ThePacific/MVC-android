@@ -247,13 +247,13 @@ public class StartView extends ActivityView<StartActivity> {
 
 # Maven
 ```groory
-compile 'com.github.thepacific:mvc:0.0.1'
+compile 'com.github.thepacific:mvc:{lastest version}'
 ```
 
 # Dependencies
 ```groovy
 compile 'com.android.support:appcompat-v7:24.2.1'
-compile 'io.reactivex:rxjava:1.2.0'
+compile 'io.reactivex:rxjava:1.2.1'
 compile 'io.reactivex:rxandroid:1.2.1'
 compile 'com.trello:rxlifecycle:0.8.0'
 compile 'com.trello:rxlifecycle-components:0.8.0'

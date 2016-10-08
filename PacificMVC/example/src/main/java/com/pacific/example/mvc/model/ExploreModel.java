@@ -24,9 +24,9 @@ public class ExploreModel extends FragmentModel<ExploreView> {
 
     private RecyclerAdapter<ExploreBean> adapter;
 
-    public ExploreModel(ExploreView fragment) {
-        super(fragment);
-        adapter = new RecyclerAdapter<ExploreBean>(view.getContext(), R.layout.item_explore) {
+    public ExploreModel(final ExploreView view) {
+        super(view);
+        adapter = new RecyclerAdapter<ExploreBean>(view.context(), R.layout.item_explore) {
             @Override
             protected void convert(final RecyclerAdapterHelper helper, ExploreBean exploreBean) {
                 helper.setImageResource(R.id.img_explore_icon, exploreBean.getIconResId());
@@ -68,7 +68,7 @@ public class ExploreModel extends FragmentModel<ExploreView> {
                         return list;
                     }
                 })
-                .compose(view.getController().<List<ExploreBean>>bindUntilEvent(FragmentEvent.PAUSE))
+                .compose(view.controller().<List<ExploreBean>>bindUntilEvent(FragmentEvent.PAUSE))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<ExploreBean>>() {

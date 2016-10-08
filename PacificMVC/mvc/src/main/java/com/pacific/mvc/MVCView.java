@@ -4,7 +4,7 @@ import android.view.View;
 
 public abstract class MVCView {
 
-    public abstract MVCController getController();
+    public abstract MVCController controller();
 
     protected abstract void initialize(Object... args);
 

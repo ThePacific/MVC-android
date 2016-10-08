@@ -13,7 +13,7 @@ public abstract class FragmentView<T extends Fragment> extends MVCView {
     }
 
     @Override
-    public T getController() {
+    public T controller() {
         return fragment;
     }
 
@@ -22,11 +22,11 @@ public abstract class FragmentView<T extends Fragment> extends MVCView {
         return (V) view.findViewById(viewId);
     }
 
-    public Context getContext() {
+    public Context context() {
         return fragment.getActivity();
     }
 
-    final void onCreatedView(View rootView, Object... args) {
+    final void onCreate(View rootView, Object... args) {
         this.view = rootView;
         initialize(args);
     }

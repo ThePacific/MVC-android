@@ -7,7 +7,7 @@ public abstract class FragmentModel<T extends FragmentView> extends MVCModel<T> 
         super(view);
     }
 
-    public void onCreatedView(View rootView) {
-        view.onCreatedView(rootView, getArgs());
+    public void onCreate(View rootView) {
+        view.onCreate(rootView, getArgs());
     }
 }

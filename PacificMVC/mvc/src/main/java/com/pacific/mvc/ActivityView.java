@@ -11,7 +11,7 @@ public abstract class ActivityView<T extends Activity> extends MVCView {
     }
 
     @Override
-    public T getController() {
+    public T controller() {
         return activity;
     }
 

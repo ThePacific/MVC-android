@@ -35,9 +35,10 @@ public class ExploreView extends FragmentView<ExploreFragment> {
         });
         recyclerView.setAdapter((RecyclerView.Adapter) args[0]);
         swipeRefreshLayout.setColorSchemeResources(R.color.primary_dark, R.color.holo_red, R.color.holo_green);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new HorizontalItemDecoration
-                .Builder(getContext())
+                .Builder(context())
+                .colorResId(R.color.divider)
                 .sizeResId(R.dimen.height_explore_divider)
                 .showLastDivider()
                 .build());

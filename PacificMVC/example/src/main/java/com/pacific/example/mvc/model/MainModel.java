@@ -14,9 +14,9 @@ public class MainModel extends ActivityModel<MainView> {
 
     private PagerAdapter pagerAdapter;
 
-    public MainModel(MainView mvcView) {
-        super(mvcView);
-        pagerAdapter = new PagerAdapter(view.getController().getSupportFragmentManager(), 2);
+    public MainModel(MainView view) {
+        super(view);
+        pagerAdapter = new PagerAdapter(view.controller().getSupportFragmentManager(), 2);
     }
 
     public void setNotify(MenuItem notify) {
@@ -43,7 +43,6 @@ public class MainModel extends ActivityModel<MainView> {
     protected Object[] getArgs() {
         return new Object[]{pagerAdapter};
     }
-
 
     public static class PagerAdapter extends FragmentPagerAdapter {
         private int count;

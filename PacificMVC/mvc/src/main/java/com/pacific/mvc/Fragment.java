@@ -41,7 +41,7 @@ public abstract class Fragment<T extends FragmentModel> extends RxFragment imple
                 return false;
             }
         });
-        model.onCreatedView(view);
+        model.onCreate(view);
         isNew = false;
     }
 
@@ -62,12 +62,12 @@ public abstract class Fragment<T extends FragmentModel> extends RxFragment imple
 
     public interface Callback {
 
-        void addFragment(@IdRes int container, Fragment Fragment, boolean isAddBack);
+        void addFragment(@IdRes int container, Fragment f, boolean isAddBack);
 
-        void replaceFragment(@IdRes int container, Fragment Fragment, boolean isAddBack);
+        void replaceFragment(@IdRes int container, Fragment f, boolean isAddBack);
 
-        void showFragment(Fragment Fragment);
+        void showFragment(Fragment f);
 
-        void hideFragment(Fragment Fragment);
+        void hideFragment(Fragment f);
     }
 }
