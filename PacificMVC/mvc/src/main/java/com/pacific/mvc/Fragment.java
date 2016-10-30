@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.trello.rxlifecycle.components.support.RxFragment;
+import com.pacific.mvc.component.RxFragment;
 
 public abstract class Fragment<T extends FragmentModel> extends RxFragment implements MVCController {
 
