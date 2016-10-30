@@ -2,6 +2,9 @@
 A pure MVC base library on android . Using it , your code can be very clean in MVC pattern .
 <p>
 [ ![Download](https://api.bintray.com/packages/thepacific/maven/mvc/images/download.svg) ](https://bintray.com/thepacific/maven/mvc/_latestVersion)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-mvc--android-brightgreen.svg?style=flat)]
+(http://android-arsenal.com/details/1/4482)
+
 <p>
 ![](https://github.com/ThePacific/MVC-android/blob/master/art/mvc.png)
 
