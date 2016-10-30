@@ -1,5 +1,6 @@
 package com.pacific.mvc.component;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
@@ -42,8 +43,8 @@ public class RxFragment extends Fragment implements LifecycleProvider<FragmentEv
     }
 
     @Override
-    public void onAttach(android.app.Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         lifecycleSubject.onNext(FragmentEvent.ATTACH);
     }
 
