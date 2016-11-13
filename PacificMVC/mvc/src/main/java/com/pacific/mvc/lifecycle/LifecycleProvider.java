@@ -1,13 +1,27 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.pacific.mvc.lifecycle;
+
+import io.reactivex.Observable;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
-import rx.Observable;
-
 /**
  * Common base interface for activity and fragment lifecycle providers.
- * <p>
+ *
  * Useful if you are writing utilities on top of rxlifecycle-components
  * or implementing your own component not supported by this library.
  */
@@ -21,11 +35,9 @@ public interface LifecycleProvider<E> {
 
     /**
      * Binds a source until a specific event occurs.
-     * <p>
-     * Intended for use with {@link Observable#compose(Observable.Transformer)}
      *
      * @param event the event that triggers unsubscription
-     * @return a reusable {@link Observable.Transformer} which unsubscribes when the event triggers.
+     * @return a reusable {@link LifecycleTransformer} which unsubscribes when the event triggers.
      */
     @Nonnull
     @CheckReturnValue
@@ -33,10 +45,8 @@ public interface LifecycleProvider<E> {
 
     /**
      * Binds a source until the next reasonable event occurs.
-     * <p>
-     * Intended for use with {@link Observable#compose(Observable.Transformer)}
      *
-     * @return a reusable {@link Observable.Transformer} which unsubscribes at the correct time.
+     * @return a reusable {@link LifecycleTransformer} which unsubscribes at the correct time.
      */
     @Nonnull
     @CheckReturnValue

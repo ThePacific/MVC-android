@@ -1,16 +1,30 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.pacific.mvc.lifecycle;
 
+import io.reactivex.Completable;
+import io.reactivex.exceptions.Exceptions;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
 import java.util.concurrent.CancellationException;
-
-import rx.Observable;
-import rx.exceptions.Exceptions;
-import rx.functions.Func1;
 
 final class Functions {
 
-    static final Func1<Throwable, Boolean> RESUME_FUNCTION = new Func1<Throwable, Boolean>() {
+    static final Function<Throwable, Boolean> RESUME_FUNCTION = new Function<Throwable, Boolean>() {
         @Override
-        public Boolean call(Throwable throwable) {
+        public Boolean apply(Throwable throwable) throws Exception {
             if (throwable instanceof OutsideLifecycleException) {
                 return true;
             }
@@ -21,17 +35,17 @@ final class Functions {
         }
     };
 
-    static final Func1<Boolean, Boolean> SHOULD_COMPLETE = new Func1<Boolean, Boolean>() {
+    static final Predicate<Boolean> SHOULD_COMPLETE = new Predicate<Boolean>() {
         @Override
-        public Boolean call(Boolean shouldComplete) {
+        public boolean test(Boolean shouldComplete) throws Exception {
             return shouldComplete;
         }
     };
 
-    static final Func1<Object, Observable<Object>> CANCEL_COMPLETABLE = new Func1<Object, Observable<Object>>() {
+    static final Function<Object, Completable> CANCEL_COMPLETABLE = new Function<Object, Completable>() {
         @Override
-        public Observable<Object> call(Object ignore) {
-            return Observable.error(new CancellationException());
+        public Completable apply(Object ignore) throws Exception {
+            return Completable.error(new CancellationException());
         }
     };
 

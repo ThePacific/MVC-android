@@ -2,19 +2,18 @@ apply plugin: 'com.android.library'
 //apply from: "../gradle/bintray_push.gradle"
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+
+    compileSdkVersion rootProject.ext.compile
+    buildToolsVersion rootProject.ext.buildTools
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 24
-        versionCode 5
-        versionName "0.0.5"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        minSdkVersion rootProject.ext.min
+        targetSdkVersion rootProject.ext.target
+        versionCode 6
+        versionName "0.0.6"
+
+        lintOptions {
+            abortOnError false
         }
     }
 
@@ -36,12 +35,20 @@ android {
         exclude 'META-INF/LGPL2.1'
         exclude 'META-INF/ASL2.0'
     }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'io.reactivex:rxjava:1.2.1'
-    compile 'io.reactivex:rxandroid:1.2.1'
+    compile "com.android.support:appcompat-v7:$rootProject.ext.support"
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxjava"
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxandroid"
     compile 'com.google.code.findbugs:jsr305:3.0.1'
 }
