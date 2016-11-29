@@ -1,12 +1,12 @@
 package com.pacific.example.bean;
 
-public class ExploreBean {
+public class Bean {
 
     private int iconResId;
     private String name;
     private String description;
 
-    public ExploreBean(int iconResId, String name, String description) {
+    public Bean(int iconResId, String name, String description) {
         this.iconResId = iconResId;
         this.name = name;
         this.description = description;

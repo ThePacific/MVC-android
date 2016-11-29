@@ -1,3 +1,3 @@
-//include ':example'
-include ':mvc'
+include ':example'
+//include ':mvc'
 //include ':mvc' ,'example'

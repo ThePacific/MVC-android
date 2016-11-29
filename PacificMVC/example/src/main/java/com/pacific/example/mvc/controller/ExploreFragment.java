@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pacific.example.R;
 import com.pacific.example.mvc.model.ExploreModel;
 import com.pacific.example.mvc.view.ExploreView;
-import com.pacific.example.R;
 import com.pacific.mvc.Fragment;
 
 public class ExploreFragment extends Fragment<ExploreModel> {

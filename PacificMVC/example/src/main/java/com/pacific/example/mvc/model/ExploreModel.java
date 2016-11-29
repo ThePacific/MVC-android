@@ -4,34 +4,34 @@ import android.view.View;
 
 import com.pacific.adapter.RecyclerAdapter;
 import com.pacific.adapter.RecyclerAdapterHelper;
-import com.pacific.example.bean.ExploreBean;
+import com.pacific.example.bean.Bean;
 import com.pacific.example.mvc.view.ExploreView;
 import com.pacific.example.R;
 import com.pacific.mvc.FragmentModel;
-import com.trello.rxlifecycle.android.FragmentEvent;
+import com.pacific.mvc.internal.FragmentEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public class ExploreModel extends FragmentModel<ExploreView> {
 
-    private RecyclerAdapter<ExploreBean> adapter;
+    private RecyclerAdapter<Bean> adapter;
 
     public ExploreModel(final ExploreView view) {
         super(view);
-        adapter = new RecyclerAdapter<ExploreBean>(view.context(), R.layout.item_explore) {
+        adapter = new RecyclerAdapter<Bean>(view.context(), R.layout.item_explore) {
             @Override
-            protected void convert(final RecyclerAdapterHelper helper, ExploreBean exploreBean) {
-                helper.setImageResource(R.id.img_explore_icon, exploreBean.getIconResId());
-                helper.setText(R.id.tv_explore_name, exploreBean.getName());
-                helper.setText(R.id.tv_explore_desc, exploreBean.getDescription());
+            protected void convert(final RecyclerAdapterHelper helper, Bean bean) {
+                helper.setImageResource(R.id.img_explore_icon, bean.getIconResId());
+                helper.setText(R.id.tv_explore_name, bean.getName());
+                helper.setText(R.id.tv_explore_desc, bean.getDescription());
                 helper.getItemView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -58,37 +58,39 @@ public class ExploreModel extends FragmentModel<ExploreView> {
     public void fetchNavigationExtra() {
         Observable
                 .just(12)
-                .map(new Func1<Integer, List<ExploreBean>>() {
+                .map(new Function<Integer, List<Bean>>() {
                     @Override
-                    public List<ExploreBean> call(Integer integer) {
+                    public List<Bean> apply(Integer integer) {
                         if (adapter.getItemCount() > integer) return null;
-                        List<ExploreBean> list = new ArrayList<>();
-                        list.add(new ExploreBean(R.drawable.web, "web work", "start：2016.01.01，end: 2016.02.01"));
-                        list.add(new ExploreBean(R.drawable.smart_ticket, "PC work", "start：2016.01.01，end: 2016.02.01"));
+                        List<Bean> list = new ArrayList<>();
+                        list.add(new Bean(R.drawable.web, "web work", "start：2016.01.01，end: 2016.02.01"));
+                        list.add(new Bean(R.drawable.smart_ticket, "PC work", "start：2016.01.01，end: 2016.02.01"));
                         return list;
                     }
                 })
-                .compose(view.controller().<List<ExploreBean>>bindUntilEvent(FragmentEvent.PAUSE))
+                .compose(view.controller().<List<Bean>>bindUntilEvent(FragmentEvent.PAUSE))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<ExploreBean>>() {
+                .subscribe(new Consumer<List<Bean>>() {
                     @Override
-                    public void call(List<ExploreBean> list) {
+                    public void accept(List<Bean> list) throws Exception {
                         if (list != null) {
                             adapter.addAll(list);
                         }
                         setRefreshing(false);
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) throws Exception {
                         throw new RuntimeException(throwable.toString());
                     }
-                }, new Action0() {
+                }, new Action() {
                     @Override
-                    public void call() {
+                    public void run() {
                         setRefreshing(false);
                     }
                 });
+
+
     }
 }
