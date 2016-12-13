@@ -18,6 +18,16 @@ public abstract class Fragment<T extends FragmentModel> extends RxFragment imple
     private boolean isNew = false;
 
     @Override
+    public T model() {
+        return model;
+    }
+
+    @Override
+    public Object[] getArgs() {
+        return null;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isNew = true;
@@ -41,7 +51,7 @@ public abstract class Fragment<T extends FragmentModel> extends RxFragment imple
                 return false;
             }
         });
-        model.onCreate(view);
+        model.onCreate(view, getArgs());
         isNew = false;
     }
 

@@ -5,7 +5,7 @@ buildscript {
 
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0-alpha2'
+        classpath 'com.android.tools.build:gradle:2.3.0-alpha3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
@@ -30,8 +30,8 @@ ext {
     compile = 25
     min = 14
     target = 25
-    buildTools = "25.0.1"
+    buildTools = "25.0.2"
     support = "25.0.1"
     rxjava = "2.0.1"
-    rxandroid = "2.0.1"
+    rxandroid = "2.0.2"
 }

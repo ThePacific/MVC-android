@@ -6,7 +6,7 @@ public abstract class ActivityModel<T extends ActivityView> extends MVCModel<T> 
         super(view);
     }
 
-    public void onCreate() {
-        view.onCreate(getArgs());
+    public void onCreate(Object... args) {
+        view.onCreate(args);
     }
 }

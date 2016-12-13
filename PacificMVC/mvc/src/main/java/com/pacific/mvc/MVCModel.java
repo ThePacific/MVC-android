@@ -7,7 +7,7 @@ public abstract class MVCModel<T extends MVCView> {
         this.view = view;
     }
 
-    protected Object[] getArgs() {
-        return null;
+    public T view() {
+        return view;
     }
 }

@@ -11,6 +11,16 @@ public abstract class Activity<T extends ActivityModel> extends RxAppCompatActiv
     protected T model;
 
     @Override
+    public T model() {
+        return model;
+    }
+
+    @Override
+    public Object[] getArgs() {
+        return null;
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         if (model == null) {

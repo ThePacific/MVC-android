@@ -32,6 +32,7 @@ import io.reactivex.subjects.BehaviorSubject;
 
 public abstract class RxAppCompatActivity extends AppCompatActivity implements LifecycleProvider<ActivityEvent> {
 
+    private static int activeCount = 0;
     private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
 
     @Override
@@ -66,6 +67,7 @@ public abstract class RxAppCompatActivity extends AppCompatActivity implements L
     @CallSuper
     protected void onStart() {
         super.onStart();
+        activeCount++;
         lifecycleSubject.onNext(ActivityEvent.START);
     }
 
@@ -86,6 +88,7 @@ public abstract class RxAppCompatActivity extends AppCompatActivity implements L
     @Override
     @CallSuper
     protected void onStop() {
+        activeCount--;
         lifecycleSubject.onNext(ActivityEvent.STOP);
         super.onStop();
     }
@@ -95,5 +98,9 @@ public abstract class RxAppCompatActivity extends AppCompatActivity implements L
     protected void onDestroy() {
         lifecycleSubject.onNext(ActivityEvent.DESTROY);
         super.onDestroy();
+    }
+
+    public static boolean isActive() {
+        return activeCount > 0;
     }
 }

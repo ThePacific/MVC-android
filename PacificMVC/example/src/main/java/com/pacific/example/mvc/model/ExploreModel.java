@@ -22,29 +22,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ExploreModel extends FragmentModel<ExploreView> {
 
-    private RecyclerAdapter<Bean> adapter;
-
     public ExploreModel(final ExploreView view) {
         super(view);
-        adapter = new RecyclerAdapter<Bean>(view.context(), R.layout.item_explore) {
-            @Override
-            protected void convert(final RecyclerAdapterHelper helper, Bean bean) {
-                helper.setImageResource(R.id.img_explore_icon, bean.getIconResId());
-                helper.setText(R.id.tv_explore_name, bean.getName());
-                helper.setText(R.id.tv_explore_desc, bean.getDescription());
-                helper.getItemView().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        view.clickSnack(helper.getAdapterPosition());
-                    }
-                });
-            }
-        };
-    }
-
-    @Override
-    protected Object[] getArgs() {
-        return new Object[]{adapter};
     }
 
     public void setRefreshing(final boolean refreshing) {
