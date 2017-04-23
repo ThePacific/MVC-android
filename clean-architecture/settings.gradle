@@ -1,1 +1,1 @@
-include ':demo', ':mvp', ':data', ':domain', ':mvc', ':mvvm'
+include ':demo', ':clean-mvp', ':clean-data', ':clean-domain', ':clean-mvc', ':clean-mvvm'

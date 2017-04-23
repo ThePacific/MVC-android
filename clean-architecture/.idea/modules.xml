@@ -3,12 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/clean-architecture.iml" filepath="$PROJECT_DIR$/clean-architecture.iml" />
-      <module fileurl="file://$PROJECT_DIR$/data/data.iml" filepath="$PROJECT_DIR$/data/data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/clean-data/data.iml" filepath="$PROJECT_DIR$/clean-data/data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/clean-domain/domain.iml" filepath="$PROJECT_DIR$/clean-domain/domain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/clean-mvc/mvc.iml" filepath="$PROJECT_DIR$/clean-mvc/mvc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/clean-mvp/mvp.iml" filepath="$PROJECT_DIR$/clean-mvp/mvp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/clean-mvvm/mvvm.iml" filepath="$PROJECT_DIR$/clean-mvvm/mvvm.iml" />
       <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/domain/domain.iml" filepath="$PROJECT_DIR$/domain/domain.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mvc/mvc.iml" filepath="$PROJECT_DIR$/mvc/mvc.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mvp/mvp.iml" filepath="$PROJECT_DIR$/mvp/mvp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mvvm/mvvm.iml" filepath="$PROJECT_DIR$/mvvm/mvvm.iml" />
     </modules>
   </component>
 </project>

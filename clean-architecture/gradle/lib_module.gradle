@@ -46,6 +46,10 @@ android {
         exclude 'META-INF/LGPL2.1'
         exclude 'META-INF/ASL2.0'
     }
+
+    configurations.all {
+        resolutionStrategy.force "com.google.code.findbugs:jsr305:$rootProject.ext.findBugs"
+    }
 }
 
 dependencies {

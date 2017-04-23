@@ -8,12 +8,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/clean-data" />
+            <option value="$PROJECT_DIR$/clean-domain" />
+            <option value="$PROJECT_DIR$/clean-mvc" />
+            <option value="$PROJECT_DIR$/clean-mvp" />
+            <option value="$PROJECT_DIR$/clean-mvvm" />
             <option value="$PROJECT_DIR$/demo" />
-            <option value="$PROJECT_DIR$/domain" />
-            <option value="$PROJECT_DIR$/mvc" />
-            <option value="$PROJECT_DIR$/mvp" />
-            <option value="$PROJECT_DIR$/mvvm" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

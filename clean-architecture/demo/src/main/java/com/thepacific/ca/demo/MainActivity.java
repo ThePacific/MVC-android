@@ -1,9 +1,10 @@
 package com.thepacific.ca.demo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+
+public class MainActivity extends RxAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
