@@ -5,8 +5,7 @@ A pure MVC base library on android . Using it , your code can be very clean in M
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-mvc--android-brightgreen.svg?style=flat)]
 (http://android-arsenal.com/details/1/4482)
 
-<p>
-![](https://github.com/ThePacific/MVC-android/blob/master/art/mvc.png)
+![](https://github.com/thepacific/MVC-android/blob/master/art/mvc.png)
 
 # Features
 * Activity and Fragment as controllers
@@ -14,7 +13,9 @@ A pure MVC base library on android . Using it , your code can be very clean in M
 
 # Example
 This sample has a RecyclerView,Toolbar and SwipRefreshLayout
-![](https://github.com/ThePacific/MVC-android/blob/master/art/preview.gif)
+
+![](https://github.com/thepacific/MVC-android/blob/master/art/preview.gif)
+
 ## Controller(Activity/Fragment)
 ```java
 public class StartActivity extends Activity<StartModel> {
