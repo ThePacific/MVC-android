@@ -15,8 +15,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class CompletableTransformerUtil {
 
-    public static CompletableTransformer io(@Nonnull final Observable lifecycle,
-                                            @Nonnull final DisposeEvent event) {
+    public static <R> CompletableTransformer io(@Nonnull final Observable<R> lifecycle,
+                                            @Nonnull final R event) {
         return new CompletableTransformer() {
             @Override
             public CompletableSource apply(Completable completable) {
@@ -28,8 +28,8 @@ public class CompletableTransformerUtil {
         };
     }
 
-    public static CompletableTransformer computation(@Nonnull final Observable lifecycle,
-                                                     @Nonnull final DisposeEvent event) {
+    public static <R> CompletableTransformer computation(@Nonnull final Observable<R> lifecycle,
+                                                     @Nonnull final R event) {
         return new CompletableTransformer() {
             @Override
             public CompletableSource apply(Completable completable) {
@@ -41,8 +41,8 @@ public class CompletableTransformerUtil {
         };
     }
 
-    public static CompletableTransformer trampoline(@Nonnull final Observable lifecycle,
-                                                    @Nonnull final DisposeEvent event) {
+    public static <R> CompletableTransformer trampoline(@Nonnull final Observable<R> lifecycle,
+                                                    @Nonnull final R event) {
         return new CompletableTransformer() {
             @Override
             public CompletableSource apply(Completable completable) {
@@ -54,8 +54,8 @@ public class CompletableTransformerUtil {
         };
     }
 
-    public static CompletableTransformer newThread(@Nonnull final Observable lifecycle,
-                                                   @Nonnull final DisposeEvent event) {
+    public static <R> CompletableTransformer newThread(@Nonnull final Observable<R> lifecycle,
+                                                   @Nonnull final R event) {
         return new CompletableTransformer() {
             @Override
             public CompletableSource apply(Completable completable) {
@@ -67,8 +67,8 @@ public class CompletableTransformerUtil {
         };
     }
 
-    public static CompletableTransformer single(@Nonnull final Observable lifecycle,
-                                                @Nonnull final DisposeEvent event) {
+    public static <R> CompletableTransformer single(@Nonnull final Observable<R> lifecycle,
+                                                @Nonnull final R event) {
         return new CompletableTransformer() {
             @Override
             public CompletableSource apply(Completable completable) {
@@ -80,8 +80,8 @@ public class CompletableTransformerUtil {
         };
     }
 
-    public static CompletableTransformer from(@Nonnull final Observable lifecycle,
-                                              @Nonnull final DisposeEvent event,
+    public static <R> CompletableTransformer from(@Nonnull final Observable<R> lifecycle,
+                                              @Nonnull final R event,
                                               @Nonnull final Executor executor) {
         return new CompletableTransformer() {
             @Override
