@@ -30,7 +30,7 @@ public class RxDialogFragment extends AppCompatDialogFragment implements Lifecyc
     @Nonnull
     @Override
     public <T> LifecycleTransformer<T> bindToLifecycle() {
-        return null;
+        throw new AssertionError("Not supported");
     }
 
     @Override

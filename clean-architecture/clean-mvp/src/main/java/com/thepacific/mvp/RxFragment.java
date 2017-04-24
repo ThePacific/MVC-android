@@ -30,7 +30,7 @@ public class RxFragment extends Fragment implements LifecycleProvider<DisposeEve
     @Nonnull
     @Override
     public <T> LifecycleTransformer<T> bindToLifecycle() {
-        return null;
+        throw new AssertionError("Not supported");
     }
 
     @Override

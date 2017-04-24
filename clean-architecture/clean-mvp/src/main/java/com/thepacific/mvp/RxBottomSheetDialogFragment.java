@@ -1,8 +1,11 @@
 package com.thepacific.mvp;
 
-import android.support.annotation.CallSuper;
+import android.os.Bundle;
 import android.support.annotation.CheckResult;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialogFragment;
+import android.view.View;
 
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
@@ -10,15 +13,10 @@ import com.trello.rxlifecycle2.RxLifecycle;
 
 import javax.annotation.Nonnull;
 
-import dagger.android.support.DaggerAppCompatActivity;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.subjects.BehaviorSubject;
 
-public class MvpActivity extends DaggerAppCompatActivity implements MvpView,
-        LifecycleProvider<DisposeEvent> {
+public class RxBottomSheetDialogFragment extends BottomSheetDialogFragment implements LifecycleProvider<DisposeEvent> {
 
     protected final BehaviorSubject<DisposeEvent> lifecycle = BehaviorSubject.create();
 
@@ -26,7 +24,7 @@ public class MvpActivity extends DaggerAppCompatActivity implements MvpView,
     @NonNull
     @CheckResult
     public final Observable<DisposeEvent> lifecycle() {
-        return lifecycle.hide();
+        return lifecycle;
     }
 
     @Nonnull
@@ -43,46 +41,38 @@ public class MvpActivity extends DaggerAppCompatActivity implements MvpView,
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        AppLife.attachOnStart();
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (!view.isClickable()) view.setClickable(true);
     }
 
     @Override
-    @CallSuper
-    protected void onPause() {
+    public void onPause() {
         lifecycle.onNext(DisposeEvent.PAUSE);
         super.onPause();
     }
 
     @Override
-    @CallSuper
-    protected void onStop() {
+    public void onStop() {
         lifecycle.onNext(DisposeEvent.STOP);
         super.onStop();
-        AppLife.detachOnStop();
     }
 
     @Override
-    @CallSuper
-    protected void onDestroy() {
+    public void onDestroyView() {
+        lifecycle.onNext(DisposeEvent.DESTROY_VIEW);
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
         lifecycle.onNext(DisposeEvent.DESTROY);
         super.onDestroy();
     }
 
     @Override
-    public Observable<DisposeEvent> rxLifecycle() {
-        return lifecycle();
-    }
-
-    @Override
-    public AppCompatActivity context() {
-        return this;
-    }
-
-    @Override
-    public Scheduler mainThread() {
-        return AndroidSchedulers.mainThread();
+    public void onDetach() {
+        lifecycle.onNext(DisposeEvent.DETACH);
+        super.onDetach();
     }
 }
-

@@ -14,7 +14,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class MaybeTransformerUtil {
-
     public static <T, R> MaybeTransformer<T, T> io(@Nonnull final Observable<R> lifecycle,
                                                    @Nonnull final R event) {
         return new MaybeTransformer<T, T>() {

@@ -2,9 +2,14 @@ package com.thepacific.mvp;
 
 import android.support.v7.app.AppCompatActivity;
 
-import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 
 public interface MvpView {
-    BehaviorSubject<DisposeEvent> lifecycle();
+
+    Scheduler mainThread();
+
+    Observable<DisposeEvent> rxLifecycle();
+
     AppCompatActivity context();
 }

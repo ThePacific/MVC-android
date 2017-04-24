@@ -28,7 +28,7 @@ public class RxActivity extends AppCompatActivity implements LifecycleProvider<D
     @Nonnull
     @Override
     public <T> LifecycleTransformer<T> bindToLifecycle() {
-        return null;
+        throw new AssertionError("Not supported");
     }
 
     @Override
@@ -41,7 +41,7 @@ public class RxActivity extends AppCompatActivity implements LifecycleProvider<D
     @Override
     protected void onStart() {
         super.onStart();
-        AppLife.flagOnStart();
+        AppLife.attachOnStart();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class RxActivity extends AppCompatActivity implements LifecycleProvider<D
     protected void onStop() {
         lifecycle.onNext(DisposeEvent.STOP);
         super.onStop();
-        AppLife.flagOnStop();
+        AppLife.detachOnStop();
     }
 
     @Override

@@ -3,11 +3,11 @@ package com.thepacific.mvp;
 public class AppLife {
     private static int lifeCounter = 0;
 
-    public static void flagOnStart() {
+    public static void attachOnStart() {
         lifeCounter++;
     }
 
-    public static void flagOnStop() {
+    public static void detachOnStop() {
         lifeCounter--;
     }
 

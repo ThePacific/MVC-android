@@ -13,7 +13,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class ObservableTransformerUtil {
-
     public static <T, R> ObservableTransformer<T, T> io(@Nonnull final Observable<R> lifecycle,
                                                         @Nonnull final R event) {
         return new ObservableTransformer<T, T>() {
