@@ -18,7 +18,7 @@ import io.reactivex.subjects.BehaviorSubject;
 
 public class RxFragment extends Fragment implements LifecycleProvider<DisposeEvent> {
 
-    protected final BehaviorSubject<DisposeEvent> lifecycle = BehaviorSubject.create();
+    private final BehaviorSubject<DisposeEvent> lifecycle = BehaviorSubject.create();
 
     @Override
     @NonNull
@@ -49,31 +49,31 @@ public class RxFragment extends Fragment implements LifecycleProvider<DisposeEve
 
     @Override
     public void onPause() {
-        lifecycle.onNext(DisposeEvent.PAUSE);
+        lifecycle.onNext(DisposeEvent.FRAGMENT_PAUSE);
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        lifecycle.onNext(DisposeEvent.STOP);
+        lifecycle.onNext(DisposeEvent.FRAGMENT_STOP);
         super.onStop();
     }
 
     @Override
     public void onDestroyView() {
-        lifecycle.onNext(DisposeEvent.DESTROY_VIEW);
+        lifecycle.onNext(DisposeEvent.FRAGMENT_DESTROY_VIEW);
         super.onDestroyView();
     }
 
     @Override
     public void onDestroy() {
-        lifecycle.onNext(DisposeEvent.DESTROY);
+        lifecycle.onNext(DisposeEvent.FRAGMENT_DESTROY);
         super.onDestroy();
     }
 
     @Override
     public void onDetach() {
-        lifecycle.onNext(DisposeEvent.DETACH);
+        lifecycle.onNext(DisposeEvent.FRAGMENT_DETACH);
         super.onDetach();
     }
 }

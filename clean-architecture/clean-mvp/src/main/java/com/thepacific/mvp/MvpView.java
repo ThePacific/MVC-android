@@ -1,5 +1,6 @@
 package com.thepacific.mvp;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 import io.reactivex.Observable;
@@ -11,5 +12,5 @@ public interface MvpView {
 
     Observable<DisposeEvent> rxLifecycle();
 
-    AppCompatActivity context();
+    Context context();
 }

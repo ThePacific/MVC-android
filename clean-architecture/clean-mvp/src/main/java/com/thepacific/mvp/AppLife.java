@@ -1,6 +1,6 @@
 package com.thepacific.mvp;
 
-public class AppLife {
+public class AppLife{
     private static int lifeCounter = 0;
 
     public static void attachOnStart() {

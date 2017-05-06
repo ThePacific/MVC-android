@@ -16,13 +16,13 @@ import io.reactivex.subjects.BehaviorSubject;
 
 public class RxActivity extends AppCompatActivity implements LifecycleProvider<DisposeEvent> {
 
-    protected final BehaviorSubject<DisposeEvent> lifecycle = BehaviorSubject.create();
+    private final BehaviorSubject<DisposeEvent> lifecycle = BehaviorSubject.create();
 
     @Override
     @NonNull
     @CheckResult
     public final Observable<DisposeEvent> lifecycle() {
-        return lifecycle;
+        return lifecycle.hide();
     }
 
     @Nonnull
@@ -47,14 +47,14 @@ public class RxActivity extends AppCompatActivity implements LifecycleProvider<D
     @Override
     @CallSuper
     protected void onPause() {
-        lifecycle.onNext(DisposeEvent.PAUSE);
+        lifecycle.onNext(DisposeEvent.ACTIVITY_PAUSE);
         super.onPause();
     }
 
     @Override
     @CallSuper
     protected void onStop() {
-        lifecycle.onNext(DisposeEvent.STOP);
+        lifecycle.onNext(DisposeEvent.ACTIVITY_STOP);
         super.onStop();
         AppLife.detachOnStop();
     }
@@ -62,7 +62,7 @@ public class RxActivity extends AppCompatActivity implements LifecycleProvider<D
     @Override
     @CallSuper
     protected void onDestroy() {
-        lifecycle.onNext(DisposeEvent.DESTROY);
+        lifecycle.onNext(DisposeEvent.ACTIVITY_DESTROY);
         super.onDestroy();
     }
 }

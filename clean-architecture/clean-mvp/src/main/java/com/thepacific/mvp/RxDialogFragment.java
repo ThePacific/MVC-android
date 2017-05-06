@@ -18,13 +18,13 @@ import io.reactivex.subjects.BehaviorSubject;
 
 public class RxDialogFragment extends AppCompatDialogFragment implements LifecycleProvider<DisposeEvent> {
 
-    protected final BehaviorSubject<DisposeEvent> lifecycle = BehaviorSubject.create();
+    private final BehaviorSubject<DisposeEvent> lifecycle = BehaviorSubject.create();
 
     @Override
     @NonNull
     @CheckResult
     public final Observable<DisposeEvent> lifecycle() {
-        return lifecycle;
+        return lifecycle.hide();
     }
 
     @Nonnull
@@ -48,31 +48,31 @@ public class RxDialogFragment extends AppCompatDialogFragment implements Lifecyc
 
     @Override
     public void onPause() {
-        lifecycle.onNext(DisposeEvent.PAUSE);
+        lifecycle.onNext(DisposeEvent.FRAGMENT_PAUSE);
         super.onPause();
     }
 
     @Override
     public void onStop() {
-        lifecycle.onNext(DisposeEvent.STOP);
+        lifecycle.onNext(DisposeEvent.FRAGMENT_STOP);
         super.onStop();
     }
 
     @Override
     public void onDestroyView() {
-        lifecycle.onNext(DisposeEvent.DESTROY_VIEW);
+        lifecycle.onNext(DisposeEvent.FRAGMENT_DESTROY_VIEW);
         super.onDestroyView();
     }
 
     @Override
     public void onDestroy() {
-        lifecycle.onNext(DisposeEvent.DESTROY);
+        lifecycle.onNext(DisposeEvent.FRAGMENT_DESTROY);
         super.onDestroy();
     }
 
     @Override
     public void onDetach() {
-        lifecycle.onNext(DisposeEvent.DETACH);
+        lifecycle.onNext(DisposeEvent.FRAGMENT_DETACH);
         super.onDetach();
     }
 }
