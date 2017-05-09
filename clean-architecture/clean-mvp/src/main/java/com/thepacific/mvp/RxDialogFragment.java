@@ -17,7 +17,6 @@ import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 
 public class RxDialogFragment extends AppCompatDialogFragment implements LifecycleProvider<DisposeEvent> {
-
     private final BehaviorSubject<DisposeEvent> lifecycle = BehaviorSubject.create();
 
     @Override

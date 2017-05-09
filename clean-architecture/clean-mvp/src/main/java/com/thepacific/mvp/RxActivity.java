@@ -15,7 +15,6 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.subjects.BehaviorSubject;
 
 public class RxActivity extends AppCompatActivity implements LifecycleProvider<DisposeEvent> {
-
     private final BehaviorSubject<DisposeEvent> lifecycle = BehaviorSubject.create();
 
     @Override

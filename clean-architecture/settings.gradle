@@ -1,5 +1,5 @@
-//include ':demo', ':clean-mvp', ':clean-data', ':clean-domain', ':clean-mvc', ':clean-mvvm'
-include ':demo',':clean-mvp', ':clean-dagger'
+include ':demo', ':clean-mvp', ':clean-data', ':clean-domain'
+//include ':clean-mvp', ':demo'
 //include ':clean-data'
 //include ':clean-domain'
 //include ':clean-mvc'

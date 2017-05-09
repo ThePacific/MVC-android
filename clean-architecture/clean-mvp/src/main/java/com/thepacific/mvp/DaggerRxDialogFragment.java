@@ -10,7 +10,7 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.HasSupportFragmentInjector;
 
-public class DaggerRxFragment extends RxFragment implements HasSupportFragmentInjector {
+public class DaggerRxDialogFragment extends RxDialogFragment implements HasSupportFragmentInjector {
     @Inject
     DispatchingAndroidInjector<Fragment> childFragmentInjector;
 

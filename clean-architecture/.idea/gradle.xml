@@ -8,7 +8,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/clean-dagger" />
+            <option value="$PROJECT_DIR$/clean-data" />
+            <option value="$PROJECT_DIR$/clean-domain" />
             <option value="$PROJECT_DIR$/clean-mvp" />
             <option value="$PROJECT_DIR$/demo" />
           </set>

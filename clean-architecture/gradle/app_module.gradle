@@ -94,7 +94,7 @@ dependencies {
     provided "com.google.auto.value:auto-value:$rootProject.ext.autoValue"
     annotationProcessor "com.google.auto.value:auto-value:$rootProject.ext.autoValue"
 
-    compile "com.google.dagger:dagger-android-support:$rootProject.ext.dagger2"
+    compile "com.google.dagger:dagger:$rootProject.ext.dagger2"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.ext.dagger2"
     annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.ext.dagger2"
 }
