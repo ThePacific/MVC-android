@@ -1,0 +1,36 @@
+apply from: "../config/lib_module.gradle"
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    testImplementation 'junit:junit:4.12'
+
+    implementation dep.appcompat
+    implementation dep.design
+    implementation dep.reactivestreams
+    implementation dep.runtime
+    implementation dep.extensions
+    annotationProcessor dep.lifecycleCompiler
+
+    implementation dep.rxjava2
+    implementation dep.rxandroid2
+    implementation dep.autoDispose
+    implementation dep.autoDisposeAndroid
+
+    compileOnly dep.annotationApi
+    compileOnly dep.autoValue
+    annotationProcessor dep.autoValueCompiler
+
+    implementation dep.dagger
+    implementation dep.daggerAndroid
+    implementation dep.daggerAndroidSupport
+    annotationProcessor dep.daggerCompiler
+    annotationProcessor dep.daggerAndroidProcessor
+
+    implementation project(":common")
+}
