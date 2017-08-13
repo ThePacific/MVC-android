@@ -20,15 +20,12 @@ public final class OkReceiver extends BroadcastReceiver {
 
   @Override
   public void onReceive(Context context, Intent intent) {
-    if (intent != null) {
-      for (Map.Entry<String, Consumer> entry : consumers.entrySet()) {
-        if (entry.getKey().equals(intent.getAction())) {
-          entry.getValue().run(context, intent);
-          break;
-        }
+    Preconditions.checkNotNull(intent);
+    for (Map.Entry<String, Consumer> entry : consumers.entrySet()) {
+      if (entry.getKey().equals(intent.getAction())) {
+        entry.getValue().run(context, intent);
+        break;
       }
-    } else {
-      throw new UnsupportedOperationException();
     }
   }
 

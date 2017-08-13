@@ -2,9 +2,12 @@ package com.thepacific.presentation.core;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
+import android.support.annotation.RestrictTo;
+import android.support.annotation.RestrictTo.Scope;
 import com.uber.autodispose.LifecycleEndedException;
 import io.reactivex.functions.Function;
 
+@RestrictTo(Scope.LIBRARY)
 public final class EventMapper implements Function<Event, Event> {
 
   @Override
