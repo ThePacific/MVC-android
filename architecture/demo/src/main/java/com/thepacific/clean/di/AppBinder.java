@@ -4,7 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.thepacific.clean.App;
-import com.thepacific.clean.BottomSheetDialog;
+import com.thepacific.clean.BottomSheet;
 import com.thepacific.presentation.core.ViewModelFactory;
 import javax.inject.Singleton;
 
@@ -23,5 +23,5 @@ public abstract class AppBinder {
     public abstract Application provideApplication(App __);
 
     @ContributesAndroidInjector
-    public abstract BottomSheetDialog bottomSheet();
+    public abstract BottomSheet bottomSheetDialogFragment();
 }

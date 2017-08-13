@@ -2,6 +2,7 @@ package com.thepacific.clean;
 
 import android.app.Application;
 import android.util.Log;
+import com.thepacific.data.http.Source;
 import com.thepacific.presentation.core.Event;
 import com.thepacific.presentation.core.ViewModel;
 import com.thepacific.presentation.rx.ObservableUtil;
@@ -16,14 +17,16 @@ public class MainViewModel extends ViewModel {
     super(application);
   }
 
-  public ObservableSubscribeProxy<Integer> load() {
-    return Observable.just(0)
+  public ObservableSubscribeProxy<Source<Repo>> load(int userId) {
+    return Observable.just(userId)
         .map(it -> {
-          Thread.sleep(100000);
-          return it;
+          Thread.sleep(3000);
+          return Source.success(Repo.create("Thepacific", 200, it));
         })
-        .compose(ObservableUtil.<Integer>io())
+        .onErrorReturn(e -> Source.failure(e))
+        .compose(ObservableUtil.io())
+        .startWith(Source.inProgress())
         .doOnDispose(() -> Log.e("___________", "onDispose"))
-        .to(ObservableUtil.<Integer>bindUntil(lifecycle(), Event.ACTIVITY_STOP));
+        .to(ObservableUtil.bindUntil(lifecycle, Event.ACTIVITY_STOP));
   }
 }

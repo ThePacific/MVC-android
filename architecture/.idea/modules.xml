@@ -3,9 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/architecture.iml" filepath="$PROJECT_DIR$/architecture.iml" />
-      <module fileurl="file://$PROJECT_DIR$/clean-architecture.iml" filepath="$PROJECT_DIR$/clean-architecture.iml" />
-      <module fileurl="file://$PROJECT_DIR$/data/clean-data.iml" filepath="$PROJECT_DIR$/data/clean-data.iml" />
-      <module fileurl="file://$PROJECT_DIR$/common/clean-domain.iml" filepath="$PROJECT_DIR$/common/clean-domain.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/data/data.iml" filepath="$PROJECT_DIR$/data/data.iml" />
       <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />

@@ -56,12 +56,12 @@ public class SecondActivity extends Activity {
   private void displayBottomSheet() {
     FragmentManager fm = getSupportFragmentManager();
     FragmentTransaction ft = fm.beginTransaction();
-    String tag = BottomSheetDialog.class.getSimpleName();
+    String tag = BottomSheet.class.getSimpleName();
     Fragment prev = fm.findFragmentByTag(tag);
     if (prev != null) {
       ft.remove(prev);
     }
-    BottomSheetDialog newFragment = BottomSheetDialog.newInstance();
+    BottomSheet newFragment = BottomSheet.newInstance();
     newFragment.show(ft, tag);
   }
 }

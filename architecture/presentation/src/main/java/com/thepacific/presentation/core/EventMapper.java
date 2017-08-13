@@ -75,7 +75,7 @@ public final class EventMapper implements Function<Event, Event> {
           throw new UnsupportedOperationException();
       }
     }
-    if (owner instanceof DialogFragment || owner instanceof BottomSheetDialogFragment) {
+    if (owner instanceof AppCompatDialogFragment || owner instanceof BottomSheetDialogFragment) {
       switch (event) {
         case ON_CREATE:
           return Event.DIALOG_CREATE;

@@ -1,18 +1,82 @@
 package com.thepacific.presentation.common;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.PopupWindow;
+import android.widget.Toast;
+import javax.annotation.Nullable;
 
 public class RouterUtil {
 
   private RouterUtil() {
     throw new UnsupportedOperationException();
+  }
+
+  public static void dismiss(@Nullable Object o) {
+    if (o == null) {
+      return;
+    }
+    if (o instanceof Dialog) {
+      Dialog dialog = (Dialog) o;
+      if (dialog.isShowing()) {
+        dialog.dismiss();
+      }
+      return;
+    }
+
+    if (o instanceof Toast) {
+      Toast toast = (Toast) o;
+      toast.cancel();
+      return;
+    }
+
+    if (o instanceof Snackbar) {
+      Snackbar snackbar = (Snackbar) o;
+      if (snackbar.isShownOrQueued()) {
+        snackbar.dismiss();
+      }
+      return;
+    }
+
+    if (o instanceof PopupWindow) {
+      PopupWindow popupWindow = (PopupWindow) o;
+      if (popupWindow.isShowing()) {
+        popupWindow.dismiss();
+      }
+      return;
+    }
+
+    if (o instanceof DialogFragment) {
+      DialogFragment fragment = (DialogFragment) o;
+      try {
+        fragment.dismiss();
+      } catch (Exception e) {
+        fragment.dismissAllowingStateLoss();
+        e.printStackTrace();
+      }
+      return;
+    }
+
+    throw new UnsupportedOperationException();
+  }
+
+  public static void showDialogFragment(FragmentManager fm, DialogFragment fragment) {
+    final String tag = fragment.getClass().getSimpleName();
+    FragmentTransaction ft = fm.beginTransaction();
+    Fragment prev = fm.findFragmentByTag(tag);
+    if (prev != null) {
+      ft.remove(prev);
+    }
+    fragment.show(ft, tag);
   }
 
   public static void addFragment(FragmentActivity activity, Fragment fragment, boolean isAddBack,

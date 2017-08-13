@@ -12,8 +12,8 @@ import io.reactivex.internal.functions.ObjectHelper;
 import javax.annotation.CheckForNull;
 import javax.inject.Inject;
 
-public abstract class DialogFragment extends android.support.v4.app.DialogFragment implements
-    LifecycleRegistryOwner {
+public abstract class AppCompatDialogFragment extends
+    android.support.v7.app.AppCompatDialogFragment implements LifecycleRegistryOwner {
 
   private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
   private ViewModel realViewModel;
