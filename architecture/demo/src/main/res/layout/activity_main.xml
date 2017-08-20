@@ -23,7 +23,7 @@
     android:layout_height="wrap_content"
     android:indeterminate="true"
     android:indeterminateBehavior="cycle"
-    android:visibility="gone"
+    android:visibility="invisible"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintRight_toRightOf="parent"

@@ -5,9 +5,9 @@ import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.quote;
 
-public final class QuickString {
+public final class MapString {
 
-  private QuickString() {
+  private MapString() {
     throw new AssertionError("No instances");
   }
 
