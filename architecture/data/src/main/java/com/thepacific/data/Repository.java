@@ -1,41 +1,37 @@
 package com.thepacific.data;
 
-import com.thepacific.common.Preconditions;
+import android.support.annotation.WorkerThread;
+import android.text.TextUtils;
 import com.thepacific.data.cache.DiskCache;
 import com.thepacific.data.cache.MemoryCache;
-import com.thepacific.data.common.DataLayerUtil;
-import com.thepacific.data.common.ExecutorUtil;
+import com.thepacific.data.common.DataUtil;
 import com.thepacific.data.http.Envelope;
 import com.thepacific.data.http.IoError;
-import com.thepacific.data.http.OnAccessFailure;
 import com.thepacific.data.http.Source;
 import com.thepacific.data.http.Status;
+import com.thepacific.guava.Preconditions;
 import com.google.gson.Gson;
 import io.reactivex.Observable;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 
 /**
  * A repository can get cached data {@link Repository#get(Object)}, or force
- * a call to network(skipping cache) {@link Repository#fetch(Object, boolean)}
+ * a call to network(skipping cache) {@link Repository#fetch(Object, boolean, boolean)}
  */
 public abstract class Repository<T, R> {
 
   protected final Gson gson;
   protected final DiskCache diskCache;
   protected final MemoryCache memoryCache;
-  protected final OnAccessFailure onAccessFailure;
   protected String key;
 
-  public Repository(Gson gson,
-      DiskCache diskCache,
-      MemoryCache memoryCache,
-      OnAccessFailure onAccessFailure) {
+  public Repository(Gson gson, DiskCache diskCache, MemoryCache memoryCache) {
     this.gson = gson;
     this.diskCache = diskCache;
     this.memoryCache = memoryCache;
-    this.onAccessFailure = onAccessFailure;
   }
 
   /**
@@ -44,8 +40,9 @@ public abstract class Repository<T, R> {
    * Sources are memory cache, disk cache, finally network
    */
   @Nonnull
+  @WorkerThread
   public final Observable<Source<R>> get(@Nonnull final T query) {
-    ExecutorUtil.requireWorkThread();
+    DataUtil.requireWorkThread();
     return stream(query)
         .flatMap(it -> {
           if (it.status == Status.SUCCESS) {
@@ -57,51 +54,30 @@ public abstract class Repository<T, R> {
           if (it.status == Status.SUCCESS) {
             return Observable.just(it);
           }
-          return fetch(query, true);
+          return fetch(query, true, true);
         });
   }
 
   /***
    * @param query query parameters
-   * @param persist true for persisting data to disk
+   * @param toDisk true for persisting data to disk cache
+   * @param toMemory true for persisting data to memory cache
    * @return an Observable of R for requested query skipping Memory & Disk Cache
    */
   @Nonnull
-  public final Observable<Source<R>> fetch(@Nonnull final T query, boolean persist) {
-    ExecutorUtil.requireWorkThread();
+  @WorkerThread
+  public final Observable<Source<R>> fetch(@Nonnull final T query, boolean toDisk,
+      boolean toMemory) {
+    DataUtil.requireWorkThread();
     Preconditions.checkNotNull(query);
     key = getKey(query);
-    return dispatchNetwork().flatMap(it -> {
-      if (it.isSuccess()) {
-        R newData = it.data();
-        if (isIrrelevant(newData)) {
-          return Observable.just(Source.irrelevant());
-        }
-        long ttl = DataLayerUtil.elapsedTimeMillis(ttl());
-        long softTtl = DataLayerUtil.elapsedTimeMillis(softTtl());
-        long now = System.currentTimeMillis();
-        Preconditions.checkState(ttl > now && softTtl > now && ttl >= softTtl);
-        if (persist) {
-          byte[] bytes = DataLayerUtil.toJsonByteArray(newData, gson);
-          diskCache.put(key, DiskCache.Entry.create(bytes, ttl, softTtl));
-        } else {
-          clearDiskCache();
-        }
-        memoryCache.put(key, MemoryCache.Entry.create(newData, ttl));
-        return Observable.just(Source.success(newData));
-      }
-
-      IoError ioError = new IoError(it.message(), it.code());
-      if (isAccessFailure(it.code())) {
-        diskCache.evictAll();
-        memoryCache.evictAll();
-        ExecutorUtil.postToMainThread(() -> onAccessFailure.run(ioError));
-        return Observable.empty();
-      }
-      memoryCache.remove(key);
-      clearDiskCache();
-      return Observable.just(Source.failure(ioError));
-    });
+    return dispatchNetwork(query)
+        .flatMap(it -> {
+          if (it.isSuccess()) {
+            return onPersist(it, toDisk, toMemory, true, true);
+          }
+          return onError(it, false, false);
+        });
   }
 
   /***
@@ -109,8 +85,9 @@ public abstract class Repository<T, R> {
    * @return an Observable of R for requested from Disk Cache
    */
   @Nonnull
+  @WorkerThread
   public final Observable<Source<R>> load(@Nonnull final T query) {
-    ExecutorUtil.requireWorkThread();
+    DataUtil.requireWorkThread();
     Preconditions.checkNotNull(query);
     key = getKey(query);
     return Observable.defer(() -> {
@@ -118,7 +95,7 @@ public abstract class Repository<T, R> {
       if (diskEntry == null) {
         return Observable.just(Source.irrelevant());
       }
-      R newData = gson.fromJson(DataLayerUtil.byteArray2String(diskEntry.data), dataType());
+      R newData = gson.fromJson(DataUtil.byteArray2String(diskEntry.data), dataType());
       if (diskEntry.isExpired() || isIrrelevant(newData)) {
         memoryCache.remove(key);
         clearDiskCache();
@@ -148,7 +125,7 @@ public abstract class Repository<T, R> {
   @Nonnull
   public final Observable<Source<R>> stream() {
     return Observable.defer(() -> {
-      MemoryCache.Entry memoryEntry = memoryCache.get(key);
+      MemoryCache.Entry memoryEntry = memoryCache.get(key, true);
       //No need to check isExpired(), MemoryCache.get(key) has already done
       if (memoryEntry == null) {
         return Observable.just(Source.irrelevant());
@@ -166,50 +143,144 @@ public abstract class Repository<T, R> {
    */
   @Nonnull
   public final R memory() {
-    MemoryCache.Entry memoryEntry = memoryCache.get(key);
+    return memory(false);
+  }
+
+  /**
+   * @param excludeExpired true to exclude expired data
+   * @return an R from Memory Cache
+   */
+  @Nonnull
+  public final R memory(boolean excludeExpired) {
+    MemoryCache.Entry memoryEntry = memoryCache.get(key, excludeExpired);
     if (memoryEntry == null) {
       throw new IllegalStateException("Not supported");
     }
     R newData = (R) memoryEntry.data;
-    if (isIrrelevant((R) memoryEntry.data)) {
+    if (isIrrelevant(newData)) {
       throw new IllegalStateException("Not supported");
     }
-    return newData;
+    return (R) memoryEntry.data;
   }
 
   public final void clearMemoryCache() {
+    if (TextUtils.isEmpty(key)) {
+      return;
+    }
     memoryCache.remove(key);
   }
 
+  @WorkerThread
   public final void clearDiskCache() {
-    ExecutorUtil.requireWorkThread();
+    if (TextUtils.isEmpty(key)) {
+      return;
+    }
+    DataUtil.requireWorkThread();
     try {
       diskCache.remove(key);
     } catch (IOException ignored) {
     }
   }
 
+
   /**
-   * @return default network cache time is 10. It must be {@code TimeUnit.MINUTES}
+   * process network error
+   *
+   * @param envelope HTTP/HTTPS result
+   * @param clearDiskCache true to clear disk cache
+   * @param clearMemoryCache true to clear memory cache
+   * @return an Observable of R
+   */
+  protected final Observable<Source<R>> onError(Envelope<R> envelope,
+      boolean clearDiskCache,
+      boolean clearMemoryCache)
+      throws IOException {
+    IoError ioError = new IoError(envelope.message(), envelope.code());
+    if (DataUtil.isAccessFailure(ioError)) {
+      diskCache.evictAll();
+      memoryCache.evictAll();
+    } else {
+      if (clearDiskCache) {
+        clearDiskCache();
+      }
+      if (clearMemoryCache) {
+        clearMemoryCache();
+      }
+    }
+    return Observable.just(Source.failure(ioError));
+  }
+
+  /**
+   * persist data
+   *
+   * @param envelope HTTP/HTTPS result
+   * @param toDisk true to persist data to disk cache
+   * @param toMemory true for persisting data to memory cache
+   * @param clearDiskCacheIfIrrelevant true to clear disk cache when result is irrelevant
+   * @param clearMemoryCacheIfIrrelevant true to clear memory cache when result is irrelevant
+   * @return an Observable of R
+   */
+  protected final Observable<Source<R>> onPersist(Envelope<R> envelope,
+      boolean toDisk,
+      boolean toMemory,
+      boolean clearDiskCacheIfIrrelevant,
+      boolean clearMemoryCacheIfIrrelevant) {
+    R newData = envelope.data();
+    if (isIrrelevant(newData)) {
+      if (clearDiskCacheIfIrrelevant) {
+        clearDiskCache();
+      }
+      if (clearMemoryCacheIfIrrelevant) {
+        clearMemoryCache();
+      }
+      return Observable.just(Source.irrelevant());
+    }
+    long now = System.currentTimeMillis();
+    long ttl = now + timeUnit().toMillis(ttl());
+    long softTtl = now + timeUnit().toMillis(softTtl());
+    Preconditions.checkState(ttl > now && softTtl > now && ttl >= softTtl);
+    if (toDisk) {
+      byte[] bytes = DataUtil.toJsonByteArray(newData, gson);
+      diskCache.put(key, DiskCache.Entry.create(bytes, ttl, softTtl));
+    } else {
+      clearDiskCache();
+    }
+    if (toMemory) {
+      memoryCache.put(key, MemoryCache.Entry.create(newData, ttl));
+    } else {
+      clearMemoryCache();
+    }
+    return Observable.just(Source.success(newData));
+  }
+
+  /**
+   * @return default network cache time is 10 MINUTES
    */
   protected int ttl() {
     return 10;
   }
 
   /**
-   * @return default refresh cache time is 5. It must be {@code TimeUnit.MINUTES}
+   * @return default refresh cache time
    */
   protected final int softTtl() {
-    return 5;
+    return ttl();
   }
 
   /**
-   * @param code HTTP/HTTPS error code
-   * @return some server does't support standard authorize rules
+   * Default TimeUnit is {@code TimeUnit.MINUTES}
    */
-  protected boolean isAccessFailure(final int code) {
-    return code == 403 || code == 405;
+  protected TimeUnit timeUnit() {
+    return TimeUnit.MINUTES;
   }
+
+  /**
+   * @return cache key
+   */
+  protected String getKey(T query) {
+    return DataUtil.md5(String.valueOf(dataType()));
+  }
+
 
   /**
    * @return to make sure never returning empty or null data
@@ -219,12 +290,7 @@ public abstract class Repository<T, R> {
   /**
    * @return request HTTP/HTTPS API
    */
-  protected abstract Observable<Envelope<R>> dispatchNetwork();
-
-  /**
-   * @return cache key
-   */
-  protected abstract String getKey(T query);
+  protected abstract Observable<? extends Envelope<R>> dispatchNetwork(final T query);
 
   /**
    * @return gson deserialize Class type for R {@code Type typeOfT = R.class} for List<R> {@code

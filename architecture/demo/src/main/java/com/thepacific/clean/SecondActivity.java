@@ -1,11 +1,11 @@
 package com.thepacific.clean;
 
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import com.thepacific.presentation.core.Activity;
 import com.thepacific.presentation.core.ViewModel;
 import com.thepacific.presentation.rx.Rx2Timer;
@@ -29,18 +29,21 @@ public class SecondActivity extends Activity {
     model = fetchViewModel();
     button = findViewById(R.id.btn_timer);
     timer = Rx2Timer.builder()
-        .onCount(it -> button.setText(String.valueOf(it)))
+        .onEmit(it -> button.setText(String.valueOf(it)))
         .onError(e -> button.setText("0"))
         .onComplete(() -> button.setText("0"))
         .build();
     button.setOnClickListener(it -> timer.start());
-  }
 
-  @Override
-  protected void addBroadcastAction(IntentFilter filter) {
-    super.addBroadcastAction(filter);
-    filter.addAction(CLOSE);
-    okReceiver.addConsumer(CLOSE, (context, intent) -> finish());
+    ProgressBar determinate = findViewById(R.id.determinate);
+    determinate.setProgress(20);
+
+    ProgressBar buffer = findViewById(R.id.buffer);
+    buffer.setProgress(20);
+    buffer.setSecondaryProgress(50);
+
+    ProgressBar progressBar = findViewById(R.id.progressBar);
+    progressBar.setIndeterminate(false);
   }
 
   @Override

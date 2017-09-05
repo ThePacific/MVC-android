@@ -16,7 +16,7 @@ public abstract class ViewModel extends AndroidViewModel implements LifecycleSco
 
   private Event event = Event.ANY;
   private final EventMapper eventMapper = new EventMapper();
-  protected final PublishSubject<Event> lifecycle = PublishSubject.create();
+  private final PublishSubject<Event> lifecycle = PublishSubject.create();
 
   public ViewModel(Application application) {
     super(application);

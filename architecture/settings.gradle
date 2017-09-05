@@ -1,1 +1,1 @@
-include ':demo', ':presentation', ':data', ':common'
+include ':demo', ':presentation', ':data', ':guava', ':common'

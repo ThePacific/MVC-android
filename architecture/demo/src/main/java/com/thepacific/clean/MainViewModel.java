@@ -27,6 +27,6 @@ public class MainViewModel extends ViewModel {
         .compose(ObservableUtil.io())
         .startWith(Source.inProgress())
         .doOnDispose(() -> Log.e("___________", "onDispose"))
-        .to(ObservableUtil.bindUntil(lifecycle, Event.ACTIVITY_STOP));
+        .to(ObservableUtil.bindUntil(lifecycle(), Event.ACTIVITY_STOP));
   }
 }

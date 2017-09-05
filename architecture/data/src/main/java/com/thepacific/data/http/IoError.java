@@ -8,8 +8,8 @@ public final class IoError extends RuntimeException {
 
   public final int code;
 
-  public IoError(int code) {
-    this.code = code;
+  public IoError() {
+    this.code = 0;
   }
 
   public IoError(String message, int code) {
@@ -32,5 +32,16 @@ public final class IoError extends RuntimeException {
       boolean writableStackTrace, int code) {
     super(message, cause, enableSuppression, writableStackTrace);
     this.code = code;
+  }
+
+  public static boolean isIoError(Throwable e) {
+    return e instanceof IoError;
+  }
+
+  public static IoError from(Throwable e) {
+    if (e instanceof IoError) {
+      return (IoError) e;
+    }
+    return new IoError(e.getMessage(), e.getCause(), 0);
   }
 }

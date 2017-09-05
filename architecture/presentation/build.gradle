@@ -1,14 +1,7 @@
 apply from: "../config/lib_module.gradle"
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
-    testImplementation 'junit:junit:4.12'
 
     implementation dep.appcompat
     implementation dep.design
@@ -32,5 +25,7 @@ dependencies {
     annotationProcessor dep.daggerCompiler
     annotationProcessor dep.daggerAndroidProcessor
 
-    implementation project(":common")
+    implementation dep.processPhoenix
+
+    implementation project(':guava')
 }

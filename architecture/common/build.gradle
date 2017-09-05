@@ -1,7 +1,18 @@
-apply plugin: 'java'
+apply plugin: 'maven'
+apply from: "../config/lib_module.gradle"
+apply from: "../config/doc_release.gradle"
+//apply from: '../config/check_style.gradle'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile dep.errorProneAnnotation
-    compile dep.findBugsJrs305
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation dep.rxjava2
+    implementation dep.rxandroid2
+    implementation dep.appcompat
+    implementation dep.palette
+    implementation dep.design
+    implementation dep.cardview
+    implementation dep.recyclerview
+    implementation dep.constraint
+
+    implementation project(':guava')
 }

@@ -1,6 +1,7 @@
 package com.thepacific.data.cache;
 
 import android.support.v4.util.LruCache;
+import com.google.gson.annotations.SerializedName;
 import io.reactivex.Completable;
 import io.reactivex.schedulers.Schedulers;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import javax.inject.Singleton;
 
 @Singleton
 @ThreadSafe
-public class MemoryCache {
+public final class MemoryCache {
 
   private final LruCache<String, Entry> cache;
   private final List<String> keys = new ArrayList<>();
@@ -28,26 +29,33 @@ public class MemoryCache {
     this.cache = new LruCache<>(maxSize);
   }
 
-  private void lookupExpired() {
-    Completable.fromAction(() -> {
-      for (String key : keys) {
-        Entry value = cache.get(key);
-        if (value != null && value.isExpired()) {
-          remove(key);
-        }
-      }
-    }).subscribeOn(Schedulers.single()).subscribe();
+  private void clearExpired() {
+    Completable.fromAction(
+        () -> {
+          String key;
+          for (int i = 0; i < keys.size(); i++) {
+            key = keys.get(i);
+            Entry value = cache.get(key);
+            if (value != null && value.isExpired()) {
+              remove(key);
+            }
+          }
+        })
+        .subscribeOn(Schedulers.single())
+        .subscribe();
   }
 
   @CheckForNull
-  public synchronized Entry get(String key) {
+  public synchronized Entry get(String key, boolean excludeExpired) {
     Entry value = cache.get(key);
-    if (value != null && value.isExpired()) {
-      remove(key);
-      lookupExpired();
-      return null;
+    if (excludeExpired) {
+      if (value != null && value.isExpired()) {
+        remove(key);
+        clearExpired();
+        return null;
+      }
+      clearExpired();
     }
-    lookupExpired();
     return value;
   }
 
@@ -56,7 +64,7 @@ public class MemoryCache {
       keys.add(key);
     }
     Entry oldValue = cache.put(key, value);
-    lookupExpired();
+    clearExpired();
     return oldValue;
   }
 
@@ -108,7 +116,10 @@ public class MemoryCache {
   @Immutable
   public static final class Entry {
 
+    @SerializedName("data")
     public final Object data;
+
+    @SerializedName("ttl")
     public final long ttl;
 
     private Entry(Object data, long ttl) {

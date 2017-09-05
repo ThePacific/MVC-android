@@ -65,14 +65,26 @@ android {
 
     configurations.all {
         resolutionStrategy.force dep.findBugsJrs305
+        resolutionStrategy.force dep.appcompat
+        resolutionStrategy.force dep.annotationApi
+        resolutionStrategy.force dep.multidex
     }
 }
 
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation dep.inject
-    implementation dep.findBugsJrs305
-    implementation dep.errorProneAnnotation
+    compileOnly dep.inject
+    compileOnly dep.findBugsJrs305
+    compileOnly dep.errorProneAnnotation
     compileOnly dep.annotationApi
+
+    testImplementation "junit:junit:$junit"
+    testImplementation dep.mockito
+
+    androidTestImplementation(dep.espresso, {
+        exclude group: 'com.android.support', module: '*'
+    })
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

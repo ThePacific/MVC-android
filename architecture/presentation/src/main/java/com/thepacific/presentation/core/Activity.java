@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import dagger.android.support.DaggerAppCompatActivity;
 import io.reactivex.internal.functions.ObjectHelper;
 import javax.annotation.CheckForNull;
@@ -15,20 +16,18 @@ import javax.inject.Inject;
 public abstract class Activity extends DaggerAppCompatActivity implements LifecycleRegistryOwner {
 
   private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
-  private ViewModel realViewModel;
-
   @Inject
   protected OkReceiver okReceiver;
-
   @Inject
   protected ViewModelFactory modelFactory;
+  private ViewModel realViewModel;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     IntentFilter filter = new IntentFilter();
     addBroadcastAction(filter);
-    registerReceiver(okReceiver, filter);
+    LocalBroadcastManager.getInstance(this).registerReceiver(okReceiver, filter);
     realViewModel = ViewModelProviders.of(this, modelFactory).get(modelClass());
     lifecycleRegistry.addObserver(realViewModel);
   }
@@ -38,7 +37,7 @@ public abstract class Activity extends DaggerAppCompatActivity implements Lifecy
     super.onDestroy();
     lifecycleRegistry.removeObserver(realViewModel);
     okReceiver.clearConsumer();
-    unregisterReceiver(okReceiver);
+    LocalBroadcastManager.getInstance(this).unregisterReceiver(okReceiver);
   }
 
   @Override
@@ -49,8 +48,7 @@ public abstract class Activity extends DaggerAppCompatActivity implements Lifecy
   @CallSuper
   protected void addBroadcastAction(IntentFilter filter) {
     if (applyFinishAction()) {
-      filter.addAction(OkAction.FINISH_ACTION);
-      okReceiver.addConsumer(OkAction.FINISH_ACTION, ((i, ii) -> finish()));
+      okReceiver.addConsumer(filter, OkReceiver.FINISH_ACTION, ((i, ii) -> finish()));
     }
   }
 

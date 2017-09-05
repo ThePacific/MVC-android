@@ -2,6 +2,7 @@ package com.thepacific.presentation.common;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -11,9 +12,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.Toast;
-import javax.annotation.Nullable;
+import com.thepacific.presentation.core.OkReceiver;
+import com.jakewharton.processphoenix.ProcessPhoenix;
 
 public class RouterUtil {
 
@@ -21,52 +24,63 @@ public class RouterUtil {
     throw new UnsupportedOperationException();
   }
 
-  public static void dismiss(@Nullable Object o) {
-    if (o == null) {
+  public static void dismiss(Object... targets) {
+    if (targets == null || targets.length == 0) {
       return;
     }
-    if (o instanceof Dialog) {
-      Dialog dialog = (Dialog) o;
-      if (dialog.isShowing()) {
-        dialog.dismiss();
+    for (int i = 0; i < targets.length; i++) {
+      Object target = targets[i];
+      if (target == null) {
+        continue;
       }
-      return;
-    }
-
-    if (o instanceof Toast) {
-      Toast toast = (Toast) o;
-      toast.cancel();
-      return;
-    }
-
-    if (o instanceof Snackbar) {
-      Snackbar snackbar = (Snackbar) o;
-      if (snackbar.isShownOrQueued()) {
-        snackbar.dismiss();
+      if (target instanceof Dialog) {
+        Dialog dialog = (Dialog) target;
+        if (dialog.isShowing()) {
+          dialog.dismiss();
+        }
+        continue;
       }
-      return;
-    }
-
-    if (o instanceof PopupWindow) {
-      PopupWindow popupWindow = (PopupWindow) o;
-      if (popupWindow.isShowing()) {
-        popupWindow.dismiss();
+      if (target instanceof Toast) {
+        Toast toast = (Toast) target;
+        toast.cancel();
+        return;
       }
-      return;
-    }
-
-    if (o instanceof DialogFragment) {
-      DialogFragment fragment = (DialogFragment) o;
-      try {
-        fragment.dismiss();
-      } catch (Exception e) {
-        fragment.dismissAllowingStateLoss();
-        e.printStackTrace();
+      if (target instanceof Snackbar) {
+        Snackbar snackbar = (Snackbar) target;
+        if (snackbar.isShownOrQueued()) {
+          snackbar.dismiss();
+        }
+        continue;
       }
-      return;
+      if (target instanceof PopupWindow) {
+        PopupWindow popupWindow = (PopupWindow) target;
+        if (popupWindow.isShowing()) {
+          popupWindow.dismiss();
+        }
+        return;
+      }
+      if (target instanceof PopupMenu) {
+        PopupMenu popupMenu = (PopupMenu) target;
+        popupMenu.dismiss();
+        continue;
+      }
+      if (target instanceof android.widget.PopupMenu) {
+        android.widget.PopupMenu popupMenu = (android.widget.PopupMenu) target;
+        popupMenu.dismiss();
+        continue;
+      }
+      if (target instanceof DialogFragment) {
+        DialogFragment fragment = (DialogFragment) target;
+        try {
+          fragment.dismiss();
+        } catch (Exception e) {
+          fragment.dismissAllowingStateLoss();
+          e.printStackTrace();
+        }
+        continue;
+      }
+      throw new UnsupportedOperationException();
     }
-
-    throw new UnsupportedOperationException();
   }
 
   public static void showDialogFragment(FragmentManager fm, DialogFragment fragment) {
@@ -152,12 +166,7 @@ public class RouterUtil {
   }
 
   public static void jumpTo(Activity from, Class<?> to, Bundle extras) {
-    Intent intent = new Intent();
-    intent.setClass(from, to);
-    if (extras != null) {
-      intent.putExtras(extras);
-    }
-    from.startActivity(intent);
+    start(from, to, extras);
     from.finish();
   }
 
@@ -191,19 +200,6 @@ public class RouterUtil {
     startForResult(from, to, null, requestCode);
   }
 
-  public static void start2(Fragment from, Class<?> to, Bundle extras) {
-    Intent intent = new Intent();
-    intent.setClass(from.getActivity(), to);
-    if (extras != null) {
-      intent.putExtras(extras);
-    }
-    from.startActivity(intent);
-  }
-
-  public static void start2(Fragment from, Class<?> to) {
-    start2(from, to, null);
-  }
-
   public static void startForResult2(Fragment from, Class<?> to, Bundle extras, int requestCode) {
     Intent intent = new Intent();
     intent.setClass(from.getActivity(), to);
@@ -215,5 +211,13 @@ public class RouterUtil {
 
   public static void startForResult2(Fragment from, Class<?> to, int requestCode) {
     startForResult2(from, to, null, requestCode);
+  }
+
+  public static void exit(Context context, boolean restart) {
+    OkReceiver.sendFinishBroadcast(context);
+    System.exit(0);
+    if (restart) {
+      ProcessPhoenix.triggerRebirth(context);
+    }
   }
 }

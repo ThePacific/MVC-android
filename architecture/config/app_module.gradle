@@ -10,10 +10,7 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-
-    dataBinding {
-        enabled = true
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -69,6 +66,9 @@ android {
 
     configurations.all {
         resolutionStrategy.force dep.findBugsJrs305
+        resolutionStrategy.force dep.appcompat
+        resolutionStrategy.force dep.annotationApi
+        resolutionStrategy.force dep.multidex
     }
 }
 
@@ -89,7 +89,7 @@ dependencies {
     implementation dep.okhttp3
     implementation dep.loggingInterceptor
     implementation dep.okio
-    implementation dep.retrofit
+    implementation dep.retrofit2
     implementation dep.adapterRxjava2
     implementation dep.converterGson
     implementation dep.gson
@@ -97,6 +97,7 @@ dependencies {
     implementation dep.rxandroid2
     implementation dep.autoDispose
     implementation dep.autoDisposeAndroid
+    implementation dep.timber
 
 
     implementation dep.inject
@@ -109,6 +110,30 @@ dependencies {
     implementation dep.dagger
     implementation dep.daggerAndroid
     implementation dep.daggerAndroidSupport
+
     annotationProcessor dep.daggerCompiler
     annotationProcessor dep.daggerAndroidProcessor
+
+    testImplementation "junit:junit:$junit"
+    testImplementation dep.mockito
+
+    androidTestImplementation(dep.espresso, {
+        exclude group: 'com.android.support', module: '*'
+    })
+
+    implementation dep.multidex
+    androidTestImplementation dep.multidex
+    androidTestImplementation dep.multidexInstrumentation
+
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary"
+    testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary"
+
+//    implementation dep.theGuava
+//    implementation dep.thePresentation
+//    implementation dep.theData
+//    implementation dep.theCommon
+    implementation dep.theAdapter
+    implementation dep.glide
+    annotationProcessor dep.glideProcessor
 }

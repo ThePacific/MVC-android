@@ -18,7 +18,7 @@ public class RepositoryTest {
 
   @Test
   public void testFetch() {
-    userRepo.fetch(userQuery, true)
+    userRepo.fetch(userQuery, true, true)
         .onErrorReturn(e -> Source.failure(e))
         .startWith(Source.inProgress())
         .subscribe(it -> {

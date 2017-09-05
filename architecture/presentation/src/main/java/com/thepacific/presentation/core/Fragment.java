@@ -27,23 +27,25 @@ public abstract class Fragment extends DaggerFragment implements LifecycleRegist
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    switch (modelProvider()) {
-      case ACTIVITY:
-        realViewModel = ViewModelProviders.of(getActivity(), modelFactory)
-            .get(modelClass());
-        break;
-      case PARENT_FRAGMENT:
-        realViewModel = ViewModelProviders.of(getParentFragment(), modelFactory)
-            .get(modelClass());
-        break;
-      case NONE:
-        realViewModel = ViewModelProviders.of(this, modelFactory)
-            .get(modelClass());
-        break;
-      default:
-        throw new UnsupportedOperationException();
+    if (isAttachViewModel()) {
+      switch (modelProvider()) {
+        case ACTIVITY:
+          realViewModel = ViewModelProviders.of(getActivity(), modelFactory)
+              .get(modelClass());
+          break;
+        case PARENT_FRAGMENT:
+          realViewModel = ViewModelProviders.of(getParentFragment(), modelFactory)
+              .get(modelClass());
+          break;
+        case NONE:
+          realViewModel = ViewModelProviders.of(this, modelFactory)
+              .get(modelClass());
+          break;
+        default:
+          throw new UnsupportedOperationException();
+      }
+      lifecycleRegistry.addObserver(realViewModel);
     }
-    lifecycleRegistry.addObserver(realViewModel);
   }
 
   @Override
@@ -67,6 +69,10 @@ public abstract class Fragment extends DaggerFragment implements LifecycleRegist
   @CheckForNull
   protected final <T extends ViewModel> T fetchViewModel() {
     return (T) ObjectHelper.requireNonNull(realViewModel, "is null");
+  }
+
+  protected boolean isAttachViewModel() {
+    return true;
   }
 
   protected abstract Class<? extends ViewModel> modelClass();

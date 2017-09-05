@@ -1,5 +1,8 @@
 package com.thepacific.data.http;
 
+import javax.annotation.concurrent.Immutable;
+
+@Immutable
 public final class Source<T> {
 
   public final Status status;

@@ -1,7 +1,9 @@
+
 package com.thepacific.data.cache;
 
-import com.thepacific.data.common.DataLayerUtil;
+import com.thepacific.data.common.DataUtil;
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import java.io.Closeable;
 import java.io.File;
 import java.io.Flushable;
@@ -62,7 +64,7 @@ public final class DiskCache implements Closeable, Flushable {
       String json = source.readUtf8();
       source.close();
       Util.closeQuietly(snapshot);
-      return DataLayerUtil.fromJson(json, null, Entry.class);
+      return DataUtil.fromJson(json, null, Entry.class);
 
     } catch (IOException e) {
       Util.closeQuietly(snapshot);
@@ -76,7 +78,7 @@ public final class DiskCache implements Closeable, Flushable {
       editor = cache.edit(key);
       if (editor != null) {
         BufferedSink sink = Okio.buffer(editor.newSink(ENTRY_METADATA));
-        sink.writeUtf8(entry.toString());//Entry.toString() is json String
+        sink.writeUtf8(entry.toString());//Entry.toString() is a json String
         sink.close();
         editor.commit();
       }
@@ -146,19 +148,23 @@ public final class DiskCache implements Closeable, Flushable {
 
     /**
      * The data returned from cache.
-     * Use {@link com.thepacific.data.common.DataLayerUtil#toJsonByteArray(Object, Gson)}
+     * Use {@link DataUtil#toJsonByteArray(Object, Gson)}
      * to serialize a data object
      */
+    @SerializedName("data")
     public final byte[] data;
 
     /**
      * Time to live(TTL) for this record
      */
+    @SerializedName("ttl")
     public final long ttl;
 
     /**
      * Soft TTL for this record
      */
+
+    @SerializedName("softTtl")
     public final long softTtl;
 
     /**

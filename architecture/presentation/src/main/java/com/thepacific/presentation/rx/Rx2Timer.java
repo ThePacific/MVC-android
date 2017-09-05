@@ -16,7 +16,7 @@ public final class Rx2Timer {
   private long initialDelay;
   private TimeUnit unit;
   private Action onComplete;
-  private Consumer<Long> onCount;
+  private Consumer<Long> onEmit;
   private Consumer<Throwable> onError;
   private long pauseTake = 0l;
   private long resumeTake = 0l;
@@ -29,7 +29,7 @@ public final class Rx2Timer {
     initialDelay = builder.initialDelay;
     unit = builder.unit;
     onComplete = builder.onComplete;
-    onCount = builder.onCount;
+    onEmit = builder.onEmit;
     onError = builder.onError;
   }
 
@@ -66,8 +66,8 @@ public final class Rx2Timer {
           .doOnSubscribe((i) -> isStarted = true)
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(aLong -> {
-            if (onCount != null) {
-              onCount.accept(aLong);
+            if (onEmit != null) {
+              onEmit.accept(aLong);
             }
           }, e -> {
             if (onError != null) {
@@ -125,8 +125,8 @@ public final class Rx2Timer {
           })
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(aLong -> {
-            if (onCount != null) {
-              onCount.accept(aLong);
+            if (onEmit != null) {
+              onEmit.accept(aLong);
             }
           }, e -> {
             cleanPauseState();
@@ -163,7 +163,7 @@ public final class Rx2Timer {
     private long initialDelay = 0;
     private TimeUnit unit = TimeUnit.SECONDS;
     private Action onComplete;
-    private Consumer<Long> onCount;
+    private Consumer<Long> onEmit;
     private Consumer<Throwable> onError;
 
     Builder() {
@@ -214,8 +214,8 @@ public final class Rx2Timer {
       return this;
     }
 
-    public Builder onCount(Consumer<Long> onCount) {
-      this.onCount = onCount;
+    public Builder onEmit(Consumer<Long> onEmit) {
+      this.onEmit = onEmit;
       return this;
     }
 

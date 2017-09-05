@@ -1,11 +1,10 @@
 package com.thepacific.data;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.thepacific.data.cache.DiskCache;
 import com.thepacific.data.cache.MemoryCache;
 import com.thepacific.data.http.Envelope;
-import com.thepacific.data.http.OnAccessFailure;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import io.reactivex.Observable;
 import java.io.File;
 import java.lang.reflect.Type;
@@ -13,22 +12,15 @@ import java.util.List;
 
 public class UserRepo extends Repository<UserQuery, List<User>> {
 
-  private UserRepo(Gson gson,
-      DiskCache diskCache,
-      MemoryCache memoryCache,
-      OnAccessFailure onAccessFailure) {
-    super(gson, diskCache, memoryCache, onAccessFailure);
+  private UserRepo(Gson gson, DiskCache diskCache, MemoryCache memoryCache) {
+    super(gson, diskCache, memoryCache);
   }
 
   public static UserRepo create() {
     File cacheDir = new File("http");
     return new UserRepo(new Gson(),
         new DiskCache(cacheDir),
-        new MemoryCache(),
-        e -> {
-          throw new AssertionError(e);
-        }
-    );
+        new MemoryCache());
   }
 
   @Override
@@ -37,7 +29,7 @@ public class UserRepo extends Repository<UserQuery, List<User>> {
   }
 
   @Override
-  protected Observable<Envelope<List<User>>> dispatchNetwork() {
+  protected Observable<Envelope<List<User>>> dispatchNetwork(UserQuery query) {
     return Observable.just(EnvelopeImpl.create());
   }
 

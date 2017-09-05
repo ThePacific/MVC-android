@@ -5,13 +5,14 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="/opt/gradle/gradle-4.1-rc-2" />
+        <option name="gradleHome" value="/opt/gradle/gradle-4.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/demo" />
+            <option value="$PROJECT_DIR$/guava" />
             <option value="$PROJECT_DIR$/presentation" />
           </set>
         </option>

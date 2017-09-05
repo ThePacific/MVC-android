@@ -1,17 +1,17 @@
 package com.thepacific.data;
 
+import static org.junit.Assert.assertEquals;
+
 import com.thepacific.data.cache.DiskCache;
 import com.thepacific.data.cache.MemoryCache;
 import com.thepacific.data.http.Source;
-import org.junit.Test;
-
+import com.thepacific.guava.Joiner;
 import java.io.File;
 import java.io.IOException;
-
+import java.util.concurrent.TimeUnit;
 import okhttp3.internal.io.FileSystem;
 import okio.ByteString;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -63,20 +63,21 @@ public class ExampleUnitTest {
   @Test
   public void testMemoryCache() {
     MemoryCache memoryCache = new MemoryCache();
-    memoryCache.put("1", MemoryCache.Entry.create(Source.success("google"), 3000));
-    memoryCache.put("2", MemoryCache.Entry.create(Source.success("square"), 5000));
-    memoryCache.put("3", MemoryCache.Entry.create(Source.success("facebook"), 10000));
+    long now = System.currentTimeMillis();
+    memoryCache.put("1", MemoryCache.Entry.create(Source.success("google"), 3000 + now));
+    memoryCache.put("2", MemoryCache.Entry.create(Source.success("square"), 5000 + now));
+    memoryCache.put("3", MemoryCache.Entry.create(Source.success("facebook"), 10000 + now));
 
     assertEquals(3, memoryCache.size());
 
-    MemoryCache.Entry entry = memoryCache.get("4");
+    MemoryCache.Entry entry = memoryCache.get("4", true);
     assertEquals(null, entry);
     assertEquals(1, memoryCache.missCount());
 
-    entry = memoryCache.get("1");
+    entry = memoryCache.get("1", true);
     assertEquals(1, memoryCache.hitCount());
-    Source<String> source = (Source) entry.data;
-    assertEquals("google", source.data);
+    Source<String> o = (Source<String>) entry.data;
+    assertEquals("google", o.data);
 
     try {
       Thread.sleep(5000);
@@ -84,20 +85,32 @@ public class ExampleUnitTest {
       throw new UnsupportedOperationException();
     }
 
-    entry = memoryCache.get("2");
+    entry = memoryCache.get("2", true);
     assertEquals(entry, null);
     assertEquals(2, memoryCache.size());
 
-    entry = memoryCache.get("1");
+    entry = memoryCache.get("1", true);
     assertEquals(entry, null);
     assertEquals(1, memoryCache.size());
 
     entry = memoryCache.put("3", MemoryCache.Entry.create(Source.success("new facebook"),
-        10000));
+        10000 + now));
 
     assertEquals("facebook", ((Source) entry.data).data);
-    entry = memoryCache.get("3");
+    entry = memoryCache.get("3", true);
 
     assertEquals("new facebook", ((Source) entry.data).data);
+  }
+
+  @Test
+  public void testJoiner() {
+    Joiner joiner = Joiner.on("");
+    assertEquals("ab", joiner.join("a", "b"));
+  }
+
+  @Test
+  public void testTimeUnit() {
+    final int ttl = 5;
+    assertEquals(60 * 1000 * ttl, TimeUnit.MINUTES.toMillis(ttl));
   }
 }
