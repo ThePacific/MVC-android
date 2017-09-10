@@ -1,9 +1,7 @@
 allprojects {
     repositories {
-        maven { url "http://10.66.72.51:8081/nexus/content/repositories/GoogleMaven/" }
-        maven { url "http://10.66.72.51:8081/nexus/content/repositories/JCenter/" }
-        maven { url "http://10.66.72.51:8081/nexus/content/repositories/MavenCentral/" }
-        maven { url "http://10.66.72.51:8081/nexus/content/repositories/releases/" }
+        google()
+        jcenter()
     }
 }
 

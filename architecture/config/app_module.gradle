@@ -99,7 +99,6 @@ dependencies {
     implementation dep.autoDisposeAndroid
     implementation dep.timber
 
-
     implementation dep.inject
     implementation dep.findBugsJrs305
     implementation dep.errorProneAnnotation
@@ -116,7 +115,6 @@ dependencies {
 
     testImplementation "junit:junit:$junit"
     testImplementation dep.mockito
-
     androidTestImplementation(dep.espresso, {
         exclude group: 'com.android.support', module: '*'
     })

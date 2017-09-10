@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 public final class OkReceiver extends BroadcastReceiver {
 
-  static final String FINISH_ACTION = "com.boo.presentation.finish";
+  static final String FINISH_ACTION = "com.thepacific.presentation.finish";
   private final ArrayMap<String, Consumer> consumers = new ArrayMap<>();
 
   @Inject
@@ -56,6 +56,11 @@ public final class OkReceiver extends BroadcastReceiver {
 
   public void clearConsumer() {
     consumers.clear();
+  }
+
+  public void removeConsumer(@Nonnull String action) {
+    Preconditions.checkState(!TextUtils.isEmpty(action));
+    consumers.remove(action);
   }
 
   public interface Consumer {

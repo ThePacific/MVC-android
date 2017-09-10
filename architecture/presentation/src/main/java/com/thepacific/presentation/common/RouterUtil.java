@@ -79,6 +79,18 @@ public class RouterUtil {
         }
         continue;
       }
+
+      if (target instanceof android.app.DialogFragment) {
+        android.app.DialogFragment fragment = (android.app.DialogFragment) target;
+        try {
+          fragment.dismiss();
+        } catch (Exception e) {
+          fragment.dismissAllowingStateLoss();
+          e.printStackTrace();
+        }
+        continue;
+      }
+
       throw new UnsupportedOperationException();
     }
   }
