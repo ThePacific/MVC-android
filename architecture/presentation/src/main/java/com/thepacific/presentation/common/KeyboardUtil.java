@@ -41,7 +41,7 @@ public class KeyboardUtil {
   }
 
   public static void hideKeyboard(Activity activity) {
-    //We can also call findViewById(android.R.id.content)
+    //we can also call findViewById(android.R.id.content)
     View target = activity.getWindow().getDecorView();
     hideKeyboard(activity, target);
   }

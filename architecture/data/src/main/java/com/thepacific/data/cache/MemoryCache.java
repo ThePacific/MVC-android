@@ -46,9 +46,9 @@ public final class MemoryCache {
   }
 
   @CheckForNull
-  public synchronized Entry get(String key, boolean excludeExpired) {
+  public synchronized Entry get(String key, boolean rejectExpired) {
     Entry value = cache.get(key);
-    if (excludeExpired) {
+    if (rejectExpired) {
       if (value != null && value.isExpired()) {
         remove(key);
         clearExpired();

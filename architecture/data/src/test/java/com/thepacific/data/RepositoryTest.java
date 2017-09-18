@@ -41,7 +41,10 @@ public class RepositoryTest {
           }
         });
 
-    assertEquals(2, userRepo.memory().size());
+    try {
+      assertEquals(2, userRepo.memory().size());
+    } catch (IllegalStateException e) {
+    }
   }
 
   @Test

@@ -115,7 +115,7 @@ public abstract class Repository<T, R> {
   public final Observable<Source<R>> stream(@Nonnull final T query) {
     Preconditions.checkNotNull(query);
     key = getKey(query);
-    return stream();
+    return stream(true);
   }
 
   /***
@@ -124,8 +124,18 @@ public abstract class Repository<T, R> {
    */
   @Nonnull
   public final Observable<Source<R>> stream() {
+    return stream(false);
+  }
+
+  /***
+   * @param rejectExpired true to exclude expired data
+   * @return an Observable of R for requested from Memory Cache without refreshing query
+   * It differs with {@link Repository#stream(Object)}
+   */
+  @Nonnull
+  public final Observable<Source<R>> stream(boolean rejectExpired) {
     return Observable.defer(() -> {
-      MemoryCache.Entry memoryEntry = memoryCache.get(key, true);
+      MemoryCache.Entry memoryEntry = memoryCache.get(key, rejectExpired);
       //No need to check isExpired(), MemoryCache.get(key) has already done
       if (memoryEntry == null) {
         return Observable.just(Source.irrelevant());
@@ -139,20 +149,20 @@ public abstract class Repository<T, R> {
   }
 
   /***
-   * @return an R from Memory Cache
+   * @return an R from Memory Cache. when null, it will throw IllegalStateException
    */
   @Nonnull
-  public final R memory() {
+  public final R memory() throws IllegalStateException {
     return memory(false);
   }
 
   /**
-   * @param excludeExpired true to exclude expired data
-   * @return an R from Memory Cache
+   * @param rejectExpired true to exclude expired data
+   * @return an R from Memory Cache. When null, it will throw IllegalStateException
    */
   @Nonnull
-  public final R memory(boolean excludeExpired) {
-    MemoryCache.Entry memoryEntry = memoryCache.get(key, excludeExpired);
+  public final R memory(boolean rejectExpired) throws IllegalStateException {
+    MemoryCache.Entry memoryEntry = memoryCache.get(key, rejectExpired);
     if (memoryEntry == null) {
       throw new IllegalStateException("Not supported");
     }
@@ -172,10 +182,10 @@ public abstract class Repository<T, R> {
 
   @WorkerThread
   public final void clearDiskCache() {
+    DataUtil.requireWorkThread();
     if (TextUtils.isEmpty(key)) {
       return;
     }
-    DataUtil.requireWorkThread();
     try {
       diskCache.remove(key);
     } catch (IOException ignored) {
