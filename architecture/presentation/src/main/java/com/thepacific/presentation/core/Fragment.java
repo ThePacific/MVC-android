@@ -1,7 +1,5 @@
 package com.thepacific.presentation.core;
 
-import android.arch.lifecycle.LifecycleRegistry;
-import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,18 +9,12 @@ import io.reactivex.internal.functions.ObjectHelper;
 import javax.annotation.CheckForNull;
 import javax.inject.Inject;
 
-public abstract class Fragment extends DaggerFragment implements LifecycleRegistryOwner {
+public abstract class Fragment extends DaggerFragment {
 
-  private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
   private ViewModel realViewModel;
 
   @Inject
   protected ViewModelFactory modelFactory;
-
-  @Override
-  public LifecycleRegistry getLifecycle() {
-    return lifecycleRegistry;
-  }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +36,7 @@ public abstract class Fragment extends DaggerFragment implements LifecycleRegist
         default:
           throw new UnsupportedOperationException();
       }
-      lifecycleRegistry.addObserver(realViewModel);
+      getLifecycle().addObserver(realViewModel);
     }
   }
 
@@ -59,7 +51,9 @@ public abstract class Fragment extends DaggerFragment implements LifecycleRegist
   @Override
   public void onDestroy() {
     super.onDestroy();
-    lifecycleRegistry.removeObserver(realViewModel);
+    if (isAttachViewModel()) {
+      getLifecycle().removeObserver(realViewModel);
+    }
   }
 
   protected ViewModel.Provider modelProvider() {

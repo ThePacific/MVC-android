@@ -1,7 +1,5 @@
 package com.thepacific.presentation.core;
 
-import android.arch.lifecycle.LifecycleRegistry;
-import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
@@ -13,9 +11,8 @@ import javax.annotation.CheckForNull;
 import javax.inject.Inject;
 
 public abstract class BottomSheetDialogFragment extends
-    android.support.design.widget.BottomSheetDialogFragment implements LifecycleRegistryOwner {
+    android.support.design.widget.BottomSheetDialogFragment {
 
-  private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
   private ViewModel realViewModel;
 
   @Inject
@@ -25,11 +22,6 @@ public abstract class BottomSheetDialogFragment extends
   public void onAttach(Context context) {
     AndroidSupportInjection.inject(this);
     super.onAttach(context);
-  }
-
-  @Override
-  public LifecycleRegistry getLifecycle() {
-    return lifecycleRegistry;
   }
 
   @Override
@@ -52,7 +44,7 @@ public abstract class BottomSheetDialogFragment extends
         default:
           throw new UnsupportedOperationException();
       }
-      lifecycleRegistry.addObserver(realViewModel);
+      getLifecycle().addObserver(realViewModel);
     }
   }
 
@@ -68,7 +60,7 @@ public abstract class BottomSheetDialogFragment extends
   public void onDestroy() {
     super.onDestroy();
     if (isAttachViewModel()) {
-      lifecycleRegistry.removeObserver(realViewModel);
+      getLifecycle().removeObserver(realViewModel);
     }
   }
 

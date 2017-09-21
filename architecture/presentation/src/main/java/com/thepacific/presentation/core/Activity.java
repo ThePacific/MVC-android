@@ -1,7 +1,5 @@
 package com.thepacific.presentation.core;
 
-import android.arch.lifecycle.LifecycleRegistry;
-import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -13,9 +11,8 @@ import io.reactivex.internal.functions.ObjectHelper;
 import javax.annotation.CheckForNull;
 import javax.inject.Inject;
 
-public abstract class Activity extends DaggerAppCompatActivity implements LifecycleRegistryOwner {
+public abstract class Activity extends DaggerAppCompatActivity {
 
-  private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
   @Inject
   protected OkReceiver okReceiver;
   @Inject
@@ -29,20 +26,15 @@ public abstract class Activity extends DaggerAppCompatActivity implements Lifecy
     addBroadcastAction(filter);
     LocalBroadcastManager.getInstance(this).registerReceiver(okReceiver, filter);
     realViewModel = ViewModelProviders.of(this, modelFactory).get(modelClass());
-    lifecycleRegistry.addObserver(realViewModel);
+    getLifecycle().addObserver(realViewModel);
   }
 
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    lifecycleRegistry.removeObserver(realViewModel);
+    getLifecycle().removeObserver(realViewModel);
     okReceiver.clearConsumer();
     LocalBroadcastManager.getInstance(this).unregisterReceiver(okReceiver);
-  }
-
-  @Override
-  public LifecycleRegistry getLifecycle() {
-    return lifecycleRegistry;
   }
 
   @CallSuper

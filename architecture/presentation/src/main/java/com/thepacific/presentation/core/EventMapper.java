@@ -115,6 +115,7 @@ public final class EventMapper implements Function<Event, Event> {
           throw new UnsupportedOperationException();
       }
     }
-    throw new UnsupportedOperationException("Owner must be com.boo.presentation.component.*");
+    throw new UnsupportedOperationException(
+        "Owner must be com.thepacific.presentation.component.*");
   }
 }

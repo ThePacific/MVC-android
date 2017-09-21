@@ -7,7 +7,6 @@ allprojects {
 
 ext {
     groupId = "com.github.thepacific"
-
     compile = 26
     buildTools = "26.0.1"
     min = "14"
@@ -16,9 +15,9 @@ ext {
     versionName = "0.0.1"
     junit = "4.12"
     espresso = "3.0.1"
-    support = "26.0.2"
+    support = "26.1.0"
     constraint = "1.1.0-beta1"
-    lifecycle = "1.0.0-alpha9"
+    lifecycle = "1.0.0-alpha9-1"
 
     findBugsJrs305 = "3.0.1"
     okhttp3 = "3.8.1"

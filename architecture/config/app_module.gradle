@@ -127,11 +127,11 @@ dependencies {
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary"
     testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary"
 
+    implementation dep.glide
+    annotationProcessor dep.glideProcessor
+    implementation dep.theAdapter
 //    implementation dep.theGuava
 //    implementation dep.thePresentation
 //    implementation dep.theData
 //    implementation dep.theCommon
-    implementation dep.theAdapter
-    implementation dep.glide
-    annotationProcessor dep.glideProcessor
 }
