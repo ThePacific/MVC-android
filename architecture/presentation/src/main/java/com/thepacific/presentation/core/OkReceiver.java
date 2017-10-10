@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
-import com.thepacific.guava.Preconditions;
 import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

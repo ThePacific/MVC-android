@@ -8,7 +8,7 @@ allprojects {
 ext {
     groupId = "com.github.thepacific"
     compile = 26
-    buildTools = "26.0.1"
+    buildTools = "26.0.2"
     min = "14"
     target = "26"
     versionCode = 1

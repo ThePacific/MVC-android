@@ -9,7 +9,6 @@ import com.thepacific.data.http.Envelope;
 import com.thepacific.data.http.IoError;
 import com.thepacific.data.http.Source;
 import com.thepacific.data.http.Status;
-import com.thepacific.guava.Preconditions;
 import com.google.gson.Gson;
 import io.reactivex.Observable;
 import java.io.IOException;

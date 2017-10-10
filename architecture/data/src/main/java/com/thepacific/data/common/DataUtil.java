@@ -3,14 +3,11 @@ package com.thepacific.data.common;
 import android.os.Looper;
 import com.thepacific.data.http.IoError;
 import com.thepacific.guava.MapString;
-import com.thepacific.guava.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.reactivex.android.MainThreadDisposable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import okio.ByteString;
@@ -96,26 +93,7 @@ public class DataUtil {
     AndroidSchedulers.mainThread().scheduleDirect(runnable);
   }
 
-  public static boolean isEmpty(Collection collection) {
-    if (collection == null || collection.isEmpty()) {
-      return true;
-    }
-    return false;
-  }
 
-  public static boolean isEmpty(Map map) {
-    if (map == null || map.isEmpty()) {
-      return true;
-    }
-    return false;
-  }
-
-  public static boolean isEmptyArray(Object array) {
-    if (array == null || Array.getLength(array) == 0) {
-      return true;
-    }
-    return false;
-  }
 
   public static boolean andPattern(String source, int minLength, int maxLength) {
     Preconditions.checkNotNull(source);

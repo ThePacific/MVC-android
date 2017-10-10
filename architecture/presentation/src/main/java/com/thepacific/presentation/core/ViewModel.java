@@ -6,6 +6,8 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
+import android.support.v4.util.Preconditions;
+import android.text.TextUtils;
 import com.uber.autodispose.LifecycleScopeProvider;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
@@ -15,6 +17,7 @@ public abstract class ViewModel extends AndroidViewModel implements LifecycleSco
     LifecycleObserver {
 
   private Event event = Event.ANY;
+
   private final EventMapper eventMapper = new EventMapper();
   private final PublishSubject<Event> lifecycle = PublishSubject.create();
 

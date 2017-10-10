@@ -27,7 +27,7 @@ public class RepositoryTest {
               System.out.println("Show Loading Dialog===============");
               break;
             case IRRELEVANT:
-              System.out.println("Empty Data===============");
+              System.out.println("EmptyUtil Data===============");
               break;
             case ERROR:
               System.out.println("Error Occur===============");
@@ -58,7 +58,7 @@ public class RepositoryTest {
               System.out.println("Show Loading Dialog===============");
               break;
             case IRRELEVANT:
-              System.out.println("Empty Data===============");
+              System.out.println("EmptyUtil Data===============");
               break;
             case ERROR:
               System.out.println("Error Occur===============");

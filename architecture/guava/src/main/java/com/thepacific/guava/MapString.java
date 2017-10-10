@@ -8,7 +8,6 @@ import static java.util.regex.Pattern.quote;
 public final class MapString {
 
   private MapString() {
-    throw new AssertionError("No instances");
   }
 
   public static Builder format(String string) {
@@ -39,20 +38,11 @@ public final class MapString {
       pattern = Pattern.compile(quote(prefix) + ".*?" + quote(suffix));
     }
 
-    /**
-     * If you set the strict mode to false, the builder won't throw any exception
-     * if a key is not found or if a key is still present in the final string.
-     */
     public Builder strictMode(boolean active) {
       this.strictMode = active;
       return this;
     }
 
-    /**
-     * @param key The key, without the '{}'.
-     * @param value The value to put for that key.
-     * @return The builder for DSL.
-     */
     public Builder with(String key, Object value) {
       if (value == null) {
         value = "";
@@ -65,9 +55,6 @@ public final class MapString {
       return this;
     }
 
-    /**
-     * Create the final string.
-     */
     public String build() {
       final Matcher matcher = pattern.matcher(baseString);
       if (strictMode && matcher.find()) {

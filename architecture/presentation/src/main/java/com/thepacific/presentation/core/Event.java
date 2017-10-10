@@ -21,6 +21,5 @@ public enum Event {
   DIALOG_PAUSE,
   DIALOG_STOP,
   DIALOG_DESTROY,
-
   ANY
 }
