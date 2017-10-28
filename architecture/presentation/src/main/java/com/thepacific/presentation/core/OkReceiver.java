@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 public final class OkReceiver extends BroadcastReceiver {
 
-  static final String FINISH_ACTION = "com.boo.presentation.finish";
+  static final String FINISH_ACTION = "com.pacific.presentation.finish";
   private final ArrayMap<String, Consumer> consumers = new ArrayMap<>();
 
   @Inject
