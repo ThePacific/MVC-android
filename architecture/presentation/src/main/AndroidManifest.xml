@@ -1,1 +1,2 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.thepacific.presentation" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.pacific.presentation"/>

@@ -2,7 +2,7 @@ package com.thepacific.data;
 
 import static org.junit.Assert.assertEquals;
 
-import com.thepacific.data.http.Source;
+import com.pacific.data.http.Source;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;

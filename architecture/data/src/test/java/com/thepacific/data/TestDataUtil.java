@@ -2,8 +2,8 @@ package com.thepacific.data;
 
 import static org.junit.Assert.assertEquals;
 
-import com.thepacific.data.cache.MemoryCache;
-import com.thepacific.data.common.DataUtil;
+import com.pacific.data.cache.MemoryCache;
+import com.pacific.data.common.DataUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

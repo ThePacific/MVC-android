@@ -13,6 +13,8 @@ dependencies {
     implementation dep.cardview
     implementation dep.recyclerview
     implementation dep.constraint
+    implementation dep.autoDispose
+    implementation dep.autoDisposeAndroid
 
     implementation project(':guava')
 }

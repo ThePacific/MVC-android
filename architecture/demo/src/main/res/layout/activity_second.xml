@@ -4,7 +4,7 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="com.thepacific.clean.SecondActivity">
+  tools:context="com.thepacific.arch_demo.com.pacific.arch_demo.SecondActivity">
 
   <Button
     android:id="@+id/btn_timer"

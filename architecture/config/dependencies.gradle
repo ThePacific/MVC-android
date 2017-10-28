@@ -7,17 +7,17 @@ allprojects {
 
 ext {
     groupId = "com.github.thepacific"
-    compile = 26
-    buildTools = "26.0.2"
+    compile = 27
+    buildTools = "27.0.0"
     min = "14"
-    target = "26"
+    target = "27"
     versionCode = 1
-    versionName = "0.0.2"
+    versionName = "0.0.1"
 
     testRunner = "1.0.1"
     junit = "4.12"
     espresso = "3.0.0"
-    support = "26.1.0"
+    support = "27.0.0"
     mockito = "2.10.0"
 
     constraint = "1.1.0-beta3"
@@ -28,7 +28,7 @@ ext {
     okio = "1.13.0"
     retrofit2 = "2.3.0"
     gson = "2.8.2"
-    rxjava2 = "2.1.5"
+    rxjava2 = "2.1.6"
     rxandroid2 = "2.0.1"
 
     inject = "1"

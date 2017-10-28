@@ -2,9 +2,10 @@ package com.thepacific.data;
 
 import static org.junit.Assert.assertEquals;
 
-import com.thepacific.data.cache.DiskCache;
-import com.thepacific.data.cache.MemoryCache;
-import com.thepacific.data.http.Source;
+import com.pacific.data.cache.DiskCache;
+import com.pacific.data.cache.MemoryCache;
+import com.pacific.data.http.Source;
+import com.pacific.guava.Joiner;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;

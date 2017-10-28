@@ -1,8 +1,9 @@
 package com.thepacific.data;
 
-import com.thepacific.data.cache.DiskCache;
-import com.thepacific.data.cache.MemoryCache;
-import com.thepacific.data.http.Envelope;
+import com.pacific.data.Repository;
+import com.pacific.data.cache.DiskCache;
+import com.pacific.data.cache.MemoryCache;
+import com.pacific.data.http.Envelope;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.reactivex.Observable;

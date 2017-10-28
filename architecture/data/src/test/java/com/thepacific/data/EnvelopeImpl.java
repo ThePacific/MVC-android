@@ -1,6 +1,6 @@
 package com.thepacific.data;
 
-import com.thepacific.data.http.Envelope;
+import com.pacific.data.http.Envelope;
 
 import java.util.ArrayList;
 import java.util.List;
