@@ -17,7 +17,7 @@ public final class Strings {
   }
 
   public static boolean isNullOrEmpty(@Nullable String string) {
-    return EmptyUtil.isEmpty(string);
+    return Preconditions.isEmpty(string);
   }
 
   public static String padStart(String string, int minLength, char padChar) {

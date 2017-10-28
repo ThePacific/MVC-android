@@ -1,8 +1,8 @@
-package com.thepacific.presentation.common;
+package com.thepacific.common;
 
 import android.content.Context;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
+import android.content.res.Resources;
+import android.support.annotation.DimenRes;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,50 +12,45 @@ public class SizeUtil {
     throw new UnsupportedOperationException();
   }
 
-  public static int dp2px(Context context, float dpValue) {
+  public static float xmlDP(Context context, @DimenRes int id) {
+    Resources resources = context.getResources();
+    return resources.getDimension(id) / resources.getDisplayMetrics().density;
+  }
+
+  public static float dp2px(Context context, float dpValue) {
     final float scale = context.getResources().getDisplayMetrics().density;
-    return (int) (dpValue * scale + 0.5f);
+    return dpValue * scale;
   }
 
   public static float px2dp(Context context, float pxValue) {
     final float scale = context.getResources().getDisplayMetrics().density;
-    return pxValue / scale + 0.5f;
+    return pxValue / scale;
   }
 
-  public static int sp2px(Context context, float spValue) {
+  public static float sp2px(Context context, float spValue) {
     final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-    return (int) (spValue * fontScale + 0.5f);
+    return spValue * fontScale;
   }
 
   public static float px2sp(Context context, float pxValue) {
     final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-    return pxValue / fontScale + 0.5f;
+    return pxValue / fontScale;
   }
 
-  public static float applyDimension(int unit, float value, DisplayMetrics metrics) {
-    switch (unit) {
-      case TypedValue.COMPLEX_UNIT_PX:
-        return value;
-      case TypedValue.COMPLEX_UNIT_DIP:
-        return value * metrics.density;
-      case TypedValue.COMPLEX_UNIT_SP:
-        return value * metrics.scaledDensity;
-      case TypedValue.COMPLEX_UNIT_PT:
-        return value * metrics.xdpi * (1.0f / 72);
-      case TypedValue.COMPLEX_UNIT_IN:
-        return value * metrics.xdpi;
-      case TypedValue.COMPLEX_UNIT_MM:
-        return value * metrics.xdpi * (1.0f / 25.4f);
-    }
-    return 0;
+  public static int dp2px_(Context context, float dpValue) {
+    return (int) (dp2px(context, dpValue) + 0.5f);
   }
 
-  public static void forceGetViewSize(final View view, final onGetSizeListener listener) {
-    view.post(() -> {
-      if (listener != null) {
-        listener.onGetSize(view);
-      }
-    });
+  public static int px2dp_(Context context, float pxValue) {
+    return (int) (px2dp(context, pxValue) + 0.5f);
+  }
+
+  public static int sp2px_(Context context, float spValue) {
+    return (int) (sp2px(context, spValue) + 0.5f);
+  }
+
+  public static int px2sp_(Context context, float pxValue) {
+    return (int) (px2sp(context, pxValue) + 0.5f);
   }
 
   public static int[] measureView(View view) {
@@ -84,10 +79,5 @@ public class SizeUtil {
 
   public static int getMeasuredHeight(View view) {
     return measureView(view)[1];
-  }
-
-  public interface onGetSizeListener {
-
-    void onGetSize(View view);
   }
 }

@@ -1,9 +1,8 @@
-
 package com.thepacific.data.cache;
 
-import com.thepacific.data.common.DataUtil;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import com.thepacific.data.common.DataUtil;
 import java.io.Closeable;
 import java.io.File;
 import java.io.Flushable;
@@ -26,6 +25,7 @@ import okio.Okio;
  */
 @Singleton
 @ThreadSafe
+@Immutable
 public final class DiskCache implements Closeable, Flushable {
 
   /**
@@ -163,7 +163,6 @@ public final class DiskCache implements Closeable, Flushable {
     /**
      * Soft TTL for this record
      */
-
     @SerializedName("softTtl")
     public final long softTtl;
 

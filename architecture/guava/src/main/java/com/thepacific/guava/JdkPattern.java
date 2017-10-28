@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-final class JdkPattern implements Serializable {
+public final class JdkPattern implements Serializable {
 
   private final Pattern pattern;
 
@@ -82,4 +82,30 @@ final class JdkPattern implements Serializable {
   }
 
   private static final long serialVersionUID = 0;
+
+  public static boolean and(String source, int min, int max) {
+    Preconditions.checkNotNull(source);
+    Preconditions.checkState(min > 0 && max > 0 && max > min);
+    String regex = MapString
+        .format("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{<min>,<max>}",
+            "<",
+            ">")
+        .with("min", String.valueOf(min))
+        .with("max", String.valueOf(max))
+        .build();
+    return source.matches(regex);
+  }
+
+  public static boolean or(String source, int min, int max) {
+    Preconditions.checkNotNull(source);
+    Preconditions.checkState(min > 0 && max > 0 && max > min);
+    String regex = MapString
+        .format("[0-9A-Za-z]{<min>,<max>}",
+            "<",
+            ">")
+        .with("min", String.valueOf(min))
+        .with("max", String.valueOf(max))
+        .build();
+    return source.matches(regex);
+  }
 }

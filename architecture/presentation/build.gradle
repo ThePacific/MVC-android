@@ -5,15 +5,9 @@ dependencies {
 
     implementation dep.appcompat
     implementation dep.design
-    implementation dep.reactivestreams
-    implementation dep.runtime
-    implementation dep.extensions
-    annotationProcessor dep.lifecycleCompiler
 
     implementation dep.rxjava2
     implementation dep.rxandroid2
-    implementation dep.autoDispose
-    implementation dep.autoDisposeAndroid
 
     compileOnly dep.annotationApi
     compileOnly dep.autoValue
@@ -26,6 +20,5 @@ dependencies {
     annotationProcessor dep.daggerAndroidProcessor
 
     implementation dep.processPhoenix
-
     implementation project(':guava')
 }

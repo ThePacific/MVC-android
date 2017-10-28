@@ -15,6 +15,7 @@ import javax.inject.Singleton;
 
 @Singleton
 @ThreadSafe
+@Immutable
 public final class MemoryCache {
 
   private final LruCache<String, Entry> cache;
@@ -29,7 +30,7 @@ public final class MemoryCache {
     this.cache = new LruCache<>(maxSize);
   }
 
-  private void clearExpired() {
+  private void evictExpired() {
     Completable.fromAction(
         () -> {
           String key;
@@ -46,15 +47,15 @@ public final class MemoryCache {
   }
 
   @CheckForNull
-  public synchronized Entry get(String key, boolean rejectExpired) {
+  public synchronized Entry get(String key, boolean evictExpired) {
     Entry value = cache.get(key);
-    if (rejectExpired) {
+    if (evictExpired) {
       if (value != null && value.isExpired()) {
         remove(key);
-        clearExpired();
+        evictExpired();
         return null;
       }
-      clearExpired();
+      evictExpired();
     }
     return value;
   }
@@ -64,7 +65,7 @@ public final class MemoryCache {
       keys.add(key);
     }
     Entry oldValue = cache.put(key, value);
-    clearExpired();
+    evictExpired();
     return oldValue;
   }
 

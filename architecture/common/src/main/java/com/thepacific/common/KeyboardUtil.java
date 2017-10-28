@@ -1,4 +1,4 @@
-package com.thepacific.presentation.common;
+package com.thepacific.common;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -41,7 +41,7 @@ public class KeyboardUtil {
   }
 
   public static void hideKeyboard(Activity activity) {
-    //we can also call findViewById(android.R.id.content)
+    //We can also call findViewById(android.R.id.content)
     View target = activity.getWindow().getDecorView();
     hideKeyboard(activity, target);
   }

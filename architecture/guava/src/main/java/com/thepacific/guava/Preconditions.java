@@ -1,32 +1,12 @@
 package com.thepacific.guava;
 
-/*
- * Copyright (C) 2017 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * Simple static methods to be called at the start of your own methods to verify
- * correct arguments and state.
- *
- * @hide
- */
 public class Preconditions {
 
   public static void checkArgument(boolean expression) {
@@ -59,7 +39,7 @@ public class Preconditions {
    */
   public static @Nonnull
   <T extends CharSequence> T checkStringNotEmpty(final T string) {
-    if (EmptyUtil.isEmpty(string)) {
+    if (isEmpty(string)) {
       throw new IllegalArgumentException();
     }
     return string;
@@ -78,7 +58,7 @@ public class Preconditions {
   public static @Nonnull
   <T extends CharSequence> T checkStringNotEmpty(final T string,
       final Object errorMessage) {
-    if (EmptyUtil.isEmpty(string)) {
+    if (isEmpty(string)) {
       throw new IllegalArgumentException(String.valueOf(errorMessage));
     }
     return string;
@@ -464,5 +444,34 @@ public class Preconditions {
       throw new IndexOutOfBoundsException("bad position");
     }
     return index;
+  }
+
+  public static boolean isEmpty(Collection collection) {
+    if (collection == null || collection.isEmpty()) {
+      return true;
+    }
+    return false;
+  }
+
+  public static boolean isEmpty(Map map) {
+    if (map == null || map.isEmpty()) {
+      return true;
+    }
+    return false;
+  }
+
+  public static boolean isEmpty(Object object) {
+    if (object == null) {
+      return true;
+    }
+    try {
+      return Array.getLength(object) == 0;
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  public static boolean isEmpty(CharSequence string) {
+    return string == null || string.length() == 0;
   }
 }

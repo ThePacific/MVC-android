@@ -1,6 +1,5 @@
 package com.thepacific.common.rx;
 
-
 import android.view.View;
 import android.view.View.OnClickListener;
 import io.reactivex.Observable;

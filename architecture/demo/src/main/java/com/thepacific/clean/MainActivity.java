@@ -1,10 +1,13 @@
 package com.thepacific.clean;
 
+import android.arch.lifecycle.ViewModel;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ProgressBar;
 import com.thepacific.presentation.common.RouterUtil;
 import com.thepacific.presentation.core.Activity;
-import com.thepacific.presentation.core.ViewModel;
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import javax.inject.Inject;
 
 public class MainActivity extends Activity {
@@ -22,26 +25,28 @@ public class MainActivity extends Activity {
     setContentView(R.layout.activity_main);
     model = fetchViewModel();
     progressBar = findViewById(R.id.progressbar);
-    findViewById(R.id.button).setOnClickListener(v->RouterUtil.start(this,SecondActivity.class));
-//    findViewById(R.id.button).setOnClickListener(i -> model.load(0).subscribe(it -> {
-//      switch (it.status) {
-//        case IN_PROGRESS:
-//          progressBar.setVisibility(View.VISIBLE);
-//          break;
-//        case IRRELEVANT:
-//          progressBar.setVisibility(View.GONE);
-//          break;
-//        case ERROR:
-//          progressBar.setVisibility(View.GONE);
-//          break;
-//        case SUCCESS:
-//          progressBar.setVisibility(View.GONE);
-//          RouterUtil.showDialogFragment(getSupportFragmentManager(), BottomSheet.newInstance());
-//          break;
-//        default:
-//          throw new UnsupportedOperationException();
-//      }
-//    }));
+    findViewById(R.id.button).setOnClickListener(v -> RouterUtil.start(this, SecondActivity.class));
+    findViewById(R.id.button).setOnClickListener(i -> model.load(0)
+        .to(AutoDispose.with(AndroidLifecycleScopeProvider.from(this)).forObservable())
+        .subscribe(it -> {
+          switch (it.status) {
+            case IN_PROGRESS:
+              progressBar.setVisibility(View.VISIBLE);
+              break;
+            case IRRELEVANT:
+              progressBar.setVisibility(View.GONE);
+              break;
+            case ERROR:
+              progressBar.setVisibility(View.GONE);
+              break;
+            case SUCCESS:
+              progressBar.setVisibility(View.GONE);
+              RouterUtil.showDialogFragment(getSupportFragmentManager(), BottomSheet.newInstance());
+              break;
+            default:
+              throw new UnsupportedOperationException();
+          }
+        }));
   }
 
   @Override

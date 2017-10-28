@@ -1,5 +1,6 @@
 package com.thepacific.presentation.core;
 
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,7 +37,6 @@ public abstract class Fragment extends DaggerFragment {
         default:
           throw new UnsupportedOperationException();
       }
-      getLifecycle().addObserver(realViewModel);
     }
   }
 
@@ -48,21 +48,13 @@ public abstract class Fragment extends DaggerFragment {
     }
   }
 
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-    if (isAttachViewModel()) {
-      getLifecycle().removeObserver(realViewModel);
-    }
-  }
-
-  protected ViewModel.Provider modelProvider() {
-    return ViewModel.Provider.ACTIVITY;
+  protected ViewModelSource modelProvider() {
+    return ViewModelSource.ACTIVITY;
   }
 
   @CheckForNull
   protected final <T extends ViewModel> T fetchViewModel() {
-    return (T) ObjectHelper.requireNonNull(realViewModel, "is null");
+    return (T) ObjectHelper.requireNonNull(realViewModel, "realViewModel = null");
   }
 
   protected boolean isAttachViewModel() {

@@ -14,14 +14,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import javax.annotation.concurrent.Immutable;
 import okhttp3.internal.Util;
 import okhttp3.internal.io.FileSystem;
 import okio.BufferedSink;
 import okio.BufferedSource;
 import okio.Okio;
 
-@Immutable
 public class SystemIo {
 
   private SystemIo() {
@@ -52,17 +50,19 @@ public class SystemIo {
       Util.closeQuietly(source);
       Util.closeQuietly(sink);
     } catch (IOException e) {
-      Log.e("SystemIo.readAsset()", e.toString());
+      Log.e("readAsset()", e.toString());
     }
   }
 
   @WorkerThread
   public static void toGallery(Context context, Bitmap bmp, File directory, String img) {
     DataUtil.requireWorkThread();
+    final String tag = "SystemIo.toGallery()";
+    final String ext = ".jpg";
     if (!FileSystem.SYSTEM.exists(directory) || !directory.isDirectory()) {
       directory.mkdir();
     }
-    final String ext = ".jpg";
+
     if (TextUtils.isEmpty(img)) {
       img = System.currentTimeMillis() + ext;
     }
@@ -80,17 +80,19 @@ public class SystemIo {
       fos.flush();
       Util.closeQuietly(fos);
     } catch (FileNotFoundException e) {
-      Log.e("SystemIo.toGallery()", e.toString());
+      Log.e(tag, e.toString());
     } catch (IOException e) {
-      Log.e("SystemIo.toGallery()", e.toString());
+      Log.e(tag, e.toString());
     }
     try {
-      MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(),
-          img, null);
+      MediaStore
+          .Images
+          .Media
+          .insertImage(context.getContentResolver(), file.getAbsolutePath(), img, null);
+      context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
     } catch (FileNotFoundException e) {
-      Log.e("SystemIo.toGallery()", e.toString());
+      Log.e(tag, e.toString());
     }
-    context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
   }
 }
 

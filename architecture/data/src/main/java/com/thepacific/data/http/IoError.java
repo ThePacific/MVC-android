@@ -8,8 +8,8 @@ public final class IoError extends RuntimeException {
 
   public final int code;
 
-  public IoError() {
-    this.code = 0;
+  public IoError(int code) {
+    this.code = code;
   }
 
   public IoError(String message, int code) {
@@ -28,20 +28,22 @@ public final class IoError extends RuntimeException {
   }
 
   @TargetApi(24)
-  public IoError(String message, Throwable cause, boolean enableSuppression,
-      boolean writableStackTrace, int code) {
+  public IoError(String message, Throwable cause,
+      boolean enableSuppression,
+      boolean writableStackTrace,
+      int code) {
     super(message, cause, enableSuppression, writableStackTrace);
     this.code = code;
   }
 
-  public static boolean isIoError(Throwable e) {
-    return e instanceof IoError;
+  public static boolean isIoError(Throwable throwable) {
+    return throwable instanceof IoError;
   }
 
-  public static IoError from(Throwable e) {
-    if (e instanceof IoError) {
-      return (IoError) e;
+  public static IoError from(Throwable throwable) {
+    if (isIoError(throwable)) {
+      return (IoError) throwable;
     }
-    return new IoError(e.getMessage(), e.getCause(), 0);
+    return new IoError(throwable.getMessage(), throwable.getCause(), -1);
   }
 }

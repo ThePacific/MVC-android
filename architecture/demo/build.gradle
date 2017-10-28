@@ -9,15 +9,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation 'junit:junit:4.12'
-
-    implementation  project(':presentation')
+    implementation project(':presentation')
     implementation project(":data")
-
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:1.5.1"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:1.5.1"
-    testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:1.5.1"
+    implementation project(":common")
 }

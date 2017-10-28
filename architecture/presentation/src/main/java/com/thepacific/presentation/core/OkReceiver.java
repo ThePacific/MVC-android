@@ -7,13 +7,14 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
+import com.thepacific.guava.Preconditions;
 import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 public final class OkReceiver extends BroadcastReceiver {
 
-  static final String FINISH_ACTION = "com.thepacific.presentation.finish";
+  static final String FINISH_ACTION = "com.boo.presentation.finish";
   private final ArrayMap<String, Consumer> consumers = new ArrayMap<>();
 
   @Inject
@@ -44,12 +45,12 @@ public final class OkReceiver extends BroadcastReceiver {
     }
   }
 
-  public void addConsumer(@Nonnull IntentFilter filter, @Nonnull String action,
+  public void addConsumer(@Nonnull IntentFilter intentFilter, @Nonnull String action,
       @Nonnull Consumer consumer) {
-    Preconditions.checkNotNull(filter);
+    Preconditions.checkNotNull(intentFilter);
     Preconditions.checkState(!TextUtils.isEmpty(action));
     Preconditions.checkNotNull(consumer);
-    filter.addAction(action);
+    intentFilter.addAction(action);
     consumers.put(action, consumer);
   }
 

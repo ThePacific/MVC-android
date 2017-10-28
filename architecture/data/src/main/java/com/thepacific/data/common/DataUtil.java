@@ -1,10 +1,10 @@
 package com.thepacific.data.common;
 
 import android.os.Looper;
-import com.thepacific.data.http.IoError;
-import com.thepacific.guava.MapString;
+import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.thepacific.data.http.IoError;
 import io.reactivex.android.MainThreadDisposable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import java.lang.reflect.Type;
@@ -93,36 +93,10 @@ public class DataUtil {
     AndroidSchedulers.mainThread().scheduleDirect(runnable);
   }
 
-
-
-  public static boolean andPattern(String source, int minLength, int maxLength) {
-    Preconditions.checkNotNull(source);
-    Preconditions.checkState(minLength > 0 && maxLength > 0 && maxLength > minLength);
-    String regex = MapString
-        .format("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{<minLength>,<maxLength>}",
-            "<",
-            ">")
-        .with("minLength", String.valueOf(minLength))
-        .with("maxLength", String.valueOf(maxLength))
-        .build();
-    return source.matches(regex);
-  }
-
-  public static boolean orPattern(String source, int minLength, int maxLength) {
-    Preconditions.checkNotNull(source);
-    Preconditions.checkState(minLength > 0 && maxLength > 0 && maxLength > minLength);
-    String regex = MapString
-        .format("[0-9A-Za-z]{<minLength>,<maxLength>}",
-            "<",
-            ">")
-        .with("minLength", String.valueOf(minLength))
-        .with("maxLength", String.valueOf(maxLength))
-        .build();
-    return source.matches(regex);
-  }
-
   public static String md5(String source) {
-    Preconditions.checkNotNull(source);
+    if (TextUtils.isEmpty(source)) {
+      return source;
+    }
     return ByteString.encodeUtf8(source).md5().hex();
   }
 }

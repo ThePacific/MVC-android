@@ -2,6 +2,7 @@ package com.thepacific.common.rx;
 
 import android.text.Editable;
 import android.widget.TextView;
+import com.thepacific.guava.Preconditions;
 import javax.annotation.Nullable;
 
 public class TextViewAfterTextChangeEvent {

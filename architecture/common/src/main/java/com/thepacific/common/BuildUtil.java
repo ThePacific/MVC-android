@@ -1,10 +1,10 @@
-package com.thepacific.presentation.common;
+package com.thepacific.common;
 
 import android.os.Build;
 
-public class PlatformUtil {
+public class BuildUtil {
 
-  private PlatformUtil() {
+  private BuildUtil() {
     throw new UnsupportedOperationException();
   }
 

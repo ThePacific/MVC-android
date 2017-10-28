@@ -9,6 +9,7 @@ import com.thepacific.data.http.Envelope;
 import com.thepacific.data.http.IoError;
 import com.thepacific.data.http.Source;
 import com.thepacific.data.http.Status;
+import com.thepacific.guava.Preconditions;
 import com.google.gson.Gson;
 import io.reactivex.Observable;
 import java.io.IOException;
@@ -36,13 +37,13 @@ public abstract class Repository<T, R> {
   /**
    * Return an Observable of {@link Source <R>} for request query
    * Data will be returned from oldest non expired source
-   * Sources are memory cache, disk cache, finally network
+   * Source is from memory cache, disk cache and network
    */
   @Nonnull
   @WorkerThread
   public final Observable<Source<R>> get(@Nonnull final T query) {
     DataUtil.requireWorkThread();
-    return stream(query)
+    return stream(query, true)
         .flatMap(it -> {
           if (it.status == Status.SUCCESS) {
             return Observable.just(it);
@@ -58,10 +59,10 @@ public abstract class Repository<T, R> {
   }
 
   /***
-   * @param query query parameters
+   * @param query query parameter
    * @param toDisk true for persisting data to disk cache
    * @param toMemory true for persisting data to memory cache
-   * @return an Observable of R for requested query skipping Memory & Disk Cache
+   * @return an Observable of R from network
    */
   @Nonnull
   @WorkerThread
@@ -80,8 +81,8 @@ public abstract class Repository<T, R> {
   }
 
   /***
-   * @param query query parameters
-   * @return an Observable of R for requested from Disk Cache
+   * @param query query parameter
+   * @return an Observable of R from Disk Cache
    */
   @Nonnull
   @WorkerThread
@@ -97,7 +98,7 @@ public abstract class Repository<T, R> {
       R newData = gson.fromJson(DataUtil.byteArray2String(diskEntry.data), dataType());
       if (diskEntry.isExpired() || isIrrelevant(newData)) {
         memoryCache.remove(key);
-        clearDiskCache();
+        evictDiskCache();
         return Observable.just(Source.irrelevant());
       }
       memoryCache.put(key, MemoryCache.Entry.create(newData, diskEntry.ttl));
@@ -106,36 +107,37 @@ public abstract class Repository<T, R> {
   }
 
   /***
-   * @param query query parameters
-   * @return an Observable of R for requested from Memory Cache with refreshing query
+   * @param query query parameter
+   * @param evictExpired true to evict expired data
+   * @return an Observable of R from Memory Cache with refreshing key
    * It differs with {@link Repository#stream()}
    */
   @Nonnull
-  public final Observable<Source<R>> stream(@Nonnull final T query) {
+  public final Observable<Source<R>> stream(@Nonnull final T query, boolean evictExpired) {
     Preconditions.checkNotNull(query);
     key = getKey(query);
-    return stream(true);
+    return stream(evictExpired);
   }
 
   /***
-   * @return an Observable of R for requested from Memory Cache without refreshing query
-   * It differs with {@link Repository#stream(Object)}
+   * @return an Observable of R from Memory Cache without key
+   * It differs with {@link Repository#stream(Object, boolean)}
    */
   @Nonnull
   public final Observable<Source<R>> stream() {
-    return stream(false);
+    return stream(true);
   }
 
-  /***
-   * @param rejectExpired true to exclude expired data
-   * @return an Observable of R for requested from Memory Cache without refreshing query
-   * It differs with {@link Repository#stream(Object)}
+  /**
+   * @param evictExpired true to evict expired data
+   * @return an Observable of R from Memory Cache without refreshing key It differs with {@link
+   * Repository#stream(Object, boolean)}
    */
   @Nonnull
-  public final Observable<Source<R>> stream(boolean rejectExpired) {
+  public final Observable<Source<R>> stream(boolean evictExpired) {
     return Observable.defer(() -> {
-      MemoryCache.Entry memoryEntry = memoryCache.get(key, rejectExpired);
-      //No need to check isExpired(), MemoryCache.get(key) has already done
+      MemoryCache.Entry memoryEntry = memoryCache.get(key, evictExpired);
+      //No need to check isExpired(), MemoryCache.get(key, evictExpired) has already done
       if (memoryEntry == null) {
         return Observable.just(Source.irrelevant());
       }
@@ -148,7 +150,9 @@ public abstract class Repository<T, R> {
   }
 
   /***
-   * @return an R from Memory Cache. when null, it will throw IllegalStateException
+   * Be careful, it maybe throw IllegalStateException
+   * It's better to make sure you have data in memory
+   * @return an R from Memory Cache
    */
   @Nonnull
   public final R memory() throws IllegalStateException {
@@ -156,12 +160,15 @@ public abstract class Repository<T, R> {
   }
 
   /**
-   * @param rejectExpired true to exclude expired data
-   * @return an R from Memory Cache. When null, it will throw IllegalStateException
+   * Be careful, it maybe throw IllegalStateException
+   * It's better to make sure you have data in memory
+   *
+   * @param evictExpired true to evict expired data
+   * @return an R from Memory Cache
    */
   @Nonnull
-  public final R memory(boolean rejectExpired) throws IllegalStateException {
-    MemoryCache.Entry memoryEntry = memoryCache.get(key, rejectExpired);
+  public final R memory(boolean evictExpired) throws IllegalStateException {
+    MemoryCache.Entry memoryEntry = memoryCache.get(key, evictExpired);
     if (memoryEntry == null) {
       throw new IllegalStateException("Not supported");
     }
@@ -172,7 +179,7 @@ public abstract class Repository<T, R> {
     return (R) memoryEntry.data;
   }
 
-  public final void clearMemoryCache() {
+  public final void evictMemoryCache() {
     if (TextUtils.isEmpty(key)) {
       return;
     }
@@ -180,11 +187,11 @@ public abstract class Repository<T, R> {
   }
 
   @WorkerThread
-  public final void clearDiskCache() {
-    DataUtil.requireWorkThread();
+  public final void evictDiskCache() {
     if (TextUtils.isEmpty(key)) {
       return;
     }
+    DataUtil.requireWorkThread();
     try {
       diskCache.remove(key);
     } catch (IOException ignored) {
@@ -196,24 +203,24 @@ public abstract class Repository<T, R> {
    * process network error
    *
    * @param envelope HTTP/HTTPS result
-   * @param clearDiskCache true to clear disk cache
-   * @param clearMemoryCache true to clear memory cache
+   * @param evictDiskCache true to evict disk cache
+   * @param evictMemoryCache true to evict memory cache
    * @return an Observable of R
    */
   protected final Observable<Source<R>> onError(Envelope<R> envelope,
-      boolean clearDiskCache,
-      boolean clearMemoryCache)
+      boolean evictDiskCache,
+      boolean evictMemoryCache)
       throws IOException {
     IoError ioError = new IoError(envelope.message(), envelope.code());
     if (DataUtil.isAccessFailure(ioError)) {
       diskCache.evictAll();
       memoryCache.evictAll();
     } else {
-      if (clearDiskCache) {
-        clearDiskCache();
+      if (evictDiskCache) {
+        evictDiskCache();
       }
-      if (clearMemoryCache) {
-        clearMemoryCache();
+      if (evictMemoryCache) {
+        evictMemoryCache();
       }
     }
     return Observable.just(Source.failure(ioError));
@@ -225,39 +232,41 @@ public abstract class Repository<T, R> {
    * @param envelope HTTP/HTTPS result
    * @param toDisk true to persist data to disk cache
    * @param toMemory true for persisting data to memory cache
-   * @param clearDiskCacheIfIrrelevant true to clear disk cache when result is irrelevant
-   * @param clearMemoryCacheIfIrrelevant true to clear memory cache when result is irrelevant
+   * @param evictDiskCacheIfIrrelevant true to evict disk cache if the result is irrelevant
+   * @param evictMemoryCacheIfIrrelevant true to evict memory cache if the result is irrelevant
    * @return an Observable of R
    */
   protected final Observable<Source<R>> onPersist(Envelope<R> envelope,
       boolean toDisk,
       boolean toMemory,
-      boolean clearDiskCacheIfIrrelevant,
-      boolean clearMemoryCacheIfIrrelevant) {
+      boolean evictDiskCacheIfIrrelevant,
+      boolean evictMemoryCacheIfIrrelevant) {
     R newData = envelope.data();
     if (isIrrelevant(newData)) {
-      if (clearDiskCacheIfIrrelevant) {
-        clearDiskCache();
+      if (evictDiskCacheIfIrrelevant) {
+        evictDiskCache();
       }
-      if (clearMemoryCacheIfIrrelevant) {
-        clearMemoryCache();
+      if (evictMemoryCacheIfIrrelevant) {
+        evictMemoryCache();
       }
       return Observable.just(Source.irrelevant());
     }
+
+    TimeUnit timeUnit = timeUnit();
     long now = System.currentTimeMillis();
-    long ttl = now + timeUnit().toMillis(ttl());
-    long softTtl = now + timeUnit().toMillis(softTtl());
+    long ttl = now + timeUnit.toMillis(ttl());
+    long softTtl = now + timeUnit.toMillis(softTtl());
     Preconditions.checkState(ttl > now && softTtl > now && ttl >= softTtl);
     if (toDisk) {
       byte[] bytes = DataUtil.toJsonByteArray(newData, gson);
       diskCache.put(key, DiskCache.Entry.create(bytes, ttl, softTtl));
     } else {
-      clearDiskCache();
+      evictDiskCache();
     }
     if (toMemory) {
       memoryCache.put(key, MemoryCache.Entry.create(newData, ttl));
     } else {
-      clearMemoryCache();
+      evictMemoryCache();
     }
     return Observable.just(Source.success(newData));
   }
@@ -289,7 +298,6 @@ public abstract class Repository<T, R> {
   protected String getKey(T query) {
     return DataUtil.md5(String.valueOf(dataType()));
   }
-
 
   /**
    * @return to make sure never returning empty or null data

@@ -14,7 +14,6 @@ public class RxView {
     throw new UnsupportedOperationException();
   }
 
-
   @CheckResult
   @NonNull
   public static Observable<View> clicks(@NonNull View view) {

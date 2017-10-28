@@ -1,5 +1,6 @@
 package com.thepacific.clean;
 
+import android.arch.lifecycle.ViewModel;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -7,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.thepacific.presentation.common.RouterUtil;
 import com.thepacific.presentation.core.BottomSheetDialogFragment;
-import com.thepacific.presentation.core.ViewModel;
+import com.thepacific.presentation.core.ViewModelSource;
 
 public class BottomSheet extends BottomSheetDialogFragment {
 
@@ -43,8 +44,8 @@ public class BottomSheet extends BottomSheetDialogFragment {
   }
 
   @Override
-  protected ViewModel.Provider modelProvider() {
-    return ViewModel.Provider.ACTIVITY;
+  protected ViewModelSource modelProvider() {
+    return ViewModelSource.ACTIVITY;
   }
 
   @Override

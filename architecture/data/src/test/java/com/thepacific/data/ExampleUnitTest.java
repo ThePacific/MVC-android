@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import com.thepacific.data.cache.DiskCache;
 import com.thepacific.data.cache.MemoryCache;
 import com.thepacific.data.http.Source;
-import com.thepacific.guava.Joiner;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;

@@ -1,5 +1,6 @@
 package com.thepacific.presentation.core;
 
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
@@ -44,7 +45,6 @@ public abstract class BottomSheetDialogFragment extends
         default:
           throw new UnsupportedOperationException();
       }
-      getLifecycle().addObserver(realViewModel);
     }
   }
 
@@ -56,21 +56,13 @@ public abstract class BottomSheetDialogFragment extends
     }
   }
 
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-    if (isAttachViewModel()) {
-      getLifecycle().removeObserver(realViewModel);
-    }
-  }
-
-  protected ViewModel.Provider modelProvider() {
-    return ViewModel.Provider.ACTIVITY;
+  protected ViewModelSource modelProvider() {
+    return ViewModelSource.ACTIVITY;
   }
 
   @CheckForNull
   protected final <T extends ViewModel> T fetchViewModel() {
-    return (T) ObjectHelper.requireNonNull(realViewModel, "is null");
+    return (T) ObjectHelper.requireNonNull(realViewModel, "realViewModel = null");
   }
 
   protected boolean isAttachViewModel() {

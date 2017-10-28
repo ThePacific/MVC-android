@@ -22,44 +22,51 @@ public final class PrefsIo {
     this.sharedPrefs = app.getSharedPreferences("os_prefs", Context.MODE_PRIVATE);
   }
 
-  public void putString(String key, String value) {
+  public PrefsIo putString(String key, String value) {
     SharedPreferences.Editor editor = sharedPrefs.edit();
     editor.putString(key, value);
     SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+    return this;
   }
 
-  public void putInt(String key, Integer value) {
+  public PrefsIo putInt(String key, Integer value) {
     SharedPreferences.Editor editor = sharedPrefs.edit();
     editor.putInt(key, value);
     SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+    return this;
   }
 
-  public void putBoolean(String key, boolean value) {
+  public PrefsIo putBoolean(String key, boolean value) {
     SharedPreferences.Editor editor = sharedPrefs.edit();
     editor.putBoolean(key, value);
     SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+    return this;
   }
 
-  public void putFloat(String key, Float value) {
+  public PrefsIo putFloat(String key, Float value) {
     SharedPreferences.Editor editor = sharedPrefs.edit();
     editor.putFloat(key, value);
     SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+    return this;
   }
 
-  public void putLong(String key, Long value) {
+  public PrefsIo putLong(String key, Long value) {
     SharedPreferences.Editor editor = sharedPrefs.edit();
     editor.putLong(key, value);
     SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+    return this;
   }
 
-  public void putObject(String key, Object value) {
+  public PrefsIo putObject(String key, Object value) {
     putString(key, DataUtil.toJson(value, null));
+    return this;
   }
 
-  public void putStringSet(String key, Set<String> value) {
+  public PrefsIo putStringSet(String key, Set<String> value) {
     SharedPreferences.Editor editor = sharedPrefs.edit();
     editor.putStringSet(key, value);
     SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+    return this;
   }
 
   public String getString(String key, String defaultValue) {
@@ -94,16 +101,18 @@ public final class PrefsIo {
     return sharedPrefs.getStringSet(key, defaultValue);
   }
 
-  public void remove(String key) {
+  public PrefsIo remove(String key) {
     SharedPreferences.Editor editor = sharedPrefs.edit();
     editor.remove(key);
     SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+    return this;
   }
 
-  public void clear() {
+  public PrefsIo clear() {
     SharedPreferences.Editor editor = sharedPrefs.edit();
     editor.clear();
     SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+    return this;
   }
 
   public boolean contains(String key) {

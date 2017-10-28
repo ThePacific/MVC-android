@@ -1,20 +1,17 @@
 package com.thepacific.clean;
 
+import android.arch.lifecycle.ViewModel;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import com.thepacific.presentation.common.RouterUtil;
 import com.thepacific.presentation.core.Activity;
-import com.thepacific.presentation.core.ViewModel;
-import com.thepacific.presentation.rx.Rx2Timer;
 import javax.inject.Inject;
 
 public class SecondActivity extends Activity {
 
   SecondViewModel model;
-  Rx2Timer timer;
+  //  Rx2Timer timer;
   Button button;
 
   public static final String CLOSE = "com.barry.arch.close";
@@ -28,12 +25,12 @@ public class SecondActivity extends Activity {
     setContentView(R.layout.activity_second);
     model = fetchViewModel();
     button = findViewById(R.id.btn_timer);
-    timer = Rx2Timer.builder()
-        .onEmit(it -> button.setText(String.valueOf(it)))
-        .onError(e -> button.setText("0"))
-        .onComplete(() -> button.setText("0"))
-        .build();
-    button.setOnClickListener(it -> timer.start());
+//    timer = Rx2Timer.builder()
+//        .onEmit(it -> button.setText(String.valueOf(it)))
+//        .onError(e -> button.setText("0"))
+//        .onComplete(() -> button.setText("0"))
+//        .build();
+//    button.setOnClickListener(it -> timer.start());
 
     ProgressBar determinate = findViewById(R.id.determinate);
     determinate.setProgress(20);
@@ -57,14 +54,6 @@ public class SecondActivity extends Activity {
   }
 
   private void displayBottomSheet() {
-    FragmentManager fm = getSupportFragmentManager();
-    FragmentTransaction ft = fm.beginTransaction();
-    String tag = BottomSheet.class.getSimpleName();
-    Fragment prev = fm.findFragmentByTag(tag);
-    if (prev != null) {
-      ft.remove(prev);
-    }
-    BottomSheet newFragment = BottomSheet.newInstance();
-    newFragment.show(ft, tag);
+    RouterUtil.showDialogFragment(getSupportFragmentManager(), BottomSheet.newInstance());
   }
 }

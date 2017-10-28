@@ -1,7 +1,9 @@
 package com.thepacific.presentation.common;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -227,9 +229,14 @@ public class RouterUtil {
 
   public static void exit(Context context, boolean restart) {
     OkReceiver.sendFinishBroadcast(context);
-    System.exit(0);
     if (restart) {
       ProcessPhoenix.triggerRebirth(context);
     }
+  }
+
+  public static boolean isForeground(Context context) {
+    ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+    ComponentName cn = (am.getRunningTasks(1).get(0)).topActivity;
+    return context.getPackageName().equals(cn.getPackageName());
   }
 }

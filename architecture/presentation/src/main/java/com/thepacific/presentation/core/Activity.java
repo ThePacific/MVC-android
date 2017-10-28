@@ -1,5 +1,6 @@
 package com.thepacific.presentation.core;
 
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -26,13 +27,11 @@ public abstract class Activity extends DaggerAppCompatActivity {
     addBroadcastAction(filter);
     LocalBroadcastManager.getInstance(this).registerReceiver(okReceiver, filter);
     realViewModel = ViewModelProviders.of(this, modelFactory).get(modelClass());
-    getLifecycle().addObserver(realViewModel);
   }
 
   @Override
   protected void onDestroy() {
     super.onDestroy();
-    getLifecycle().removeObserver(realViewModel);
     okReceiver.clearConsumer();
     LocalBroadcastManager.getInstance(this).unregisterReceiver(okReceiver);
   }
@@ -46,7 +45,7 @@ public abstract class Activity extends DaggerAppCompatActivity {
 
   @CheckForNull
   protected final <T extends ViewModel> T fetchViewModel() {
-    return (T) ObjectHelper.requireNonNull(realViewModel, "is null");
+    return (T) ObjectHelper.requireNonNull(realViewModel, "realViewModel = null");
   }
 
   public boolean applyFinishAction() {

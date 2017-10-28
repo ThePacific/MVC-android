@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import com.thepacific.data.cache.MemoryCache;
 import com.thepacific.data.common.DataUtil;
-import com.thepacific.guava.MapString;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
