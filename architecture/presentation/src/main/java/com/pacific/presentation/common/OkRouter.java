@@ -1,4 +1,4 @@
-package com.pacific.presenter.common;
+package com.pacific.presentation.common;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -17,7 +17,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.Toast;
-import com.pacific.presenter.core.OkReceiver;
+import com.pacific.presentation.core.OkReceiver;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 public class OkRouter {

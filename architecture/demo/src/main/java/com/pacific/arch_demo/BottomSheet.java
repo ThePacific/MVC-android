@@ -6,9 +6,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.pacific.presenter.common.OkRouter;
-import com.pacific.presenter.core.BottomSheetDialogFragment;
-import com.pacific.presenter.core.ViewModelSource;
+import com.pacific.presentation.common.OkRouter;
+import com.pacific.presentation.core.BottomSheetDialogFragment;
+import com.pacific.presentation.core.ViewModelSource;
 
 public class BottomSheet extends BottomSheetDialogFragment {
 

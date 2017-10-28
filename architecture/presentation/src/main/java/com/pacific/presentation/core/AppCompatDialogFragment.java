@@ -1,4 +1,4 @@
-package com.pacific.presenter.core;
+package com.pacific.presentation.core;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;

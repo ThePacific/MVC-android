@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.pacific.arch_demo.App;
 import com.pacific.arch_demo.BottomSheet;
-import com.pacific.presenter.core.ViewModelFactory;
+import com.pacific.presentation.core.ViewModelFactory;
 import javax.inject.Singleton;
 
 import dagger.Binds;

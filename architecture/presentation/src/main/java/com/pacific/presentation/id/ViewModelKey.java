@@ -1,4 +1,4 @@
-package com.pacific.presenter.id;
+package com.pacific.presentation.id;
 
 import android.arch.lifecycle.ViewModel;
 import dagger.MapKey;

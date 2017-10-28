@@ -3,7 +3,6 @@ apply from: "../config/lib_module.gradle"
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation dep.okhttp3
     implementation dep.okio
     implementation dep.gson

@@ -1,4 +1,4 @@
-include ':demo', ':presentation', ':data', ':guava', ':common'
+//include ':demo', ':presentation', ':data', ':guava', ':common'
 //include ':presentation', ':guava'
-//include ':data', ':guava'
+include ':data', ':guava'
 //include ':common', ':guava'
