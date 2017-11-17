@@ -58,11 +58,13 @@ public class DialogScopeProvider implements LifecycleScopeProvider<ViewLifecycle
     return lifecycleScopeProvider.lifecycle();
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public Function<ViewLifecycleEvent, ViewLifecycleEvent> correspondingEvents() {
     return lifecycleScopeProvider.correspondingEvents();
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public ViewLifecycleEvent peekLifecycle() {
     if (dialog.isShowing() || lifecycleScopeProvider.peekLifecycle() == ViewLifecycleEvent.ATTACH) {

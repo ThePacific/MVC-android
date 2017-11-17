@@ -1,13 +1,10 @@
 package com.pacific.data.cache;
 
 import android.support.v4.util.LruCache;
-import com.google.gson.annotations.SerializedName;
-import io.reactivex.Completable;
-import io.reactivex.schedulers.Schedulers;
-import java.util.ArrayList;
-import java.util.List;
+import com.squareup.moshi.Json;
+import java.util.LinkedList;
 import java.util.Map;
-import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.inject.Inject;
@@ -19,7 +16,7 @@ import javax.inject.Singleton;
 public final class MemoryCache {
 
   private final LruCache<String, Entry> cache;
-  private final List<String> keys = new ArrayList<>();
+  private final LinkedList<String> keys = new LinkedList<>();
 
   @Inject
   public MemoryCache() {
@@ -30,32 +27,27 @@ public final class MemoryCache {
     this.cache = new LruCache<>(maxSize);
   }
 
-  private void evictExpired() {
-    Completable.fromAction(
-        () -> {
-          String key;
-          for (int i = 0; i < keys.size(); i++) {
-            key = keys.get(i);
-            Entry value = cache.get(key);
-            if (value != null && value.isExpired()) {
-              remove(key);
-            }
-          }
-        })
-        .subscribeOn(Schedulers.single())
-        .subscribe();
+  public void evictExpired() {
+    String key;
+    for (int i = 0; i < keys.size(); ) {
+      key = keys.get(i);
+      Entry value = cache.get(key);
+      if (value != null && value.isExpired()) {
+        remove(key);
+      } else {
+        i++;
+      }
+    }
   }
 
-  @CheckForNull
+  @CheckReturnValue
   public synchronized Entry get(String key, boolean evictExpired) {
     Entry value = cache.get(key);
     if (evictExpired) {
       if (value != null && value.isExpired()) {
         remove(key);
-        evictExpired();
-        return null;
+        value = null;
       }
-      evictExpired();
     }
     return value;
   }
@@ -65,8 +57,8 @@ public final class MemoryCache {
       keys.add(key);
     }
     Entry oldValue = cache.put(key, value);
-    evictExpired();
     return oldValue;
+
   }
 
   public Entry remove(String key) {
@@ -117,10 +109,10 @@ public final class MemoryCache {
   @Immutable
   public static final class Entry {
 
-    @SerializedName("data")
+    @Json(name = "data")
     public final Object data;
 
-    @SerializedName("ttl")
+    @Json(name = "ttl")
     public final long ttl;
 
     private Entry(Object data, long ttl) {

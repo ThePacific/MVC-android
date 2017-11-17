@@ -1,7 +1,4 @@
-apply plugin: 'maven'
 apply from: "../config/lib_module.gradle"
-apply from: "../config/doc_release.gradle"
-//apply from: '../config/check_style.gradle'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

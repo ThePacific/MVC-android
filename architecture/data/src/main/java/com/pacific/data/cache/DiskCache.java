@@ -1,12 +1,13 @@
 package com.pacific.data.cache;
 
-import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 import com.pacific.data.common.DataUtil;
+import com.squareup.moshi.Json;
+import com.squareup.moshi.Moshi;
 import java.io.Closeable;
 import java.io.File;
 import java.io.Flushable;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.ThreadSafe;
@@ -39,14 +40,16 @@ public final class DiskCache implements Closeable, Flushable {
   private static final int ENTRY_METADATA = 0;
 
   private final DiskLruCache cache;
+  private final Moshi moshi;
 
   @Inject
-  public DiskCache(File directory) {
-    this(directory, 1024 * 1024 * 10);
+  public DiskCache(Moshi moshi, File directory) {
+    this(moshi, directory, 1024 * 1024 * 10);
   }
 
-  public DiskCache(File directory, long maxSize) {
+  public DiskCache(Moshi moshi, File directory, long maxSize) {
     cache = DiskLruCache.create(FileSystem.SYSTEM, directory, VERSION, ENTRY_COUNT, maxSize);
+    this.moshi = moshi;
   }
 
   public Entry get(String key) {
@@ -64,7 +67,7 @@ public final class DiskCache implements Closeable, Flushable {
       String json = source.readUtf8();
       source.close();
       Util.closeQuietly(snapshot);
-      return DataUtil.fromJson(json, null, Entry.class);
+      return DataUtil.fromJson(json, moshi, Entry.class);
 
     } catch (IOException e) {
       Util.closeQuietly(snapshot);
@@ -78,7 +81,8 @@ public final class DiskCache implements Closeable, Flushable {
       editor = cache.edit(key);
       if (editor != null) {
         BufferedSink sink = Okio.buffer(editor.newSink(ENTRY_METADATA));
-        sink.writeUtf8(entry.toString());//Entry.toString() is a json String
+        //Entry.toString() is a json String
+        sink.writeUtf8(entry.toString());
         sink.close();
         editor.commit();
       }
@@ -148,22 +152,22 @@ public final class DiskCache implements Closeable, Flushable {
 
     /**
      * The data returned from cache.
-     * Use {@link DataUtil#toJsonByteArray(Object, Gson)}
+     * Use {@link DataUtil#toJson(Object, Moshi, Type)}}
      * to serialize a data object
      */
-    @SerializedName("data")
+    @Json(name = "data")
     public final byte[] data;
 
     /**
      * Time to live(TTL) for this record
      */
-    @SerializedName("ttl")
+    @Json(name = "ttl")
     public final long ttl;
 
     /**
      * Soft TTL for this record
      */
-    @SerializedName("softTtl")
+    @Json(name = "softTtl")
     public final long softTtl;
 
     /**

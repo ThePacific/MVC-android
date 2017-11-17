@@ -61,6 +61,7 @@ public abstract class AppCompatDialogFragment extends
   }
 
   @CheckForNull
+  @SuppressWarnings("unchecked")
   protected final <T extends ViewModel> T fetchViewModel() {
     return (T) ObjectHelper.requireNonNull(realViewModel, "realViewModel = null");
   }

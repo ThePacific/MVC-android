@@ -3,10 +3,12 @@ package com.pacific.presentation.core;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import java.util.Map;
+import javax.annotation.concurrent.Immutable;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
+@Immutable
 @Singleton
 public final class ViewModelFactory implements ViewModelProvider.Factory {
 

@@ -447,17 +447,11 @@ public class Preconditions {
   }
 
   public static boolean isEmpty(Collection collection) {
-    if (collection == null || collection.isEmpty()) {
-      return true;
-    }
-    return false;
+    return collection == null || collection.isEmpty();
   }
 
   public static boolean isEmpty(Map map) {
-    if (map == null || map.isEmpty()) {
-      return true;
-    }
-    return false;
+    return map == null || map.isEmpty();
   }
 
   public static boolean isEmpty(Object object) {

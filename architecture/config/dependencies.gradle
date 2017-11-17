@@ -8,53 +8,54 @@ allprojects {
 ext {
     groupId = "com.github.thepacific"
     compile = 27
-    buildTools = "27.0.0"
-    min = "14"
+    buildTools = "27.0.1"
+    min = "16"
     target = "27"
     versionCode = 1
-    versionName = "0.0.1"
+    versionName = "1.0.0"
 
     testRunner = "1.0.1"
     junit = "4.12"
     espresso = "3.0.0"
     support = "27.0.0"
-    mockito = "2.10.0"
+    mockito = "2.12.0"
+    truth = "0.36"
 
     constraint = "1.1.0-beta3"
-    lifecycle = "1.0.0-rc1"
+    lifecycle = "1.0.0"
 
     findBugsJrs305 = "3.0.2"
     okhttp3 = "3.9.0"
     okio = "1.13.0"
     retrofit2 = "2.3.0"
-    gson = "2.8.2"
+    moshi = "1.5.0"
     rxjava2 = "2.1.6"
     rxandroid2 = "2.0.1"
 
     inject = "1"
     javaxAnnotation = "1.3"
     errorProne = "2.0.21"
-    dagger2 = "2.12"
+    jetAnnotations = "15.0"
+    dagger2 = "2.13"
     autoValue = "1.5.1"
 
     autoDispose = "0.4.0"
-    timber = "4.5.1"
+    timber = "4.6.0"
     permissions = "0.9.4"
     parceler = "1.1.9"
-    glide = "4.2.0"
+    glide = "4.3.1"
     leakcanary = "1.5.4"
     multidex = "1.0.2"
     phoenix = "2.0.0"
     reflection = "0.9.6"
 
-    mAdapter = "2.1.0"
-    mGuava = "0.0.2"
-    mCommon = "0.0.2"
-    presentation = "0.0.2"
-    data = "0.0.2"
+    mAdapter = "2.1.1"
+    mGuava = "1.0.0"
+    mCommon = "1.0.0"
+    mPresentation = "1.0.0"
+    mData = "1.0.0"
 
     dep = [
-            supportV4               : "com.android.support:support-v4:$support",
             appcompat               : "com.android.support:appcompat-v7:$support",
             palette                 : "com.android.support:palette-v7:$support",
             design                  : "com.android.support:design:$support",
@@ -71,8 +72,8 @@ ext {
             okio                    : "com.squareup.okio:okio:$okio",
             retrofit2               : "com.squareup.retrofit2:retrofit:$retrofit2",
             adapterRxjava2          : "com.squareup.retrofit2:adapter-rxjava2:$retrofit2",
-            converterGson           : "com.squareup.retrofit2:converter-gson:$retrofit2",
-            gson                    : "com.google.code.gson:gson:$gson",
+            converterMoshi          : "com.squareup.retrofit2:converter-moshi:$retrofit2",
+            moshi                   : "com.squareup.moshi:moshi:$moshi",
             rxjava2                 : "io.reactivex.rxjava2:rxjava:$rxjava2",
             rxandroid2              : "io.reactivex.rxjava2:rxandroid:$rxandroid2",
             autoDispose             : "com.uber.autodispose:autodispose:$autoDispose",
@@ -80,6 +81,7 @@ ext {
             autoDisposeComponent    : "com.uber.autodispose:autodispose-android-archcomponents:$autoDispose",
             annotationApi           : "javax.annotation:javax.annotation-api:$javaxAnnotation",
             errorProne              : "com.google.errorprone:error_prone_annotations:$errorProne",
+            jetAnnotations          : "org.jetbrains:annotations:$jetAnnotations",
             inject                  : "javax.inject:javax.inject:$inject",
             autoValue               : "com.google.auto.value:auto-value:$autoValue",
             autoValueCompiler       : "com.google.auto.value:auto-value:$autoValue",
@@ -92,11 +94,12 @@ ext {
             parceler                : "org.parceler:parceler-api:$parceler",
             parcelerProcessor       : "org.parceler:parceler:$parceler",
             theAdapter              : "com.github.thepacific:adapter:$mAdapter",
-            theData                 : "com.github.thepacific:data:$data",
+            theData                 : "com.github.thepacific:data:$mData",
             theCommon               : "com.github.thepacific:common:$mCommon",
-            thePresentation         : "com.github.thepacific:presentation:$presentation",
+            thePresentation         : "com.github.thepacific:presentation:$mPresentation",
             theGuava                : "com.github.thepacific:guava:$mGuava",
             mockito                 : "org.mockito:mockito-core:$mockito",
+            truth                   : "com.google.truth:truth:$truth",
             junit                   : "junit:junit:$junit",
             testRunner              : "com.android.support.test:runner:$testRunner",
             espresso                : "com.android.support.test.espresso:espresso-core:$espresso",
@@ -106,6 +109,8 @@ ext {
             glide                   : "com.github.bumptech.glide:glide:$glide",
             glideProcessor          : "com.github.bumptech.glide:compiler:$glide",
             processPhoenix          : "com.jakewharton:process-phoenix:$phoenix",
-            reflection              : "org.jooq:joor:$reflection"
+            reflection              : "org.jooq:joor:$reflection",
+            leakcanary              : "com.squareup.leakcanary:leakcanary-android:$leakcanary",
+            leakcanaryNo            : "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary"
     ]
 }

@@ -15,6 +15,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import com.pacific.guava.Preconditions;
 
 public class RecyclerViewDivider extends RecyclerView.ItemDecoration {
 
@@ -244,9 +245,7 @@ public class RecyclerViewDivider extends RecyclerView.ItemDecoration {
   }
 
   public static Builder builder(@Nullable Context context) {
-    if (context == null) {
-      throw new NullPointerException("context = null");
-    }
+    Preconditions.checkNotNull(context);
     return new Builder(context);
   }
 
@@ -274,7 +273,7 @@ public class RecyclerViewDivider extends RecyclerView.ItemDecoration {
       final TypedArray a = context.obtainStyledAttributes(ATTRS);
       this.drawable = a.getDrawable(0);
       if (this.drawable == null) {
-        Log.w("RecyclerViewDivider", "@android:attr/listDivider was not set");
+        Log.e("RecyclerViewDivider", "@android:attr/listDivider was not set");
       }
       a.recycle();
     }

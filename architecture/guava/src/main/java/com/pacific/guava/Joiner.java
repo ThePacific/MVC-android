@@ -1,14 +1,14 @@
 package com.pacific.guava;
 
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import static com.pacific.guava.Preconditions.checkNotNull;
 
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.io.IOException;
 import java.util.AbstractList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import javax.annotation.Nullable;
 
 public class Joiner {
@@ -24,7 +24,7 @@ public class Joiner {
   private final String separator;
 
   private Joiner(String separator) {
-    this.separator = Preconditions.checkNotNull(separator);
+    this.separator = checkNotNull(separator);
   }
 
   private Joiner(Joiner prototype) {
@@ -38,7 +38,7 @@ public class Joiner {
 
   @CanIgnoreReturnValue
   public <A extends Appendable> A appendTo(A appendable, Iterator<?> parts) throws IOException {
-    Preconditions.checkNotNull(appendable);
+    checkNotNull(appendable);
     if (parts.hasNext()) {
       appendable.append(toString(parts.next()));
       while (parts.hasNext()) {
@@ -104,7 +104,7 @@ public class Joiner {
   }
 
   public Joiner useForNull(final String nullText) {
-    Preconditions.checkNotNull(nullText);
+    checkNotNull(nullText);
     return new Joiner(this) {
       @Override
       CharSequence toString(@Nullable Object part) {
@@ -127,8 +127,8 @@ public class Joiner {
     return new Joiner(this) {
       @Override
       public <A extends Appendable> A appendTo(A appendable, Iterator<?> parts) throws IOException {
-        Preconditions.checkNotNull(appendable, "appendable");
-        Preconditions.checkNotNull(parts, "parts");
+        checkNotNull(appendable, "appendable");
+        checkNotNull(parts, "parts");
         while (parts.hasNext()) {
           Object part = parts.next();
           if (part != null) {
@@ -173,7 +173,7 @@ public class Joiner {
 
     private MapJoiner(Joiner joiner, String keyValueSeparator) {
       this.joiner = joiner; // only "this" is ever passed, so don't checkNotNull
-      this.keyValueSeparator = Preconditions.checkNotNull(keyValueSeparator);
+      this.keyValueSeparator = checkNotNull(keyValueSeparator);
     }
 
     @CanIgnoreReturnValue
@@ -199,7 +199,7 @@ public class Joiner {
     @CanIgnoreReturnValue
     public <A extends Appendable> A appendTo(A appendable, Iterator<? extends Entry<?, ?>> parts)
         throws IOException {
-      Preconditions.checkNotNull(appendable);
+      checkNotNull(appendable);
       if (parts.hasNext()) {
         Entry<?, ?> entry = parts.next();
         appendable.append(joiner.toString(entry.getKey()));
@@ -245,13 +245,13 @@ public class Joiner {
   }
 
   CharSequence toString(Object part) {
-    Preconditions.checkNotNull(part); // checkNotNull for GWT (do not optimize).
+    checkNotNull(part);
     return (part instanceof CharSequence) ? (CharSequence) part : part.toString();
   }
 
   private static Iterable<Object> iterable(
       final Object first, final Object second, final Object[] rest) {
-    Preconditions.checkNotNull(rest);
+    checkNotNull(rest);
     return new AbstractList<Object>() {
       @Override
       public int size() {

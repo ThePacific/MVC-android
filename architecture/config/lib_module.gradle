@@ -9,8 +9,8 @@ android {
         targetSdkVersion rootProject.ext.target
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -28,6 +28,11 @@ android {
     }
 
     packagingOptions {
+        exclude 'META-INF/README'
+        exclude 'META-INF/README.txt'
+        exclude 'META-INF/readme'
+        exclude 'META-INF/readme.txt'
+
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/license'
@@ -56,6 +61,9 @@ android {
 
         exclude 'META-INF/RXJAVA.DEPENDENCIES'
         exclude 'META-INF/RXJAVA.DEPENDENCIES.txt'
+
+        exclude 'META-INF/proguard/**'
+        exclude 'META-INF/*.version'
     }
 
     compileOptions {
@@ -65,7 +73,6 @@ android {
 
     configurations.all {
         resolutionStrategy.force dep.findBugsJrs305
-        resolutionStrategy.force dep.appcompat
         resolutionStrategy.force dep.appcompat
         resolutionStrategy.force dep.annotationApi
         resolutionStrategy.force dep.multidex
@@ -78,18 +85,25 @@ dependencies {
     compileOnly dep.inject
     compileOnly dep.findBugsJrs305
     compileOnly dep.errorProne
+    compileOnly dep.jetAnnotations
     compileOnly dep.annotationApi
 
+    compileOnly dep.autoValue
+    annotationProcessor dep.autoValueCompiler
+
     testImplementation dep.junit
+    testImplementation dep.truth
     testImplementation dep.mockito
     testImplementation dep.lifecycleTest
     androidTestImplementation dep.testRunner
+    androidTestImplementation dep.truth
     androidTestImplementation(dep.espresso, {
         exclude group: 'com.android.support', module: '*'
     })
 
-    implementation dep.supportV4
-    implementation dep.lifecycleJava8
-    implementation dep.lifecycleReactivestreams
-    implementation dep.lifecycleExtensions
+    api dep.lifecycleJava8
+    api dep.lifecycleReactivestreams
+    api dep.lifecycleExtensions
+
+//    api dep.theGuava
 }

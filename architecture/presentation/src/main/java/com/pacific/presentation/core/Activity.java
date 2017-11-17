@@ -44,6 +44,7 @@ public abstract class Activity extends DaggerAppCompatActivity {
   }
 
   @CheckForNull
+  @SuppressWarnings("unchecked")
   protected final <T extends ViewModel> T fetchViewModel() {
     return (T) ObjectHelper.requireNonNull(realViewModel, "realViewModel = null");
   }

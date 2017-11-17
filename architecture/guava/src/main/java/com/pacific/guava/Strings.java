@@ -1,5 +1,8 @@
 package com.pacific.guava;
 
+import static com.pacific.guava.Preconditions.checkArgument;
+import static com.pacific.guava.Preconditions.checkNotNull;
+
 import javax.annotation.Nullable;
 
 public final class Strings {
@@ -13,15 +16,11 @@ public final class Strings {
 
   @Nullable
   public static String emptyToNull(@Nullable String string) {
-    return isNullOrEmpty(string) ? null : string;
-  }
-
-  public static boolean isNullOrEmpty(@Nullable String string) {
-    return Preconditions.isEmpty(string);
+    return Preconditions.isEmpty(string) ? null : string;
   }
 
   public static String padStart(String string, int minLength, char padChar) {
-    Preconditions.checkNotNull(string); // eager for GWT.
+    checkNotNull(string);
     if (string.length() >= minLength) {
       return string;
     }
@@ -34,7 +33,7 @@ public final class Strings {
   }
 
   public static String padEnd(String string, int minLength, char padChar) {
-    Preconditions.checkNotNull(string); // eager for GWT.
+    checkNotNull(string); // eager for GWT.
     if (string.length() >= minLength) {
       return string;
     }
@@ -47,10 +46,10 @@ public final class Strings {
   }
 
   public static String repeat(String string, int count) {
-    Preconditions.checkNotNull(string); // eager for GWT.
+    checkNotNull(string);
 
     if (count <= 1) {
-      Preconditions.checkArgument(count >= 0, count);
+      checkArgument(count >= 0, count);
       return (count == 0) ? "" : string;
     }
 
@@ -73,8 +72,8 @@ public final class Strings {
   }
 
   public static String commonPrefix(CharSequence a, CharSequence b) {
-    Preconditions.checkNotNull(a);
-    Preconditions.checkNotNull(b);
+    checkNotNull(a);
+    checkNotNull(b);
 
     int maxPrefixLength = Math.min(a.length(), b.length());
     int p = 0;
@@ -88,8 +87,8 @@ public final class Strings {
   }
 
   public static String commonSuffix(CharSequence a, CharSequence b) {
-    Preconditions.checkNotNull(a);
-    Preconditions.checkNotNull(b);
+    checkNotNull(a);
+    checkNotNull(b);
 
     int maxSuffixLength = Math.min(a.length(), b.length());
     int s = 0;

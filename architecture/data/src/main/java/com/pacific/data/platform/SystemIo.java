@@ -5,15 +5,19 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
 import android.util.Log;
 import com.pacific.data.common.DataUtil;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import okhttp3.internal.Util;
 import okhttp3.internal.io.FileSystem;
 import okio.BufferedSink;
@@ -22,16 +26,20 @@ import okio.Okio;
 
 public class SystemIo {
 
+  private final static String TAG = "SystemIo";
+
   private SystemIo() {
     throw new UnsupportedOperationException();
   }
 
   @WorkerThread
-  public static void readAsset(Context context, String name, boolean overwrite) {
-    DataUtil.requireWorkThread();
+  public static void readAsset(Context context, String name, String path, boolean overwrite) {
+    DataUtil.verifyWorkThread();
+    path = suffixDirectory(path);
+    verifyDirectory(path);
     AssetManager assetManager = context.getAssets();
     try {
-      final File file = new File(context.getFilesDir() + File.separator + name);
+      final File file = new File(path + name);
       if (FileSystem.SYSTEM.exists(file)) {
         if (overwrite) {
           FileSystem.SYSTEM.delete(file);
@@ -50,19 +58,17 @@ public class SystemIo {
       Util.closeQuietly(source);
       Util.closeQuietly(sink);
     } catch (IOException e) {
-      Log.e("readAsset()", e.toString());
+      Log.e(TAG, e.toString());
     }
   }
 
   @WorkerThread
   public static void toGallery(Context context, Bitmap bmp, File directory, String img) {
-    DataUtil.requireWorkThread();
-    final String tag = "SystemIo.toGallery()";
+    DataUtil.verifyWorkThread();
     final String ext = ".jpg";
     if (!FileSystem.SYSTEM.exists(directory) || !directory.isDirectory()) {
       directory.mkdir();
     }
-
     if (TextUtils.isEmpty(img)) {
       img = System.currentTimeMillis() + ext;
     }
@@ -80,9 +86,9 @@ public class SystemIo {
       fos.flush();
       Util.closeQuietly(fos);
     } catch (FileNotFoundException e) {
-      Log.e(tag, e.toString());
+      Log.e(TAG, e.toString());
     } catch (IOException e) {
-      Log.e(tag, e.toString());
+      Log.e(TAG, e.toString());
     }
     try {
       MediaStore
@@ -91,8 +97,58 @@ public class SystemIo {
           .insertImage(context.getContentResolver(), file.getAbsolutePath(), img, null);
       context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
     } catch (FileNotFoundException e) {
-      Log.e(tag, e.toString());
+      Log.e(TAG, e.toString());
     }
+  }
+
+  @WorkerThread
+  public static void unzip(File zipFile, String directory) {
+    DataUtil.verifyWorkThread();
+    try {
+      ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFile));
+      BufferedSource source = Okio.buffer(Okio.source(zipInputStream));
+      directory = suffixDirectory(directory);
+      ZipEntry zipEntry;
+      BufferedSink sink;
+      while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+        if (zipEntry.isDirectory()) {
+          verifyDirectory(directory + File.separator + zipEntry.getName());
+        } else {
+          sink = Okio.buffer(Okio.sink(new File(directory, zipEntry.getName())));
+          byte[] bytes = new byte[1024];
+          int nRead;
+          while ((nRead = source.read(bytes)) != -1) {
+            sink.write(bytes, 0, nRead);
+          }
+          Util.closeQuietly(sink);
+          zipInputStream.closeEntry();
+        }
+      }
+      Util.closeQuietly(source);
+      Util.closeQuietly(zipInputStream);
+    } catch (IOException e) {
+      Log.e(TAG, e.toString());
+    }
+  }
+
+  public static String getSDCard() {
+    return suffixDirectory(Environment.getExternalStorageDirectory().getAbsolutePath());
+  }
+
+  @WorkerThread
+  public static File verifyDirectory(String directory) {
+    File file = new File(directory);
+    if (!file.exists() || !file.isDirectory()) {
+      file.mkdirs();
+    }
+    return file;
+  }
+
+  public static String suffixDirectory(String directory) {
+    if (!directory.endsWith(File.separator)) {
+      directory = directory + File.separator;
+    }
+    return directory;
   }
 }
 

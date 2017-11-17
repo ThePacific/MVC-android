@@ -10,7 +10,7 @@ import com.pacific.data.http.IoError;
 import com.pacific.data.http.Source;
 import com.pacific.data.http.Status;
 import com.pacific.guava.Preconditions;
-import com.google.gson.Gson;
+import com.squareup.moshi.Moshi;
 import io.reactivex.Observable;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -23,13 +23,13 @@ import javax.annotation.Nonnull;
  */
 public abstract class Repository<T, R> {
 
-  protected final Gson gson;
+  protected final Moshi moshi;
   protected final DiskCache diskCache;
   protected final MemoryCache memoryCache;
   protected String key;
 
-  public Repository(Gson gson, DiskCache diskCache, MemoryCache memoryCache) {
-    this.gson = gson;
+  public Repository(Moshi moshi, DiskCache diskCache, MemoryCache memoryCache) {
+    this.moshi = moshi;
     this.diskCache = diskCache;
     this.memoryCache = memoryCache;
   }
@@ -41,8 +41,9 @@ public abstract class Repository<T, R> {
    */
   @Nonnull
   @WorkerThread
+  @SuppressWarnings("unchecked")
   public final Observable<Source<R>> get(@Nonnull final T query) {
-    DataUtil.requireWorkThread();
+    DataUtil.verifyWorkThread();
     return stream(query, true)
         .flatMap(it -> {
           if (it.status == Status.SUCCESS) {
@@ -58,7 +59,7 @@ public abstract class Repository<T, R> {
         });
   }
 
-  /***
+  /**
    * @param query query parameter
    * @param toDisk true for persisting data to disk cache
    * @param toMemory true for persisting data to memory cache
@@ -66,28 +67,29 @@ public abstract class Repository<T, R> {
    */
   @Nonnull
   @WorkerThread
+  @SuppressWarnings("unchecked")
   public final Observable<Source<R>> fetch(@Nonnull final T query, boolean toDisk,
       boolean toMemory) {
-    DataUtil.requireWorkThread();
+    DataUtil.verifyWorkThread();
     Preconditions.checkNotNull(query);
     key = getKey(query);
-    return dispatchNetwork(query)
-        .flatMap(it -> {
-          if (it.isSuccess()) {
-            return onPersist(it, toDisk, toMemory, true, true);
-          }
-          return onError(it, false, false);
-        });
+    return dispatchNetwork(query).flatMap(it -> {
+      if (it.isSuccess()) {
+        return onPersist(it, toDisk, toMemory, true, true);
+      }
+      return onError(it, false, false);
+    });
   }
 
-  /***
+  /**
    * @param query query parameter
    * @return an Observable of R from Disk Cache
    */
   @Nonnull
   @WorkerThread
+  @SuppressWarnings("unchecked")
   public final Observable<Source<R>> load(@Nonnull final T query) {
-    DataUtil.requireWorkThread();
+    DataUtil.verifyWorkThread();
     Preconditions.checkNotNull(query);
     key = getKey(query);
     return Observable.defer(() -> {
@@ -95,7 +97,8 @@ public abstract class Repository<T, R> {
       if (diskEntry == null) {
         return Observable.just(Source.irrelevant());
       }
-      R newData = gson.fromJson(DataUtil.byteArray2String(diskEntry.data), dataType());
+      String json = DataUtil.byteArray2String(diskEntry.data);
+      R newData = DataUtil.fromJson(json, moshi, dataType());
       if (diskEntry.isExpired() || isIrrelevant(newData)) {
         memoryCache.remove(key);
         evictDiskCache();
@@ -106,42 +109,35 @@ public abstract class Repository<T, R> {
     });
   }
 
-  /***
+  /**
    * @param query query parameter
    * @param evictExpired true to evict expired data
-   * @return an Observable of R from Memory Cache with refreshing key
-   * It differs with {@link Repository#stream()}
+   * @return an Observable of R from Memory Cache with refreshing key It differs with {@link
+   * Repository#stream(boolean)}
    */
   @Nonnull
+  @SuppressWarnings("unchecked")
   public final Observable<Source<R>> stream(@Nonnull final T query, boolean evictExpired) {
     Preconditions.checkNotNull(query);
     key = getKey(query);
     return stream(evictExpired);
   }
 
-  /***
-   * @return an Observable of R from Memory Cache without key
-   * It differs with {@link Repository#stream(Object, boolean)}
-   */
-  @Nonnull
-  public final Observable<Source<R>> stream() {
-    return stream(true);
-  }
-
   /**
    * @param evictExpired true to evict expired data
-   * @return an Observable of R from Memory Cache without refreshing key It differs with {@link
+   * @return an Observable of R from Memory Cache without refreshing key. It differs with {@link
    * Repository#stream(Object, boolean)}
    */
   @Nonnull
+  @SuppressWarnings("unchecked")
   public final Observable<Source<R>> stream(boolean evictExpired) {
     return Observable.defer(() -> {
-      MemoryCache.Entry memoryEntry = memoryCache.get(key, evictExpired);
-      //No need to check isExpired(), MemoryCache.get(key, evictExpired) has already done
-      if (memoryEntry == null) {
+      MemoryCache.Entry entry = memoryCache.get(key, evictExpired);
+      //No need to check isExpired(), MemoryCache.get() has already done
+      if (entry == null) {
         return Observable.just(Source.irrelevant());
       }
-      R newData = (R) memoryEntry.data;
+      R newData = (R) entry.data;
       if (isIrrelevant(newData)) {
         return Observable.just(Source.irrelevant());
       }
@@ -149,14 +145,10 @@ public abstract class Repository<T, R> {
     });
   }
 
-  /***
-   * Be careful, it maybe throw IllegalStateException
-   * It's better to make sure you have data in memory
-   * @return an R from Memory Cache
-   */
   @Nonnull
-  public final R memory() throws IllegalStateException {
-    return memory(false);
+  @SuppressWarnings("unchecked")
+  public final Observable<Source<R>> stream() {
+    return stream(true);
   }
 
   /**
@@ -167,16 +159,23 @@ public abstract class Repository<T, R> {
    * @return an R from Memory Cache
    */
   @Nonnull
+  @SuppressWarnings("unchecked")
   public final R memory(boolean evictExpired) throws IllegalStateException {
-    MemoryCache.Entry memoryEntry = memoryCache.get(key, evictExpired);
-    if (memoryEntry == null) {
+    MemoryCache.Entry entry = memoryCache.get(key, evictExpired);
+    if (entry == null) {
       throw new IllegalStateException("Not supported");
     }
-    R newData = (R) memoryEntry.data;
+    R newData = (R) entry.data;
     if (isIrrelevant(newData)) {
       throw new IllegalStateException("Not supported");
     }
-    return (R) memoryEntry.data;
+    return (R) entry.data;
+  }
+
+  @Nonnull
+  @SuppressWarnings("unchecked")
+  public final R memory() throws IllegalStateException {
+    return memory(false);
   }
 
   public final void evictMemoryCache() {
@@ -191,13 +190,13 @@ public abstract class Repository<T, R> {
     if (TextUtils.isEmpty(key)) {
       return;
     }
-    DataUtil.requireWorkThread();
+    DataUtil.verifyWorkThread();
     try {
       diskCache.remove(key);
     } catch (IOException ignored) {
+      ignored.printStackTrace();
     }
   }
-
 
   /**
    * process network error
@@ -207,12 +206,11 @@ public abstract class Repository<T, R> {
    * @param evictMemoryCache true to evict memory cache
    * @return an Observable of R
    */
-  protected final Observable<Source<R>> onError(Envelope<R> envelope,
-      boolean evictDiskCache,
-      boolean evictMemoryCache)
-      throws IOException {
-    IoError ioError = new IoError(envelope.message(), envelope.code());
-    if (DataUtil.isAccessFailure(ioError)) {
+  @SuppressWarnings("unchecked")
+  protected final Observable<Source<R>> onError(Envelope<R> envelope, boolean evictDiskCache,
+      boolean evictMemoryCache) throws IOException {
+    IoError error = new IoError(envelope.message(), envelope.code());
+    if (DataUtil.isAccessFailure(error)) {
       diskCache.evictAll();
       memoryCache.evictAll();
     } else {
@@ -223,7 +221,7 @@ public abstract class Repository<T, R> {
         evictMemoryCache();
       }
     }
-    return Observable.just(Source.failure(ioError));
+    return Observable.just(Source.failure(error));
   }
 
   /**
@@ -236,11 +234,9 @@ public abstract class Repository<T, R> {
    * @param evictMemoryCacheIfIrrelevant true to evict memory cache if the result is irrelevant
    * @return an Observable of R
    */
-  protected final Observable<Source<R>> onPersist(Envelope<R> envelope,
-      boolean toDisk,
-      boolean toMemory,
-      boolean evictDiskCacheIfIrrelevant,
-      boolean evictMemoryCacheIfIrrelevant) {
+  @SuppressWarnings("unchecked")
+  protected final Observable<Source<R>> onPersist(Envelope<R> envelope, boolean toDisk,
+      boolean toMemory, boolean evictDiskCacheIfIrrelevant, boolean evictMemoryCacheIfIrrelevant) {
     R newData = envelope.data();
     if (isIrrelevant(newData)) {
       if (evictDiskCacheIfIrrelevant) {
@@ -258,7 +254,7 @@ public abstract class Repository<T, R> {
     long softTtl = now + timeUnit.toMillis(softTtl());
     Preconditions.checkState(ttl > now && softTtl > now && ttl >= softTtl);
     if (toDisk) {
-      byte[] bytes = DataUtil.toJsonByteArray(newData, gson);
+      byte[] bytes = DataUtil.toJsonByteArray(newData, moshi, dataType());
       diskCache.put(key, DiskCache.Entry.create(bytes, ttl, softTtl));
     } else {
       evictDiskCache();
@@ -310,8 +306,7 @@ public abstract class Repository<T, R> {
   protected abstract Observable<? extends Envelope<R>> dispatchNetwork(final T query);
 
   /**
-   * @return gson deserialize Class type for R {@code Type typeOfT = R.class} for List<R> {@code
-   * Type typeOfT = new TypeToken<List<R>>() { }.getType()}
+   * User {@code Types.newParameterizedType(...)}
    */
   protected abstract Type dataType();
 }

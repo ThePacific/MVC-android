@@ -53,6 +53,7 @@ public abstract class Fragment extends DaggerFragment {
   }
 
   @CheckForNull
+  @SuppressWarnings("unchecked")
   protected final <T extends ViewModel> T fetchViewModel() {
     return (T) ObjectHelper.requireNonNull(realViewModel, "realViewModel = null");
   }

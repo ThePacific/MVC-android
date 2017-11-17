@@ -28,5 +28,4 @@ public class RxView {
     checkNotNull(view, "view == null");
     return new TextViewAfterTextChangeEventObservable(view);
   }
-
 }

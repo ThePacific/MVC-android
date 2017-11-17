@@ -2,15 +2,12 @@ apply from: "../config/lib_module.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation dep.okhttp3
     implementation dep.okio
-    implementation dep.gson
+    implementation dep.moshi
     implementation dep.rxjava2
     implementation dep.rxandroid2
 
-    compileOnly dep.autoValue
-    annotationProcessor dep.autoValueCompiler
     implementation dep.dagger
     implementation dep.daggerAndroid
     implementation dep.daggerAndroidSupport

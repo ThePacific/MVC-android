@@ -2,14 +2,17 @@ package com.pacific.data.common;
 
 import android.os.Looper;
 import android.text.TextUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.pacific.data.BuildConfig;
 import com.pacific.data.http.IoError;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 import io.reactivex.android.MainThreadDisposable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.List;
 import java.util.Map;
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
 import okio.ByteString;
 
 public class DataUtil {
@@ -18,39 +21,57 @@ public class DataUtil {
     throw new UnsupportedOperationException();
   }
 
-  public static String toJson(Object value, Gson gson) {
-    if (gson == null) {
-      gson = new Gson();
+  public void cancelRequest(OkHttpClient client, Object tag) {
+    for (Call call : client.dispatcher().queuedCalls()) {
+      if (tag.equals(call.request().tag())) {
+        call.cancel();
+      }
     }
-    return gson.toJson(value);
-  }
-
-  public static <T> T fromJson(String json, Gson gson, Class<T> tClass) {
-    if (gson == null) {
-      gson = new Gson();
+    for (Call call : client.dispatcher().runningCalls()) {
+      if (tag.equals(call.request().tag())) {
+        call.cancel();
+      }
     }
-    return gson.fromJson(json, tClass);
   }
 
-  public static <T> List<T> fromJsonToList(String json, Gson gson) {
-    if (gson == null) {
-      gson = new Gson();
+  public static String md5(String source) {
+    if (TextUtils.isEmpty(source)) {
+      return source;
     }
-    Type typeOfT = new TypeToken<List<T>>() {
-    }.getType();
-    return gson.fromJson(json, typeOfT);
+    return ByteString.encodeUtf8(source).md5().hex();
   }
 
-  public static <T> List<T> fromJsonByteArrayToList(byte[] jsonByteArray, Gson gson) {
-    return fromJsonToList(byteArray2String(jsonByteArray), gson);
+  public static Map<String, String> toMap(Object obj, Moshi moshi) {
+    if (moshi == null) {
+      moshi = new Moshi.Builder().build();
+    }
+    JsonAdapter<Object> adapter = moshi.adapter(Object.class);
+    Object jsonStructure = adapter.toJsonValue(obj);
+    Map<String, String> jsonObject = (Map<String, String>) jsonStructure;
+    return jsonObject;
   }
 
-  public static byte[] toJsonByteArray(Object value, Gson gson) {
-    return string2ByteArray(toJson(value, gson));
+  public static String toJson(Object obj, Moshi moshi, Type type) {
+    if (moshi == null) {
+      moshi = new Moshi.Builder().build();
+    }
+    return moshi.adapter(type).lenient().toJson(obj);
   }
 
-  public static <T> T fromJsonByteArray(byte[] jsonByteArray, Gson gson, Class<T> tClass) {
-    return fromJson(byteArray2String(jsonByteArray), gson, tClass);
+  public static <T> T fromJson(String json, Moshi moshi, Type type) throws IOException {
+    if (moshi == null) {
+      moshi = new Moshi.Builder().build();
+    }
+    return (T) moshi.adapter(type).lenient().fromJson(json);
+  }
+
+  public static byte[] toJsonByteArray(Object obj, Moshi moshi, Type type) {
+    return string2ByteArray(toJson(obj, moshi, type));
+  }
+
+  public static <T> T fromJsonByteArray(byte[] jsonByteArray, Moshi moshi, Type type)
+      throws IOException {
+    return fromJson(byteArray2String(jsonByteArray), moshi, type);
   }
 
   public static byte[] string2ByteArray(String value) {
@@ -61,29 +82,29 @@ public class DataUtil {
     return ByteString.of(bytes, 0, bytes.length).utf8();
   }
 
-  public static Map<String, String> toMap(Object obj, Gson gson) {
-    if (gson == null) {
-      gson = new Gson();
-    }
-    String json = gson.toJson(obj);
-    Map<String, String> map = gson.fromJson(json, new TypeToken<Map<String, String>>() {
-    }.getType());
-    return map;
-  }
-
   public static boolean isAccessFailure(IoError ioError) {
     return ioError.code == 403 || ioError.code == 405;
   }
 
   public static boolean isMainThread() {
-    return Looper.getMainLooper().getThread() == Thread.currentThread();
+    try {
+      return Looper.myLooper() == Looper.getMainLooper();
+    } catch (Exception e) {
+      return true;// Cover for tests
+    }
   }
 
-  public static void requireMainThread() {
+  public static void verifyMainThread() {
+    if (BuildConfig.DEBUG) {
+      return;// Cover for tests
+    }
     MainThreadDisposable.verifyMainThread();
   }
 
-  public static void requireWorkThread() {
+  public static void verifyWorkThread() {
+    if (BuildConfig.DEBUG) {
+      return;// Cover for tests
+    }
     if (isMainThread()) {
       throw new UnsupportedOperationException("Can't run in Main thread");
     }
@@ -91,12 +112,5 @@ public class DataUtil {
 
   public static void postToMainThread(Runnable runnable) {
     AndroidSchedulers.mainThread().scheduleDirect(runnable);
-  }
-
-  public static String md5(String source) {
-    if (TextUtils.isEmpty(source)) {
-      return source;
-    }
-    return ByteString.encodeUtf8(source).md5().hex();
   }
 }

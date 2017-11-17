@@ -9,9 +9,12 @@ import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 import com.pacific.guava.Preconditions;
 import java.util.Map;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 import javax.inject.Inject;
 
+@Immutable
 public final class OkReceiver extends BroadcastReceiver {
 
   static final String FINISH_ACTION = "com.pacific.presentation.finish";
@@ -22,6 +25,7 @@ public final class OkReceiver extends BroadcastReceiver {
     super();
   }
 
+  @CheckForNull
   public static void sendBroadcast(@Nonnull Context context, @Nonnull String action) {
     Preconditions.checkNotNull(context);
     Preconditions.checkState(!TextUtils.isEmpty(action));
@@ -30,6 +34,7 @@ public final class OkReceiver extends BroadcastReceiver {
     LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
   }
 
+  @CheckForNull
   public static void sendFinishBroadcast(@Nonnull Context context) {
     sendBroadcast(context, FINISH_ACTION);
   }
@@ -45,6 +50,7 @@ public final class OkReceiver extends BroadcastReceiver {
     }
   }
 
+  @CheckForNull
   public void addConsumer(@Nonnull IntentFilter intentFilter, @Nonnull String action,
       @Nonnull Consumer consumer) {
     Preconditions.checkNotNull(intentFilter);
@@ -58,6 +64,7 @@ public final class OkReceiver extends BroadcastReceiver {
     consumers.clear();
   }
 
+  @CheckForNull
   public void removeConsumer(@Nonnull String action) {
     Preconditions.checkState(!TextUtils.isEmpty(action));
     consumers.remove(action);

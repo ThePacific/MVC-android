@@ -1,5 +1,6 @@
 package com.pacific.guava;
 
+import com.pacific.guava.JdkPattern.JdkMatcher;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -98,7 +99,7 @@ public final class Splitter {
         new Strategy() {
           @Override
           public SplittingIterator iterator(final Splitter splitter, CharSequence toSplit) {
-            final CommonMatcher matcher = jdkPattern.matcher(toSplit);
+            final JdkMatcher matcher = jdkPattern.matcher(toSplit);
             return new SplittingIterator(splitter, toSplit) {
               @Override
               public int separatorStart(int start) {
