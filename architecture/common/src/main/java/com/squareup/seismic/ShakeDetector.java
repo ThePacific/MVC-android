@@ -9,12 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Detects phone shaking. If more than 75% of the samples taken in the past 0.5s are
- * accelerating, the device is a) shaking, or b) free falling 1.84m (h =
- * 1/2*g*t^2*3/4).
- *
- * @author Bob Lee (bob@squareup.com)
- * @author Eric Burke (eric@squareup.com)
+ * Detects phone shaking. If more than 75% of the samples taken in the past 0.5s are accelerating,
+ * the device is a) shaking, or b) free falling 1.84m (h = 1/2*g*t^2*3/4).
  */
 public class ShakeDetector implements SensorEventListener {
 
@@ -23,27 +19,12 @@ public class ShakeDetector implements SensorEventListener {
   public static final int SENSITIVITY_HARD = 15;
 
   private static final int DEFAULT_ACCELERATION_THRESHOLD = SENSITIVITY_MEDIUM;
-
-  /**
-   * When the magnitude of total acceleration exceeds this
-   * value, the phone is accelerating.
-   */
-  private int accelerationThreshold = DEFAULT_ACCELERATION_THRESHOLD;
-
-  /**
-   * Listens for shakes.
-   */
-  public interface Listener {
-
-    /**
-     * Called on the main thread when the device is shaken.
-     */
-    void hearShake();
-  }
-
   private final SampleQueue queue = new SampleQueue();
   private final Listener listener;
-
+  /**
+   * When the magnitude of total acceleration exceeds this value, the phone is accelerating.
+   */
+  private int accelerationThreshold = DEFAULT_ACCELERATION_THRESHOLD;
   private SensorManager sensorManager;
   private Sensor accelerometer;
 
@@ -75,8 +56,8 @@ public class ShakeDetector implements SensorEventListener {
   }
 
   /**
-   * Stops listening.  Safe to call when already stopped.  Ignored on devices
-   * without appropriate hardware.
+   * Stops listening.  Safe to call when already stopped.  Ignored on devices without appropriate
+   * hardware.
    */
   public void stop() {
     if (accelerometer != null) {
@@ -120,6 +101,21 @@ public class ShakeDetector implements SensorEventListener {
     this.accelerationThreshold = accelerationThreshold;
   }
 
+  @Override
+  public void onAccuracyChanged(Sensor sensor, int accuracy) {
+  }
+
+  /**
+   * Listens for shakes.
+   */
+  public interface Listener {
+
+    /**
+     * Called on the main thread when the device is shaken.
+     */
+    void hearShake();
+  }
+
   /**
    * Queue of samples. Keeps a running average.
    */
@@ -132,9 +128,8 @@ public class ShakeDetector implements SensorEventListener {
     private static final long MIN_WINDOW_SIZE = MAX_WINDOW_SIZE >> 1; // 0.25s
 
     /**
-     * Ensure the queue size never falls below this size, even if the device
-     * fails to deliver this many events during the time window. The LG Ally
-     * is one such device.
+     * Ensure the queue size never falls below this size, even if the device fails to deliver this
+     * many events during the time window. The LG Ally is one such device.
      */
     private static final int MIN_QUEUE_SIZE = 4;
 
@@ -224,8 +219,7 @@ public class ShakeDetector implements SensorEventListener {
     }
 
     /**
-     * Returns true if we have enough samples and more than 3/4 of those samples
-     * are accelerating.
+     * Returns true if we have enough samples and more than 3/4 of those samples are accelerating.
      */
     boolean isShaking() {
       return newest != null
@@ -284,9 +278,5 @@ public class ShakeDetector implements SensorEventListener {
       sample.next = head;
       head = sample;
     }
-  }
-
-  @Override
-  public void onAccuracyChanged(Sensor sensor, int accuracy) {
   }
 }

@@ -1,7 +1,5 @@
 package com.pacific.data;
 
-import com.pacific.data.http.Envelope;
-
 import java.util.ArrayList;
 import java.util.List;
 

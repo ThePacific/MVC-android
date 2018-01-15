@@ -30,6 +30,26 @@ public class Spannable extends SpannableStringBuilder {
   }
 
   /**
+   * Sets span objects to the text. This is more efficient than creating a new instance of Spannable
+   * or SpannableStringBuilder.
+   *
+   * @return {@code SpannableString}.
+   */
+  public static SpannableString spanText(CharSequence text, Object... spans) {
+    SpannableString spannableString = new SpannableString(text);
+    for (Object span : spans) {
+      spannableString.setSpan(span, 0, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+    return spannableString;
+  }
+
+  public static SpannableString spanText(CharSequence text, Object span) {
+    SpannableString spannableString = new SpannableString(text);
+    spannableString.setSpan(span, 0, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    return spannableString;
+  }
+
+  /**
    * Appends the character sequence {@code text} and spans {@code spans} over the appended part.
    *
    * @param text the character sequence to append.
@@ -74,9 +94,8 @@ public class Spannable extends SpannableStringBuilder {
   }
 
   /**
-   * Change the flag. Default is SPAN_EXCLUSIVE_EXCLUSIVE.
-   * The flags determine how the span will behave when text is
-   * inserted at the start or end of the span's range
+   * Change the flag. Default is SPAN_EXCLUSIVE_EXCLUSIVE. The flags determine how the span will
+   * behave when text is inserted at the start or end of the span's range
    *
    * @param flag see {@link Spanned}.
    */
@@ -85,18 +104,16 @@ public class Spannable extends SpannableStringBuilder {
   }
 
   /**
-   * Mark the specified range of text with the specified object.
-   * The flags determine how the span will behave when text is
-   * inserted at the start or end of the span's range.
+   * Mark the specified range of text with the specified object. The flags determine how the span
+   * will behave when text is inserted at the start or end of the span's range.
    */
   private void setSpan(Object span, int start, int end) {
     setSpan(span, start, end, flag);
   }
 
   /**
-   * Sets a span object to all appearances of specified text in the spannable.
-   * A new instance of a span object must be provided for each iteration
-   * because it can't be reused.
+   * Sets a span object to all appearances of specified text in the spannable. A new instance of a
+   * span object must be provided for each iteration because it can't be reused.
    *
    * @param textToSpan Case-sensitive text to span in the current spannable.
    * @param getSpan Interface to get a span for each spanned string.
@@ -123,25 +140,5 @@ public class Spannable extends SpannableStringBuilder {
      * @return A new span object should be returned.
      */
     Object getSpan();
-  }
-
-  /**
-   * Sets span objects to the text. This is more efficient than creating a new instance of Spannable
-   * or SpannableStringBuilder.
-   *
-   * @return {@code SpannableString}.
-   */
-  public static SpannableString spanText(CharSequence text, Object... spans) {
-    SpannableString spannableString = new SpannableString(text);
-    for (Object span : spans) {
-      spannableString.setSpan(span, 0, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-    }
-    return spannableString;
-  }
-
-  public static SpannableString spanText(CharSequence text, Object span) {
-    SpannableString spannableString = new SpannableString(text);
-    spannableString.setSpan(span, 0, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-    return spannableString;
   }
 }

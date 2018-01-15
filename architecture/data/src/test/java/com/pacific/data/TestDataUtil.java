@@ -3,8 +3,6 @@ package com.pacific.data;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.pacific.data.cache.MemoryCache;
-import com.pacific.data.common.DataUtil;
 import com.pacific.guava.JdkPattern;
 import com.pacific.guava.Joiner;
 import com.pacific.guava.OkString;

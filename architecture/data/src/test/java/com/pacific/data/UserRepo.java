@@ -1,8 +1,5 @@
 package com.pacific.data;
 
-import com.pacific.data.cache.DiskCache;
-import com.pacific.data.cache.MemoryCache;
-import com.pacific.data.http.Envelope;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import io.reactivex.Observable;

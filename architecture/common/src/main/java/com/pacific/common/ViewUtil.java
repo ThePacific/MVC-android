@@ -23,16 +23,16 @@ public class ViewUtil {
     editText.setSelection(editText.getText().toString().length());
   }
 
-  public static void trimAnimation(RecyclerView view) {
+  public static void trimItemAnimator(RecyclerView view) {
     ((DefaultItemAnimator) view.getItemAnimator()).setSupportsChangeAnimations(false);
   }
 
   public static boolean isAttached(View view) {
-    return (isVersion(VERSION_CODES.KITKAT) && view.isAttachedToWindow())
+    return (VERSION.SDK_INT >= VERSION_CODES.KITKAT && view.isAttachedToWindow())
         || view.getWindowToken() != null;
   }
 
-  public static boolean isVersion(int version) {
+  public static boolean onSdk(int version) {
     return VERSION.SDK_INT >= version;
   }
 }

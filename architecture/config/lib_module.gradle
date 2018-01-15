@@ -88,9 +88,6 @@ dependencies {
     compileOnly dep.jetAnnotations
     compileOnly dep.annotationApi
 
-    compileOnly dep.autoValue
-    annotationProcessor dep.autoValueCompiler
-
     testImplementation dep.junit
     testImplementation dep.truth
     testImplementation dep.mockito
@@ -101,9 +98,9 @@ dependencies {
         exclude group: 'com.android.support', module: '*'
     })
 
-    api dep.lifecycleJava8
-    api dep.lifecycleReactivestreams
-    api dep.lifecycleExtensions
+    implementation dep.lifecycleJava8
+    implementation dep.lifecycleReactivestreams
+    implementation dep.lifecycleExtensions
 
-//    api dep.theGuava
+//    implementation dep.theGuava
 }

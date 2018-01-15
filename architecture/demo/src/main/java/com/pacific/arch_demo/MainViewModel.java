@@ -3,7 +3,7 @@ package com.pacific.arch_demo;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 import com.pacific.common.rx.ObservableUtil;
-import com.pacific.data.http.Source;
+import com.pacific.data.Source;
 import io.reactivex.Observable;
 import javax.inject.Inject;
 

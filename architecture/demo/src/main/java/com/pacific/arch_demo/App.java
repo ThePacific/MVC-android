@@ -1,7 +1,7 @@
 package com.pacific.arch_demo;
 
-import com.squareup.leakcanary.LeakCanary;
 import com.pacific.arch_demo.di.DaggerAppComponent;
+import com.pacific.common.SystemUtil;
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
 
@@ -15,9 +15,6 @@ public class App extends DaggerApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    if (LeakCanary.isInAnalyzerProcess(this)) {
-    } else {
-      LeakCanary.install(this);
-    }
+    SystemUtil.attachDebug(this, null);
   }
 }

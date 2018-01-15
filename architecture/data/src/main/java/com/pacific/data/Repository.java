@@ -2,13 +2,6 @@ package com.pacific.data;
 
 import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
-import com.pacific.data.cache.DiskCache;
-import com.pacific.data.cache.MemoryCache;
-import com.pacific.data.common.DataUtil;
-import com.pacific.data.http.Envelope;
-import com.pacific.data.http.IoError;
-import com.pacific.data.http.Source;
-import com.pacific.data.http.Status;
 import com.pacific.guava.Preconditions;
 import com.squareup.moshi.Moshi;
 import io.reactivex.Observable;
@@ -18,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 
 /**
- * A repository can get cached data {@link Repository#get(Object)}, or force
- * a call to network(skipping cache) {@link Repository#fetch(Object, boolean, boolean)}
+ * A repository can get cached data {@link Repository#get(Object)}, or force a call to
+ * network(skipping cache) {@link Repository#fetch(Object, boolean, boolean)}
  */
 public abstract class Repository<T, R> {
 
@@ -35,9 +28,8 @@ public abstract class Repository<T, R> {
   }
 
   /**
-   * Return an Observable of {@link Source <R>} for request query
-   * Data will be returned from oldest non expired source
-   * Source is from memory cache, disk cache and network
+   * Return an Observable of {@link Source <R>} for request query Data will be returned from oldest
+   * non expired source Source is from memory cache, disk cache and network
    */
   @Nonnull
   @WorkerThread
@@ -152,8 +144,8 @@ public abstract class Repository<T, R> {
   }
 
   /**
-   * Be careful, it maybe throw IllegalStateException
-   * It's better to make sure you have data in memory
+   * Be careful, it maybe throw IllegalStateException It's better to make sure you have data in
+   * memory
    *
    * @param evictExpired true to evict expired data
    * @return an R from Memory Cache
@@ -209,8 +201,8 @@ public abstract class Repository<T, R> {
   @SuppressWarnings("unchecked")
   protected final Observable<Source<R>> onError(Envelope<R> envelope, boolean evictDiskCache,
       boolean evictMemoryCache) throws IOException {
-    IoError error = new IoError(envelope.message(), envelope.code());
-    if (DataUtil.isAccessFailure(error)) {
+    IOError ioError = new IOError(envelope.message(), envelope.code());
+    if (DataUtil.isAccessFailure(ioError)) {
       diskCache.evictAll();
       memoryCache.evictAll();
     } else {
@@ -221,7 +213,7 @@ public abstract class Repository<T, R> {
         evictMemoryCache();
       }
     }
-    return Observable.just(Source.failure(error));
+    return Observable.just(Source.failure(ioError));
   }
 
   /**

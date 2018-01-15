@@ -15,11 +15,11 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('../config/protal.keystore')
-            storePassword "ivi123123"
-            keyAlias "protal.keystore"
-            keyPassword "ivi123123"
-            v2SigningEnabled false
+            storeFile file('../config/thep.jks')
+            storePassword "20180101"
+            keyAlias "thep.the2016"
+            keyPassword "20180101"
+            v2SigningEnabled true
         }
     }
 

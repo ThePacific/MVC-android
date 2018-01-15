@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/arch-kotlin/arch-kotlin.iml" filepath="$PROJECT_DIR$/arch-kotlin/arch-kotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/architecture.iml" filepath="$PROJECT_DIR$/architecture.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/data/data.iml" filepath="$PROJECT_DIR$/data/data.iml" />

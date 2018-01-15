@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel;
 
 import com.pacific.arch_demo.MainViewModel;
 import com.pacific.arch_demo.SecondViewModel;
-import com.pacific.presentation.id.ViewModelKey;
+import com.pacific.presentation.ViewModelKey;
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;

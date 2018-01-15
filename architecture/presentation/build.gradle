@@ -1,5 +1,6 @@
 apply from: "../config/lib_module.gradle"
-//apply from: '../config/check_style.gradle'
+apply plugin: 'kotlin-android'
+apply from: '../config/check_style.gradle'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -10,6 +11,9 @@ dependencies {
     implementation dep.rxjava2
     implementation dep.rxandroid2
 
+    compileOnly dep.autoValue
+    annotationProcessor dep.autoValueCompiler
+
     implementation dep.dagger
     implementation dep.daggerAndroid
     implementation dep.daggerAndroidSupport
@@ -17,6 +21,7 @@ dependencies {
     annotationProcessor dep.daggerAndroidProcessor
 
     implementation dep.processPhoenix
+    implementation dep.reflection
 
     implementation project(':guava')
 }

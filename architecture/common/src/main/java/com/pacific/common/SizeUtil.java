@@ -12,7 +12,7 @@ public class SizeUtil {
     throw new UnsupportedOperationException();
   }
 
-  public static float xmlDP(Context context, @DimenRes int id) {
+  public static float getXmlDP(Context context, @DimenRes int id) {
     Resources resources = context.getResources();
     return resources.getDimension(id) / resources.getDisplayMetrics().density;
   }
@@ -37,19 +37,19 @@ public class SizeUtil {
     return pxValue / fontScale;
   }
 
-  public static int dp2px_(Context context, float dpValue) {
+  public static int dp2px_int(Context context, float dpValue) {
     return (int) (dp2px(context, dpValue) + 0.5f);
   }
 
-  public static int px2dp_(Context context, float pxValue) {
+  public static int px2dp_int(Context context, float pxValue) {
     return (int) (px2dp(context, pxValue) + 0.5f);
   }
 
-  public static int sp2px_(Context context, float spValue) {
+  public static int sp2px_int(Context context, float spValue) {
     return (int) (sp2px(context, spValue) + 0.5f);
   }
 
-  public static int px2sp_(Context context, float pxValue) {
+  public static int px2sp_int(Context context, float pxValue) {
     return (int) (px2sp(context, pxValue) + 0.5f);
   }
 

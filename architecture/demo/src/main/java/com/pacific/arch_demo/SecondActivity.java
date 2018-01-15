@@ -4,8 +4,8 @@ import android.arch.lifecycle.ViewModel;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import com.pacific.presentation.common.OkRouter;
-import com.pacific.presentation.core.Activity;
+import com.pacific.presentation.Activity;
+import com.pacific.presentation.OkRouter;
 import javax.inject.Inject;
 
 public class SecondActivity extends Activity {

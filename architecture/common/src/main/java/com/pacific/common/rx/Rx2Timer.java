@@ -33,6 +33,10 @@ public final class Rx2Timer {
     onError = builder.onError;
   }
 
+  public static Builder builder() {
+    return new Builder();
+  }
+
   /**
    * is in pause state
    */
@@ -150,10 +154,6 @@ public final class Rx2Timer {
     resumeTake = 0l;
     pauseTake = 0l;
     isStarted = false;
-  }
-
-  public static Builder builder() {
-    return new Builder();
   }
 
   public static final class Builder {

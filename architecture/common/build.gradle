@@ -13,5 +13,8 @@ dependencies {
     implementation dep.autoDispose
     implementation dep.autoDisposeAndroid
 
+    debugImplementation dep.leakcanary
+    releaseImplementation dep.leakcanaryNo
+
     implementation project(':guava')
 }

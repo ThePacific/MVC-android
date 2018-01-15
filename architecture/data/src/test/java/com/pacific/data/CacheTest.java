@@ -2,9 +2,6 @@ package com.pacific.data;
 
 import static org.junit.Assert.assertEquals;
 
-import com.pacific.data.cache.DiskCache;
-import com.pacific.data.cache.MemoryCache;
-import com.pacific.data.http.Source;
 import com.squareup.moshi.Moshi;
 import java.io.File;
 import java.io.IOException;

@@ -35,6 +35,11 @@ public class DialogScopeProvider implements LifecycleScopeProvider<ViewLifecycle
   private final LifecycleScopeProvider lifecycleScopeProvider;
   private final Dialog dialog;
 
+  private DialogScopeProvider(final Dialog dialog) {
+    this.dialog = dialog;
+    this.lifecycleScopeProvider = ViewScopeProvider.from(dialog.getWindow().getDecorView());
+  }
+
   /**
    * Creates a {@link LifecycleScopeProvider} for Android Dialog.
    *
@@ -46,11 +51,6 @@ public class DialogScopeProvider implements LifecycleScopeProvider<ViewLifecycle
       throw new NullPointerException("dialog == null");
     }
     return new DialogScopeProvider(dialog);
-  }
-
-  private DialogScopeProvider(final Dialog dialog) {
-    this.dialog = dialog;
-    this.lifecycleScopeProvider = ViewScopeProvider.from(dialog.getWindow().getDecorView());
   }
 
   @Override
