@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.pacific.presentation.BottomSheetDialogFragment;
-import com.pacific.presentation.OkRouter;
+import com.pacific.presentation.Router;
 import com.pacific.presentation.ViewModelSource;
 
 public class BottomSheet extends BottomSheetDialogFragment {
@@ -40,7 +40,7 @@ public class BottomSheet extends BottomSheetDialogFragment {
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    view.findViewById(R.id.text).setOnClickListener(i -> OkRouter.dismiss(this));
+    view.findViewById(R.id.text).setOnClickListener(i -> Router.dismiss(this));
   }
 
   @Override

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import com.pacific.presentation.Activity;
-import com.pacific.presentation.OkRouter;
+import com.pacific.presentation.Router;
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
 import javax.inject.Inject;
@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
     setContentView(R.layout.activity_main);
     model = fetchViewModel();
     progressBar = findViewById(R.id.progressbar);
-    findViewById(R.id.button).setOnClickListener(v -> OkRouter.start(this, SecondActivity.class));
+    findViewById(R.id.button).setOnClickListener(v -> Router.start(this, SecondActivity.class));
     findViewById(R.id.button).setOnClickListener(i -> model.load(0)
         .to(AutoDispose.with(AndroidLifecycleScopeProvider.from(this)).forObservable())
         .subscribe(it -> {
@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
               break;
             case SUCCESS:
               progressBar.setVisibility(View.GONE);
-              OkRouter.showDialogFragment(getSupportFragmentManager(), BottomSheet.newInstance());
+              Router.showDialogFragment(getSupportFragmentManager(), BottomSheet.newInstance());
               break;
             default:
               throw new UnsupportedOperationException();

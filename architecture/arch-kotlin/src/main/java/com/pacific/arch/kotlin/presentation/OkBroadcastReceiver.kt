@@ -7,7 +7,7 @@ import android.content.IntentFilter
 import android.support.v4.util.ArrayMap
 import javax.inject.Inject
 
-class OkReceiver @Inject constructor() : BroadcastReceiver() {
+class OkBroadcastReceiver @Inject constructor() : BroadcastReceiver() {
     private val consumers = ArrayMap<String, Consumer>()
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -19,18 +19,18 @@ class OkReceiver @Inject constructor() : BroadcastReceiver() {
         }
     }
 
-    fun addConsumer(filter: IntentFilter, action: String, consumer: Consumer): OkReceiver {
+    fun addConsumer(filter: IntentFilter, action: String, consumer: Consumer): OkBroadcastReceiver {
         filter.addAction(action)
         consumers.put(action, consumer)
         return this
     }
 
-    fun clearConsumer(): OkReceiver {
+    fun clearConsumer(): OkBroadcastReceiver {
         consumers.clear()
         return this
     }
 
-    fun removeConsumer(action: String): OkReceiver {
+    fun removeConsumer(action: String): OkBroadcastReceiver {
         consumers.remove(action)
         return this
     }

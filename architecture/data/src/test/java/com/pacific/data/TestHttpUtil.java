@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestDataUtil {
+public class TestHttpUtil {
 
   @Test
   public void testIsEmpty() {
@@ -43,19 +43,19 @@ public class TestDataUtil {
   public void testToJson() throws IOException {
     MemoryCache.Entry entry = MemoryCache.Entry.create("Just test", 1000L);
     final String expected = "{\"data\":\"Just test\",\"ttl\":1000}";
-    assertEquals(expected, DataUtil.toJson(entry, null, MemoryCache.Entry.class));
+    assertEquals(expected, HttpUtil.toJson(entry, null, MemoryCache.Entry.class));
 
     Note note = new Note();
     note.title = "for example";
     note.size = 512;
     final String target = "{\"note_size\":512,\"note_title\":\"for example\"}";
-    assertEquals(target, DataUtil.toJson(note, null, Object.class));
+    assertEquals(target, HttpUtil.toJson(note, null, Object.class));
   }
 
   @Test
   public void testFromJson() throws IOException {
     final String json = "{\"data\":\"Just test\",\"ttl\":1000}";
-    MemoryCache.Entry entry = DataUtil.fromJson(json, null, MemoryCache.Entry.class);
+    MemoryCache.Entry entry = HttpUtil.fromJson(json, null, MemoryCache.Entry.class);
     assertEquals("Just test", entry.data);
     assertEquals(1000L, entry.ttl);
 
@@ -64,7 +64,7 @@ public class TestDataUtil {
         + "{\"note_title\":\"second note\",\"note_size\":2048}"
         + "]}";
 
-    Page page = DataUtil.fromJson(json1, null, Page.class);
+    Page page = HttpUtil.fromJson(json1, null, Page.class);
     assertEquals(2, page.notes.size());
     assertEquals(1024, page.notes.get(0).size);
     assertEquals("first note", page.notes.get(0).title);
@@ -76,7 +76,7 @@ public class TestDataUtil {
         + "{\"note_title\":\"second note\",\"note_size\":2048}"
         + "]}";
 
-    PageT<Note> page2 = DataUtil
+    PageT<Note> page2 = HttpUtil
         .fromJson(json2, null, Types.newParameterizedType(PageT.class, Note.class));
     assertEquals(2, page2.notes.size());
     assertEquals(1024, page2.notes.get(0).size);
@@ -89,7 +89,7 @@ public class TestDataUtil {
         + "{\"note_title\":\"second note\",\"note_size\":2048}"
         + "]";
 
-    List<Note> notes = DataUtil
+    List<Note> notes = HttpUtil
         .fromJson(listJson, null, Types.newParameterizedType(List.class, Note.class));
     assertEquals(2, notes.size());
     assertEquals(1024, notes.get(0).size);
@@ -97,7 +97,7 @@ public class TestDataUtil {
     assertEquals(2048, notes.get(1).size);
     assertEquals("second note", notes.get(1).title);
 
-    DataUtil.toJson(page2, null, Types.newParameterizedType(PageT.class, Note.class));
+    HttpUtil.toJson(page2, null, Types.newParameterizedType(PageT.class, Note.class));
   }
 
   @Test
@@ -107,7 +107,7 @@ public class TestDataUtil {
     note.size = 512;
     note.content = "Hello world";
 
-    Map<String, String> map = DataUtil.toMap(note, null);
+    Map<String, String> map = HttpUtil.toMap(note, null);
 
     assertEquals(3, map.size());
     assertEquals(true, map.containsKey("note_title"));
@@ -117,7 +117,7 @@ public class TestDataUtil {
     assertEquals(512L, map.get("note_size"));
     assertEquals("Hello world", map.get("content"));
 
-    Map<String, String> map2 = DataUtil.toMap(note, null);
+    Map<String, String> map2 = HttpUtil.toMap(note, null);
     assertEquals(3, map2.size());
     assertEquals(true, map2.containsKey("note_title"));
     assertEquals(true, map2.containsKey("note_size"));

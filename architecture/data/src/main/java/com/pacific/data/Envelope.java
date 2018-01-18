@@ -1,12 +1,11 @@
 package com.pacific.data;
 
 public interface Envelope<T> {
+    boolean isSuccess();
 
-  boolean isSuccess();
+    int code();
 
-  int code();
+    String message();
 
-  String message();
-
-  T data();
+    T data();
 }

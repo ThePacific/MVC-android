@@ -209,5 +209,5 @@ fun sendBroadcast(context: Context, action: String) {
 }
 
 fun sendFinishBroadcast(context: Context) {
-    sendBroadcast(context, "com.pacific.arch.kotlin.presentation.finish")
+    sendBroadcast(context, "com.pacific.arch.action.finish")
 }

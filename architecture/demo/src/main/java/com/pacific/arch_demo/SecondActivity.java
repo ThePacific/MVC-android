@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import com.pacific.presentation.Activity;
-import com.pacific.presentation.OkRouter;
+import com.pacific.presentation.Router;
 import javax.inject.Inject;
 
 public class SecondActivity extends Activity {
@@ -54,6 +54,6 @@ public class SecondActivity extends Activity {
   }
 
   private void displayBottomSheet() {
-    OkRouter.showDialogFragment(getSupportFragmentManager(), BottomSheet.newInstance());
+    Router.showDialogFragment(getSupportFragmentManager(), BottomSheet.newInstance());
   }
 }

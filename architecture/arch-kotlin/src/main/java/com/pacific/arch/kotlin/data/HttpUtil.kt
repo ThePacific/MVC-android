@@ -1,11 +1,7 @@
 package com.pacific.arch.kotlin.data
 
-import android.os.Looper
-import com.pacific.arch.kotlin.BuildConfig
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
-import io.reactivex.android.MainThreadDisposable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import okhttp3.OkHttpClient
 import okio.ByteString
 import java.io.IOException
@@ -63,32 +59,4 @@ fun toJsonByteArray(obj: Any, moshi: Moshi?, type: Type): ByteArray {
 @Throws(IOException::class)
 fun <T> fromJsonByteArray(byteArray: ByteArray, moshi: Moshi?, type: Type): T {
     return fromJson(byteArray2String(byteArray), moshi, type)
-}
-
-fun isMainThread(): Boolean {
-    return try {
-        Looper.myLooper() == Looper.getMainLooper()
-    } catch (e: Exception) {
-        true// Cover for tests
-    }
-}
-
-fun verifyMainThread() {
-    if (BuildConfig.DEBUG) {
-        return // Cover for tests
-    }
-    MainThreadDisposable.verifyMainThread()
-}
-
-fun verifyWorkThread() {
-    if (BuildConfig.DEBUG) {
-        return // Cover for tests
-    }
-    if (isMainThread()) {
-        throw UnsupportedOperationException("Can't run in Main thread")
-    }
-}
-
-fun postToMainThread(runnable: Runnable) {
-    AndroidSchedulers.mainThread().scheduleDirect(runnable)
 }

@@ -6,66 +6,67 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import dagger.android.support.AndroidSupportInjection;
-import io.reactivex.internal.functions.ObjectHelper;
+
 import javax.inject.Inject;
 
+import dagger.android.support.AndroidSupportInjection;
+import io.reactivex.internal.functions.ObjectHelper;
+
 public abstract class AppCompatDialogFragment extends
-    android.support.v7.app.AppCompatDialogFragment {
+        android.support.v7.app.AppCompatDialogFragment {
+    @Inject
+    protected ViewModelFactory modelFactory;
+    private ViewModel realViewModel;
 
-  @Inject
-  protected ViewModelFactory modelFactory;
-  private ViewModel realViewModel;
-
-  @Override
-  public void onAttach(Context context) {
-    AndroidSupportInjection.inject(this);
-    super.onAttach(context);
-  }
-
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    if (isAttachViewModel()) {
-      switch (modelProvider()) {
-        case ACTIVITY:
-          realViewModel = ViewModelProviders.of(getActivity(), modelFactory)
-              .get(modelClass());
-          break;
-        case PARENT_FRAGMENT:
-          realViewModel = ViewModelProviders.of(getParentFragment(), modelFactory)
-              .get(modelClass());
-          break;
-        case NONE:
-          realViewModel = ViewModelProviders.of(this, modelFactory)
-              .get(modelClass());
-          break;
-        default:
-          throw new UnsupportedOperationException();
-      }
+    @Override
+    public void onAttach(Context context) {
+        AndroidSupportInjection.inject(this);
+        super.onAttach(context);
     }
-  }
 
-  @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    if (!view.isClickable()) {
-      view.setClickable(true);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (isAttachViewModel()) {
+            switch (modelProvider()) {
+                case ACTIVITY:
+                    realViewModel = ViewModelProviders.of(getActivity(), modelFactory)
+                            .get(modelClass());
+                    break;
+                case PARENT_FRAGMENT:
+                    realViewModel = ViewModelProviders.of(getParentFragment(), modelFactory)
+                            .get(modelClass());
+                    break;
+                case NONE:
+                    realViewModel = ViewModelProviders.of(this, modelFactory)
+                            .get(modelClass());
+                    break;
+                default:
+                    throw new UnsupportedOperationException();
+            }
+        }
     }
-  }
 
-  protected ViewModelSource modelProvider() {
-    return ViewModelSource.ACTIVITY;
-  }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (!view.isClickable()) {
+            view.setClickable(true);
+        }
+    }
 
-  @SuppressWarnings("unchecked")
-  protected final <T extends ViewModel> T fetchViewModel() {
-    return (T) ObjectHelper.requireNonNull(realViewModel, "realViewModel = null");
-  }
+    protected ViewModelSource modelProvider() {
+        return ViewModelSource.ACTIVITY;
+    }
 
-  protected boolean isAttachViewModel() {
-    return false;
-  }
+    @SuppressWarnings("unchecked")
+    protected final <T extends ViewModel> T fetchViewModel() {
+        return (T) ObjectHelper.requireNonNull(realViewModel, "realViewModel = null");
+    }
 
-  protected abstract Class<? extends ViewModel> modelClass();
+    protected boolean isAttachViewModel() {
+        return false;
+    }
+
+    protected abstract Class<? extends ViewModel> modelClass();
 }

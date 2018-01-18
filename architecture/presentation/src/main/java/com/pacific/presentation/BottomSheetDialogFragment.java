@@ -6,8 +6,8 @@ import android.support.design.widget.BottomSheetDialog;
 
 public abstract class BottomSheetDialogFragment extends AppCompatDialogFragment {
 
-  @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
-    return new BottomSheetDialog(getContext(), getTheme());
-  }
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return new BottomSheetDialog(getContext(), getTheme());
+    }
 }

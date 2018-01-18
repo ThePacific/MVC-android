@@ -12,7 +12,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 abstract class Activity : DaggerAppCompatActivity() {
-    protected @Inject lateinit var okReceiver: OkReceiver
+    protected @Inject lateinit var okReceiver: OkBroadcastReceiver
     protected @Inject lateinit var modelFactory: ViewModelFactory
 
     @Suppress("UNCHECKED_CAST")
@@ -37,8 +37,8 @@ abstract class Activity : DaggerAppCompatActivity() {
     protected open fun addBroadcastAction(filter: IntentFilter) {
         if (applyFinishAction()) {
             okReceiver.addConsumer(filter,
-                    "com.pacific.arch.kotlin.presentation.finish",
-                    object : OkReceiver.Consumer {
+                    "com.pacific.arch.action.finish",
+                    object : OkBroadcastReceiver.Consumer {
                         override fun run(context: Context, intent: Intent) {
                             finish()
                         }

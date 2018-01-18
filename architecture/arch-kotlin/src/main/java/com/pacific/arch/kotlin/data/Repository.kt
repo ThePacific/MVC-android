@@ -2,6 +2,7 @@ package com.pacific.arch.kotlin.data
 
 import android.support.annotation.WorkerThread
 import android.text.TextUtils
+import com.pacific.arch.kotlin.rx.verifyWorkThread
 import com.pacific.guava.Preconditions
 import com.squareup.moshi.Moshi
 import io.reactivex.Observable
