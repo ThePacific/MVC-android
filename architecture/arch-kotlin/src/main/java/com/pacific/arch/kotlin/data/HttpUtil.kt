@@ -18,30 +18,37 @@ fun cancelOkhttp3Request(okHttpClient: OkHttpClient, tag: Any) {
 
 fun md5(src: String) = ByteString.encodeUtf8(src).md5().hex()!!
 
-fun toMap(obj: Any, moshi: Moshi?): Map<String, String> {
-    var localMoshi = moshi
-    if (localMoshi == null) {
-        localMoshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-    }
-    val adapter = localMoshi!!.adapter(Any::class.java)
+@JvmOverloads
+@Suppress("UNCHECKED_CAST")
+fun toMap(obj: Any, moshi: Moshi? = null): Map<String, String> {
+    val mMoshi = moshi ?: Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    val adapter = mMoshi!!.adapter(Any::class.java)
     return adapter.toJsonValue(obj) as Map<String, String>
 }
 
-fun toJson(obj: Any, moshi: Moshi?, type: Type): String {
-    var localMoshi = moshi
-    if (localMoshi == null) {
-        localMoshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-    }
-    return localMoshi!!.adapter<Any>(type).lenient().toJson(obj)
+@JvmOverloads
+fun toJson(obj: Any, type: Type, moshi: Moshi? = null): String {
+    val mMoshi = moshi ?: Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    return mMoshi.adapter<Any>(type).lenient().toJson(obj)
 }
 
+@JvmOverloads
 @Throws(IOException::class)
-fun <T> fromJson(json: String, moshi: Moshi?, type: Type): T {
-    var localMoshi = moshi
-    if (localMoshi == null) {
-        localMoshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-    }
-    return localMoshi!!.adapter<Any>(type).lenient().fromJson(json) as T
+@Suppress("UNCHECKED_CAST")
+fun <T> fromJson(json: String, type: Type, moshi: Moshi? = null): T {
+    val mMoshi = moshi ?: Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    return mMoshi!!.adapter<T>(type).lenient().fromJson(json)!!
+}
+
+@JvmOverloads
+fun toByteArrayJson(obj: Any, type: Type, moshi: Moshi? = null): ByteArray {
+    return string2ByteArray(toJson(obj, type, moshi))
+}
+
+@JvmOverloads
+@Throws(IOException::class)
+fun <T> fromByteArrayJson(byteArray: ByteArray, type: Type, moshi: Moshi? = null): T {
+    return fromJson(byteArray2String(byteArray), type, moshi)
 }
 
 fun string2ByteArray(src: String): ByteArray {
@@ -50,13 +57,4 @@ fun string2ByteArray(src: String): ByteArray {
 
 fun byteArray2String(bytes: ByteArray): String {
     return ByteString.of(bytes, 0, bytes.size).utf8()
-}
-
-fun toJsonByteArray(obj: Any, moshi: Moshi?, type: Type): ByteArray {
-    return string2ByteArray(toJson(obj, moshi, type))
-}
-
-@Throws(IOException::class)
-fun <T> fromJsonByteArray(byteArray: ByteArray, moshi: Moshi?, type: Type): T {
-    return fromJson(byteArray2String(byteArray), moshi, type)
 }

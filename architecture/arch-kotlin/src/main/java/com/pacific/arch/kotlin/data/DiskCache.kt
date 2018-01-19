@@ -10,7 +10,6 @@ import java.io.Closeable
 import java.io.File
 import java.io.Flushable
 import java.io.IOException
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -42,7 +41,7 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
             val json = source.readUtf8()
             source.close()
             Util.closeQuietly(snapshot)
-            fromJson<Entry>(json, moshi, Entry::class.java)
+            fromJson<Entry>(json, Entry::class.java, moshi)
         } catch (e: IOException) {
             Util.closeQuietly(snapshot)
             null
@@ -144,20 +143,20 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
     class Entry private constructor(
             /**
              * The data returned from cache.
-             * Use [DataUtil.toJson]}
+             * Use {@code HttpUtil.toJson()}
              * to serialize a data object
              */
-            @field:Json(name = "data")
+            @Json(name = "data")
             val data: ByteArray,
             /**
              * Time to live(TTL) for this record
              */
-            @field:Json(name = "ttl")
+            @Json(name = "TTL")
             val TTL: Long,
             /**
              * Soft TTL for this record
              */
-            @field:Json(name = "softTtl")
+            @Json(name = "softTTL")
             val softTTL: Long) {
 
         /**
@@ -168,18 +167,7 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
         /**
          * @return To a json String
          */
-        override fun toString(): String {
-            val builder = StringBuilder()
-            builder.append("{")
-                    .append("data=")
-                    .append(Arrays.toString(data))
-                    .append(", ttl=")
-                    .append(TTL)
-                    .append(", softTtl=")
-                    .append(softTTL)
-                    .append("}")
-            return builder.toString()
-        }
+        override fun toString() = toJson(this, DiskCache.Entry::class.java)
 
         /**
          * True if a refresh is needed from the original data source.

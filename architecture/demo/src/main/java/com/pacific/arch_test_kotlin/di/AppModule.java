@@ -1,4 +1,4 @@
-package com.pacific.arch_demo.di;
+package com.pacific.arch_test_kotlin.di;
 
 import dagger.Module;
 

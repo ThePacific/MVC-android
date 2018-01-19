@@ -8,7 +8,8 @@ import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 abstract class Fragment : DaggerFragment() {
-    protected @Inject lateinit var modelFactory: ViewModelFactory
+    @Inject
+    protected lateinit var modelFactory: ViewModelFactory
 
     @Suppress("UNCHECKED_CAST")
     private val realViewModel: ViewModel? by lazy {

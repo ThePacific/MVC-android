@@ -1,10 +1,10 @@
-package com.pacific.arch_demo.di;
+package com.pacific.arch_test_kotlin.di;
 
 import android.app.Application;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.pacific.arch_demo.App;
-import com.pacific.arch_demo.BottomSheet;
+import com.pacific.arch_test_kotlin.App;
+import com.pacific.arch_test_kotlin.BottomSheet;
 import com.pacific.presentation.ViewModelFactory;
 import javax.inject.Singleton;
 

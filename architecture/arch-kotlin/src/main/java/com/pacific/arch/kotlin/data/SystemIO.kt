@@ -20,13 +20,13 @@ import java.util.zip.ZipInputStream
 
 @WorkerThread
 fun readAsset(context: Context, name: String, path: String, overwrite: Boolean) {
-    var path = path
+    var mPath = path
     verifyWorkThread()
-    path = addSeparator(path)
-    mkdirs(path)
+    mPath = addSeparator(mPath)
+    mkdirs(mPath)
     val assetManager = context.assets
     try {
-        val file = File(path + name)
+        val file = File(mPath + name)
         if (FileSystem.SYSTEM.exists(file)) {
             if (overwrite) {
                 FileSystem.SYSTEM.delete(file)
@@ -94,20 +94,21 @@ fun toGallery(context: Context, bitmap: Bitmap, directory: File, image: String) 
 }
 
 @WorkerThread
+@Suppress("UNCHECKED_CAST")
 fun unzip(zipFile: File, directory: String) {
-    var directory = directory
+    var mDirectory = directory
     verifyWorkThread()
     try {
         val zipInputStream = ZipInputStream(FileInputStream(zipFile))
         val source = Okio.buffer(Okio.source(zipInputStream))
-        directory = addSeparator(directory)
+        mDirectory = addSeparator(mDirectory)
         var sink: BufferedSink
         var zipEntry: ZipEntry? = zipInputStream.nextEntry
         while (zipEntry != null) {
             if (zipEntry.isDirectory) {
-                mkdirs(directory + File.separator + zipEntry.name)
+                mkdirs(mDirectory + File.separator + zipEntry.name)
             } else {
-                sink = Okio.buffer(Okio.sink(File(directory, zipEntry.name)))
+                sink = Okio.buffer(Okio.sink(File(mDirectory, zipEntry.name)))
                 val bytes = ByteArray(1024)
                 var nRead: Int = source.read(bytes)
                 while (nRead != -1) {
@@ -137,10 +138,10 @@ fun mkdirs(dir: String): File {
     return file
 }
 
-fun addSeparator(dir: String): String {
-    return if (dir.endsWith(File.separator)) {
-        dir
-    } else dir + File.separator
+fun addSeparator(directory: String): String {
+    return if (directory.endsWith(File.separator)) {
+        directory
+    } else directory + File.separator
 }
 
 val sdCard = addSeparator(Environment.getExternalStorageDirectory().absolutePath)

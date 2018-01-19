@@ -1,7 +1,7 @@
-package com.pacific.arch_demo.di;
+package com.pacific.arch_test_kotlin.di;
 
-import com.pacific.arch_demo.MainActivity;
-import com.pacific.arch_demo.SecondActivity;
+import com.pacific.arch_test_kotlin.MainActivity;
+import com.pacific.arch_test_kotlin.SecondActivity;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 

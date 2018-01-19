@@ -1,4 +1,4 @@
-package com.pacific.arch_demo;
+package com.pacific.arch_test_kotlin;
 
 import android.arch.lifecycle.ViewModel;
 import android.os.Bundle;

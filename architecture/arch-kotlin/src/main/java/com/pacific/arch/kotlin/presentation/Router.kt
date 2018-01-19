@@ -209,5 +209,7 @@ fun sendBroadcast(context: Context, action: String) {
 }
 
 fun sendFinishBroadcast(context: Context) {
-    sendBroadcast(context, "com.pacific.arch.action.finish")
+    sendBroadcast(context, ACTION_FINISH)
 }
+
+const val ACTION_FINISH = "com.pacific.arch.action.finish"

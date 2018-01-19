@@ -43,13 +43,14 @@ abstract class Repository<in T, R>(protected val moshi: Moshi,
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun load(query: T): Observable<Source<R>> {
         verifyWorkThread()
         key = getKey(query)
         return Observable.defer {
             val diskEntry = diskCache.get(key!!) ?: return@defer Observable.just(Source.irrelevant<R>())
-            val json = byteArray2String(diskEntry!!.data)
-            val newData: R = fromJson(json, moshi, dataType())
+            val json = byteArray2String(diskEntry.data)
+            val newData: R = fromJson(json, dataType(), moshi)
             if (diskEntry.isExpired || isIrrelevant(newData)) {
                 memoryCache.remove(key!!)
                 evictDiskCache()
@@ -61,6 +62,7 @@ abstract class Repository<in T, R>(protected val moshi: Moshi,
     }
 
     @JvmOverloads
+    @Suppress("UNCHECKED_CAST")
     fun stream(query: T? = null, evictExpired: Boolean = true): Observable<Source<R>> {
         if (query != null) {
             key = getKey(query)
@@ -68,7 +70,7 @@ abstract class Repository<in T, R>(protected val moshi: Moshi,
         return Observable.defer {
             //No need to check isExpired(), MemoryCache.get() has already done
             val entry = memoryCache.get(key!!, evictExpired) ?: return@defer Observable.just(Source.irrelevant<R>())
-            val newData = entry!!.data as R
+            val newData = entry.data as R
             if (isIrrelevant(newData)) {
                 return@defer Observable.just(Source.irrelevant<R>())
             }
@@ -78,6 +80,7 @@ abstract class Repository<in T, R>(protected val moshi: Moshi,
 
     @Throws(IllegalStateException::class)
     @JvmOverloads
+    @Suppress("UNCHECKED_CAST")
     fun memory(evictExpired: Boolean = false): R {
         val entry = memoryCache.get(key!!, evictExpired) ?: throw IllegalStateException("Not supported")
         val newData = entry.data as R
@@ -126,7 +129,7 @@ abstract class Repository<in T, R>(protected val moshi: Moshi,
         val softTtl = now + timeUnit.toMillis(softTtl().toLong())
         Preconditions.checkState(ttl > now && softTtl > now && ttl >= softTtl)
         if (toDisk) {
-            val bytes = toJsonByteArray(newData as Any, moshi, dataType())
+            val bytes = toByteArrayJson(newData as Any, dataType(), moshi)
             diskCache.put(key!!, DiskCache.Entry.create(bytes, ttl, softTtl))
         } else {
             evictDiskCache()

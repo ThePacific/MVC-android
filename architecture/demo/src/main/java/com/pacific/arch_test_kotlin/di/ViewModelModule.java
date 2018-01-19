@@ -1,9 +1,9 @@
-package com.pacific.arch_demo.di;
+package com.pacific.arch_test_kotlin.di;
 
 import android.arch.lifecycle.ViewModel;
 
-import com.pacific.arch_demo.MainViewModel;
-import com.pacific.arch_demo.SecondViewModel;
+import com.pacific.arch_test_kotlin.MainViewModel;
+import com.pacific.arch_test_kotlin.SecondViewModel;
 import com.pacific.presentation.ViewModelKey;
 import dagger.Binds;
 import dagger.Module;

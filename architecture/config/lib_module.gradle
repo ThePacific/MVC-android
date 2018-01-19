@@ -102,5 +102,4 @@ dependencies {
     implementation dep.lifecycleReactivestreams
     implementation dep.lifecycleExtensions
 
-//    implementation dep.theGuava
 }

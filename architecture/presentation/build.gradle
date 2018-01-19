@@ -1,5 +1,4 @@
 apply from: "../config/lib_module.gradle"
-apply plugin: 'kotlin-android'
 apply from: '../config/check_style.gradle'
 
 dependencies {

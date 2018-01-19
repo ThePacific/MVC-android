@@ -9,7 +9,8 @@ import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 abstract class AppCompatDialogFragment : android.support.v7.app.AppCompatDialogFragment() {
-    protected @Inject lateinit var modelFactory: ViewModelFactory
+    @Inject
+    protected lateinit var modelFactory: ViewModelFactory
 
     @Suppress("UNCHECKED_CAST")
     private val realViewModel: ViewModel? by lazy {

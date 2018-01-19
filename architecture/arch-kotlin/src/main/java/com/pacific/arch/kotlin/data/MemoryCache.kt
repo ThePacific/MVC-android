@@ -92,8 +92,8 @@ class MemoryCache(maxSize: Int) {
         return cache.size()
     }
 
-    class Entry private constructor(@field:Json(name = "data") val data: Any?,
-                                    private @field:Json(name = "ttl") val TTL: Long) {
+    class Entry private constructor(@Json(name = "data") val data: Any?,
+                                    @Json(name = "TTL") val TTL: Long) {
 
         val isExpired: Boolean get() = this.TTL < System.currentTimeMillis()
 

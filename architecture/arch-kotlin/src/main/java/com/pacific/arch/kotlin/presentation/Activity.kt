@@ -12,8 +12,11 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 abstract class Activity : DaggerAppCompatActivity() {
-    protected @Inject lateinit var okReceiver: OkBroadcastReceiver
-    protected @Inject lateinit var modelFactory: ViewModelFactory
+    @Inject
+    protected lateinit var okBroadcastReceiver: OkBroadcastReceiver
+
+    @Inject
+    protected lateinit var modelFactory: ViewModelFactory
 
     @Suppress("UNCHECKED_CAST")
     private val realViewModel: ViewModel by lazy {
@@ -24,20 +27,20 @@ abstract class Activity : DaggerAppCompatActivity() {
         super.onCreate(savedInstanceState)
         val filter = IntentFilter()
         addBroadcastAction(filter)
-        LocalBroadcastManager.getInstance(this).registerReceiver(okReceiver, filter)
+        LocalBroadcastManager.getInstance(this).registerReceiver(okBroadcastReceiver, filter)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        okReceiver.clearConsumer()
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(okReceiver)
+        okBroadcastReceiver.clearConsumer()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(okBroadcastReceiver)
     }
 
     @CallSuper
     protected open fun addBroadcastAction(filter: IntentFilter) {
         if (applyFinishAction()) {
-            okReceiver.addConsumer(filter,
-                    "com.pacific.arch.action.finish",
+            okBroadcastReceiver.addConsumer(filter,
+                    ACTION_FINISH,
                     object : OkBroadcastReceiver.Consumer {
                         override fun run(context: Context, intent: Intent) {
                             finish()
@@ -49,9 +52,7 @@ abstract class Activity : DaggerAppCompatActivity() {
     @Suppress("UNCHECKED_CAST")
     protected fun <T : ViewModel> fetchViewModel(): T = realViewModel as T
 
-    protected open fun applyFinishAction(): Boolean {
-        return true
-    }
+    protected open fun applyFinishAction() = true
 
     protected abstract fun modelClass(): Class<out ViewModel>
 }

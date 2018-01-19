@@ -39,4 +39,9 @@ public class UserRepo extends Repository<UserQuery, List<User>> {
   protected Type dataType() {
     return Types.newParameterizedType(List.class, User.class);
   }
+
+  @Override
+  protected boolean isAccessFailure(IOError ioError) {
+    return false;
+  }
 }

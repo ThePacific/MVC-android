@@ -1,6 +1,6 @@
-package com.pacific.arch_demo.di;
+package com.pacific.arch_test_kotlin.di;
 
-import com.pacific.arch_demo.App;
+import com.pacific.arch_test_kotlin.App;
 import javax.inject.Singleton;
 
 import dagger.Component;
