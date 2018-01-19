@@ -1,19 +1,19 @@
 package com.pacific.arch.data
 
 import android.support.annotation.WorkerThread
+import android.support.v4.util.Preconditions2
 import android.text.TextUtils
 import com.pacific.arch.rx.verifyWorkThread
-import com.pacific.guava.Preconditions
 import com.squareup.moshi.Moshi
 import io.reactivex.Observable
 import java.io.IOException
 import java.lang.reflect.Type
 import java.util.concurrent.TimeUnit
 
-abstract class Repository<in T, R>(protected val moshi: Moshi,
-                                   protected val diskCache: DiskCache,
-                                   protected val memoryCache: MemoryCache,
-                                   protected var key: String?) {
+abstract class Repository<in T, R>(@JvmField protected val moshi: Moshi,
+                                   @JvmField protected val diskCache: DiskCache,
+                                   @JvmField protected val memoryCache: MemoryCache,
+                                   @JvmField protected var key: String?) {
 
     fun get(query: T): Observable<Source<R>> {
         verifyWorkThread()
@@ -48,7 +48,8 @@ abstract class Repository<in T, R>(protected val moshi: Moshi,
         verifyWorkThread()
         key = getKey(query)
         return Observable.defer {
-            val diskEntry = diskCache.get(key!!) ?: return@defer Observable.just(Source.irrelevant<R>())
+            val diskEntry = diskCache.get(key!!)
+                    ?: return@defer Observable.just(Source.irrelevant<R>())
             val json = byteArray2String(diskEntry.data)
             val newData: R = fromJson(json, dataType(), moshi)
             if (diskEntry.isExpired || isIrrelevant(newData)) {
@@ -69,7 +70,8 @@ abstract class Repository<in T, R>(protected val moshi: Moshi,
         }
         return Observable.defer {
             //No need to check isExpired(), MemoryCache.get() has already done
-            val entry = memoryCache.get(key!!, evictExpired) ?: return@defer Observable.just(Source.irrelevant<R>())
+            val entry = memoryCache.get(key!!, evictExpired)
+                    ?: return@defer Observable.just(Source.irrelevant<R>())
             val newData = entry.data as R
             if (isIrrelevant(newData)) {
                 return@defer Observable.just(Source.irrelevant<R>())
@@ -82,7 +84,8 @@ abstract class Repository<in T, R>(protected val moshi: Moshi,
     @JvmOverloads
     @Suppress("UNCHECKED_CAST")
     fun memory(evictExpired: Boolean = false): R {
-        val entry = memoryCache.get(key!!, evictExpired) ?: throw IllegalStateException("Not supported")
+        val entry = memoryCache.get(key!!, evictExpired)
+                ?: throw IllegalStateException("Not supported")
         val newData = entry.data as R
         if (isIrrelevant(newData)) {
             throw IllegalStateException("Not supported")
@@ -127,7 +130,7 @@ abstract class Repository<in T, R>(protected val moshi: Moshi,
         val now = System.currentTimeMillis()
         val ttl = now + timeUnit.toMillis(ttl().toLong())
         val softTtl = now + timeUnit.toMillis(softTtl().toLong())
-        Preconditions.checkState(ttl > now && softTtl > now && ttl >= softTtl)
+        Preconditions2.checkState(ttl > now && softTtl > now && ttl >= softTtl)
         if (toDisk) {
             val bytes = toByteArrayJson(newData as Any, dataType(), moshi)
             diskCache.put(key!!, DiskCache.Entry.create(bytes, ttl, softTtl))
