@@ -127,6 +127,9 @@ dependencies {
     kapt dep.daggerAndroidProcessor
     implementation dep.processPhoenix
     implementation dep.reflection
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     kapt "android.arch.lifecycle:compiler:1.0.0"
@@ -134,8 +137,6 @@ dependencies {
     implementation dep.okhttp3
     implementation dep.okio
     implementation dep.moshi
-
-    implementation project(':guava')
 
     implementation 'com.squareup.moshi:moshi-kotlin:1.5.0'
     testImplementation 'com.squareup.moshi:moshi-kotlin:1.5.0'

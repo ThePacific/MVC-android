@@ -2,10 +2,8 @@ apply from: "../config/app_module.gradle"
 
 
 android {
-
     defaultConfig {
         applicationId "com.thepacific.clean"
-        multiDexEnabled true
     }
 }
 

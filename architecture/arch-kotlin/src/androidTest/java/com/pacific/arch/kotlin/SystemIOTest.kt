@@ -2,7 +2,7 @@ package com.pacific.arch.kotlin
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
-import com.pacific.arch.kotlin.data.addSeparator
+import com.pacific.arch.data.addSeparator
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

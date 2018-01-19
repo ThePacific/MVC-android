@@ -2,6 +2,7 @@ package com.pacific.arch_test_kotlin;
 
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.support.v4.util.Preconditions2;
 
 import com.pacific.arch_test_kotlin.di.DaggerAppComponent;
 import com.pacific.common.SystemUtil;
@@ -26,5 +27,7 @@ public class App extends DaggerApplication {
     public void onCreate() {
         super.onCreate();
         SystemUtil.attachDebug(this, null);
+
+        Preconditions2.checkArgument(false);
     }
 }

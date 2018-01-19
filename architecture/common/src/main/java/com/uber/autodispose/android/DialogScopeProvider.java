@@ -16,12 +16,14 @@
 
 package com.uber.autodispose.android;
 
-import static com.uber.autodispose.android.ViewLifecycleEvent.DETACH;
-
 import android.app.Dialog;
+
 import com.uber.autodispose.LifecycleScopeProvider;
+
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
+
+import static com.uber.autodispose.android.ViewLifecycleEvent.DETACH;
 
 /**
  * A {@link LifecycleScopeProvider} that can provide scoping for Android {@link Dialog} classes.
@@ -32,44 +34,45 @@ import io.reactivex.functions.Function;
  */
 public class DialogScopeProvider implements LifecycleScopeProvider<ViewLifecycleEvent> {
 
-  private final LifecycleScopeProvider lifecycleScopeProvider;
-  private final Dialog dialog;
+    private final LifecycleScopeProvider lifecycleScopeProvider;
+    private final Dialog dialog;
 
-  private DialogScopeProvider(final Dialog dialog) {
-    this.dialog = dialog;
-    this.lifecycleScopeProvider = ViewScopeProvider.from(dialog.getWindow().getDecorView());
-  }
-
-  /**
-   * Creates a {@link LifecycleScopeProvider} for Android Dialog.
-   *
-   * @param dialog the dialog to scope for
-   * @return a {@link LifecycleScopeProvider} against this dialog.
-   */
-  public static DialogScopeProvider from(Dialog dialog) {
-    if (dialog == null) {
-      throw new NullPointerException("dialog == null");
+    private DialogScopeProvider(final Dialog dialog) {
+        this.dialog = dialog;
+        this.lifecycleScopeProvider = ViewScopeProvider.from(dialog.getWindow().getDecorView());
     }
-    return new DialogScopeProvider(dialog);
-  }
 
-  @Override
-  public Observable<ViewLifecycleEvent> lifecycle() {
-    return lifecycleScopeProvider.lifecycle();
-  }
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public Function<ViewLifecycleEvent, ViewLifecycleEvent> correspondingEvents() {
-    return lifecycleScopeProvider.correspondingEvents();
-  }
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public ViewLifecycleEvent peekLifecycle() {
-    if (dialog.isShowing() || lifecycleScopeProvider.peekLifecycle() == ViewLifecycleEvent.ATTACH) {
-      return ViewLifecycleEvent.ATTACH;
+    /**
+     * Creates a {@link LifecycleScopeProvider} for Android Dialog.
+     *
+     * @param dialog the dialog to scope for
+     * @return a {@link LifecycleScopeProvider} against this dialog.
+     */
+    public static DialogScopeProvider from(Dialog dialog) {
+        if (dialog == null) {
+            throw new NullPointerException("dialog == null");
+        }
+        return new DialogScopeProvider(dialog);
     }
-    return DETACH;
-  }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Observable<ViewLifecycleEvent> lifecycle() {
+        return lifecycleScopeProvider.lifecycle();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Function<ViewLifecycleEvent, ViewLifecycleEvent> correspondingEvents() {
+        return lifecycleScopeProvider.correspondingEvents();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public ViewLifecycleEvent peekLifecycle() {
+        if (dialog.isShowing() || lifecycleScopeProvider.peekLifecycle() == ViewLifecycleEvent.ATTACH) {
+            return ViewLifecycleEvent.ATTACH;
+        }
+        return DETACH;
+    }
 }

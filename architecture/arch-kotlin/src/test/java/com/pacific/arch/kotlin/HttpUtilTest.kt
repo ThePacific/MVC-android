@@ -1,6 +1,6 @@
 package com.pacific.arch.kotlin
 
-import com.pacific.arch.kotlin.data.*
+import com.pacific.arch.data.*
 import com.squareup.moshi.Types
 import org.junit.Assert.*
 import org.junit.Test
