@@ -98,6 +98,7 @@
 -keep public class *extends java.lang.annotation.Annotation {
   <all>;
 }
+
 -keep public class *implements java.lang.annotation.Annotation {
   <all>;
 }

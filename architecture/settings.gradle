@@ -1,6 +1,1 @@
-//include ':demo'
-//include ':common'
-//include ':guava'
-//include ':data'
-//include ':presentation'
-include ':arch-core'
+include ':arch', ':arch-example'

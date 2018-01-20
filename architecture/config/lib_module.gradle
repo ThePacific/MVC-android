@@ -24,7 +24,7 @@ android {
         baseline file("lint-baseline.xml")
         checkAllWarnings true
         warningsAsErrors true
-        abortOnError false
+        abortOnError true
     }
 
     packagingOptions {
@@ -101,5 +101,4 @@ dependencies {
     implementation dep.lifecycleJava8
     implementation dep.lifecycleReactivestreams
     implementation dep.lifecycleExtensions
-
 }

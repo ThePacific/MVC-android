@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/arch-core/arch-core.iml" filepath="$PROJECT_DIR$/arch-core/arch-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/arch/arch.iml" filepath="$PROJECT_DIR$/arch/arch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/arch-example/arch-example.iml" filepath="$PROJECT_DIR$/arch-example/arch-example.iml" />
       <module fileurl="file://$PROJECT_DIR$/architecture.iml" filepath="$PROJECT_DIR$/architecture.iml" />
     </modules>
   </component>

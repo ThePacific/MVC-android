@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compile
@@ -11,6 +13,13 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+
+        //fix AutoValue build path
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
     }
 
     signingConfigs {
@@ -106,6 +115,7 @@ dependencies {
     implementation dep.lifecycleReactivestreams
     implementation dep.lifecycleExtensions
     implementation dep.lifecycleJava8
+    kapt "android.arch.lifecycle:compiler:$lifecycle"
 
     implementation dep.okhttp3
     implementation dep.loggingInterceptor
@@ -114,11 +124,18 @@ dependencies {
     implementation dep.adapterRxjava2
     implementation dep.converterMoshi
     implementation dep.moshi
+
     implementation dep.rxjava2
     implementation dep.rxandroid2
-    implementation dep.autoDispose
-    implementation dep.autoDisposeAndroid
-    implementation dep.autoDisposeComponent
+    implementation dep.dispose
+    implementation dep.disposeAndroid
+    implementation dep.disposeComponent
+    implementation dep.disposeComponentTest
+    implementation dep.disposeK
+    implementation dep.disposeAndroidK
+    implementation dep.disposeComponentK
+    implementation dep.disposeComponentTestK
+
     implementation dep.reflection
     implementation dep.timber
 
@@ -129,13 +146,13 @@ dependencies {
     compileOnly dep.annotationApi
 
     compileOnly dep.autoValue
-    annotationProcessor dep.autoValueCompiler
+    kapt dep.autoValueCompiler
 
     implementation dep.dagger
     implementation dep.daggerAndroid
     implementation dep.daggerAndroidSupport
-    annotationProcessor dep.daggerCompiler
-    annotationProcessor dep.daggerAndroidProcessor
+    kapt dep.daggerCompiler
+    kapt dep.daggerAndroidProcessor
 
     testImplementation dep.junit
     testImplementation dep.mockito
@@ -153,10 +170,15 @@ dependencies {
     releaseImplementation dep.leakcanaryNo
 
     implementation dep.glide
-    annotationProcessor dep.glideProcessor
+    kapt dep.glideProcessor
     implementation dep.parceler
-    annotationProcessor dep.parcelerProcessor
+    kapt dep.parcelerProcessor
     implementation dep.rxPermissions
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 }
 
 gradle.projectsEvaluated {

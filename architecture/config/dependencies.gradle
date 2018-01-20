@@ -28,7 +28,7 @@ ext {
     okhttp3 = "3.9.1"
     okio = "1.13.0"
     retrofit2 = "2.3.0"
-    moshi = "1.4.0"
+    moshi = "1.5.0"
     rxjava2 = "2.1.8"
     rxandroid2 = "2.0.1"
 
@@ -39,7 +39,7 @@ ext {
     dagger2 = "2.14.1"
     autoValue = "1.5.3"
 
-    autoDispose = "0.5.1"
+    dispose = "0.5.1"
     timber = "4.6.0"
     permissions = "0.9.4"
     parceler = "1.1.9"
@@ -74,11 +74,17 @@ ext {
             adapterRxjava2          : "com.squareup.retrofit2:adapter-rxjava2:$retrofit2",
             converterMoshi          : "com.squareup.retrofit2:converter-moshi:$retrofit2",
             moshi                   : "com.squareup.moshi:moshi:$moshi",
+            moshiK                  : "com.squareup.moshi:moshi-kotlin:$moshi",
             rxjava2                 : "io.reactivex.rxjava2:rxjava:$rxjava2",
             rxandroid2              : "io.reactivex.rxjava2:rxandroid:$rxandroid2",
-            autoDispose             : "com.uber.autodispose:autodispose:$autoDispose",
-            autoDisposeAndroid      : "com.uber.autodispose:autodispose-android:$autoDispose",
-            autoDisposeComponent    : "com.uber.autodispose:autodispose-android-archcomponents:$autoDispose",
+            dispose                 : "com.uber.autodispose:autodispose:$dispose",
+            disposeAndroid          : "com.uber.autodispose:autodispose-android:$dispose",
+            disposeComponent        : "com.uber.autodispose:autodispose-android-archcomponents:$dispose",
+            disposeComponentTest    : "com.uber.autodispose:autodispose-android-archcomponents-test:$dispose",
+            disposeK                : "com.uber.autodispose:autodispose-kotlin:$dispose",
+            disposeAndroidK         : "com.uber.autodispose:autodispose-android-kotlin:$dispose",
+            disposeComponentK       : "com.uber.autodispose:autodispose-android-archcomponents-kotlin:$dispose",
+            disposeComponentTestK   : "com.uber.autodispose:autodispose-android-archcomponents-test-kotlin:$dispose",
             annotationApi           : "javax.annotation:javax.annotation-api:$javaxAnnotation",
             errorProne              : "com.google.errorprone:error_prone_annotations:$errorProne",
             jetAnnotations          : "org.jetbrains:annotations:$jetAnnotations",

@@ -1,0 +1,12 @@
+apply from: "../config/app_module_kotlin.gradle"
+
+android {
+    defaultConfig {
+        applicationId "com.pacific.arch.example"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':arch')
+}

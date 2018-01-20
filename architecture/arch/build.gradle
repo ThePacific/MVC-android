@@ -1,0 +1,36 @@
+apply from: "../config/lib_module_kotlin.gradle"
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation dep.appcompat
+    implementation dep.design
+
+    implementation dep.rxjava2
+    implementation dep.rxandroid2
+    implementation dep.dispose
+    implementation dep.disposeAndroid
+    implementation dep.disposeComponent
+    implementation dep.disposeComponentTest
+    implementation dep.disposeK
+    implementation dep.disposeAndroidK
+    implementation dep.disposeComponentK
+    implementation dep.disposeComponentTestK
+
+    compileOnly dep.autoValue
+    kapt dep.autoValueCompiler
+    implementation dep.dagger
+    implementation dep.daggerAndroid
+    implementation dep.daggerAndroidSupport
+    kapt dep.daggerCompiler
+    kapt dep.daggerAndroidProcessor
+
+    implementation dep.processPhoenix
+
+    implementation dep.reflection
+
+    implementation dep.okhttp3
+    implementation dep.okio
+    implementation dep.moshi
+    implementation dep.moshiK
+}

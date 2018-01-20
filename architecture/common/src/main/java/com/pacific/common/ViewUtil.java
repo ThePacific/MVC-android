@@ -27,9 +27,9 @@ public class ViewUtil {
     ((DefaultItemAnimator) view.getItemAnimator()).setSupportsChangeAnimations(false);
   }
 
+  @SuppressLint("RestrictedApi")
   public static boolean isAttached(View view) {
-    return (VERSION.SDK_INT >= VERSION_CODES.KITKAT && view.isAttachedToWindow())
-        || view.getWindowToken() != null;
+    return ;
   }
 
   public static boolean onSdk(int version) {
