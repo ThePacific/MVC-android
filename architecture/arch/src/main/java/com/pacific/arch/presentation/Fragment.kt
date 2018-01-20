@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 abstract class Fragment : DaggerFragment() {
     @Inject
-    protected lateinit var modelFactory: ViewModelFactory
+    lateinit var modelFactory: ViewModelFactory
 
     @Suppress("UNCHECKED_CAST")
     private val realViewModel: ViewModel? by lazy {
@@ -34,16 +34,12 @@ abstract class Fragment : DaggerFragment() {
         }
     }
 
-    protected open fun modelProvider(): ViewModelSource {
-        return ViewModelSource.ACTIVITY
-    }
-
     @Suppress("UNCHECKED_CAST")
     protected fun <T : ViewModel> fetchViewModel(): T = realViewModel as T
 
-    protected open fun isAttachViewModel(): Boolean {
-        return true
-    }
+    protected open fun modelProvider() = ViewModelSource.ACTIVITY
+
+    protected open fun isAttachViewModel() = true
 
     protected abstract fun modelClass(): Class<out ViewModel>
 }

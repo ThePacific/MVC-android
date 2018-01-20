@@ -20,7 +20,7 @@ import com.jakewharton.processphoenix.ProcessPhoenix
 import org.joor.Reflect
 
 fun exit(application: Application, restart: Boolean) {
-    sendFinishBroadcast(application)
+    sendBroadcast(application, ACTION_FINISH)
     if (restart) {
         ProcessPhoenix.triggerRebirth(application)
     } else {
@@ -206,10 +206,6 @@ fun sendBroadcast(context: Context, action: String) {
     val intent = Intent()
     intent.action = action
     LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
-}
-
-fun sendFinishBroadcast(context: Context) {
-    sendBroadcast(context, ACTION_FINISH)
 }
 
 const val ACTION_FINISH = "com.pacific.arch.action.finish"

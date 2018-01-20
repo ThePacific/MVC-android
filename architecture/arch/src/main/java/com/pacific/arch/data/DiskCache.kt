@@ -143,20 +143,20 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
              * Use {@code HttpUtil.toJson()}
              * to serialize a data object
              */
-            @Json(name = "data")
             @JvmField
+            @Json(name = "data")
             val data: ByteArray,
             /**
              * Time to live(TTL) for this record
              */
-            @Json(name = "TTL")
             @JvmField
+            @Json(name = "TTL")
             val TTL: Long,
             /**
              * Soft TTL for this record
              */
-            @Json(name = "softTTL")
             @JvmField
+            @Json(name = "softTTL")
             val softTTL: Long) {
 
         /**

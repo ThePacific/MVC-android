@@ -16,8 +16,6 @@ fun cancelOkhttp3Request(okHttpClient: OkHttpClient, tag: Any) {
             .forEach { it.cancel() }
 }
 
-fun md5(src: String) = ByteString.encodeUtf8(src).md5().hex()!!
-
 @JvmOverloads
 @Suppress("UNCHECKED_CAST")
 fun toMap(obj: Any, moshi: Moshi? = null): Map<String, String> {
@@ -41,20 +39,16 @@ fun <T> fromJson(json: String, type: Type, moshi: Moshi? = null): T {
 }
 
 @JvmOverloads
-fun toByteArrayJson(obj: Any, type: Type, moshi: Moshi? = null): ByteArray {
-    return string2ByteArray(toJson(obj, type, moshi))
-}
+fun toByteArrayJson(obj: Any, type: Type, moshi: Moshi? = null) = str2ByteArray(toJson(obj, type, moshi))
 
 @JvmOverloads
 @Throws(IOException::class)
 fun <T> fromByteArrayJson(byteArray: ByteArray, type: Type, moshi: Moshi? = null): T {
-    return fromJson(byteArray2String(byteArray), type, moshi)
+    return fromJson(byteArray2Str(byteArray), type, moshi)
 }
 
-fun string2ByteArray(src: String): ByteArray {
-    return ByteString.encodeUtf8(src).toByteArray()
-}
+fun str2ByteArray(src: String) = ByteString.encodeUtf8(src).toByteArray()!!
 
-fun byteArray2String(bytes: ByteArray): String {
-    return ByteString.of(bytes, 0, bytes.size).utf8()
-}
+fun byteArray2Str(bytes: ByteArray) = ByteString.of(bytes, 0, bytes.size).utf8()!!
+
+fun md5(src: String) = ByteString.encodeUtf8(src).md5().hex()!!

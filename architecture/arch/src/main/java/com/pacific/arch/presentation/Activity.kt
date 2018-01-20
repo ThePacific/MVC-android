@@ -13,10 +13,10 @@ import javax.inject.Inject
 
 abstract class Activity : DaggerAppCompatActivity() {
     @Inject
-    protected lateinit var okBroadcastReceiver: OkBroadcastReceiver
+    lateinit var okBroadcastReceiver: OkBroadcastReceiver
 
     @Inject
-    protected lateinit var modelFactory: ViewModelFactory
+    lateinit var modelFactory: ViewModelFactory
 
     @Suppress("UNCHECKED_CAST")
     private val realViewModel: ViewModel by lazy {

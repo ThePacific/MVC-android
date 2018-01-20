@@ -24,12 +24,11 @@ class HttpUtilTest {
 
     }
 
-
     @Test
     fun testJson() {
         val access = "20170101"
         val now = System.currentTimeMillis()
-        val diskEntry1 = DiskCache.Entry.create(string2ByteArray(access), now + 5000, now + 1000)
+        val diskEntry1 = DiskCache.Entry.create(str2ByteArray(access), now + 5000, now + 1000)
         val diskEntry2 = fromJson<DiskCache.Entry>(
                 toJson(diskEntry1, DiskCache.Entry::class.java),
                 DiskCache.Entry::class.java)
@@ -77,25 +76,23 @@ class HttpUtilTest {
         assertEquals(72L, list3[2].star)
     }
 
-
     @Test
     fun testByArrayJson() {
         val access = "20170101"
         val now = System.currentTimeMillis()
-        val diskEntry1 = DiskCache.Entry.create(string2ByteArray(access), now + 5000, now + 1000)
+        val diskEntry1 = DiskCache.Entry.create(str2ByteArray(access), now + 5000, now + 1000)
         val diskEntry2 = fromByteArrayJson<DiskCache.Entry>(
                 toByteArrayJson(diskEntry1, DiskCache.Entry::class.java),
                 DiskCache.Entry::class.java)
 
         assertEquals(diskEntry1.TTL, diskEntry2.TTL)
         assertEquals(diskEntry1.softTTL, diskEntry2.softTTL)
-        assertEquals(byteArray2String(diskEntry1.data), access)
-        assertEquals(byteArray2String(diskEntry2.data), access)
+        assertEquals(byteArray2Str(diskEntry1.data), access)
+        assertEquals(byteArray2Str(diskEntry2.data), access)
     }
-
 
     @Test
     fun testStringByArray() {
-        assertEquals("hello world!", byteArray2String(string2ByteArray("hello world!")))
+        assertEquals("hello world!", byteArray2Str(str2ByteArray("hello world!")))
     }
 }

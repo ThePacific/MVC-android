@@ -50,7 +50,7 @@ abstract class Repository<in T, R>(@JvmField protected val moshi: Moshi,
         return Observable.defer {
             val diskEntry = diskCache.get(key!!)
                     ?: return@defer Observable.just(Source.irrelevant<R>())
-            val json = byteArray2String(diskEntry.data)
+            val json = byteArray2Str(diskEntry.data)
             val newData: R = fromJson(json, dataType(), moshi)
             if (diskEntry.isExpired || isIrrelevant(newData)) {
                 memoryCache.remove(key!!)
