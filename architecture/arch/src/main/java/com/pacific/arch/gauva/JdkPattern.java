@@ -1,7 +1,5 @@
 package com.pacific.arch.gauva;
 
-import android.support.v4.util.Preconditions;
-
 import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,12 +10,12 @@ public final class JdkPattern implements Serializable {
     private final Pattern pattern;
 
     JdkPattern(Pattern pattern) {
-        this.pattern = Preconditions.checkNotNull(pattern);
+        this.pattern = Preconditions2.checkNotNull(pattern);
     }
 
     public static boolean and(String source, int min, int max) {
-        Preconditions.checkNotNull(source);
-        Preconditions.checkState(min > 0 && max > 0 && max > min);
+        Preconditions2.checkNotNull(source);
+        Preconditions2.checkState(min > 0 && max > 0 && max > min);
         String regex = Phrase3
                 .format("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{<min>,<max>}",
                         "<",
@@ -29,8 +27,8 @@ public final class JdkPattern implements Serializable {
     }
 
     public static boolean or(String source, int min, int max) {
-        Preconditions.checkNotNull(source);
-        Preconditions.checkState(min > 0 && max > 0 && max > min);
+        Preconditions2.checkNotNull(source);
+        Preconditions2.checkState(min > 0 && max > 0 && max > min);
         String regex = Phrase3
                 .format("[0-9A-Za-z]{<min>,<max>}",
                         "<",
@@ -76,7 +74,7 @@ public final class JdkPattern implements Serializable {
         final Matcher matcher;
 
         JdkMatcher(Matcher matcher) {
-            this.matcher = Preconditions.checkNotNull(matcher);
+            this.matcher = Preconditions2.checkNotNull(matcher);
         }
 
         boolean matches() {

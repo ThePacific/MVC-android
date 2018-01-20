@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import static android.support.v4.util.Preconditions2.checkNotNull;
+import static com.pacific.arch.gauva.Preconditions2.checkNotNull;
 
 public class Joiner {
 
@@ -33,8 +33,7 @@ public class Joiner {
         return new Joiner(String.valueOf(separator));
     }
 
-    private static Iterable<Object> iterable(
-            final Object first, final Object second, final Object[] rest) {
+    private static Iterable<Object> iterable(final Object first, final Object second, final Object[] rest) {
         checkNotNull(rest);
         return new AbstractList<Object>() {
             @Override

@@ -1,7 +1,7 @@
 package com.pacific.arch.data
 
 import android.support.annotation.WorkerThread
-import android.support.v4.util.Preconditions2
+import com.pacific.arch.gauva.Preconditions2
 import android.text.TextUtils
 import com.pacific.arch.rx.verifyWorkThread
 import com.squareup.moshi.Moshi

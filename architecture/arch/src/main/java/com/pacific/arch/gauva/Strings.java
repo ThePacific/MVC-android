@@ -1,10 +1,10 @@
 package com.pacific.arch.gauva;
 
 import android.support.annotation.Nullable;
-import android.support.v4.util.Preconditions2;
 
-import static android.support.v4.util.Preconditions2.checkArgument;
-import static android.support.v4.util.Preconditions2.checkNotNull;
+import static com.pacific.arch.gauva.Preconditions2.checkArgument;
+import static com.pacific.arch.gauva.Preconditions2.checkNotNull;
+import static com.pacific.arch.gauva.Preconditions2.isEmpty;
 
 public final class Strings {
 
@@ -17,7 +17,7 @@ public final class Strings {
 
     @Nullable
     public static String emptyToNull(@Nullable String string) {
-        return Preconditions2.isEmpty(string) ? null : string;
+        return isEmpty(string) ? null : string;
     }
 
     public static String padStart(String string, int minLength, char padChar) {
@@ -96,8 +96,7 @@ public final class Strings {
         while (s < maxSuffixLength && a.charAt(a.length() - s - 1) == b.charAt(b.length() - s - 1)) {
             s++;
         }
-        if (validSurrogatePairAt(a, a.length() - s - 1)
-                || validSurrogatePairAt(b, b.length() - s - 1)) {
+        if (validSurrogatePairAt(a, a.length() - s - 1) || validSurrogatePairAt(b, b.length() - s - 1)) {
             s--;
         }
         return a.subSequence(a.length() - s, a.length()).toString();

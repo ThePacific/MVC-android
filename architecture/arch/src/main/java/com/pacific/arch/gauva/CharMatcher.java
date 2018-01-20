@@ -1,7 +1,5 @@
 package com.pacific.arch.gauva;
 
-import android.support.v4.util.Preconditions2;
-
 import java.util.Arrays;
 import java.util.BitSet;
 

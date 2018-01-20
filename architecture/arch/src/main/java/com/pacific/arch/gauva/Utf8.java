@@ -1,7 +1,5 @@
 package com.pacific.arch.gauva;
 
-import android.support.v4.util.Preconditions2;
-
 import static java.lang.Character.MAX_SURROGATE;
 import static java.lang.Character.MIN_SURROGATE;
 
@@ -82,7 +80,6 @@ public final class Utf8 {
         int index = off;
         while (true) {
             int byte1;
-
             // Optimize for interior runs of ASCII bytes.
             do {
                 if (index >= end) {

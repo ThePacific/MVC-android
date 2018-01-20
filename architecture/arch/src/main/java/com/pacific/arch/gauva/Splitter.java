@@ -1,7 +1,5 @@
 package com.pacific.arch.gauva;
 
-import android.support.v4.util.Preconditions;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -9,6 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import static com.pacific.arch.gauva.Preconditions2.checkArgument;
+import static com.pacific.arch.gauva.Preconditions2.checkNotNull;
 
 public final class Splitter {
 
@@ -33,7 +34,7 @@ public final class Splitter {
     }
 
     public static Splitter on(final CharMatcher separatorMatcher) {
-        Preconditions.checkNotNull(separatorMatcher);
+        checkNotNull(separatorMatcher);
 
         return new Splitter(
                 new Strategy() {
@@ -55,8 +56,7 @@ public final class Splitter {
     }
 
     public static Splitter on(final String separator) {
-        Preconditions
-                .checkArgument(separator.length() != 0, "The separator may not be the empty string.");
+        checkArgument(separator.length() != 0, "The separator may not be the empty string.");
         if (separator.length() == 1) {
             return Splitter.on(separator.charAt(0));
         }
@@ -95,7 +95,7 @@ public final class Splitter {
     }
 
     private static Splitter on(final JdkPattern jdkPattern) {
-        Preconditions.checkArgument(!jdkPattern.matcher("").matches(), jdkPattern);
+        checkArgument(!jdkPattern.matcher("").matches(), jdkPattern);
         return new Splitter(
                 new Strategy() {
                     @Override
@@ -121,7 +121,7 @@ public final class Splitter {
     }
 
     public static Splitter fixedLength(final int length) {
-        Preconditions.checkArgument(length > 0, "The length may not be less than 1");
+        checkArgument(length > 0, "The length may not be less than 1");
         return new Splitter(
                 new Strategy() {
                     @Override
@@ -147,7 +147,7 @@ public final class Splitter {
     }
 
     public Splitter limit(int limit) {
-        Preconditions.checkArgument(limit > 0, limit);
+        checkArgument(limit > 0, limit);
         return new Splitter(strategy, omitEmptyStrings, trimmer, limit);
     }
 
@@ -156,12 +156,12 @@ public final class Splitter {
     }
 
     public Splitter trimResults(CharMatcher trimmer) {
-        Preconditions.checkNotNull(trimmer);
+        checkNotNull(trimmer);
         return new Splitter(strategy, omitEmptyStrings, trimmer, limit);
     }
 
     public Iterable<String> split(final CharSequence sequence) {
-        Preconditions.checkNotNull(sequence);
+        checkNotNull(sequence);
         return new Iterable<String>() {
             @Override
             public Iterator<String> iterator() {
@@ -183,7 +183,7 @@ public final class Splitter {
     }
 
     public List<String> splitToList(CharSequence sequence) {
-        Preconditions.checkNotNull(sequence);
+        checkNotNull(sequence);
 
         Iterator<String> iterator = splittingIterator(sequence);
         List<String> result = new ArrayList<String>();
@@ -220,7 +220,7 @@ public final class Splitter {
 
         private MapSplitter(Splitter outerSplitter, Splitter entrySplitter) {
             this.outerSplitter = outerSplitter; // only "this" is passed
-            this.entrySplitter = Preconditions.checkNotNull(entrySplitter);
+            this.entrySplitter = checkNotNull(entrySplitter);
         }
 
         public Map<String, String> split(CharSequence sequence) {
@@ -228,15 +228,15 @@ public final class Splitter {
             for (String entry : outerSplitter.split(sequence)) {
                 Iterator<String> entryFields = entrySplitter.splittingIterator(entry);
 
-                Preconditions.checkArgument(entryFields.hasNext(), entry);
+                checkArgument(entryFields.hasNext(), entry);
                 String key = entryFields.next();
-                Preconditions.checkArgument(!map.containsKey(key), key);
+                checkArgument(!map.containsKey(key), key);
 
-                Preconditions.checkArgument(entryFields.hasNext(), entry);
+                checkArgument(entryFields.hasNext(), entry);
                 String value = entryFields.next();
                 map.put(key, value);
 
-                Preconditions.checkArgument(!entryFields.hasNext(), entry);
+                checkArgument(!entryFields.hasNext(), entry);
             }
             return Collections.unmodifiableMap(map);
         }

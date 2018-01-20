@@ -1,9 +1,10 @@
-package android.support.v4.util;
+package com.pacific.arch.gauva;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.util.Preconditions;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
@@ -11,6 +12,9 @@ import java.util.Map;
 
 @SuppressLint("RestrictedApi")
 public class Preconditions2 {
+    private Preconditions2() {
+    }
+
     public static void checkArgument(boolean expression) {
         Preconditions.checkArgument(expression);
     }

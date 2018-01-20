@@ -7,7 +7,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static android.support.v4.util.Preconditions2.checkState;
+import static com.pacific.arch.gauva.Preconditions2.checkState;
 
 abstract class AbstractIterator<T> implements Iterator<T> {
 

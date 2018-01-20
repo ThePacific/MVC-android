@@ -17,7 +17,9 @@
 package com.uber.autodispose.android;
 
 import android.app.Dialog;
+import android.support.annotation.NonNull;
 
+import com.pacific.arch.gauva.Preconditions2;
 import com.uber.autodispose.LifecycleScopeProvider;
 
 import io.reactivex.Observable;
@@ -48,10 +50,8 @@ public class DialogScopeProvider implements LifecycleScopeProvider<ViewLifecycle
      * @param dialog the dialog to scope for
      * @return a {@link LifecycleScopeProvider} against this dialog.
      */
-    public static DialogScopeProvider from(Dialog dialog) {
-        if (dialog == null) {
-            throw new NullPointerException("dialog == null");
-        }
+    public static DialogScopeProvider from(@NonNull Dialog dialog) {
+        Preconditions2.checkNotNull(dialog);
         return new DialogScopeProvider(dialog);
     }
 
