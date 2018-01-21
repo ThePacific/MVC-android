@@ -1,4 +1,4 @@
-package com.pacific.arch.example
+package com.pacific.example
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("com.pacific.arch.example", appContext.packageName)
+        assertEquals("com.pacific.example", appContext.packageName)
     }
 }

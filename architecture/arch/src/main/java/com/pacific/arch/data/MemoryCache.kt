@@ -16,7 +16,7 @@ class MemoryCache(maxSize: Int) {
     fun get(key: String, evictExpired: Boolean): Entry? {
         var value: Entry? = cache.get(key)
         if (evictExpired) {
-            if (value != null && value.isExpired) {
+            if (value != null && value.isExpired()) {
                 remove(key)
                 value = null
             }
@@ -44,7 +44,7 @@ class MemoryCache(maxSize: Int) {
         while (i < keys.size) {
             key = keys[i]
             val value = cache.get(key)
-            if (value != null && value.isExpired) {
+            if (value != null && value.isExpired()) {
                 remove(key)
             } else {
                 i++
@@ -92,15 +92,9 @@ class MemoryCache(maxSize: Int) {
         return cache.size()
     }
 
-    class Entry private constructor(@JvmField @Json(name = "data") val data: Any?,
-                                    @JvmField @Json(name = "TTL") val TTL: Long) {
+    class Entry(@JvmField @Json(name = "data") val data: Any?,
+                @JvmField @Json(name = "TTL") val TTL: Long) {
 
-        val isExpired: Boolean get() = this.TTL < System.currentTimeMillis()
-
-        companion object {
-            fun create(data: Any, TTL: Long): Entry {
-                return Entry(data, TTL)
-            }
-        }
+        fun isExpired() = this.TTL < System.currentTimeMillis()
     }
 }

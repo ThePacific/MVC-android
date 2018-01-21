@@ -17,7 +17,7 @@ android {
         release {
             storeFile file('../config/thep.jks')
             storePassword "20180101"
-            keyAlias "thep.the2016"
+            keyAlias "the2016"
             keyPassword "20180101"
             v2SigningEnabled true
         }
@@ -157,6 +157,8 @@ dependencies {
     implementation dep.parceler
     annotationProcessor dep.parcelerProcessor
     implementation dep.rxPermissions
+
+    implementation dep.theAdpater
 }
 
 gradle.projectsEvaluated {

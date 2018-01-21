@@ -26,7 +26,7 @@ android {
         release {
             storeFile file('../config/thep.jks')
             storePassword "20180101"
-            keyAlias "thep.the2016"
+            keyAlias "the2016"
             keyPassword "20180101"
             v2SigningEnabled true
         }
@@ -174,6 +174,8 @@ dependencies {
     implementation dep.parceler
     kapt dep.parcelerProcessor
     implementation dep.rxPermissions
+
+    implementation dep.theAdapter
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"

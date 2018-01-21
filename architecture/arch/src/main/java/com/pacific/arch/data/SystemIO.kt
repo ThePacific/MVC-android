@@ -144,4 +144,4 @@ fun addSeparator(directory: String): String {
     } else directory + File.separator
 }
 
-val sdCard = addSeparator(Environment.getExternalStorageDirectory().absolutePath)
+fun getSDCard() = addSeparator(Environment.getExternalStorageDirectory().absolutePath)

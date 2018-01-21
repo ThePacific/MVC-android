@@ -21,23 +21,20 @@
 #-renamesourcefileattribute SourceFile
 -keep class android.databinding.DataBindingUtil { *; }
 -keep public class android.support.v4.content.FileProvider { *; }
--keep class com.boo.partner.view.wheel.** { *; }
--keep class net.cachapa.expandablelayout.** { *; }
 -keepclassmembers class android.support.v4.app.DialogFragment {
-   boolean mDismissed;
-   boolean mShownByMe;
+    boolean mDismissed;
+    boolean mShownByMe;
 }
 
 -keepclasseswithmembers class * {
-   @android.webkit.JavascriptInterface <methods>;
+    @android.webkit.JavascriptInterface <methods>;
 }
 
--keep class java.lang.Object
 -keep interface org.parceler.Parcel
 -keep @org.parceler.Parcel class * { *; }
 -keep class **$$Parcelable { *; }
 -keepnames class * implements android.os.Parcelable {
-  public static final ** CREATOR;
+    public static final ** CREATOR;
 }
 
 -dontwarn com.google.errorprone.annotations.**
@@ -67,9 +64,14 @@
 #-keep class * implements com.google.gson.JsonSerializer
 #-keep class * implements com.google.gson.JsonDeserializer
 -keepclasseswithmembers class * {
-  @com.squareup.moshi.* <methods>;
+    @com.squareup.moshi.* <methods>;
 }
 -keep @com.squareup.moshi.JsonQualifier interface *
+# add kotlin support
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
+}
+-dontnote sun.misc.Unsafe
 ##---------------End: proguard configuration for Moshi/Gson ----------
 
 
@@ -77,8 +79,8 @@
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public class * extends com.bumptech.glide.module.AppGlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
-  **[] $VALUES;
-  public *;
+    **[] $VALUES;
+    public *;
 }
 # for DexGuard only
 # -keepresourcexmlelements manifest/application/meta-data@value=GlideModule
@@ -91,14 +93,66 @@
 -dontwarn com.flurry.**
 -keepattributes *Annotation*,EnclosingMethod,Signature
 -keepclasseswithmembers class * {
-   public <init>(android.content.Context, android.util.AttributeSet, int);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
 }
 
 -keep class * implements android.arch.lifecycle.GeneratedAdapter {<init>(...);}
--keep public class *extends java.lang.annotation.Annotation {
-  <all>;
-}
 
--keep public class *implements java.lang.annotation.Annotation {
-  <all>;
-}
+-keep public class * implements java.lang.annotation.Annotation
+
+
+-dontnote com.bumptech.glide.GeneratedAppGlideModuleImpl
+-dontnote kotlin.internal.jdk8.JDK8PlatformImplementations
+-dontnote kotlin.internal.JRE8PlatformImplementations
+-dontnote kotlin.internal.JRE7PlatformImplementations
+-dontnote com.android.org.conscrypt.SSLParametersImpl
+-dontnote org.apache.harmony.xnet.provider.jsse.SSLParametersImpl
+-dontnote dalvik.system.CloseGuard
+-dontnote sun.security.ssl.SSLContextImpl
+-dontnote android.databinding.DataBindingComponent
+-dontnote android.arch.lifecycle.LifecycleOwner
+-dontnote android.arch.lifecycle.Lifecycle$Event
+
+-dontnote org.intellij.lang.annotations.Flow
+-dontnote org.intellij.lang.annotations.Identifier
+-dontnote org.intellij.lang.annotations.JdkConstants$AdjustableOrientation
+-dontnote org.intellij.lang.annotations.JdkConstants$BoxLayoutAxis
+-dontnote org.intellij.lang.annotations.JdkConstants$CalendarMonth
+-dontnote org.intellij.lang.annotations.JdkConstants$CursorType
+-dontnote org.intellij.lang.annotations.JdkConstants$FlowLayoutAlignment
+-dontnote org.intellij.lang.annotations.JdkConstants$FontStyle
+-dontnote org.intellij.lang.annotations.JdkConstants$HorizontalAlignment
+-dontnote org.intellij.lang.annotations.JdkConstants$InputEventMask
+-dontnote org.intellij.lang.annotations.JdkConstants$ListSelectionMode
+-dontnote org.intellij.lang.annotations.JdkConstants$PatternFlags
+-dontnote org.intellij.lang.annotations.JdkConstants$TabLayoutPolicy
+-dontnote org.intellij.lang.annotations.JdkConstants$TabPlacement
+-dontnote org.intellij.lang.annotations.JdkConstants$TitledBorderJustification
+-dontnote org.intellij.lang.annotations.JdkConstants$TitledBorderTitlePosition
+-dontnote org.intellij.lang.annotations.JdkConstants$TreeSelectionMode
+-dontnote org.intellij.lang.annotations.JdkConstants
+-dontnote org.intellij.lang.annotations.Language
+-dontnote org.intellij.lang.annotations.MagicConstant
+-dontnote org.intellij.lang.annotations.Pattern
+-dontnote org.intellij.lang.annotations.PrintFormat
+-dontnote org.intellij.lang.annotations.PrintFormatPattern
+-dontnote org.intellij.lang.annotations.RegExp
+-dontnote org.intellij.lang.annotations.Subst
+-dontnote org.jetbrains.annotations.Contract
+-dontnote org.jetbrains.annotations.Nls
+-dontnote org.jetbrains.annotations.NonNls
+-dontnote org.jetbrains.annotations.NotNull
+-dontnote org.jetbrains.annotations.Nullable
+-dontnote org.jetbrains.annotations.PropertyKey
+-dontnote org.jetbrains.annotations.TestOnly
+-dontnote android.net.http.SslError
+-dontnote android.net.http.SslCertificate$DName
+-dontnote android.net.http.SslCertificate
+-dontnote android.net.http.HttpResponseCache
+-dontnote org.apache.http.conn.scheme.SocketFactory
+-dontnote org.apache.http.conn.scheme.HostNameResolver
+-dontnote org.apache.http.conn.scheme.LayeredSocketFactory
+-dontnote org.apache.http.conn.ConnectTimeoutException
+-dontnote org.apache.http.params.CoreConnectionPNames
+-dontnote org.apache.http.params.HttpParams
+-dontnote org.apache.http.params.HttpConnectionParams

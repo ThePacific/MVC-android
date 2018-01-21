@@ -1,1 +1,1 @@
-include ':arch', ':arch-example'
+include ':arch', ':example'

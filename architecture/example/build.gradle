@@ -2,11 +2,12 @@ apply from: "../config/app_module_kotlin.gradle"
 
 android {
     defaultConfig {
-        applicationId "com.pacific.arch.example"
+        applicationId "com.pacific.example"
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':arch')
+    kapt 'com.android.databinding:compiler:3.1.0-alpha08'
 }

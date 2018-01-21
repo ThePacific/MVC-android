@@ -1,4 +1,4 @@
-package com.pacific.arch.example
+package com.pacific.example
 
 import org.junit.Test
 

@@ -1,8 +1,8 @@
 package com.pacific.arch.data
 
 import android.support.annotation.WorkerThread
-import com.pacific.arch.gauva.Preconditions2
 import android.text.TextUtils
+import com.pacific.arch.gauva.Preconditions2
 import com.pacific.arch.rx.verifyWorkThread
 import com.squareup.moshi.Moshi
 import io.reactivex.Observable
@@ -52,12 +52,12 @@ abstract class Repository<in T, R>(@JvmField protected val moshi: Moshi,
                     ?: return@defer Observable.just(Source.irrelevant<R>())
             val json = byteArray2Str(diskEntry.data)
             val newData: R = fromJson(json, dataType(), moshi)
-            if (diskEntry.isExpired || isIrrelevant(newData)) {
+            if (diskEntry.isExpired() || isIrrelevant(newData)) {
                 memoryCache.remove(key!!)
                 evictDiskCache()
                 return@defer Observable.just(Source.irrelevant<R>())
             }
-            memoryCache.put(key!!, MemoryCache.Entry.create(newData as Any, diskEntry.TTL))
+            memoryCache.put(key!!, MemoryCache.Entry(newData as Any, diskEntry.TTL))
             Observable.just(Source.success<R>(newData))
         }
     }
@@ -133,12 +133,12 @@ abstract class Repository<in T, R>(@JvmField protected val moshi: Moshi,
         Preconditions2.checkState(ttl > now && softTtl > now && ttl >= softTtl)
         if (toDisk) {
             val bytes = toByteArrayJson(newData as Any, dataType(), moshi)
-            diskCache.put(key!!, DiskCache.Entry.create(bytes, ttl, softTtl))
+            diskCache.put(key!!, DiskCache.Entry(bytes, ttl, softTtl))
         } else {
             evictDiskCache()
         }
         if (toMemory) {
-            memoryCache.put(key!!, MemoryCache.Entry.create(newData as Any, ttl))
+            memoryCache.put(key!!, MemoryCache.Entry(newData as Any, ttl))
         } else {
             evictMemoryCache()
         }

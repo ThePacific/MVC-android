@@ -137,7 +137,7 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
      * It's extracted from android Volley library.
      * See `https://github.com/google/volley`
      */
-    class Entry private constructor(
+    class Entry(
             /**
              * The data returned from cache.
              * Use {@code HttpUtil.toJson()}
@@ -162,7 +162,7 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
         /**
          * True if the entry is expired.
          */
-        val isExpired: Boolean get() = this.TTL < System.currentTimeMillis()
+        fun isExpired() = this.TTL < System.currentTimeMillis()
 
         /**
          * @return To a json String
@@ -172,14 +172,6 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
         /**
          * True if a refresh is needed from the original data source.
          */
-        fun refreshNeeded(): Boolean {
-            return this.softTTL < System.currentTimeMillis()
-        }
-
-        companion object {
-            fun create(data: ByteArray, TTL: Long, softTTL: Long): Entry {
-                return Entry(data, TTL, softTTL)
-            }
-        }
+        fun refreshNeeded() = this.softTTL < System.currentTimeMillis()
     }
 }
