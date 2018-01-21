@@ -9,5 +9,4 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':arch')
-    kapt 'com.android.databinding:compiler:3.1.0-alpha08'
 }
