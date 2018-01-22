@@ -15,8 +15,7 @@ public class TextViewAfterTextChangeEvent {
     this.editable = editable;
   }
 
-  public static TextViewAfterTextChangeEvent create(@Nullable TextView view,
-      @Nullable Editable editable) {
+  public static TextViewAfterTextChangeEvent create(@Nullable TextView view, @Nullable Editable editable) {
     Preconditions.checkNotNull(view);
     Preconditions.checkNotNull(editable);
     return new TextViewAfterTextChangeEvent(view, editable);

@@ -3,6 +3,7 @@ package com.pacific.arch.example
 import android.arch.lifecycle.ViewModel
 import android.os.Bundle
 import android.util.Log
+import com.pacific.arch.common.viewModel
 import com.pacific.arch.presentation.Activity
 import com.pacific.example.MainViewModel
 import javax.inject.Inject
@@ -12,9 +13,7 @@ class MainActivity : Activity() {
     @Inject
     lateinit var app: App
 
-    private val model: MainViewModel by lazy {
-        fetchViewModel() as MainViewModel
-    }
+    private val model: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

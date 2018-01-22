@@ -41,7 +41,7 @@ abstract class AppCompatDialogFragment : android.support.v7.app.AppCompatDialogF
     }
 
     @Suppress("UNCHECKED_CAST")
-    protected fun <T : ViewModel> fetchViewModel(): T = realViewModel as T
+    override fun <T : ViewModel> getViewModel() = realViewModel as T
 
     protected open fun modelProvider() = ViewModelSource.ACTIVITY
 

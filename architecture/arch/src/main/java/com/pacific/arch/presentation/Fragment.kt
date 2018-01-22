@@ -35,7 +35,7 @@ abstract class Fragment : DaggerFragment() {
     }
 
     @Suppress("UNCHECKED_CAST")
-    protected fun <T : ViewModel> fetchViewModel(): T = realViewModel as T
+    override fun <T : ViewModel> getViewModel() = realViewModel as T
 
     protected open fun modelProvider() = ViewModelSource.ACTIVITY
 

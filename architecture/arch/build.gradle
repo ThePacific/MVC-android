@@ -1,5 +1,11 @@
 apply from: "../config/lib_module_kotlin.gradle"
 
+android {
+    dataBinding {
+        enabled = true
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
@@ -33,4 +39,7 @@ dependencies {
     implementation dep.okio
     implementation dep.moshi
     implementation dep.moshiK
+
+    debugImplementation dep.leakcanary
+    releaseImplementation dep.leakcanaryNo
 }
