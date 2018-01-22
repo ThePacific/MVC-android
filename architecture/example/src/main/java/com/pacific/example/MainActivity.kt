@@ -3,8 +3,8 @@ package com.pacific.arch.example
 import android.arch.lifecycle.ViewModel
 import android.os.Bundle
 import android.util.Log
-import com.pacific.arch.common.viewModel
 import com.pacific.arch.presentation.Activity
+import com.pacific.arch.presentation.viewModel
 import com.pacific.example.MainViewModel
 import javax.inject.Inject
 
