@@ -1,8 +1,0 @@
-apply plugin: 'java'
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    compileOnly dep.errorProne
-    compileOnly dep.findBugsJrs305
-    compileOnly dep.annotationApi
-}
