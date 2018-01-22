@@ -8,7 +8,7 @@ import android.view.View
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
-abstract class AppCompatDialogFragment : android.support.v7.app.AppCompatDialogFragment() {
+abstract class AppCompatDialogFragment : android.support.v7.app.AppCompatDialogFragment(), GetViewModel {
     @Inject
     lateinit var modelFactory: ViewModelFactory
 

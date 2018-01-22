@@ -11,7 +11,7 @@ import android.support.v4.content.LocalBroadcastManager
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-abstract class Activity : DaggerAppCompatActivity() {
+abstract class Activity : DaggerAppCompatActivity(), GetViewModel {
     @Inject
     lateinit var okBroadcastReceiver: OkBroadcastReceiver
 
