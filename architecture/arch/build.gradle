@@ -1,4 +1,5 @@
 apply from: "../config/lib_module_kotlin.gradle"
+apply plugin: 'kotlin-android'
 
 android {
     dataBinding {
@@ -6,20 +7,8 @@ android {
     }
 }
 
-// Ensure the no-op dependency is always used in JVM tests.
-configurations.all { config ->
-    if (config.name.contains('UnitTest')) {
-        config.resolutionStrategy.eachDependency { details ->
-            if (details.requested.group == 'com.squareup.leakcanary' && details.requested.name == 'leakcanary-android') {
-                details.useTarget(group: details.requested.group, name: 'leakcanary-android-no-op', version: details.requested.version)
-            }
-        }
-    }
-}
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     implementation dep.appcompat
     implementation dep.design
 

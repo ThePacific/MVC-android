@@ -112,10 +112,18 @@ dependencies {
     implementation dep.recyclerview
     implementation dep.constraint
 
-    implementation dep.lifecycleReactivestreams
+    implementation dep.roomRxjava
+    implementation dep.liveDataRxjava
+    implementation dep.lifecyclePaging
+
     implementation dep.lifecycleExtensions
-    implementation dep.lifecycleJava8
-    kapt "android.arch.lifecycle:compiler:$lifecycle"
+    implementation dep.lifecycleViewModel
+    implementation dep.lifecycleCommonJava8
+    implementation dep.lifecycleLiveData
+    kapt dep.lifecycleCompiler
+
+    implementation dep.lifecycleRoom
+    kapt dep.lifecycleRoomCompiler
 
     implementation dep.okhttp3
     implementation dep.loggingInterceptor
@@ -157,6 +165,7 @@ dependencies {
     testImplementation dep.junit
     testImplementation dep.mockito
     testImplementation dep.lifecycleTest
+    testImplementation dep.lifecycleRoomTest
     androidTestImplementation dep.testRunner
     androidTestImplementation(dep.espresso, {
         exclude group: 'com.android.support', module: '*'
@@ -188,5 +197,15 @@ dependencies {
 gradle.projectsEvaluated {
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xmaxerrs" << "500"
+    }
+}
+
+configurations.all { config ->
+    if (config.name.contains('UnitTest')) {
+        config.resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'com.squareup.leakcanary' && details.requested.name == 'leakcanary-android') {
+                details.useTarget(group: details.requested.group, name: 'leakcanary-android-no-op', version: details.requested.version)
+            }
+        }
     }
 }

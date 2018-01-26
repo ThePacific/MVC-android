@@ -101,20 +101,39 @@ dependencies {
     testImplementation dep.truth
     testImplementation dep.mockito
     testImplementation dep.lifecycleTest
+    testImplementation dep.lifecycleRoomTest
     androidTestImplementation dep.testRunner
     androidTestImplementation dep.truth
     androidTestImplementation(dep.espresso, {
         exclude group: 'com.android.support', module: '*'
     })
 
-    implementation dep.lifecycleJava8
-    implementation dep.lifecycleReactivestreams
+    implementation dep.roomRxjava
+    implementation dep.liveDataRxjava
+    implementation dep.lifecyclePaging
+
     implementation dep.lifecycleExtensions
-    kapt "android.arch.lifecycle:compiler:$lifecycle"
+    implementation dep.lifecycleViewModel
+    implementation dep.lifecycleCommonJava8
+    implementation dep.lifecycleLiveData
+    kapt dep.lifecycleCompiler
+
+    implementation dep.lifecycleRoom
+    kapt dep.lifecycleRoomCompiler
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
+
+configurations.all { config ->
+    if (config.name.contains('UnitTest')) {
+        config.resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'com.squareup.leakcanary' && details.requested.name == 'leakcanary-android') {
+                details.useTarget(group: details.requested.group, name: 'leakcanary-android-no-op', version: details.requested.version)
+            }
+        }
+    }
 }
