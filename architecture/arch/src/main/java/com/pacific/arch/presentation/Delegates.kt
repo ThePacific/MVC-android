@@ -20,8 +20,7 @@ class SetContentView<in T : Activity, out R : ViewDataBinding>(@LayoutRes privat
 }
 
 
-fun <T : Activity, R : ViewModel>
-        activityViewModel(modelClass: Class<R>) = SetActivityViewModel<T, R>(modelClass)
+fun <T : Activity, R : ViewModel> activityViewModel(modelClass: Class<R>) = SetActivityViewModel<T, R>(modelClass)
 
 class SetActivityViewModel<in T : Activity, out R : ViewModel>(private val modelClass: Class<R>) {
     private var value: R? = null
@@ -33,8 +32,7 @@ class SetActivityViewModel<in T : Activity, out R : ViewModel>(private val model
     }
 }
 
-fun <T : android.support.v4.app.Fragment, R : ViewModel>
-        fragmentViewModel(modelClass: Class<R>) = SetFragmentViewModel<T, R>(modelClass)
+fun <T : android.support.v4.app.Fragment, R : ViewModel> fragmentViewModel(modelClass: Class<R>) = SetFragmentViewModel<T, R>(modelClass)
 
 class SetFragmentViewModel<in T : android.support.v4.app.Fragment, out R : ViewModel>(private val modelClass: Class<R>) {
     private var value: R? = null
