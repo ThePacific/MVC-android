@@ -147,9 +147,6 @@ public final class Rx2Timer {
         }
     }
 
-    /**
-     * clean pause states
-     */
     public void reset() {
         isPause = false;
         resumeTake = 0l;

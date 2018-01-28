@@ -42,8 +42,6 @@ public final class EndlessOnScrollListener extends RecyclerView.OnScrollListener
             }
         }
         if (!loading && loader != null && (totalCount - visibleCount) <= (firstVisiblePosition + threshold)) {
-            // End has been reached
-            // Do something
             page++;
             loader.onLoad(page);
             loading = true;

@@ -1,10 +1,9 @@
 package com.pacific.arch.example
 
-import android.arch.lifecycle.ViewModel
 import android.os.Bundle
 import android.util.Log
 import com.pacific.arch.presentation.Activity
-import com.pacific.arch.presentation.viewModel
+import com.pacific.arch.presentation.activityViewModel
 import com.pacific.example.MainViewModel
 import javax.inject.Inject
 
@@ -13,7 +12,7 @@ class MainActivity : Activity() {
     @Inject
     lateinit var app: App
 
-    private val model: MainViewModel by viewModel()
+    private val model by activityViewModel(MainViewModel::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,5 +22,4 @@ class MainActivity : Activity() {
         Log.e("_______________", model.toString())
     }
 
-    override fun modelClass(): Class<out ViewModel> = MainViewModel::class.java
 }

@@ -3,7 +3,6 @@ package com.pacific.arch.views
 import android.app.Application
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Point
 import android.os.StrictMode
 import android.telephony.TelephonyManager
 import android.util.Log
@@ -108,8 +107,5 @@ fun attachDebug(application: Application, runnable: Runnable?) {
             .subscribe()
 }
 
-fun screenSize(): Point {
-    val width = Resources.getSystem().displayMetrics.widthPixels
-    val height = Resources.getSystem().displayMetrics.heightPixels
-    return Point(width, height)
-}
+val screenWidth get() = Resources.getSystem().displayMetrics.widthPixels
+val screenHeight get() = Resources.getSystem().displayMetrics.heightPixels

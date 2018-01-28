@@ -12,8 +12,8 @@ dependencies {
     implementation dep.appcompat
     implementation dep.design
 
-    implementation dep.rxjava2
-    implementation dep.rxandroid2
+    implementation dep.rxjava
+    implementation dep.rxandroid
     implementation dep.dispose
     implementation dep.disposeAndroid
     implementation dep.disposeComponent
