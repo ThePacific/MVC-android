@@ -1,4 +1,4 @@
-package com.pacific.arch.views.widget;
+package com.pacific.arch.views.rx;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;

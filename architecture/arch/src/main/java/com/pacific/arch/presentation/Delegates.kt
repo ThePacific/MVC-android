@@ -26,53 +26,49 @@ class SetActivityViewModel<in T : Activity, out R : ViewModel>(private val model
     private var value: R? = null
     operator fun getValue(thisRef: T, property: KProperty<*>): R {
         if (value == null) {
-            value = ViewModelProviders.of(thisRef, thisRef.modelFactory).get<R>(modelClass)
+            value = ViewModelProviders.of(thisRef, thisRef.viewModelFactory).get<R>(modelClass)
         }
         return value!!
     }
 }
 
-fun <T : android.support.v4.app.Fragment, R : ViewModel> fragmentViewModel(modelClass: Class<R>) = SetFragmentViewModel<T, R>(modelClass)
+fun <T : Fragment, R : ViewModel> fragmentViewModel(modelClass: Class<R>) = SetFragmentViewModel<T, R>(modelClass)
 
-class SetFragmentViewModel<in T : android.support.v4.app.Fragment, out R : ViewModel>(private val modelClass: Class<R>) {
+class SetFragmentViewModel<in T : Fragment, out R : ViewModel>(private val modelClass: Class<R>) {
     private var value: R? = null
     operator fun getValue(thisRef: T, property: KProperty<*>): R {
-        if (value == null) {
-            when (thisRef) {
-                is Fragment -> {
-                    val f = thisRef as Fragment
-                    if (thisRef.isAttachViewModel()) {
-                        value = when (thisRef.modelProvider()) {
-                            ViewModelSource.ACTIVITY -> {
-                                ViewModelProviders.of(f.activity!!, f.modelFactory).get(modelClass)
-                            }
-                            ViewModelSource.PARENT_FRAGMENT -> {
-                                ViewModelProviders.of(f.parentFragment!!, f.modelFactory).get(modelClass)
-                            }
-                            ViewModelSource.NONE -> {
-                                ViewModelProviders.of(f, f.modelFactory).get(modelClass)
-                            }
-                        }
-                    }
+        if (value == null && thisRef.isAttachViewModel()) {
+            value = when (thisRef.viewModelSource()) {
+                ViewModelSource.ACTIVITY -> {
+                    ViewModelProviders.of(thisRef.activity!!, thisRef.viewModelFactory).get(modelClass)
                 }
-                is AppCompatDialogFragment -> {
-                    val f = thisRef as AppCompatDialogFragment
-                    if (thisRef.isAttachViewModel()) {
-                        value = when (thisRef.modelProvider()) {
-                            ViewModelSource.ACTIVITY -> {
-                                ViewModelProviders.of(f.activity!!, f.modelFactory).get(modelClass)
-                            }
-                            ViewModelSource.PARENT_FRAGMENT -> {
-                                ViewModelProviders.of(f.parentFragment!!, f.modelFactory).get(modelClass)
-                            }
-                            ViewModelSource.NONE -> {
-                                ViewModelProviders.of(f, f.modelFactory).get(modelClass)
-                            }
-                        }
-                    }
+                ViewModelSource.PARENT_FRAGMENT -> {
+                    ViewModelProviders.of(thisRef.parentFragment!!, thisRef.viewModelFactory).get(modelClass)
                 }
-                else -> {
-                    throw UnsupportedOperationException()
+                ViewModelSource.NONE -> {
+                    ViewModelProviders.of(thisRef, thisRef.viewModelFactory).get(modelClass)
+                }
+            }
+        }
+        return value!!
+    }
+}
+
+fun <T : AppCompatDialogFragment, R : ViewModel> dialogFragmentViewModel(modelClass: Class<R>) = SetDialogFragmentViewModel<T, R>(modelClass)
+
+class SetDialogFragmentViewModel<in T : AppCompatDialogFragment, out R : ViewModel>(private val modelClass: Class<R>) {
+    private var value: R? = null
+    operator fun getValue(thisRef: T, property: KProperty<*>): R {
+        if (value == null && thisRef.isAttachViewModel()) {
+            value = when (thisRef.viewModelSource()) {
+                ViewModelSource.ACTIVITY -> {
+                    ViewModelProviders.of(thisRef.activity!!, thisRef.viewModelFactory).get(modelClass)
+                }
+                ViewModelSource.PARENT_FRAGMENT -> {
+                    ViewModelProviders.of(thisRef.parentFragment!!, thisRef.viewModelFactory).get(modelClass)
+                }
+                ViewModelSource.NONE -> {
+                    ViewModelProviders.of(thisRef, thisRef.viewModelFactory).get(modelClass)
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.pacific.arch.views
+package com.pacific.arch.views.compact
 
 import android.app.Application
 import android.content.Context
@@ -35,27 +35,25 @@ fun getCupArch(): Int {
         }
     }
     if (arch.contains("ar")) {
-        return if (arch.contains("64")) {
-            ARM64_V8A
-        } else if (arch.contains("7")) {
-            ARMEABI_V7
-        } else {
-            ARMEABI
+        return when {
+            arch.contains("64") -> ARM64_V8A
+            arch.contains("7") -> ARMEABI_V7
+            else -> ARMEABI
         }
     }
     throw AssertionError("Unknown cpu arch")
 }
 
 fun getCupArchDescription(): String {
-    when (getCupArch()) {
-        ARMEABI -> return "armeabi"
-        ARMEABI_V7 -> return "armeabi_v7"
-        ARM64_V8A -> return "arm64_v8a"
-        X86 -> return "x86"
-        X86_64 -> return "x86_64"
-        MIPS -> return "mips"
-        MIPS_64 -> return "mips_64"
-        else -> return "Unknown CUP"
+    return when (getCupArch()) {
+        ARMEABI -> "armeabi"
+        ARMEABI_V7 -> "armeabi_v7"
+        ARM64_V8A -> "arm64_v8a"
+        X86 -> "x86"
+        X86_64 -> "x86_64"
+        MIPS -> "mips"
+        MIPS_64 -> "mips_64"
+        else -> "unknown CUP"
     }
 }
 

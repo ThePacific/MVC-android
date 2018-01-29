@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 abstract class Fragment : DaggerFragment() {
     @Inject
-    lateinit var modelFactory: ViewModelFactory
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -16,7 +16,7 @@ abstract class Fragment : DaggerFragment() {
         }
     }
 
-    open fun modelProvider() = ViewModelSource.ACTIVITY
+    open fun viewModelSource() = ViewModelSource.ACTIVITY
 
     open fun isAttachViewModel() = true
 }

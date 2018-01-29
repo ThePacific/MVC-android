@@ -1,4 +1,4 @@
-package com.pacific.arch.views.widget;
+package com.pacific.arch.views.rx;
 
 import android.view.View;
 import android.view.View.OnClickListener;

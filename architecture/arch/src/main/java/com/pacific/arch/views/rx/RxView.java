@@ -1,4 +1,4 @@
-package com.pacific.arch.views.widget;
+package com.pacific.arch.views.rx;
 
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;

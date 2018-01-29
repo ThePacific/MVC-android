@@ -14,7 +14,7 @@ abstract class Activity : DaggerAppCompatActivity() {
     lateinit var okBroadcastReceiver: OkBroadcastReceiver
 
     @Inject
-    lateinit var modelFactory: ViewModelFactory
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,13 +32,11 @@ abstract class Activity : DaggerAppCompatActivity() {
     @CallSuper
     protected open fun addBroadcastAction(filter: IntentFilter) {
         if (applyFinishAction()) {
-            okBroadcastReceiver.addConsumer(filter,
-                    ACTION_FINISH,
-                    object : OkBroadcastReceiver.Consumer {
-                        override fun run(context: Context, intent: Intent) {
-                            finish()
-                        }
-                    })
+            okBroadcastReceiver.addConsumer(filter, ACTION_FINISH, object : OkBroadcastReceiver.Consumer {
+                override fun run(context: Context, intent: Intent) {
+                    finish()
+                }
+            })
         }
     }
 

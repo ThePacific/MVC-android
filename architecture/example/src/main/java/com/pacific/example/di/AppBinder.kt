@@ -31,6 +31,7 @@ abstract class AppBinder {
     abstract fun provideContext(it: App): Context
 
 
+
     ////ViewModel binders
     @Binds
     @IntoMap
@@ -38,9 +39,11 @@ abstract class AppBinder {
     abstract fun bindMainViewModel(it: MainViewModel): ViewModel
 
 
+
     ////Activity binders
     @ContributesAndroidInjector
     abstract fun mainActivity(): MainActivity
+
 
 
     ////Fragment and FragmentDialog binders

@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 abstract class AppCompatDialogFragment : android.support.v7.app.AppCompatDialogFragment() {
     @Inject
-    lateinit var modelFactory: ViewModelFactory
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onAttach(context: Context?) {
         AndroidSupportInjection.inject(this)
@@ -23,7 +23,7 @@ abstract class AppCompatDialogFragment : android.support.v7.app.AppCompatDialogF
     }
 
 
-    open fun modelProvider() = ViewModelSource.ACTIVITY
+    open fun viewModelSource() = ViewModelSource.ACTIVITY
 
     open fun isAttachViewModel() = true
 }
