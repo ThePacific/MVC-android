@@ -1,4 +1,4 @@
-package com.pacific.arch.views.rx;
+package com.pacific.arch.views.rxbinding;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;

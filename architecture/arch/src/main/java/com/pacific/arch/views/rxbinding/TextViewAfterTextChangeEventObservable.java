@@ -1,4 +1,4 @@
-package com.pacific.arch.views.rx;
+package com.pacific.arch.views.rxbinding;
 
 import android.text.Editable;
 import android.text.TextWatcher;
