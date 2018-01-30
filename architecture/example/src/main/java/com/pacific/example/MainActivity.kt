@@ -1,6 +1,7 @@
 package com.pacific.arch.example
 
 import android.os.Bundle
+import android.widget.Toast
 import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.core.SearchResult
 import com.baidu.mapapi.search.geocode.*
@@ -26,32 +27,45 @@ class MainActivity : Activity() {
 
         geoCoder.setOnGetGeoCodeResultListener(object : OnGetGeoCoderResultListener {
             override fun onGetGeoCodeResult(result: GeoCodeResult?) {
-                if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-                    //没有检索到结果
+                if (result == null || result.error == SearchResult.ERRORNO.PERMISSION_UNFINISHED) {
+                    toast("没有检索到经纬度,请确保网络正常")
+                    return
+                }
+                if (result.error == SearchResult.ERRORNO.NO_ERROR) {
+                    toast("经纬度(${result.location.latitude},${result.location.longitude})")
                     return
                 }
 
-                //获取地理编码结果
+                toast("检索出错：${result.error}")
             }
 
             override fun onGetReverseGeoCodeResult(result: ReverseGeoCodeResult?) {
-                if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-                    //没有找到检索结果
-
+                if (result == null || result.error == SearchResult.ERRORNO.PERMISSION_UNFINISHED) {
+                    toast("没有解析到地址,请确保网络正常")
+                    return
+                }
+                if (result.error == SearchResult.ERRORNO.NO_ERROR) {
+                    toast("地址:${result.addressDetail.countryName},"
+                            + "${result.addressDetail.province},"
+                            + "${result.addressDetail.city}")
+                    return
                 }
 
-                //获取反向地理编码结果
+                toast("解析出错：${result.error}")
             }
         })
 
         geoCoder.geocode(GeoCodeOption().city("北京").address("海淀区上地十街10号"))
 
-
-        geoCoder.reverseGeoCode(ReverseGeoCodeOption().location(LatLng(118.0, 168.0)))
+        geoCoder.reverseGeoCode(ReverseGeoCodeOption().newVersion(1).location(LatLng(40.00, 118.00)))
     }
 
     override fun onDestroy() {
         super.onDestroy()
         geoCoder.destroy()
+    }
+
+    fun toast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
     }
 }

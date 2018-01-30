@@ -25,8 +25,18 @@
 -dontwarn com.baidu.**
 
 -dontwarn org.mockito.**
--dontwarn org.junit.**
--dontwarn android.test.**
--dontwarn org.objenesis.instantiator.sun.**
--dontnote org.objenesis.instantiator.sun.**
 -dontnote org.mockito.**
+
+-dontwarn org.junit.**
+-dontnote org.junit.**
+
+-dontwarn junit.runner**
+-dontnote junit.runner**
+-dontwarn junit.framework.**
+-dontnote junit.framework.**
+
+-dontwarn android.test.**
+-dontnote android.test.**
+
+-dontwarn org.objenesis.instantiator.**
+-dontnote org.objenesis.instantiator.**
