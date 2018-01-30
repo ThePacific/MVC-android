@@ -3,11 +3,19 @@ apply plugin: 'kotlin-android'
 
 android {
     defaultConfig {
-        applicationId "com.pacific.example"
+        applicationId "com.pacific.arch.example"
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':arch')
+
+    implementation files('libs/BaiduLBS_Android.jar')
 }

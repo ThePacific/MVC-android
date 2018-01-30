@@ -1,6 +1,5 @@
 package com.pacific.example.data
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
 import android.content.Context
@@ -15,9 +14,6 @@ data class MyContent(@PrimaryKey @ColumnInfo(name = "id") val id: Int,
 interface MyContentDao {
     @Insert(onConflict = REPLACE)
     fun save(content: MyContent)
-
-    @Query("SELECT * FROM my_content")
-    fun loadAll(): LiveData<MyContent>
 }
 
 
