@@ -23,3 +23,10 @@
 -keep class com.baidu.** {*;}
 -keep class vi.com.** {*;}
 -dontwarn com.baidu.**
+
+-dontwarn org.mockito.**
+-dontwarn org.junit.**
+-dontwarn android.test.**
+-dontwarn org.objenesis.instantiator.sun.**
+-dontnote org.objenesis.instantiator.sun.**
+-dontnote org.mockito.**
