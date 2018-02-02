@@ -184,7 +184,9 @@ dependencies {
     releaseImplementation dep.leakcanaryNo
 
     implementation dep.glide
+    implementation dep.glideOkhttp3
     kapt dep.glideProcessor
+
     implementation dep.parceler
     kapt dep.parcelerProcessor
     implementation dep.rxPermissions
