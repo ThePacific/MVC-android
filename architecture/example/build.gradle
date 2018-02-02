@@ -16,6 +16,4 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':arch')
-
-    implementation files('libs/BaiduLBS_Android.jar')
 }

@@ -22,9 +22,21 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            storeFile file('../config/thep.jks')
+            storePassword "20180101"
+            keyAlias "the2016"
+            keyPassword "20180101"
+            v2SigningEnabled true
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', '../config/proguard-rules.pro'
         }
     }
