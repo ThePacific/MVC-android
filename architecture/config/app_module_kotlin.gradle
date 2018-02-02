@@ -188,6 +188,7 @@ dependencies {
     implementation dep.parceler
     kapt dep.parcelerProcessor
     implementation dep.rxPermissions
+    implementation dep.androidJob
 
     implementation dep.theAdapter
 
@@ -196,12 +197,6 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
-}
-
-gradle.projectsEvaluated {
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xmaxerrs" << "500"
-    }
 }
 
 kapt {

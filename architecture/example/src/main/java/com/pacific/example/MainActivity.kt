@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.core.SearchResult
 import com.baidu.mapapi.search.geocode.*
+import com.bumptech.glide.Glide
 import com.pacific.arch.presentation.Activity
 import com.pacific.arch.presentation.activityViewModel
 import com.pacific.example.MainViewModel
