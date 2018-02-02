@@ -31,7 +31,6 @@ abstract class AppBinder {
     abstract fun provideContext(it: App): Context
 
 
-
     ////ViewModel binders
     @Binds
     @IntoMap

@@ -44,13 +44,14 @@ ext {
 
     dispose = "0.5.1"
     timber = "4.6.0"
-    permissions = "0.9.4"
+    permissions = "0.9.5"
     parceler = "1.1.9"
-    glide = "4.4.0"
+    glide = "4.6.0"
     leakcanary = "1.5.4"
     multidex = "1.0.2"
     phoenix = "2.0.0"
     reflection = "0.9.6"
+    androidJob = "1.2.2"
 
     mAdapter = "2.1.1"
     mGuava = "0.0.8"
@@ -86,8 +87,8 @@ ext {
             converterMoshi         : "com.squareup.retrofit2:converter-moshi:$retrofit2",
             moshi                  : "com.squareup.moshi:moshi:$moshi",
             moshiK                 : "com.squareup.moshi:moshi-kotlin:$moshi",
-            rxjava                : "io.reactivex.rxjava2:rxjava:$rxjava",
-            rxandroid             : "io.reactivex.rxjava2:rxandroid:$rxandroid",
+            rxjava                 : "io.reactivex.rxjava2:rxjava:$rxjava",
+            rxandroid              : "io.reactivex.rxjava2:rxandroid:$rxandroid",
             dispose                : "com.uber.autodispose:autodispose:$dispose",
             disposeAndroid         : "com.uber.autodispose:autodispose-android:$dispose",
             disposeComponent       : "com.uber.autodispose:autodispose-android-archcomponents:$dispose",
@@ -107,7 +108,8 @@ ext {
             daggerAndroidSupport   : "com.google.dagger:dagger-android-support:$dagger2",
             daggerCompiler         : "com.google.dagger:dagger-compiler:$dagger2",
             daggerAndroidProcessor : "com.google.dagger:dagger-android-processor:$dagger2",
-            rxPermissions          : "com.tbruyelle.rxpermissions2:rxpermissions:$permissions@aar",
+            rxPermissions          : "com.tbruyelle.rxpermissions2:rxpermissions:$permissions",
+            androidJob             : "com.evernote:android-job:$androidJob",
             parceler               : "org.parceler:parceler-api:$parceler",
             parcelerProcessor      : "org.parceler:parceler:$parceler",
             theAdapter             : "com.github.thepacific:adapter:$mAdapter",
@@ -124,6 +126,7 @@ ext {
             multidexInstrumentation: "com.android.support:multidex-instrumentation:$multidex",
             timber                 : "com.jakewharton.timber:timber:$timber",
             glide                  : "com.github.bumptech.glide:glide:$glide",
+            glideOkhttp3           : "com.github.bumptech.glide:okhttp3-integration:$glide",
             glideProcessor         : "com.github.bumptech.glide:compiler:$glide",
             processPhoenix         : "com.jakewharton:process-phoenix:$phoenix",
             reflection             : "org.jooq:joor:$reflection",

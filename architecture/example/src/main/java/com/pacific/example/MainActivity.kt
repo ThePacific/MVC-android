@@ -1,6 +1,7 @@
 package com.pacific.arch.example
 
 import android.os.Bundle
+
 import com.pacific.arch.presentation.Activity
 import com.pacific.arch.presentation.activityViewModel
 import com.pacific.example.MainViewModel
