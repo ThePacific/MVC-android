@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.pacific.arch">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pacific.arch">
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 
 </manifest>

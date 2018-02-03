@@ -3,6 +3,10 @@ allprojects {
         google()
         jcenter()
         mavenCentral()
+
+        maven {
+            url "https://dl.bintray.com/kotlin/kotlin-eap/"
+        }
     }
 }
 
@@ -46,7 +50,7 @@ ext {
     timber = "4.6.0"
     permissions = "0.9.5"
     parceler = "1.1.9"
-    glide = "4.6.0"
+    glide = "4.6.1"
     leakcanary = "1.5.4"
     multidex = "1.0.2"
     phoenix = "2.0.0"
