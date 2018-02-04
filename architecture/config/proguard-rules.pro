@@ -87,21 +87,13 @@
 ##---------------End: proguard configuration for glide  ----------
 
 
-# Required to preserve the Flurry SDK
--dontnote com.flurry.sdk.**
--keep class com.flurry.** { *; }
--dontwarn com.flurry.**
--keepattributes *Annotation*,EnclosingMethod,Signature
--keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet, int);
-}
-
 -keep class * implements android.arch.lifecycle.GeneratedAdapter {<init>(...);}
 
 -keep public class * implements java.lang.annotation.Annotation
 
 
 -dontnote com.bumptech.glide.GeneratedAppGlideModuleImpl
+-dontwarn com.bumptech.glide.GeneratedAppGlideModuleImpl
 -dontnote kotlin.internal.jdk8.JDK8PlatformImplementations
 -dontnote kotlin.internal.JRE8PlatformImplementations
 -dontnote kotlin.internal.JRE7PlatformImplementations
@@ -156,3 +148,6 @@
 -dontnote org.apache.http.params.CoreConnectionPNames
 -dontnote org.apache.http.params.HttpParams
 -dontnote org.apache.http.params.HttpConnectionParams
+
+-dontnote com.evernote.android.job.GcmAvailableHelper
+-dontnote com.evernote.android.job.JobManager

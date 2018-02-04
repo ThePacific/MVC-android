@@ -1,19 +1,13 @@
 package com.pacific.arch.presentation
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerAppCompatDialogFragment
 import javax.inject.Inject
 
-abstract class AppCompatDialogFragment : android.support.v7.app.AppCompatDialogFragment() {
+abstract class AppCompatDialogFragment : DaggerAppCompatDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-
-    override fun onAttach(context: Context?) {
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -21,7 +15,6 @@ abstract class AppCompatDialogFragment : android.support.v7.app.AppCompatDialogF
             view.isClickable = true
         }
     }
-
 
     open fun viewModelSource() = ViewModelSource.ACTIVITY
 

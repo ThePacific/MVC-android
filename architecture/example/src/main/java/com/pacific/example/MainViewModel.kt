@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(app: App) : BaseViewModel(app) {
 
-    fun load(userId: Int) = "Hello World"
+    fun load() = "Hello World"
 }
