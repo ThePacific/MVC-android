@@ -1,5 +1,6 @@
 package com.pacific.example.di
 
+import android.util.Log
 import com.pacific.example.GlideComponent
 import dagger.Module
 import dagger.Provides
@@ -15,6 +16,7 @@ class AppModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
+        Log.e("_________________","init OkHttpClient")
         return OkHttpClient.Builder().build()
     }
 }

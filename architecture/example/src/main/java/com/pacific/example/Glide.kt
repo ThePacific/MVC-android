@@ -9,8 +9,10 @@ import com.bumptech.glide.integration.okhttp3.OkHttpLibraryGlideModule
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.module.AppGlideModule
+import com.pacific.adapter.RecyclerAdapter
 import com.pacific.arch.example.App
 import dagger.Module
+import dagger.Provides
 import dagger.Subcomponent
 import okhttp3.OkHttpClient
 import java.io.InputStream
@@ -23,11 +25,7 @@ class NewOkHttpLibraryGlideModule : AppGlideModule() {
     lateinit var okHttpClient: OkHttpClient
 
     init {
-        App.instance!!.appComponent()
-                .glideComponentBuilder()
-                .glideModule(GlideDaggerModule())
-                .build()
-                .inject(this)
+        App.instance!!.appComponent().glideComponentBuilder().build().inject(this)
     }
 
     override fun isManifestParsingEnabled() = false
@@ -42,17 +40,17 @@ class NewOkHttpLibraryGlideModule : AppGlideModule() {
 @Subcomponent(modules = [(GlideDaggerModule::class)])
 interface GlideComponent {
 
-    fun inject(newOkHttpLibraryGlideModule: NewOkHttpLibraryGlideModule)
+    fun inject(okHttpLibraryGlideModule: NewOkHttpLibraryGlideModule)
 
     @Subcomponent.Builder
     interface Builder {
-        /**optionally,if we don't have any args in GlideConfigModule constructor */
-        fun glideModule(glideModule: GlideDaggerModule): Builder
-
         fun build(): GlideComponent
     }
 }
 
 
 @Module
-class GlideDaggerModule
+class GlideDaggerModule {
+    @Provides
+    fun provideRecyclerAdapter() = RecyclerAdapter()
+}
