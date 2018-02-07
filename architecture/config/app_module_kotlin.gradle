@@ -98,9 +98,11 @@ android {
     }
 
     configurations.all {
+        resolutionStrategy.force dep.jetAnnotations
         resolutionStrategy.force dep.findBugsJrs305
         resolutionStrategy.force dep.annotationApi
         resolutionStrategy.force dep.multidex
+        resolutionStrategy.force dep.mockito
     }
 
     dataBinding {

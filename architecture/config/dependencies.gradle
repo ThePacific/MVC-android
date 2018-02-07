@@ -16,8 +16,8 @@ ext {
     buildTools = "27.0.3"
     min = "16"
     target = "27"
-    versionCode = 9
-    versionName = "0.0.9"
+    versionCode = 1
+    versionName = "0.0.1"
 
     testRunner = "1.0.1"
     junit = "4.12"
@@ -41,12 +41,12 @@ ext {
 
     inject = "1"
     javaxAnnotation = "1.3"
-    errorProne = "2.1.3"
+    errorProne = "2.2.0"
     jetAnnotations = "15.0"
     dagger2 = "2.14.1"
     autoValue = "1.5.3"
 
-    dispose = "0.5.1"
+    dispose = "0.6.0"
     timber = "4.6.0"
     permissions = "0.9.5"
     parceler = "1.1.9"
