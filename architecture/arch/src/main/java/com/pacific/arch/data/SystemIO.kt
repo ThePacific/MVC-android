@@ -22,7 +22,7 @@ import java.util.zip.ZipInputStream
 fun readAsset(context: Context, name: String, path: String, overwrite: Boolean) {
     var mPath = path
     verifyWorkThread()
-    mPath = addSeparator(mPath)
+    mPath = fileSeparator(mPath)
     mkdirs(mPath)
     val assetManager = context.assets
     try {
@@ -101,7 +101,7 @@ fun unzip(zipFile: File, directory: String) {
     try {
         val zipInputStream = ZipInputStream(FileInputStream(zipFile))
         val source = Okio.buffer(Okio.source(zipInputStream))
-        mDirectory = addSeparator(mDirectory)
+        mDirectory = fileSeparator(mDirectory)
         var sink: BufferedSink
         var zipEntry: ZipEntry? = zipInputStream.nextEntry
         while (zipEntry != null) {
@@ -138,10 +138,10 @@ fun mkdirs(directory: String): File {
     return file
 }
 
-fun addSeparator(directory: String): String {
+fun fileSeparator(directory: String): String {
     return if (directory.endsWith(File.separator)) {
         directory
     } else directory + File.separator
 }
 
-fun getSDCard() = addSeparator(Environment.getExternalStorageDirectory().absolutePath)
+fun sdcard() = fileSeparator(Environment.getExternalStorageDirectory().absolutePath)

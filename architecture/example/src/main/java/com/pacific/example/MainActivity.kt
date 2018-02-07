@@ -1,7 +1,6 @@
 package com.pacific.arch.example
 
 import android.os.Bundle
-import android.util.Log
 import com.pacific.arch.presentation.Activity
 import com.pacific.arch.presentation.activityViewModel
 import com.pacific.example.MainViewModel
@@ -23,6 +22,5 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         GlideApp.with(this).load("ex.png")
-        Log.e("_______________","____________")
     }
 }
