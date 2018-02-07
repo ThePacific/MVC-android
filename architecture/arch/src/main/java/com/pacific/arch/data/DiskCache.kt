@@ -17,11 +17,7 @@ import javax.inject.Inject
  * It's extracted from {@link okhttp3.Cache}.
  */
 class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Closeable, Flushable {
-    private val cache: DiskLruCache = DiskLruCache.create(FileSystem.SYSTEM,
-            directory,
-            VERSION,
-            ENTRY_COUNT,
-            maxSize)
+    private val cache: DiskLruCache = DiskLruCache.create(FileSystem.SYSTEM, directory, VERSION, ENTRY_COUNT, maxSize)
 
     @Inject constructor(moshi: Moshi, directory: File) : this(moshi, directory, 1024 * 1024 * 100)
 

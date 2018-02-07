@@ -20,8 +20,8 @@ import java.util.zip.ZipInputStream
 
 @WorkerThread
 fun readAsset(context: Context, name: String, path: String, overwrite: Boolean) {
-    var mPath = path
     verifyWorkThread()
+    var mPath = path
     mPath = fileSeparator(mPath)
     mkdirs(mPath)
     val assetManager = context.assets
@@ -82,10 +82,7 @@ fun toGallery(context: Context, bitmap: Bitmap, directory: File, image: String) 
     }
 
     try {
-        MediaStore
-                .Images
-                .Media
-                .insertImage(context.contentResolver, file.absolutePath, img, null)
+        MediaStore.Images.Media.insertImage(context.contentResolver, file.absolutePath, img, null)
         context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)))
     } catch (e: FileNotFoundException) {
         Log.e("SystemIO", e.toString())
@@ -96,8 +93,8 @@ fun toGallery(context: Context, bitmap: Bitmap, directory: File, image: String) 
 @WorkerThread
 @Suppress("UNCHECKED_CAST")
 fun unzip(zipFile: File, directory: String) {
-    var mDirectory = directory
     verifyWorkThread()
+    var mDirectory = directory
     try {
         val zipInputStream = ZipInputStream(FileInputStream(zipFile))
         val source = Okio.buffer(Okio.source(zipInputStream))
