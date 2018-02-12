@@ -12,12 +12,8 @@ import java.io.Flushable
 import java.io.IOException
 import javax.inject.Inject
 
-/**
- * An interface for a cache keyed by a String with a ByteArray as data.
- * It's extracted from {@link okhttp3.Cache}.
- */
 class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Closeable, Flushable {
-    private val cache: DiskLruCache = DiskLruCache.create(FileSystem.SYSTEM, directory, VERSION, ENTRY_COUNT, maxSize)
+    private val cache = DiskLruCache.create(FileSystem.SYSTEM, directory, VERSION, ENTRY_COUNT, maxSize)
 
     @Inject constructor(moshi: Moshi, directory: File) : this(moshi, directory, 1024 * 1024 * 100)
 
@@ -128,46 +124,15 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
         const val ENTRY_METADATA = 0
     }
 
-    /**
-     * Data and metadata for an entry returned by the cache.
-     * It's extracted from android Volley library.
-     * See `https://github.com/google/volley`
-     */
     class Entry(
-            /**
-             * The data returned from cache.
-             * Use {@code HttpUtil.toJson()}
-             * to serialize a data object
-             */
-            @JvmField
-            @Json(name = "data")
-            val data: ByteArray,
-            /**
-             * Time to live(TTL) for this record
-             */
-            @JvmField
-            @Json(name = "TTL")
-            val TTL: Long,
-            /**
-             * Soft TTL for this record
-             */
-            @JvmField
-            @Json(name = "softTTL")
-            val softTTL: Long) {
+            @JvmField @Json(name = "data") val data: ByteArray,
+            @JvmField @Json(name = "TTL") val TTL: Long,
+            @JvmField @Json(name = "softTTL") val softTTL: Long) {
 
-        /**
-         * True if the entry is expired.
-         */
         fun isExpired() = this.TTL < System.currentTimeMillis()
 
-        /**
-         * @return To a json String
-         */
-        override fun toString() = toJson(this, DiskCache.Entry::class.java)
-
-        /**
-         * True if a refresh is needed from the original data source.
-         */
         fun refreshNeeded() = this.softTTL < System.currentTimeMillis()
+
+        override fun toString() = toJson(this, DiskCache.Entry::class.java)
     }
 }

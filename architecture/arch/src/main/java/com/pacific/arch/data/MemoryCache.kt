@@ -5,12 +5,9 @@ import com.squareup.moshi.Json
 import java.util.*
 import javax.inject.Inject
 
-class MemoryCache(maxSize: Int) {
-    private val cache: LruCache<String, Entry> = LruCache(maxSize)
+class MemoryCache @Inject constructor() {
+    private val cache = LruCache<String, Entry>(Int.MAX_VALUE)
     private val keys = LinkedList<String>()
-
-    @Inject
-    constructor() : this(Int.MAX_VALUE)
 
     fun get(key: String, evictExpired: Boolean): Entry? {
         var value: Entry? = cache.get(key)
@@ -23,7 +20,6 @@ class MemoryCache(maxSize: Int) {
         return value
     }
 
-    @Synchronized
     fun put(key: String, value: Entry): Entry {
         if (!keys.contains(key)) {
             keys.add(key)
