@@ -12,7 +12,6 @@ class MemoryCache(maxSize: Int) {
     @Inject
     constructor() : this(Int.MAX_VALUE)
 
-    @Synchronized
     fun get(key: String, evictExpired: Boolean): Entry? {
         var value: Entry? = cache.get(key)
         if (evictExpired) {

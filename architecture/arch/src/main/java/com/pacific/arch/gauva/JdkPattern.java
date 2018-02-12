@@ -13,26 +13,24 @@ public final class JdkPattern implements Serializable {
         this.pattern = Preconditions2.checkNotNull(pattern);
     }
 
-    public static boolean and(String source, int min, int max) {
+    public static boolean andLogic(String source, int min, int max) {
         Preconditions2.checkNotNull(source);
         Preconditions2.checkState(min > 0 && max > 0 && max > min);
-        String regex = Phrase3
-                .format("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{<min>,<max>}",
-                        "<",
-                        ">")
+        String regex = Phrase3.format("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{<min>,<max>}",
+                "<",
+                ">")
                 .with("min", String.valueOf(min))
                 .with("max", String.valueOf(max))
                 .build();
         return source.matches(regex);
     }
 
-    public static boolean or(String source, int min, int max) {
+    public static boolean orLogic(String source, int min, int max) {
         Preconditions2.checkNotNull(source);
         Preconditions2.checkState(min > 0 && max > 0 && max > min);
-        String regex = Phrase3
-                .format("[0-9A-Za-z]{<min>,<max>}",
-                        "<",
-                        ">")
+        String regex = Phrase3.format("[0-9A-Za-z]{<min>,<max>}",
+                "<",
+                ">")
                 .with("min", String.valueOf(min))
                 .with("max", String.valueOf(max))
                 .build();
