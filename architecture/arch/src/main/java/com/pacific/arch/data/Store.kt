@@ -1,4 +1,4 @@
 package com.pacific.arch.data
 
-class Store {
+abstract class Store<K, V> {
 }
