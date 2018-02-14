@@ -91,7 +91,6 @@ fun toGallery(context: Context, bitmap: Bitmap, directory: File, image: String) 
 }
 
 @WorkerThread
-@Suppress("UNCHECKED_CAST")
 fun unzip(zipFile: File, directory: String) {
     verifyWorkThread()
     var mDirectory = directory
@@ -141,4 +140,7 @@ fun fileSeparator(directory: String): String {
     } else directory + File.separator
 }
 
-fun sdcard() = fileSeparator(Environment.getExternalStorageDirectory().absolutePath)
+fun sdcard(): String {
+    return fileSeparator(Environment.getExternalStorageDirectory().absolutePath)
+}
+

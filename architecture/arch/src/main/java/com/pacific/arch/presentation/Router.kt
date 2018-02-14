@@ -86,7 +86,7 @@ fun showDialogFragment(fm: FragmentManager, fragment: DialogFragment) {
     fragment.show(ft, tag)
 }
 
-fun showDialogFragment2(fm: FragmentManager, fragment: DialogFragment) {
+fun showDialogFragmentAllowingStateLoss(fm: FragmentManager, fragment: DialogFragment) {
     val tag = fragment.javaClass.simpleName
     val ft = fm.beginTransaction()
     val prev = fm.findFragmentByTag(tag)
