@@ -42,4 +42,10 @@ dependencies {
 
     debugImplementation dep.leakcanary
     releaseImplementation dep.leakcanaryNo
+
+    implementation 'se.ansman.kotshi:api:1.0.0'
+    kapt 'se.ansman.kotshi:compiler:1.0.0'
+
+    testImplementation 'se.ansman.kotshi:api:1.0.0'
+    kaptTest 'se.ansman.kotshi:compiler:1.0.0'
 }

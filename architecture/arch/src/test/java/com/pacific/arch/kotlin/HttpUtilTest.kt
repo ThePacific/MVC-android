@@ -57,7 +57,7 @@ class HttpUtilTest {
         assertEquals(72L, page2.list[2].star)
 
 
-        val page3 = Page(list1)
+        val page3 = Page<Note>(list1)
         val type2 = Types.newParameterizedType(Page::class.java, Note::class.java)
         val page4 = fromJson<Page<Note>>(toJson(page3, type2), type2)
         assertTrue(page3.list.size == page4.list.size && 3 == page4.list.size)

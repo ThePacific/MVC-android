@@ -7,7 +7,3 @@ data class Note constructor(@Json(name = "note_title") var title: String?,
                             @Json(name = "note_content") var content: String?)
 
 data class SimplePage constructor(@Json(name = "my_list") var list: List<Note>)
-
-data class Page<T> constructor(@Json(name = "my_list") var list: List<T>)
-
-
