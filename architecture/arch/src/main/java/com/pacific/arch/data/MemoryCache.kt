@@ -1,16 +1,15 @@
 package com.pacific.arch.data
 
 import android.support.v4.util.LruCache
-import com.squareup.moshi.Json
 import java.util.*
 import javax.inject.Inject
 
 class MemoryCache @Inject constructor() {
-    private val cache = LruCache<String, Entry>(Int.MAX_VALUE)
+    private val cache = LruCache<String, MemoryCacheEntry>(Int.MAX_VALUE)
     private val keys = LinkedList<String>()
 
-    fun get(key: String, evictExpired: Boolean): Entry? {
-        var value: Entry? = cache.get(key)
+    fun get(key: String, evictExpired: Boolean): MemoryCacheEntry? {
+        var value: MemoryCacheEntry? = cache.get(key)
         if (evictExpired) {
             if (value != null && value.isExpired()) {
                 remove(key)
@@ -20,7 +19,7 @@ class MemoryCache @Inject constructor() {
         return value
     }
 
-    fun put(key: String, value: Entry): Entry {
+    fun put(key: String, value: MemoryCacheEntry): MemoryCacheEntry {
         if (!keys.contains(key)) {
             keys.add(key)
         }
@@ -28,7 +27,7 @@ class MemoryCache @Inject constructor() {
 
     }
 
-    fun remove(key: String): Entry {
+    fun remove(key: String): MemoryCacheEntry {
         keys.remove(key)
         return cache.remove(key)
     }
@@ -47,49 +46,23 @@ class MemoryCache @Inject constructor() {
         }
     }
 
-    fun snapshot(): Map<String, Entry> {
-        return cache.snapshot()
-    }
+    fun snapshot() = cache.snapshot()
 
-    fun trimToSize(maxSize: Int) {
-        cache.trimToSize(maxSize)
-    }
+    fun trimToSize(maxSize: Int) = cache.trimToSize(maxSize)
 
-    fun createCount(): Int {
-        return cache.createCount()
-    }
+    fun createCount() = cache.createCount()
 
-    fun evictAll() {
-        cache.evictAll()
-    }
+    fun evictAll() = cache.evictAll()
 
-    fun evictionCount(): Int {
-        return cache.evictionCount()
-    }
+    fun evictionCount() = cache.evictionCount()
 
-    fun hitCount(): Int {
-        return cache.hitCount()
-    }
+    fun hitCount() = cache.hitCount()
 
-    fun maxSize(): Int {
-        return cache.maxSize()
-    }
+    fun maxSize() = cache.maxSize()
 
-    fun missCount(): Int {
-        return cache.missCount()
-    }
+    fun missCount() = cache.missCount()
 
-    fun putCount(): Int {
-        return cache.putCount()
-    }
+    fun putCount() = cache.putCount()
 
-    fun size(): Int {
-        return cache.size()
-    }
-
-    class Entry(@JvmField @Json(name = "data") val data: Any?,
-                @JvmField @Json(name = "TTL") val TTL: Long) {
-
-        fun isExpired() = this.TTL < System.currentTimeMillis()
-    }
+    fun size() = cache.size()
 }

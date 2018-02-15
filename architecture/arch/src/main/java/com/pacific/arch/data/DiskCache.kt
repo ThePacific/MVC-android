@@ -1,6 +1,5 @@
 package com.pacific.arch.data
 
-import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
 import okhttp3.internal.Util
 import okhttp3.internal.cache.DiskLruCache
@@ -15,9 +14,9 @@ import javax.inject.Inject
 class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Closeable, Flushable {
     private val cache = DiskLruCache.create(FileSystem.SYSTEM, directory, VERSION, ENTRY_COUNT, maxSize)
 
-    @Inject constructor(moshi: Moshi, directory: File) : this(moshi, directory, 1024 * 1024 * 100)
+    @Inject constructor(moshi: Moshi, directory: File) : this(moshi, directory, 1024 * 1024 * 64)
 
-    fun get(key: String): Entry? {
+    fun get(key: String): DiskCacheEntry? {
         val snapshot: DiskLruCache.Snapshot?
         try {
             snapshot = cache.get(key)
@@ -33,7 +32,7 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
             val json = source.readUtf8()
             source.close()
             Util.closeQuietly(snapshot)
-            fromJson<Entry>(json, Entry::class.java, moshi)
+            fromJson<DiskCacheEntry>(json, DiskCacheEntry::class.java, moshi)
         } catch (e: IOException) {
             Util.closeQuietly(snapshot)
             null
@@ -41,7 +40,7 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
 
     }
 
-    fun put(key: String, entry: Entry) {
+    fun put(key: String, entry: DiskCacheEntry) {
         var editor: DiskLruCache.Editor? = null
         try {
             editor = cache.edit(key)
@@ -59,14 +58,6 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
     @Throws(IOException::class)
     fun remove(key: String) {
         cache.remove(key)
-    }
-
-    private fun abortQuietly(editor: DiskLruCache.Editor?) {
-        try {
-            editor?.abort()
-        } catch (ignored: IOException) {
-        }
-
     }
 
     @Throws(IOException::class)
@@ -89,18 +80,6 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
         return cache.size()
     }
 
-    fun maxSize(): Long {
-        return cache.maxSize
-    }
-
-    fun directory(): File {
-        return cache.directory
-    }
-
-    fun isClosed(): Boolean {
-        return cache.isClosed
-    }
-
     @Throws(IOException::class)
     override fun flush() {
         cache.flush()
@@ -111,28 +90,24 @@ class DiskCache(private val moshi: Moshi, directory: File, maxSize: Long) : Clos
         cache.close()
     }
 
+    private fun abortQuietly(editor: DiskLruCache.Editor?) {
+        try {
+            editor?.abort()
+        } catch (ignored: IOException) {
+        }
+    }
+
+    fun maxSize() = cache.maxSize
+
+    fun directory() = cache.directory
+
+    fun isClosed() = cache.isClosed
+
     companion object {
-        /**
-         * Unlike [okhttp3.Cache] ENTRY_COUNT = 2.
-         * We don't save the CacheHeader and Respond in two separated files.
-         * Instead, we wrap them in [DiskCache.Entry].
-         */
         const val ENTRY_COUNT = 1
 
         const val VERSION = 201105
 
         const val ENTRY_METADATA = 0
-    }
-
-    class Entry(
-            @JvmField @Json(name = "data") val data: ByteArray,
-            @JvmField @Json(name = "TTL") val TTL: Long,
-            @JvmField @Json(name = "softTTL") val softTTL: Long) {
-
-        fun isExpired() = this.TTL < System.currentTimeMillis()
-
-        fun refreshNeeded() = this.softTTL < System.currentTimeMillis()
-
-        override fun toString() = toJson(this, DiskCache.Entry::class.java)
     }
 }

@@ -28,10 +28,10 @@ class HttpUtilTest {
     fun testJson() {
         val access = "20170101"
         val now = System.currentTimeMillis()
-        val diskEntry1 = DiskCache.Entry(str2ByteArray(access), now + 5000, now + 1000)
-        val diskEntry2 = fromJson<DiskCache.Entry>(
-                toJson(diskEntry1, DiskCache.Entry::class.java),
-                DiskCache.Entry::class.java)
+        val diskEntry1 = DiskCacheEntry(str2ByteArray(access), now + 5000, now + 1000)
+        val diskEntry2 = fromJson<DiskCacheEntry>(
+                toJson(diskEntry1, DiskCacheEntry::class.java),
+                DiskCacheEntry::class.java)
 
         assertEquals(diskEntry1.TTL, diskEntry2.TTL)
         assertEquals(diskEntry1.softTTL, diskEntry2.softTTL)
@@ -80,10 +80,10 @@ class HttpUtilTest {
     fun testByArrayJson() {
         val access = "20170101"
         val now = System.currentTimeMillis()
-        val diskEntry1 = DiskCache.Entry(str2ByteArray(access), now + 5000, now + 1000)
-        val diskEntry2 = fromByteArrayJson<DiskCache.Entry>(
-                toByteArrayJson(diskEntry1, DiskCache.Entry::class.java),
-                DiskCache.Entry::class.java)
+        val diskEntry1 = DiskCacheEntry(str2ByteArray(access), now + 5000, now + 1000)
+        val diskEntry2 = fromByteArrayJson<DiskCacheEntry>(
+                toByteArrayJson(diskEntry1, DiskCacheEntry::class.java),
+                DiskCacheEntry::class.java)
 
         assertEquals(diskEntry1.TTL, diskEntry2.TTL)
         assertEquals(diskEntry1.softTTL, diskEntry2.softTTL)

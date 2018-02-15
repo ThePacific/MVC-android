@@ -140,7 +140,5 @@ fun fileSeparator(directory: String): String {
     } else directory + File.separator
 }
 
-fun sdcard(): String {
-    return fileSeparator(Environment.getExternalStorageDirectory().absolutePath)
-}
+fun sdcard() = fileSeparator(Environment.getExternalStorageDirectory().absolutePath)
 

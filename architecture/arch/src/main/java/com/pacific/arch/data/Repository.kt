@@ -56,7 +56,7 @@ abstract class Repository<in T, R>(@JvmField protected val moshi: Moshi,
                 evictDiskCache()
                 return@defer Observable.just(Source.irrelevant<R>())
             }
-            memoryCache.put(key!!, MemoryCache.Entry(newData as Any, diskEntry.TTL))
+            memoryCache.put(key!!, MemoryCacheEntry(newData as Any, diskEntry.TTL))
             Observable.just(Source.success<R>(newData))
         }
     }
@@ -96,8 +96,8 @@ abstract class Repository<in T, R>(@JvmField protected val moshi: Moshi,
     protected fun onError(envelope: Envelope<R>,
                           evictDiskCache: Boolean,
                           evictMemoryCache: Boolean): Observable<Source<R>> {
-        val ioError = IOError(envelope.message(), envelope.code())
-        if (isAccessFailure(ioError)) {
+        val workflowException = WorkflowException(envelope.message(), envelope.code())
+        if (isAccessFailure(workflowException)) {
             diskCache.evictAll()
             memoryCache.evictAll()
         } else {
@@ -108,7 +108,7 @@ abstract class Repository<in T, R>(@JvmField protected val moshi: Moshi,
                 evictMemoryCache()
             }
         }
-        return Observable.just(Source.failure(ioError))
+        return Observable.just(Source.failure(workflowException))
     }
 
     protected fun onPersist(envelope: Envelope<R>, toDisk: Boolean,
@@ -132,12 +132,12 @@ abstract class Repository<in T, R>(@JvmField protected val moshi: Moshi,
         Preconditions2.checkState(ttl > now && softTTL > now && ttl >= softTTL)
         if (toDisk) {
             val bytes = toByteArrayJson(newData as Any, dataType(), moshi)
-            diskCache.put(key!!, DiskCache.Entry(bytes, ttl, softTTL))
+            diskCache.put(key!!, DiskCacheEntry(bytes, ttl, softTTL))
         } else {
             evictDiskCache()
         }
         if (toMemory) {
-            memoryCache.put(key!!, MemoryCache.Entry(newData as Any, ttl))
+            memoryCache.put(key!!, MemoryCacheEntry(newData as Any, ttl))
         } else {
             evictMemoryCache()
         }
@@ -208,5 +208,5 @@ abstract class Repository<in T, R>(@JvmField protected val moshi: Moshi,
      */
     protected abstract fun dataType(): Type
 
-    protected abstract fun isAccessFailure(ioError: IOError): Boolean
+    protected abstract fun isAccessFailure(workflowException: WorkflowException): Boolean
 }
