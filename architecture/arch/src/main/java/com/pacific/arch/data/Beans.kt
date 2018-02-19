@@ -55,7 +55,7 @@ enum class Status {
     SUCCESS, ERROR, IN_PROGRESS, IRRELEVANT
 }
 
-class WorkflowException : RuntimeException {
+class FlowException : RuntimeException {
     @JvmField
     val errorCode: Int
 
@@ -82,12 +82,12 @@ class WorkflowException : RuntimeException {
     }
 
     companion object {
-        fun isWorkflowException(e: Throwable): Boolean {
-            return e is WorkflowException
+        fun isFlowException(e: Throwable): Boolean {
+            return e is FlowException
         }
 
-        fun from(e: Throwable): WorkflowException {
-            return e as? WorkflowException ?: WorkflowException(e.message!!, e.cause!!, -1)
+        fun from(e: Throwable): FlowException {
+            return e as? FlowException ?: FlowException(e.message!!, e.cause!!, -1)
         }
     }
 }

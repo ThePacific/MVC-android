@@ -105,11 +105,22 @@ abstract class Store<in K, V>(@JvmField protected val moshi: Moshi,
         }
     }
 
+    @WorkerThread
+    fun evictAll() {
+        verifyWorkThread()
+        try {
+            diskCache.evictAll()
+            memoryCache.evictAll()
+        } catch (ignored: IOException) {
+            ignored.printStackTrace()
+        }
+    }
+
     protected open fun onError(envelope: Envelope<V>,
                                evictDiskCache: Boolean,
                                evictMemoryCache: Boolean): Observable<Source<V>> {
-        val e = WorkflowException(envelope.message(), envelope.code())
-        if (triggerEvictAll(e)) {
+        val flowException = FlowException(envelope.message(), envelope.code())
+        if (isEvictAll(flowException)) {
             evictAll()
         } else {
             if (evictDiskCache) {
@@ -119,7 +130,7 @@ abstract class Store<in K, V>(@JvmField protected val moshi: Moshi,
                 evictMemoryCache()
             }
         }
-        return Observable.just(Source.failure(e))
+        return Observable.just(Source.failure(flowException))
     }
 
     protected open fun onSave(envelope: Envelope<V>,
@@ -158,13 +169,6 @@ abstract class Store<in K, V>(@JvmField protected val moshi: Moshi,
         return Observable.just(Source.success(newData))
     }
 
-    @WorkerThread
-    fun evictAll() {
-        verifyWorkThread()
-        diskCache.evictAll()
-        memoryCache.evictAll()
-    }
-
     /**
      * @return default network cache time is 10 MINUTES
      */
@@ -188,7 +192,7 @@ abstract class Store<in K, V>(@JvmField protected val moshi: Moshi,
     /**
      * @return true to evict app cache including DiskCache and MemoryCache
      */
-    protected open fun triggerEvictAll(e: WorkflowException) = false
+    protected open fun isEvictAll(flowException: FlowException) = false
 
     /**
      * @return request HTTP/HTTPS API
