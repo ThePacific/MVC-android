@@ -16,4 +16,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':arch')
+    implementation 'com.android.support:support-v4:27.0.2'
 }
+apply plugin: 'kotlin-android-extensions'

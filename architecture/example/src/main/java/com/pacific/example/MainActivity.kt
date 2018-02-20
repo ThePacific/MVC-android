@@ -4,8 +4,8 @@ import android.os.Bundle
 import com.pacific.arch.presentation.Activity
 import com.pacific.arch.presentation.activityViewModel
 import com.pacific.example.MainViewModel
-import com.pacific.example.di.GlideApp
 import okhttp3.OkHttpClient
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : Activity() {
@@ -21,6 +21,6 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        GlideApp.with(this).load("ex.png")
+        Timber.e("this client is %s", okHttpClient)
     }
 }

@@ -13,6 +13,7 @@ import com.pacific.arch.example.App
 import dagger.Module
 import dagger.Subcomponent
 import okhttp3.OkHttpClient
+import timber.log.Timber
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -30,13 +31,13 @@ class NewOkHttpLibraryGlideModule : AppGlideModule() {
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         super.registerComponents(context, glide, registry)
+        Timber.e("this client is %s", okHttpClient)
         registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(okHttpClient))
     }
 }
 
 @Subcomponent(modules = [(GlideDaggerModule::class)])
 interface GlideComponent {
-
     fun inject(okHttpLibraryGlideModule: NewOkHttpLibraryGlideModule)
 
     @Subcomponent.Builder

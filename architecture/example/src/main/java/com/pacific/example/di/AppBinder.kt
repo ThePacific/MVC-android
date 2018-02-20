@@ -43,6 +43,6 @@ abstract class AppBinder {
     abstract fun mainActivity(): MainActivity
 
 
-    ////Fragment and FragmentDialog binders
+    ////the global Fragment and FragmentDialog binders
 }
 

@@ -2,10 +2,14 @@ package com.pacific.arch.presentation
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.annotation.LayoutRes
 import kotlin.reflect.KProperty
+
+typealias OkConsumer = (context: Context, intent: Intent) -> Unit
 
 fun <T : Activity, R : ViewDataBinding> contentView(@LayoutRes layoutRes: Int) = SetContentView<T, R>(layoutRes)
 

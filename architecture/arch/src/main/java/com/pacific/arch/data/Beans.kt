@@ -14,7 +14,6 @@ interface Envelope<out T> {
 class DiskCacheEntry(@JvmField @Json(name = "data") val data: ByteArray,
                      @JvmField @Json(name = "TTL") val TTL: Long,
                      @JvmField @Json(name = "softTTL") val softTTL: Long) {
-
     fun isExpired() = this.TTL < System.currentTimeMillis()
 
     fun refreshNeeded() = softTTL < System.currentTimeMillis()
@@ -24,14 +23,12 @@ class DiskCacheEntry(@JvmField @Json(name = "data") val data: ByteArray,
 
 class MemoryCacheEntry(@JvmField @Json(name = "data") val data: Any?,
                        @JvmField @Json(name = "TTL") val TTL: Long) {
-
     fun isExpired() = TTL < System.currentTimeMillis()
 }
 
 class Source<out T> private constructor(@JvmField val status: Status,
                                         @JvmField val error: Throwable?,
                                         @JvmField val data: T?) {
-
     companion object {
         fun <T> inProgress(): Source<T> {
             return Source<T>(Status.IN_PROGRESS, null, null)

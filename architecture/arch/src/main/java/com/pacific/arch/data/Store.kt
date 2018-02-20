@@ -190,7 +190,7 @@ abstract class Store<in K, V>(@JvmField protected val moshi: Moshi,
     protected open fun getKey(query: K): String = md5(dataType().toString())
 
     /**
-     * @return true to evict app cache including DiskCache and MemoryCache
+     * @return true to evict the global cache including DiskCache and MemoryCache
      */
     protected open fun isEvictAll(flowException: FlowException) = false
 

@@ -1,12 +1,12 @@
 package com.pacific.example
 
+import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import com.pacific.arch.example.App
 import io.reactivex.disposables.CompositeDisposable
 
-open class BaseViewModel constructor(app: App) : AndroidViewModel(app) {
+open class RxAwareViewModel constructor(APP: Application) : AndroidViewModel(APP) {
     @JvmField
-    protected val disposables = CompositeDisposable()
+    val disposables = CompositeDisposable()
 
     override fun onCleared() {
         super.onCleared()
