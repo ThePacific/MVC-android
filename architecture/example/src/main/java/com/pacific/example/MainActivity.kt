@@ -1,26 +1,21 @@
 package com.pacific.arch.example
 
 import android.os.Bundle
+import com.pacific.arch.example.databinding.ActivityMainBinding
 import com.pacific.arch.presentation.Activity
 import com.pacific.arch.presentation.activityViewModel
+import com.pacific.arch.presentation.contentView
+import com.pacific.arch.presentation.replaceFragment
+import com.pacific.example.MainFragment
 import com.pacific.example.MainViewModel
-import okhttp3.OkHttpClient
-import timber.log.Timber
-import javax.inject.Inject
 
 class MainActivity : Activity() {
 
-    @Inject
-    lateinit var app: App
-
-    @Inject
-    lateinit var okHttpClient: OkHttpClient
-
     private val model by activityViewModel(MainViewModel::class.java)
+    private val binding: ActivityMainBinding by contentView(R.layout.activity_main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        Timber.e("this client is %s", okHttpClient)
+        replaceFragment(this, MainFragment.newInstance(), false, binding.container.id)
     }
 }

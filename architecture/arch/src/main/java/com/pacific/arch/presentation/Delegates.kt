@@ -7,6 +7,8 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.annotation.LayoutRes
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import kotlin.reflect.KProperty
 
 typealias OkConsumer = (context: Context, intent: Intent) -> Unit
@@ -23,6 +25,10 @@ class SetContentView<in T : Activity, out R : ViewDataBinding>(@LayoutRes privat
     }
 }
 
+////used in Fragment or DialogFragment
+fun <T : ViewDataBinding> LayoutInflater.dataBinding(@LayoutRes layoutRes: Int, container: ViewGroup?): T {
+    return DataBindingUtil.inflate(this, layoutRes, container, false)
+}
 
 fun <T : Activity, R : ViewModel> activityViewModel(modelClass: Class<R>) = SetActivityViewModel<T, R>(modelClass)
 

@@ -8,6 +8,8 @@ import com.pacific.arch.example.App
 import com.pacific.arch.example.MainActivity
 import com.pacific.arch.presentation.ViewModelFactory
 import com.pacific.arch.presentation.ViewModelKey
+import com.pacific.example.MainFragment
+import com.pacific.example.MainFragmentViewModel
 import com.pacific.example.MainViewModel
 import dagger.Binds
 import dagger.Module
@@ -37,12 +39,23 @@ abstract class AppBinder {
     @ViewModelKey(MainViewModel::class)
     abstract fun bindMainViewModel(it: MainViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainFragmentViewModel::class)
+    abstract fun bindMainFragmentViewModel(it: MainFragmentViewModel): ViewModel
+
 
     ////Activity binders
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [(MainActivityBinder::class)])
     abstract fun mainActivity(): MainActivity
 
 
     ////the global Fragment and FragmentDialog binders
 }
 
+
+@Module
+abstract class MainActivityBinder {
+    @ContributesAndroidInjector
+    abstract fun mainFragment(): MainFragment
+}
