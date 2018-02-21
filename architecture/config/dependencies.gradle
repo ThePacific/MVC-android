@@ -62,6 +62,7 @@ ext {
     mCommon = "0.0.8"
     mPresentation = "0.0.8"
     mData = "0.0.8"
+    threeTenBP = "1.0.5"
 
     dep = [
             appcompat              : "com.android.support:appcompat-v7:$support",
@@ -135,6 +136,7 @@ ext {
             processPhoenix         : "com.jakewharton:process-phoenix:$phoenix",
             reflection             : "org.jooq:joor-java-8:$reflection",
             leakcanary             : "com.squareup.leakcanary:leakcanary-android:$leakcanary",
-            leakcanaryNo           : "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary"
+            leakcanaryNo           : "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary",
+            threeTenBP             : "com.jakewharton.threetenabp:threetenabp:$threeTenBP"
     ]
 }

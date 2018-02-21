@@ -6,7 +6,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 open class RxAwareViewModel constructor(app: Application) : AndroidViewModel(app) {
     @JvmField
-    val disposables = CompositeDisposable()
+    protected val disposables = CompositeDisposable()
 
     override fun onCleared() {
         super.onCleared()

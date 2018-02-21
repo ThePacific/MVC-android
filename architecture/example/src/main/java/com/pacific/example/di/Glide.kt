@@ -23,7 +23,7 @@ class NewOkHttpLibraryGlideModule : AppGlideModule() {
     lateinit var okHttpClient: OkHttpClient
 
     init {
-        App.instance!!.appComponent().glideComponentBuilder().build().inject(this)
+        App.INSTANCE!!.appComponent().glideComponentBuilder().build().inject(this)
     }
 
     override fun isManifestParsingEnabled() = false

@@ -57,7 +57,7 @@ public final class Phrase3 {
         public String build() {
             final Matcher matcher = pattern.matcher(baseString);
             if (strictMode && matcher.find()) {
-                throw new RuntimeException("You didn't pass an arg for key " + matcher.group());
+                throw new RuntimeException("You didn't pass an argument for key " + matcher.group());
             } else {
                 return baseString;
             }

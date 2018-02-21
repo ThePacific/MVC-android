@@ -1,12 +1,12 @@
 package com.pacific.example
 
 import android.os.SystemClock
-import android.util.Log
 import com.pacific.arch.data.Source
 import com.pacific.arch.example.App
 import com.pacific.arch.rx.ObservableUtil
 import com.pacific.arch.rx.verifyWorkThread
 import io.reactivex.Observable
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainFragmentViewModel @Inject constructor(app: App) : RxAwareViewModel(app) {
@@ -16,13 +16,14 @@ class MainFragmentViewModel @Inject constructor(app: App) : RxAwareViewModel(app
                 .just("begin to get user from remote")
                 .map {
                     verifyWorkThread()
-                    Log.e("*******", it)
+                    Timber.e(it)
                     SystemClock.sleep(3000)
-                    Log.e("*******", "done")
+                    Timber.e("done")
                     return@map Source.success(it)
                 }
-                .doOnDispose { Log.e("*******", "dispose") }
+                .doOnDispose { Timber.e("dispose") }
+                .onErrorReturn { Source.failure(it) }
                 .compose(ObservableUtil.io())
-
+                .startWith(Source.inProgress())
     }
 }

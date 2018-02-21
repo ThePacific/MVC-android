@@ -3,12 +3,14 @@ package com.pacific.arch.views.compact
 import android.app.Application
 import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import android.os.StrictMode
 import android.telephony.TelephonyManager
 import android.util.Log
 import com.pacific.arch.rx.CompletableUtil
 import com.squareup.leakcanary.LeakCanary
 import io.reactivex.Completable
+
 
 const val ARMEABI = 1
 const val ARMEABI_V7 = 2
@@ -60,7 +62,9 @@ fun getCupArchDescription(): String {
 fun isEmulator(context: Context): Boolean {
     val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     val networkOperator = tm.networkOperatorName.toLowerCase()
-    return "android" == networkOperator
+    val fingerPrint = Build.FINGERPRINT
+    return "android" == networkOperator || fingerPrint.startsWith("unknown") ||
+            fingerPrint.contains("generic") || fingerPrint.contains("vbox")
 }
 
 fun getBuildConfigValue(context: Context, key: String): Any? {
