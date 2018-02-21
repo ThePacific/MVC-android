@@ -11,7 +11,6 @@ import com.pacific.arch.rx.CompletableUtil
 import com.squareup.leakcanary.LeakCanary
 import io.reactivex.Completable
 
-
 const val ARMEABI = 1
 const val ARMEABI_V7 = 2
 const val ARM64_V8A = 3
@@ -43,7 +42,7 @@ fun getCupArch(): Int {
             else -> ARMEABI
         }
     }
-    throw AssertionError("Unknown cpu arch")
+    throw AssertionError("Unknown CPU")
 }
 
 fun getCupArchDescription(): String {

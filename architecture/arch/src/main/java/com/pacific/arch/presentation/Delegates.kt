@@ -26,7 +26,7 @@ class SetContentView<in T : Activity, out R : ViewDataBinding>(@LayoutRes privat
 }
 
 ////used in Fragment or DialogFragment
-fun <T : ViewDataBinding> LayoutInflater.dataBinding(@LayoutRes layoutRes: Int, container: ViewGroup?): T {
+fun <T : ViewDataBinding> LayoutInflater.fragmentDataBinding(@LayoutRes layoutRes: Int, container: ViewGroup?): T {
     return DataBindingUtil.inflate(this, layoutRes, container, false)
 }
 

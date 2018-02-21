@@ -24,7 +24,7 @@ class MainFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = inflater.dataBinding(R.layout.fragment_main, container)
+        binding = inflater.fragmentDataBinding(R.layout.fragment_main, container)
         binding.btnSummit.setOnClickListener(this)
         return binding.root
     }
