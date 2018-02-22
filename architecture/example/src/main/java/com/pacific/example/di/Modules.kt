@@ -10,7 +10,14 @@ import com.pacific.arch.example.App
 import com.pacific.arch.example.MainActivity
 import com.pacific.arch.presentation.ViewModelFactory
 import com.pacific.arch.presentation.ViewModelKey
-import com.pacific.example.*
+import com.pacific.example.AppsBottomSheet
+import com.pacific.example.MainFragment
+import com.pacific.example.MainFragmentViewModel
+import com.pacific.example.MainViewModel
+import com.pacific.example.common.IS_DEBUG
+import com.pacific.example.common.OS_PREFS
+import com.pacific.example.feature.zygote.SplashActivity
+import com.pacific.example.feature.zygote.SplashViewModel
 import com.squareup.moshi.Moshi
 import dagger.Binds
 import dagger.Module
@@ -133,6 +140,11 @@ abstract class AppBinder {
     ////ViewModel binders
     @Binds
     @IntoMap
+    @ViewModelKey(SplashViewModel::class)
+    abstract fun bindSplashViewModel(it: SplashViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(MainViewModel::class)
     abstract fun bindMainViewModel(it: MainViewModel): ViewModel
 
@@ -143,16 +155,25 @@ abstract class AppBinder {
 
 
     ////Activity binders
+    @ContributesAndroidInjector
+    abstract fun splashActivity(): SplashActivity
+
     @ContributesAndroidInjector(modules = [(MainActivityBinder::class)])
     abstract fun mainActivity(): MainActivity
 
 
-    ////the global Fragment and FragmentDialog binders
+    ////Global Fragment and FragmentDialog binders
 }
 
 
 @Module
 abstract class MainActivityBinder {
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [(MainFragmentBinder::class)])
     abstract fun mainFragment(): MainFragment
+}
+
+@Module
+abstract class MainFragmentBinder {
+    @ContributesAndroidInjector
+    abstract fun appsBottomSheet(): AppsBottomSheet
 }

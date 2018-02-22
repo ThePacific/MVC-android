@@ -8,6 +8,7 @@ import com.pacific.arch.presentation.contentView
 import com.pacific.arch.presentation.replaceFragment
 import com.pacific.example.MainFragment
 import com.pacific.example.MainViewModel
+import timber.log.Timber
 
 class MainActivity : Activity() {
 
@@ -17,5 +18,6 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         replaceFragment(this, MainFragment.newInstance(), false, binding.container.id)
+        Timber.e(toString())
     }
 }

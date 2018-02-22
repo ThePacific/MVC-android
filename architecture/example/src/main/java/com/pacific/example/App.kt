@@ -3,7 +3,7 @@ package com.pacific.arch.example
 import android.content.Context
 import android.support.multidex.MultiDex
 import com.pacific.arch.views.compact.attachDebug
-import com.pacific.example.CrashReportingTree
+import com.pacific.example.base.CrashReportingTree
 import com.pacific.example.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication

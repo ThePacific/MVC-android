@@ -1,4 +1,4 @@
-package com.pacific.example
+package com.pacific.example.base
 
 import android.util.Log
 import timber.log.Timber

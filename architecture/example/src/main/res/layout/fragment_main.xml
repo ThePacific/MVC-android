@@ -7,11 +7,12 @@
         tools:context="com.pacific.example.MainFragment">
 
         <Button
-            android:id="@+id/btn_summit"
+            android:id="@+id/btn_show_apps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/app_name" />
+            android:text="Show Apps"
+            android:textAllCaps="false" />
 
     </FrameLayout>
 </layout>
