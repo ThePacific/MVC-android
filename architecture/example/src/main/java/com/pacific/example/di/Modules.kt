@@ -14,8 +14,8 @@ import com.pacific.example.AppsBottomSheet
 import com.pacific.example.MainFragment
 import com.pacific.example.MainFragmentViewModel
 import com.pacific.example.MainViewModel
-import com.pacific.example.common.IS_DEBUG
 import com.pacific.example.common.OS_PREFS
+import com.pacific.example.common.DEBUG
 import com.pacific.example.feature.zygote.SplashActivity
 import com.pacific.example.feature.zygote.SplashViewModel
 import com.squareup.moshi.Moshi
@@ -50,7 +50,7 @@ class AppModule {
                 HttpLoggingInterceptor.Logger {
                     Timber.tag("okHttp").i(it)
                 })
-                .setLevel(if (IS_DEBUG) {
+                .setLevel(if (DEBUG) {
                     HttpLoggingInterceptor.Level.BODY
                 } else {
                     HttpLoggingInterceptor.Level.NONE

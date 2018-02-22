@@ -5,7 +5,7 @@ import android.widget.Toast
 import com.pacific.arch.example.App
 import com.pacific.arch.presentation.dismiss
 
-var toast: Toast? = null
+private var toast: Toast? = null
 
 fun showToast(@StringRes stringRes: Int) {
     showToast(App.INSTANCE!!.getString(stringRes))

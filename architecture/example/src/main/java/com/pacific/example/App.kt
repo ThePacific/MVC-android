@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.multidex.MultiDex
 import com.pacific.arch.views.compact.attachDebug
 import com.pacific.example.base.CrashReportingTree
+import com.pacific.example.common.DEBUG
 import com.pacific.example.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -29,7 +30,7 @@ class App : DaggerApplication() {
         INSTANCE = this
 
         attachDebug(this, Runnable {
-            if (BuildConfig.DEBUG) {
+            if (DEBUG) {
                 Timber.plant(DebugTree())
             } else {
                 Timber.plant(CrashReportingTree())
