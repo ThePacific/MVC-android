@@ -62,8 +62,10 @@ fun isEmulator(context: Context): Boolean {
     val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     val networkOperator = tm.networkOperatorName.toLowerCase()
     val fingerPrint = Build.FINGERPRINT
-    return "android" == networkOperator || fingerPrint.startsWith("unknown") ||
-            fingerPrint.contains("generic") || fingerPrint.contains("vbox")
+    return "android" == networkOperator
+            || fingerPrint.startsWith("unknown")
+            || fingerPrint.contains("generic")
+            || fingerPrint.contains("vbox")
 }
 
 fun getBuildConfigValue(context: Context, key: String): Any? {
@@ -84,26 +86,27 @@ fun getBuildConfigValue(context: Context, key: String): Any? {
     return null
 }
 
-fun attachDebug(application: Application, runnable: Runnable?) {
-    Completable.fromAction {
-        if (LeakCanary.isInAnalyzerProcess(application)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return@fromAction
-        }
-        runnable?.run()
-        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .penaltyDeath()
-                .build())
-        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .penaltyDeath()
-                .build())
-        LeakCanary.install(application)
-    }
+fun attachDebug(app: Application, runnable: Runnable?) {
+    Completable
+            .fromAction {
+                if (LeakCanary.isInAnalyzerProcess(app)) {
+                    // This process is dedicated to LeakCanary for heap analysis.
+                    // You should not init your app in this process.
+                    return@fromAction
+                }
+                runnable?.run()
+                StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                        .detectAll()
+                        .penaltyLog()
+                        .penaltyDeath()
+                        .build())
+                StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                        .detectAll()
+                        .penaltyLog()
+                        .penaltyDeath()
+                        .build())
+                LeakCanary.install(app)
+            }
             .compose(CompletableUtil.newThread())
             .subscribe()
 }

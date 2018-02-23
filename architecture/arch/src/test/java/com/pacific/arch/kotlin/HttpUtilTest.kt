@@ -21,7 +21,6 @@ class HttpUtilTest {
         assertEquals("how to improve yourself", map1.getValue("note_title"))
         assertEquals(1024L, map1.getValue("note_star"))
         assertEquals("Learn more, sleep more, and eat more", map1.getValue("note_content"))
-
     }
 
     @Test

@@ -8,10 +8,11 @@ import com.pacific.arch.example.MainActivity
 import com.pacific.arch.example.R
 import com.pacific.arch.example.databinding.FragmentMainBinding
 import com.pacific.arch.presentation.*
+import com.pacific.example.base.BaseFragment
 import timber.log.Timber
 import javax.inject.Inject
 
-class MainFragment : Fragment(), View.OnClickListener {
+class MainFragment : BaseFragment(), View.OnClickListener {
 
     private val model by fragmentViewModel(MainFragmentViewModel::class.java)
     private lateinit var binding: FragmentMainBinding

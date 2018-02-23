@@ -2,6 +2,7 @@ package com.pacific.arch.example
 
 import android.content.Context
 import android.support.multidex.MultiDex
+import com.pacific.arch.rx.verifyWorkThread
 import com.pacific.arch.views.compact.attachDebug
 import com.pacific.example.base.CrashReportingTree
 import com.pacific.example.common.DEBUG
@@ -30,6 +31,7 @@ class App : DaggerApplication() {
         INSTANCE = this
 
         attachDebug(this, Runnable {
+            verifyWorkThread()
             if (DEBUG) {
                 Timber.plant(DebugTree())
             } else {

@@ -73,8 +73,9 @@ class FlowException : RuntimeException {
     }
 
     @TargetApi(24)
-    constructor(message: String, cause: Throwable, enableSuppression: Boolean, writableStackTrace: Boolean,
-                code: Int) : super(message, cause, enableSuppression, writableStackTrace) {
+    constructor(message: String, cause: Throwable, enableSuppression: Boolean,
+                writableStackTrace: Boolean, code: Int
+    ) : super(message, cause, enableSuppression, writableStackTrace) {
         this.errorCode = code
     }
 

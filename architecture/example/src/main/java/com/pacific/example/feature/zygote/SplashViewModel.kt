@@ -8,7 +8,7 @@ import io.reactivex.Completable
 import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(app: Application) : RxAwareViewModel(app) {
-    fun init(): Completable {
+    fun initialize(): Completable {
         return Completable
                 .fromAction({
                     SystemClock.sleep(3000)
