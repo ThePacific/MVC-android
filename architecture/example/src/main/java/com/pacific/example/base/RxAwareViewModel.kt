@@ -1,10 +1,10 @@
-package com.pacific.example
+package com.pacific.example.base
 
+import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import com.pacific.arch.example.App
 import io.reactivex.disposables.CompositeDisposable
 
-open class BaseViewModel constructor(app: App) : AndroidViewModel(app) {
+abstract class RxAwareViewModel constructor(app: Application) : AndroidViewModel(app) {
     @JvmField
     protected val disposables = CompositeDisposable()
 

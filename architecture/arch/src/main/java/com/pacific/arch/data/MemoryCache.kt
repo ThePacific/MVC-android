@@ -9,12 +9,10 @@ class MemoryCache @Inject constructor() {
     private val keys = LinkedList<String>()
 
     fun get(key: String, evictExpired: Boolean): MemoryCacheEntry? {
-        var value: MemoryCacheEntry? = cache.get(key)
-        if (evictExpired) {
-            if (value != null && value.isExpired()) {
-                remove(key)
-                value = null
-            }
+        var value: MemoryCacheEntry = cache.get(key) ?: return null
+        if (evictExpired && value.isExpired()) {
+            remove(key)
+            return null
         }
         return value
     }
@@ -24,7 +22,6 @@ class MemoryCache @Inject constructor() {
             keys.add(key)
         }
         return cache.put(key, value)
-
     }
 
     fun remove(key: String): MemoryCacheEntry {

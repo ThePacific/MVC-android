@@ -3,6 +3,7 @@ package com.pacific.arch.views.compact
 import android.app.Application
 import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import android.os.StrictMode
 import android.telephony.TelephonyManager
 import android.util.Log
@@ -41,7 +42,7 @@ fun getCupArch(): Int {
             else -> ARMEABI
         }
     }
-    throw AssertionError("Unknown cpu arch")
+    throw AssertionError("Unknown CPU")
 }
 
 fun getCupArchDescription(): String {
@@ -60,7 +61,11 @@ fun getCupArchDescription(): String {
 fun isEmulator(context: Context): Boolean {
     val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     val networkOperator = tm.networkOperatorName.toLowerCase()
+    val fingerPrint = Build.FINGERPRINT
     return "android" == networkOperator
+            || fingerPrint.startsWith("unknown")
+            || fingerPrint.contains("generic")
+            || fingerPrint.contains("vbox")
 }
 
 fun getBuildConfigValue(context: Context, key: String): Any? {
@@ -81,26 +86,27 @@ fun getBuildConfigValue(context: Context, key: String): Any? {
     return null
 }
 
-fun attachDebug(application: Application, runnable: Runnable?) {
-    Completable.fromAction {
-        if (LeakCanary.isInAnalyzerProcess(application)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return@fromAction
-        }
-        runnable?.run()
-        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .penaltyDeath()
-                .build())
-        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .penaltyDeath()
-                .build())
-        LeakCanary.install(application)
-    }
+fun attachDebug(app: Application, runnable: Runnable?) {
+    Completable
+            .fromAction {
+                if (LeakCanary.isInAnalyzerProcess(app)) {
+                    // This process is dedicated to LeakCanary for heap analysis.
+                    // You should not init your app in this process.
+                    return@fromAction
+                }
+                runnable?.run()
+                StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                        .detectAll()
+                        .penaltyLog()
+                        .penaltyDeath()
+                        .build())
+                StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+                        .detectAll()
+                        .penaltyLog()
+                        .penaltyDeath()
+                        .build())
+                LeakCanary.install(app)
+            }
             .compose(CompletableUtil.newThread())
             .subscribe()
 }

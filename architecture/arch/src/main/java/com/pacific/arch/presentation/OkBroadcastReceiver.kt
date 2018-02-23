@@ -8,18 +8,18 @@ import android.support.v4.util.ArrayMap
 import javax.inject.Inject
 
 class OkBroadcastReceiver @Inject constructor() : BroadcastReceiver() {
-    private val consumers = ArrayMap<String, Consumer>()
+    private val consumers = ArrayMap<String, OkConsumer>()
 
     override fun onReceive(context: Context, intent: Intent) {
         for ((key, value) in consumers) {
             if (key == intent.action) {
-                value.run(context, intent)
+                value(context, intent)
                 break
             }
         }
     }
 
-    fun addConsumer(filter: IntentFilter, action: String, consumer: Consumer): OkBroadcastReceiver {
+    fun addConsumer(filter: IntentFilter, action: String, consumer: OkConsumer): OkBroadcastReceiver {
         filter.addAction(action)
         consumers[action] = consumer
         return this
@@ -33,9 +33,5 @@ class OkBroadcastReceiver @Inject constructor() : BroadcastReceiver() {
     fun removeConsumer(action: String): OkBroadcastReceiver {
         consumers.remove(action)
         return this
-    }
-
-    interface Consumer {
-        fun run(context: Context, intent: Intent)
     }
 }

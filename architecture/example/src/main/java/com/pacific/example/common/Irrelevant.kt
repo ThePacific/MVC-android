@@ -1,4 +1,4 @@
-package com.pacific.example
+package com.pacific.example.common
 
 import com.pacific.arch.example.BuildConfig
 

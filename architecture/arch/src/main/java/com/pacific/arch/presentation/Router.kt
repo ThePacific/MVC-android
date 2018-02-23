@@ -208,4 +208,9 @@ fun sendBroadcast(context: Context, action: String) {
     LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
 }
 
+fun Activity.okFinish() {
+    this.setResult(Activity.RESULT_OK)
+    this.finish()
+}
+
 const val ACTION_FINISH = "com.pacific.arch.action.finish"

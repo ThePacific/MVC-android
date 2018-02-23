@@ -53,8 +53,8 @@ fun readAsset(context: Context, name: String, path: String, overwrite: Boolean) 
 
 @WorkerThread
 fun toGallery(context: Context, bitmap: Bitmap, directory: File, image: String) {
-    var img = image
     verifyWorkThread()
+    var img = image
     val ext = ".jpg"
     if (!FileSystem.SYSTEM.exists(directory) || !directory.isDirectory) {
         directory.mkdir()

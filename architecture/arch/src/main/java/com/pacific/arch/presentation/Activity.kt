@@ -32,10 +32,8 @@ abstract class Activity : DaggerAppCompatActivity() {
     @CallSuper
     protected open fun addBroadcastAction(filter: IntentFilter) {
         if (applyFinishAction()) {
-            okBroadcastReceiver.addConsumer(filter, ACTION_FINISH, object : OkBroadcastReceiver.Consumer {
-                override fun run(context: Context, intent: Intent) {
-                    finish()
-                }
+            okBroadcastReceiver.addConsumer(filter, ACTION_FINISH, { _: Context, _: Intent ->
+                finish()
             })
         }
     }

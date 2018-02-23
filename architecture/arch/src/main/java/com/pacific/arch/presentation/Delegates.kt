@@ -2,10 +2,16 @@ package com.pacific.arch.presentation
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.annotation.LayoutRes
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import kotlin.reflect.KProperty
+
+typealias OkConsumer = (context: Context, intent: Intent) -> Unit
 
 fun <T : Activity, R : ViewDataBinding> contentView(@LayoutRes layoutRes: Int) = SetContentView<T, R>(layoutRes)
 
@@ -19,6 +25,10 @@ class SetContentView<in T : Activity, out R : ViewDataBinding>(@LayoutRes privat
     }
 }
 
+////used in Fragment or DialogFragment
+fun <T : ViewDataBinding> LayoutInflater.fragmentDataBinding(@LayoutRes layoutRes: Int, container: ViewGroup?): T {
+    return DataBindingUtil.inflate(this, layoutRes, container, false)
+}
 
 fun <T : Activity, R : ViewModel> activityViewModel(modelClass: Class<R>) = SetActivityViewModel<T, R>(modelClass)
 

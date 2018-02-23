@@ -52,3 +52,4 @@ fun str2ByteArray(src: String) = ByteString.encodeUtf8(src).toByteArray()!!
 fun byteArray2Str(bytes: ByteArray) = ByteString.of(bytes, 0, bytes.size).utf8()!!
 
 fun md5(src: String) = ByteString.encodeUtf8(src).md5().hex()!!
+
