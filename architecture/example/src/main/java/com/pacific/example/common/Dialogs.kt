@@ -8,11 +8,11 @@ import com.pacific.arch.presentation.dismiss
 private var toast: Toast? = null
 
 fun showToast(@StringRes stringRes: Int) {
-    showToast(App.INSTANCE!!.getString(stringRes))
+    showToast(App.get().getString(stringRes))
 }
 
 fun showToast(text: CharSequence) {
     dismiss(toast)
-    toast = Toast.makeText(App.INSTANCE, text, Toast.LENGTH_SHORT)
+    toast = Toast.makeText(App.get(), text, Toast.LENGTH_SHORT)
     toast?.show()
 }

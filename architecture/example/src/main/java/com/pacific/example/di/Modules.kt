@@ -3,6 +3,7 @@ package com.pacific.example.di
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.SharedPreferences
 import com.pacific.adapter.RecyclerAdapter
@@ -14,8 +15,9 @@ import com.pacific.example.AppsBottomSheet
 import com.pacific.example.MainFragment
 import com.pacific.example.MainFragmentViewModel
 import com.pacific.example.MainViewModel
-import com.pacific.example.common.OS_PREFS
 import com.pacific.example.common.DEBUG
+import com.pacific.example.common.OS_PREFS
+import com.pacific.example.data.SystemDatabase
 import com.pacific.example.feature.zygote.SplashActivity
 import com.pacific.example.feature.zygote.SplashViewModel
 import com.squareup.moshi.Moshi
@@ -111,6 +113,12 @@ class AppModule {
     @Singleton
     fun provideSharedPreferences(APP: Application): SharedPreferences {
         return APP.getSharedPreferences(OS_PREFS, Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSystemDatabase(app: Application): SystemDatabase {
+        return Room.databaseBuilder(app, SystemDatabase::class.java, "delight.db3").build()
     }
 
     @Provides

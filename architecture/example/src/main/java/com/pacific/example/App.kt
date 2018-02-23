@@ -43,6 +43,9 @@ class App : DaggerApplication() {
     fun appComponent() = androidInjector as DaggerAppComponent
 
     companion object {
-        var INSTANCE: App? = null
+        @Volatile
+        private var INSTANCE: App? = null
+
+        fun get() = INSTANCE!!
     }
 }
