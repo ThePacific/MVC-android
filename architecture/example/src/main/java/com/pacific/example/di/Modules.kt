@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.SharedPreferences
-import com.pacific.adapter.RecyclerAdapter
 import com.pacific.arch.example.App
 import com.pacific.arch.example.MainActivity
 import com.pacific.arch.presentation.ViewModelFactory
@@ -27,7 +26,6 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import dagger.multibindings.IntoMap
-import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import timber.log.Timber
@@ -50,7 +48,7 @@ class AppModule {
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor(
                 HttpLoggingInterceptor.Logger {
-                    Timber.tag("okHttp").i(it)
+                    Timber.tag("OkHttp3").i(it)
                 })
                 .setLevel(if (DEBUG) {
                     HttpLoggingInterceptor.Level.BODY
@@ -120,12 +118,6 @@ class AppModule {
     fun provideSystemDatabase(app: Application): SystemDatabase {
         return Room.databaseBuilder(app, SystemDatabase::class.java, "delight.db3").build()
     }
-
-    @Provides
-    fun provideCompositeDisposable() = CompositeDisposable()
-
-    @Provides
-    fun provideRecyclerAdapter() = RecyclerAdapter()
 }
 
 

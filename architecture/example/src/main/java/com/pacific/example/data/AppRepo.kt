@@ -5,6 +5,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppRepo @Inject constructor(val prefs: SharedPreferences) {
-
+class AppRepo @Inject constructor(private val prefs: SharedPreferences,
+                                  private val systemDatabase: SystemDatabase) {
 }

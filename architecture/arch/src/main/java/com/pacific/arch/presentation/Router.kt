@@ -19,7 +19,8 @@ import android.widget.Toast
 import com.jakewharton.processphoenix.ProcessPhoenix
 import org.joor.Reflect
 
-fun exit(application: Application, restart: Boolean) {
+@JvmOverloads
+fun exit(application: Application, restart: Boolean = false) {
     sendBroadcast(application, ACTION_FINISH)
     if (restart) {
         ProcessPhoenix.triggerRebirth(application)
