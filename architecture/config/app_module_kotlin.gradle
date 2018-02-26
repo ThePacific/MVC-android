@@ -171,6 +171,7 @@ dependencies {
 
     testImplementation dep.junit
     testImplementation dep.mockito
+    testImplementation dep.okhttp3Mock
     testImplementation dep.lifecycleTest
     testImplementation dep.lifecycleRoomTest
     androidTestImplementation dep.testRunner

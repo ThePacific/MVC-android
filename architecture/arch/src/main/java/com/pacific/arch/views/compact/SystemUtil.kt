@@ -75,14 +75,11 @@ fun getBuildConfigValue(context: Context, key: String): Any? {
         return field.get(null)
     } catch (e: ClassNotFoundException) {
         Log.d("SystemUtil", "Unable to get the BuildConfig, is this built with ANT?")
-        e.printStackTrace()
     } catch (e: NoSuchFieldException) {
         Log.d("SystemUtil", key + " is not a valid field. Check your build.gradle")
     } catch (e: IllegalAccessException) {
         Log.d("SystemUtil", "Illegal Access Exception: Let's print a stack trace.")
-        e.printStackTrace()
     }
-
     return null
 }
 
@@ -111,5 +108,5 @@ fun attachDebug(app: Application, runnable: Runnable?) {
             .subscribe()
 }
 
-val screenWidth get() = Resources.getSystem().displayMetrics.widthPixels
-val screenHeight get() = Resources.getSystem().displayMetrics.heightPixels
+val SCREEN_WIDTH get() = Resources.getSystem().displayMetrics.widthPixels
+val SCREEN_WHEIGHT get() = Resources.getSystem().displayMetrics.heightPixels

@@ -3,12 +3,8 @@ package com.pacific.example.feature.zygote
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import com.pacific.arch.example.MainActivity
 import com.pacific.arch.example.R
-import com.pacific.arch.presentation.exit
-import com.pacific.arch.presentation.start
 import com.pacific.example.base.BaseActivity
-import com.squareup.haha.perflib.Main
 import kotlinx.android.synthetic.main.activity_splash.*
 
 /**
@@ -77,12 +73,12 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun toggle() {
-        start(this,MainActivity::class.java)
-//        if (mVisible) {
-//            hide()
-//        } else {
-//            show()
-//        }
+
+        if (mVisible) {
+            hide()
+        } else {
+            show()
+        }
     }
 
     private fun hide() {

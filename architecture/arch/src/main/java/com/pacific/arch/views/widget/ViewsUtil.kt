@@ -26,4 +26,4 @@ fun RecyclerView.trimItemAnimator() {
 fun View.isAttached() = AutoDisposeAndroidUtil.isAttached(this)
 
 
-fun aboveSdk(version: Int) = Build.VERSION.SDK_INT >= version
+fun verifySDK(version: Int) = Build.VERSION.SDK_INT >= version

@@ -32,11 +32,11 @@ ext {
     paging = "1.0.0-alpha5"
 
     findBugsJrs305 = "3.0.2"
-    okhttp3 = "3.9.1"
+    okhttp3 = "3.4.0"
     okio = "1.14.0"
     retrofit2 = "2.3.0"
     moshi = "1.5.0"
-    rxjava = "2.1.9"
+    rxjava = "2.1.10"
     rxandroid = "2.0.2"
 
     inject = "1"
@@ -46,7 +46,7 @@ ext {
     dagger2 = "2.14.1"
     autoValue = "1.5.3"
 
-    dispose = "0.6.0"
+    dispose = "0.6.1"
     timber = "4.6.0"
     permissions = "0.9.5"
     parceler = "1.1.9"
@@ -85,6 +85,7 @@ ext {
             liveDataRxjava         : "android.arch.lifecycle:reactivestreams:$lifecycle",
             findBugsJrs305         : "com.google.code.findbugs:jsr305:$findBugsJrs305",
             okhttp3                : "com.squareup.okhttp3:okhttp:$okhttp3",
+            okhttp3Mock            : "com.squareup.okhttp3:mockwebserver:$okhttp3",
             loggingInterceptor     : "com.squareup.okhttp3:logging-interceptor:$okhttp3",
             okio                   : "com.squareup.okio:okio:$okio",
             retrofit2              : "com.squareup.retrofit2:retrofit:$retrofit2",

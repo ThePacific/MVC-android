@@ -3,7 +3,7 @@ package com.pacific.example
 import android.os.SystemClock
 import com.pacific.arch.data.Source
 import com.pacific.arch.example.App
-import com.pacific.arch.rx.ObservableUtil
+import com.pacific.arch.rx.applyIo
 import com.pacific.arch.rx.verifyWorkThread
 import com.pacific.example.base.RxAwareViewModel
 import io.reactivex.Observable
@@ -23,7 +23,7 @@ class MainFragmentViewModel @Inject constructor(app: App) : RxAwareViewModel(app
                 }
                 .doOnDispose { Timber.e("dispose") }
                 .onErrorReturn { Source.failure(it) }
-                .compose(ObservableUtil.io())
+                .applyIo()
                 .startWith(Source.inProgress())
     }
 }
