@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.SharedPreferences
-import com.pacific.adapter.RecyclerAdapter
 import com.pacific.arch.example.App
 import com.pacific.arch.example.MainActivity
 import com.pacific.arch.presentation.ViewModelFactory
@@ -15,8 +14,11 @@ import com.pacific.example.AppsBottomSheet
 import com.pacific.example.MainFragment
 import com.pacific.example.MainFragmentViewModel
 import com.pacific.example.MainViewModel
-import com.pacific.example.common.DEBUG
+import com.pacific.example.common.DEBUG_APP
+import com.pacific.example.common.DEBUG_BASE_URL
 import com.pacific.example.common.OS_PREFS
+import com.pacific.example.common.RELEASE_BASE_URL
+import com.pacific.example.data.DataService
 import com.pacific.example.data.SystemDatabase
 import com.pacific.example.feature.zygote.SplashActivity
 import com.pacific.example.feature.zygote.SplashViewModel
@@ -27,9 +29,11 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import dagger.multibindings.IntoMap
-import io.reactivex.disposables.CompositeDisposable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import timber.log.Timber
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
@@ -50,9 +54,9 @@ class AppModule {
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor(
                 HttpLoggingInterceptor.Logger {
-                    Timber.tag("okHttp").i(it)
+                    Timber.tag("OkHttp3").i(it)
                 })
-                .setLevel(if (DEBUG) {
+                .setLevel(if (DEBUG_APP) {
                     HttpLoggingInterceptor.Level.BODY
                 } else {
                     HttpLoggingInterceptor.Level.NONE
@@ -111,6 +115,27 @@ class AppModule {
 
     @Provides
     @Singleton
+    fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
+        return Retrofit.Builder()
+                .client(okHttpClient)
+                .baseUrl(if (DEBUG_APP) {
+                    DEBUG_BASE_URL
+                } else {
+                    RELEASE_BASE_URL
+                })
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDataService(retrofit: Retrofit): DataService {
+        return retrofit.create(DataService::class.java)
+    }
+
+    @Provides
+    @Singleton
     fun provideSharedPreferences(APP: Application): SharedPreferences {
         return APP.getSharedPreferences(OS_PREFS, Context.MODE_PRIVATE)
     }
@@ -120,12 +145,6 @@ class AppModule {
     fun provideSystemDatabase(app: Application): SystemDatabase {
         return Room.databaseBuilder(app, SystemDatabase::class.java, "delight.db3").build()
     }
-
-    @Provides
-    fun provideCompositeDisposable() = CompositeDisposable()
-
-    @Provides
-    fun provideRecyclerAdapter() = RecyclerAdapter()
 }
 
 
@@ -179,6 +198,7 @@ abstract class MainActivityBinder {
     @ContributesAndroidInjector(modules = [(MainFragmentBinder::class)])
     abstract fun mainFragment(): MainFragment
 }
+
 
 @Module
 abstract class MainFragmentBinder {

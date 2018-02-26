@@ -4,11 +4,13 @@ import android.annotation.TargetApi
 import com.squareup.moshi.Json
 import java.lang.RuntimeException
 
+var STORE_USER_ID = "android"
+
 interface Envelope<out T> {
-    val isSuccess: Boolean
+    fun status(): Boolean
     fun code(): Int
     fun message(): String
-    fun data(): T
+    fun data(): T?
 }
 
 class DiskCacheEntry(@JvmField @Json(name = "data") val data: ByteArray,

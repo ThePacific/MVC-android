@@ -38,7 +38,7 @@ abstract class Store<in K, V>(@JvmField protected val moshi: Moshi,
         verifyWorkThread()
         key = getKey(query)
         return dispatchNetwork(query).flatMap {
-            if (it.isSuccess) {
+            if (it.status()) {
                 return@flatMap onSave(it, toDisk, toMemory, true, true)
             }
             return@flatMap onError(it, false, false)
@@ -166,7 +166,7 @@ abstract class Store<in K, V>(@JvmField protected val moshi: Moshi,
         } else {
             evictMemoryCache()
         }
-        return Observable.just(Source.success(newData))
+        return Observable.just(Source.success(newData!!))
     }
 
     /**
@@ -202,7 +202,7 @@ abstract class Store<in K, V>(@JvmField protected val moshi: Moshi,
     /**
      * @return to make sure never save/return empty or null data
      */
-    protected abstract fun isIrrelevant(data: V): Boolean
+    protected abstract fun isIrrelevant(data: V?): Boolean
 
     /**
      * User `Types.newParameterizedType(...)`

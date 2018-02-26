@@ -73,6 +73,7 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun toggle() {
+
         if (mVisible) {
             hide()
         } else {
