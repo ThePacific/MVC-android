@@ -13,7 +13,5 @@ abstract class BaseStore<in K, V> constructor(@JvmField protected val dataServic
         return super.isEvictAll(flowException)
     }
 
-    fun httpParameters(query: K): Map<String, String> {
-        return toMap(query as Any, moshi)
-    }
+    fun httpFieldMap(query: K): Map<String, String> = toMap(query as Any, moshi)
 }

@@ -4,6 +4,8 @@ import android.annotation.TargetApi
 import com.squareup.moshi.Json
 import java.lang.RuntimeException
 
+var STORE_USER_ID = "android"
+
 interface Envelope<out T> {
     fun status(): Boolean
     fun code(): Int
