@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="main_tab_titles">
+        <item>首页</item>
+        <item>游戏</item>
+        <item>电影</item>
+        <item>图书</item>
+        <item>报亭</item>
+    </string-array>
+</resources>

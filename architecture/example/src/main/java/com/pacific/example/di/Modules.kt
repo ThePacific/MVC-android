@@ -7,19 +7,26 @@ import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.SharedPreferences
 import com.pacific.arch.example.App
-import com.pacific.arch.example.MainActivity
 import com.pacific.arch.presentation.ViewModelFactory
 import com.pacific.arch.presentation.ViewModelKey
-import com.pacific.example.AppsBottomSheet
-import com.pacific.example.MainFragment
-import com.pacific.example.MainFragmentViewModel
-import com.pacific.example.MainViewModel
 import com.pacific.example.common.DEBUG_APP
 import com.pacific.example.common.DEBUG_BASE_URL
 import com.pacific.example.common.OS_PREFS
 import com.pacific.example.common.RELEASE_BASE_URL
 import com.pacific.example.data.DataService
 import com.pacific.example.data.SystemDatabase
+import com.pacific.example.feature.book.BookFragment
+import com.pacific.example.feature.book.BookViewModel
+import com.pacific.example.feature.film.FilmFragment
+import com.pacific.example.feature.film.FilmViewModel
+import com.pacific.example.feature.game.GameFragment
+import com.pacific.example.feature.game.GameViewModel
+import com.pacific.example.feature.home.HomeFragment
+import com.pacific.example.feature.home.HomeViewModel
+import com.pacific.example.feature.main.MainActivity
+import com.pacific.example.feature.main.MainViewModel
+import com.pacific.example.feature.news.NewsFragment
+import com.pacific.example.feature.news.NewsViewModel
 import com.pacific.example.feature.zygote.SplashActivity
 import com.pacific.example.feature.zygote.SplashViewModel
 import com.squareup.moshi.Moshi
@@ -177,8 +184,28 @@ abstract class AppBinder {
 
     @Binds
     @IntoMap
-    @ViewModelKey(MainFragmentViewModel::class)
-    abstract fun bindMainFragmentViewModel(it: MainFragmentViewModel): ViewModel
+    @ViewModelKey(HomeViewModel::class)
+    abstract fun bindHomeViewModel(it: HomeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(GameViewModel::class)
+    abstract fun bindGameViewModel(it: GameViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FilmViewModel::class)
+    abstract fun bindFilmViewModel(it: FilmViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(BookViewModel::class)
+    abstract fun bindBookViewModel(it: BookViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NewsViewModel::class)
+    abstract fun bindNewsViewModel(it: NewsViewModel): ViewModel
 
 
     ////Activity binders
@@ -195,13 +222,18 @@ abstract class AppBinder {
 
 @Module
 abstract class MainActivityBinder {
-    @ContributesAndroidInjector(modules = [(MainFragmentBinder::class)])
-    abstract fun mainFragment(): MainFragment
-}
-
-
-@Module
-abstract class MainFragmentBinder {
     @ContributesAndroidInjector
-    abstract fun appsBottomSheet(): AppsBottomSheet
+    abstract fun homeFragment(): HomeFragment
+
+    @ContributesAndroidInjector
+    abstract fun gameFragment(): GameFragment
+
+    @ContributesAndroidInjector
+    abstract fun filmFragment(): FilmFragment
+
+    @ContributesAndroidInjector
+    abstract fun bookFragment(): BookFragment
+
+    @ContributesAndroidInjector
+    abstract fun newFragment(): NewsFragment
 }
