@@ -45,6 +45,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         binding.viewPager.clearOnPageChangeListeners()
         binding.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout))
         binding.viewPager.adapter = mainFragmentAdapter
+
+        onSearchRequested()
     }
 
     override fun onBackPressed() {
@@ -65,6 +67,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         return if (id == R.id.action_settings) {
             true
         } else super.onOptionsItemSelected(item)
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

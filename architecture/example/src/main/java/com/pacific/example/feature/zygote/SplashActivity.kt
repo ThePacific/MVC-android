@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import com.pacific.arch.example.R
+import com.pacific.arch.example.R.id.fullscreen_content
 import com.pacific.example.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
