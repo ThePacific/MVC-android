@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
-import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
@@ -12,9 +11,10 @@ import com.pacific.arch.example.R
 import com.pacific.arch.example.databinding.ActivityMainBinding
 import com.pacific.arch.presentation.activityViewModel
 import com.pacific.arch.presentation.contentView
+import com.pacific.arch.presentation.start
 import com.pacific.arch.views.widget.OnTabSelected
 import com.pacific.example.base.BaseActivity
-import com.pacific.example.views.SyncActionProvider
+import com.pacific.example.feature.about.AboutActivity
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -24,7 +24,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     @Inject
     lateinit var mainFragmentAdapter: MainFragmentAdapter
 
-    private lateinit var menu: Menu
+    lateinit var syncAction: MenuItem
+        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,35 +55,32 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onBackPressed() {
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
-            filmToolbarMenu()
         } else {
             super.onBackPressed()
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        this.menu = menu
-        when (mainFragmentAdapter.currentPosition) {
-            0 -> homeToolbarMenu()
-            1 -> gameToolbarMenu()
-            2 -> filmToolbarMenu()
-            3 -> bookToolbarMenu()
-            4 -> newsToolbarMenu()
-        }
+        menuInflater.inflate(R.menu.main, menu)
+        menu.findItem(R.id.action_sync)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        return if (id == R.id.action_settings) {
-            true
-        } else super.onOptionsItemSelected(item)
-
+        when (id) {
+            R.id.action_search -> {
+                start(this@MainActivity, AboutActivity::class.java)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
+
         when (id) {
             R.id.nav_camera -> {
             }
@@ -99,28 +97,5 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    fun homeToolbarMenu() {
-        menuInflater.inflate(R.menu.fragment_home_toolbar, menu)
-        val syncProvider = MenuItemCompat.getActionProvider(menu.findItem(R.id.action_sync)) as SyncActionProvider
-
-    }
-
-    fun newsToolbarMenu() {
-        menu.findItem(R.id.action_sync).isVisible = false
-
-    }
-
-    fun filmToolbarMenu() {
-        menu.findItem(R.id.action_sync).isVisible = false
-    }
-
-    fun gameToolbarMenu() {
-        menu.findItem(R.id.action_sync).isVisible = false
-    }
-
-    fun bookToolbarMenu() {
-        menu.findItem(R.id.action_sync).isVisible = false
     }
 }

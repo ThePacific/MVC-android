@@ -5,6 +5,7 @@
     <item android:drawable="@color/primary" />
     <item>
         <bitmap
+            android:alpha="0.0"
             android:gravity="center"
             android:src="@drawable/ic_launcher" />
     </item>
