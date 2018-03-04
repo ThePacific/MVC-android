@@ -24,6 +24,16 @@
         <activity
             android:name="com.pacific.example.feature.main.MainActivity"
             android:screenOrientation="portrait">
+
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.pacific.example.feature.search.SearchActivity" />
+        </activity>
+
+        <activity
+            android:name="com.pacific.example.feature.zygote.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,11 +41,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name="com.pacific.example.feature.zygote.SplashActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:name="com.pacific.example.feature.search.SearchActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/search_activity_searchable" />
+        </activity>
+
+        <activity
+            android:name="com.pacific.example.feature.about.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

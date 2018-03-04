@@ -5,9 +5,10 @@
     <android.support.constraint.ConstraintLayout style="@style/MatchWrap">
 
         <ImageView
+            android:layout_margin="2dp"
             android:id="@+id/img_icon"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

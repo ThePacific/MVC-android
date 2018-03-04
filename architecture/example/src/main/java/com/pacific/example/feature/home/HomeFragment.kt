@@ -1,6 +1,7 @@
 package com.pacific.example.feature.home
 
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.pacific.arch.presentation.fragmentViewModel
 import com.pacific.example.di.GlideApp
 import com.pacific.example.feature.main.MainFragment
 import com.pacific.example.model.Apk
+import com.pacific.example.views.GridDividerDecoration
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.kotlin.autoDisposable
 
@@ -35,10 +37,8 @@ class HomeFragment : MainFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = inflater.fragmentDataBinding(R.layout.fragment_home, container)
-        binding.recycler.layoutManager = LinearLayoutManager(
-                activity,
-                LinearLayoutManager.VERTICAL,
-                false)
+        binding.recycler.layoutManager = GridLayoutManager(mainActivity,3)
+        binding.recycler.addItemDecoration(GridDividerDecoration(mainActivity))
         binding.recycler.adapter = recyclerAdapter
         return binding.root
     }

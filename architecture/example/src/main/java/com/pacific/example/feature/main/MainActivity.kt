@@ -11,16 +11,21 @@ import com.pacific.arch.example.R
 import com.pacific.arch.example.databinding.ActivityMainBinding
 import com.pacific.arch.presentation.activityViewModel
 import com.pacific.arch.presentation.contentView
+import com.pacific.arch.presentation.start
 import com.pacific.arch.views.widget.OnTabSelected
 import com.pacific.example.base.BaseActivity
+import com.pacific.example.feature.about.AboutActivity
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     private val binding: ActivityMainBinding by contentView(R.layout.activity_main)
     val model by activityViewModel(MainViewModel::class.java)
-    
+
     @Inject
     lateinit var mainFragmentAdapter: MainFragmentAdapter
+
+    lateinit var syncAction: MenuItem
+        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,19 +62,25 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
+        menu.findItem(R.id.action_sync)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        return if (id == R.id.action_settings) {
-            true
-        } else super.onOptionsItemSelected(item)
+        when (id) {
+            R.id.action_search -> {
+                start(this@MainActivity, AboutActivity::class.java)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
+
         when (id) {
             R.id.nav_camera -> {
             }

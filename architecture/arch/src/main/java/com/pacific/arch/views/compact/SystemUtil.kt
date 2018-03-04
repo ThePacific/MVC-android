@@ -8,6 +8,7 @@ import android.os.StrictMode
 import android.telephony.TelephonyManager
 import android.util.Log
 import com.pacific.arch.rx.CompletableUtil
+import com.pacific.arch.views.widget.verifySDK
 import com.squareup.leakcanary.LeakCanary
 import io.reactivex.Completable
 
@@ -92,11 +93,20 @@ fun attachDebug(app: Application, runnable: Runnable?) {
                     return@fromAction
                 }
                 runnable?.run()
-                StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                        .detectAll()
-                        .penaltyLog()
-                        .penaltyDeath()
-                        .build())
+
+                // see https://github.com/square/okhttp/issues/3537 on Android O
+                if (verifySDK(Build.VERSION_CODES.O) || verifySDK(Build.VERSION_CODES.O_MR1)) {
+                    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                            .detectAll()
+                            .penaltyLog()
+                            .build())
+                } else {
+                    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                            .detectAll()
+                            .penaltyLog()
+                            .penaltyDeath()
+                            .build())
+                }
                 StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
                         .detectAll()
                         .penaltyLog()

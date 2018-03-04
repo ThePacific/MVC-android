@@ -15,6 +15,7 @@ import com.pacific.example.common.OS_PREFS
 import com.pacific.example.common.RELEASE_BASE_URL
 import com.pacific.example.data.DataService
 import com.pacific.example.data.SystemDatabase
+import com.pacific.example.feature.about.AboutActivity
 import com.pacific.example.feature.book.BookFragment
 import com.pacific.example.feature.book.BookViewModel
 import com.pacific.example.feature.film.FilmFragment
@@ -27,6 +28,7 @@ import com.pacific.example.feature.main.MainActivity
 import com.pacific.example.feature.main.MainViewModel
 import com.pacific.example.feature.news.NewsFragment
 import com.pacific.example.feature.news.NewsViewModel
+import com.pacific.example.feature.search.SearchActivity
 import com.pacific.example.feature.zygote.SplashActivity
 import com.pacific.example.feature.zygote.SplashViewModel
 import com.squareup.moshi.Moshi
@@ -214,6 +216,12 @@ abstract class AppBinder {
 
     @ContributesAndroidInjector(modules = [(MainActivityBinder::class)])
     abstract fun mainActivity(): MainActivity
+
+    @ContributesAndroidInjector
+    abstract fun searchActivity(): SearchActivity
+
+    @ContributesAndroidInjector
+    abstract fun aboutActivity(): AboutActivity
 
 
     ////Global Fragment and FragmentDialog binders
