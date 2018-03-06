@@ -14,7 +14,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
-        //fix AutoValue build path
+        // fix AutoValue build path
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath false
@@ -110,6 +110,8 @@ dependencies {
     compileOnly dep.errorProne
     compileOnly dep.jetAnnotations
     compileOnly dep.annotationApi
+
+    implementation dep.ktx
 
     testImplementation dep.junit
     testImplementation dep.truth

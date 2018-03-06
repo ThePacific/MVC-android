@@ -14,7 +14,7 @@ import com.pacific.arch.presentation.contentView
 import com.pacific.arch.presentation.start
 import com.pacific.arch.views.widget.OnTabSelected
 import com.pacific.example.base.BaseActivity
-import com.pacific.example.feature.about.AboutActivity
+import com.pacific.example.feature.search.SearchActivity
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -70,7 +70,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val id = item.itemId
         when (id) {
             R.id.action_search -> {
-                start(this@MainActivity, AboutActivity::class.java)
+                start(this@MainActivity, SearchActivity::class.java)
                 return true
             }
         }

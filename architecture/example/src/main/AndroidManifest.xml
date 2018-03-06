@@ -57,7 +57,8 @@
         <activity
             android:name="com.pacific.example.feature.about.AboutActivity"
             android:label="@string/title_activity_about"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/SearchScreen"></activity>
     </application>
 
 </manifest>

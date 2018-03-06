@@ -20,7 +20,7 @@ fun isMainThread(): Boolean {
 
 fun verifyMainThread() {
     if (BuildConfig.DEBUG) {
-        return // Cover for tests
+        return// Cover for tests
     }
     MainThreadDisposable.verifyMainThread()
 }

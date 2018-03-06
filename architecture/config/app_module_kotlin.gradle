@@ -119,6 +119,8 @@ dependencies {
     implementation dep.recyclerview
     implementation dep.constraint
 
+    implementation dep.ktx
+
     implementation dep.roomRxjava
     implementation dep.liveDataRxjava
     implementation dep.lifecyclePaging
