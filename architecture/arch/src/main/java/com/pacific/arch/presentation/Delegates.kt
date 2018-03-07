@@ -18,9 +18,7 @@ fun <T : Activity, R : ViewDataBinding> contentView(@LayoutRes layoutRes: Int) =
 class SetContentView<in T : Activity, out R : ViewDataBinding>(@LayoutRes private val layoutRes: Int) {
     private var value: R? = null
     operator fun getValue(thisRef: T, property: KProperty<*>): R {
-        if (value == null) {
-            value = DataBindingUtil.setContentView(thisRef, layoutRes)
-        }
+        value = value ?: DataBindingUtil.setContentView(thisRef, layoutRes)
         return value!!
     }
 }
@@ -35,9 +33,7 @@ fun <T : Activity, R : ViewModel> activityViewModel(modelClass: Class<R>) = SetA
 class SetActivityViewModel<in T : Activity, out R : ViewModel>(private val modelClass: Class<R>) {
     private var value: R? = null
     operator fun getValue(thisRef: T, property: KProperty<*>): R {
-        if (value == null) {
-            value = ViewModelProviders.of(thisRef, thisRef.viewModelFactory).get<R>(modelClass)
-        }
+        value = value ?: ViewModelProviders.of(thisRef, thisRef.viewModelFactory).get<R>(modelClass)
         return value!!
     }
 }

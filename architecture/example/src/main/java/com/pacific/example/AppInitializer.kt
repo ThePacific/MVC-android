@@ -1,6 +1,7 @@
 package com.pacific.example
 
 import android.arch.lifecycle.*
+import com.facebook.stetho.Stetho
 import com.pacific.arch.example.App
 import com.pacific.arch.rx.verifyWorkThread
 import com.pacific.arch.views.compact.attachDebug
@@ -24,6 +25,7 @@ class AppInitializer @Inject constructor(private val app: App,
             verifyWorkThread()
 
             if (DEBUG_APP) {
+                Stetho.initializeWithDefaults(app)
                 Timber.plant(Timber.DebugTree())
             } else {
                 Timber.plant(CrashReportingTree())

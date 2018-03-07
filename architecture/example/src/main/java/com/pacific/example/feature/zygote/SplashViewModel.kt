@@ -11,7 +11,7 @@ class SplashViewModel @Inject constructor(app: Application) : RxAwareViewModel(a
     fun initialize(): Completable {
         return Completable
                 .fromAction({
-                    SystemClock.sleep(2000)
+                    SystemClock.sleep(1000)
                 })
                 .compose(CompletableUtil.newThread())
     }

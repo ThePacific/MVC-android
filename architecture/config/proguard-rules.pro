@@ -26,6 +26,10 @@
     boolean mShownByMe;
 }
 
+-keepclassmembers class android.widget.TextView {
+    int mCursorDrawableRes;
+}
+
 -keepclasseswithmembers class * {
     @android.webkit.JavascriptInterface <methods>;
 }

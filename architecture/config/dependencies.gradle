@@ -56,6 +56,8 @@ ext {
     phoenix = "2.0.0"
     reflection = "0.9.7"
     androidJob = "1.2.2"
+    connection = "1.0.1"
+    stetho = "1.5.0"
 
     mAdapter = "2.1.1"
     mGuava = "0.0.8"
@@ -136,10 +138,13 @@ ext {
             glideOkhttp3           : "com.github.bumptech.glide:okhttp3-integration:$glide",
             glideProcessor         : "com.github.bumptech.glide:compiler:$glide",
             processPhoenix         : "com.jakewharton:process-phoenix:$phoenix",
-            reflection             : "org.jooq:joor-java-8:$reflection",
+            reflection             : "org.jooq:joor-java-6:$reflection",
             leakcanary             : "com.squareup.leakcanary:leakcanary-android:$leakcanary",
             leakcanaryNo           : "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary",
             threeTenBP             : "com.jakewharton.threetenabp:threetenabp:$threeTenBP",
-            ktx                    : "androidx.core:core-ktx:$ktx"
+            ktx                    : "androidx.core:core-ktx:$ktx",
+            connection             : "com.facebook.network.connectionclass:connectionclass:$connection",
+            stetho                 : "com.facebook.stetho:stetho:$stetho",
+            stethoOkHttp3          : "com.facebook.stetho:stetho-okhttp3:$stetho"
     ]
 }

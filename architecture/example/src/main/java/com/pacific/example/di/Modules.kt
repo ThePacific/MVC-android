@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.SharedPreferences
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.pacific.arch.example.App
 import com.pacific.arch.presentation.ViewModelFactory
 import com.pacific.arch.presentation.ViewModelKey
@@ -108,6 +109,7 @@ class AppModule {
                             sslContext: SSLContext): OkHttpClient {
         return OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .addNetworkInterceptor(StethoInterceptor())
                 .sslSocketFactory(sslContext.socketFactory, x509TrustManager)
                 .hostnameVerifier { _, _ -> true }
                 .connectTimeout(60, TimeUnit.SECONDS)

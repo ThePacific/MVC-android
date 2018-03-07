@@ -21,14 +21,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name="com.pacific.example.feature.main.MainActivity"
-            android:screenOrientation="portrait">
-
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.pacific.example.feature.search.SearchActivity" />
-        </activity>
 
         <activity
             android:name="com.pacific.example.feature.zygote.SplashActivity"
@@ -43,7 +35,17 @@
         </activity>
 
         <activity
+            android:name="com.pacific.example.feature.main.MainActivity"
+            android:screenOrientation="portrait">
+
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.pacific.example.feature.search.SearchActivity" />
+        </activity>
+
+        <activity
             android:name="com.pacific.example.feature.search.SearchActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -57,8 +59,7 @@
         <activity
             android:name="com.pacific.example.feature.about.AboutActivity"
             android:label="@string/title_activity_about"
-            android:screenOrientation="portrait"
-            android:theme="@style/SearchScreen"></activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

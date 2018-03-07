@@ -196,6 +196,9 @@ dependencies {
     kapt dep.parcelerProcessor
     implementation dep.rxPermissions
     implementation dep.androidJob
+    implementation dep.connection
+    implementation dep.stetho
+    implementation dep.stethoOkHttp3
 
     implementation dep.theAdapter
     implementation dep.threeTenBP

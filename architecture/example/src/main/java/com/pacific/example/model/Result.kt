@@ -19,6 +19,6 @@ class EnvelopeImpl<out T>(@Json(name = "status") private val status: Boolean,
 data class User(@Json(name = "login_name") val loginName: String,
                 @Json(name = "register_datetime") val registerDatetime: String)
 
-data class Installer(@Json(name = "download_version") val downloadVersion: String,
-                     @Json(name = "force_update") val forceUpdate: Boolean,
+data class Installer(@Json(name = "downloaded_version") val downloadVersion: String,
+                     @Json(name = "force_to_update") val forceUpdate: Boolean,
                      @Json(name = "download_url") val downloadUrl: String)
