@@ -26,7 +26,7 @@
     boolean mShownByMe;
 }
 
--keepclassmembers class android.widget.TextView {
+-keepclassmembers class android.widget.AutoCompleteTextView {
     int mCursorDrawableRes;
 }
 

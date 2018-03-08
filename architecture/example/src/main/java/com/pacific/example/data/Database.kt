@@ -41,7 +41,7 @@ interface BankDao {
     fun update(bank: Bank)
 }
 
-@Database(entities = [(AppInfo::class), (Bank::class)], version = 1)
+@Database(entities = [(AppInfo::class), (Bank::class)], version = 1, exportSchema = true)
 abstract class SystemDatabase : RoomDatabase() {
     abstract fun appInfoDao(): AppInfoDao
     abstract fun bankDao(): BankDao

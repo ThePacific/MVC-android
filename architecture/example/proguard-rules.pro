@@ -36,3 +36,14 @@
 
 -dontwarn org.objenesis.instantiator.**
 -dontnote org.objenesis.instantiator.**
+
+
+-dontnote com.facebook.stetho.dumpapp.Dumper
+-dontnote com.facebook.stetho.dumpapp.DumperContext
+-dontnote com.facebook.stetho.okhttp3.StethoInterceptor
+-dontnote com.facebook.stetho.okhttp3.StethoInterceptor$ForwardingResponseBody
+-dontnote com.facebook.stetho.okhttp3.StethoInterceptor$OkHttpInspectorRequest
+-dontnote com.facebook.stetho.okhttp3.StethoInterceptor$OkHttpInspectorResponse
+-dontnote okhttp3.ResponseBody
+-dontnote com.facebook.stetho.inspector.runtime.RhinoDetectingRuntimeReplFactory
+-dontnote okhttp3.internal.platform.ConscryptPlatform

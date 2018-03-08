@@ -34,7 +34,7 @@ class AppInitializer @Inject constructor(private val app: App,
             ProcessLifecycleOwner.get().lifecycle.addObserver(object : LifecycleObserver {
                 @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
                 fun onAppLifecycle(owner: LifecycleOwner, event: Lifecycle.Event) {
-                    Timber.i("App current state -> %s ", owner.lifecycle.currentState)
+                    Timber.i("app current state -> %s ", owner.lifecycle.currentState)
                     if (event == Lifecycle.Event.ON_START || event == Lifecycle.Event.ON_STOP) {
                         appLifecycle.onNext(event)
                     }
