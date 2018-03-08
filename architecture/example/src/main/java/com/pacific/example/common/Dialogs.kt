@@ -7,11 +7,11 @@ import com.pacific.arch.presentation.dismiss
 
 private var toast: Toast? = null
 
-fun showToast(@StringRes stringRes: Int) {
-    showToast(App.get().getString(stringRes))
+fun toast(@StringRes stringRes: Int) {
+    toast(App.get().getString(stringRes))
 }
 
-fun showToast(text: CharSequence) {
+fun toast(text: CharSequence) {
     dismiss(toast)
     toast = Toast.makeText(App.get(), text, Toast.LENGTH_SHORT)
     toast?.show()

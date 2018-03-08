@@ -14,7 +14,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
-        // fix AutoValue build path for kotlin-kapt
+        // fix AutoValue build path for kotlin-apt
         javaCompileOptions {
             annotationProcessorOptions {
                 includeCompileClasspath false

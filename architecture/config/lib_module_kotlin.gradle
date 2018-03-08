@@ -142,13 +142,3 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 }
-
-kapt {
-    correctErrorTypes = true
-    javacOptions {
-        option("-Xmaxerrs", 500)
-    }
-    arguments {
-        arg("room.schemaLocation", "$projectDir/schemas".toString())
-    }
-}
