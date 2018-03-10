@@ -12,6 +12,7 @@ interface AppComponent : AndroidInjector<App> {
 
     @Component.Builder
     abstract class Builder : AndroidInjector.Builder<App>() {
+        // hack kotlin-apt warning
         abstract override fun build(): AppComponent
     }
 }
