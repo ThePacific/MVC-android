@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.TabLayout
 import android.support.v4.view.GravityCompat
+import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
@@ -15,15 +16,13 @@ import com.pacific.arch.views.widget.OnTabSelected
 import com.pacific.example.base.BaseActivity
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener,
+        ViewPager.OnPageChangeListener {
     private val binding: ActivityMainBinding by contentView(R.layout.activity_main)
     val model by activityViewModel(MainViewModel::class.java)
 
     @Inject
     lateinit var mainFragmentAdapter: MainFragmentAdapter
-
-    lateinit var syncAction: MenuItem
-        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +46,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         })
         binding.viewPager.clearOnPageChangeListeners()
         binding.viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout))
+        binding.viewPager.addOnPageChangeListener(this)
         binding.viewPager.adapter = mainFragmentAdapter
     }
 
@@ -95,5 +95,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {
+    }
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+    }
+
+    override fun onPageSelected(position: Int) {
     }
 }

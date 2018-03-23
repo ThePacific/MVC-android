@@ -1,9 +1,7 @@
 package com.pacific.example.common
 
-import com.pacific.arch.example.BuildConfig
-
 @JvmField
-var DEBUG_APP: Boolean = BuildConfig.DEBUG
+var DEBUG_APP: Boolean = false
 
 const val OS_PREFS = "os_prefs"
 const val APK_EXT = ".apk"

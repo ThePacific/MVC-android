@@ -37,6 +37,5 @@ class CrashReportingTree : Timber.Tree() {
                 FakeCrashLibrary.logWarning(t)
             }
         }
-
     }
 }

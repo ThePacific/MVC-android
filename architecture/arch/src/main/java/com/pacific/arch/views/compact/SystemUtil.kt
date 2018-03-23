@@ -84,7 +84,8 @@ fun getBuildConfigValue(context: Context, key: String): Any? {
     return null
 }
 
-fun attachDebug(app: Application, runnable: Runnable?) {
+fun attachDebug(app: Application, runnable: Runnable?, isDebug: Boolean) {
+    if (!isDebug) return
     Completable
             .fromAction {
                 if (LeakCanary.isInAnalyzerProcess(app)) {

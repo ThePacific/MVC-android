@@ -16,11 +16,13 @@ import javax.inject.Singleton
 
 @Singleton
 class AppInitializer @Inject constructor(private val app: App,
-                                         private val systemRepo: SystemRepo,
-                                         private val moshi: Moshi) {
+                                         private val moshi: Moshi,
+                                         private val systemRepo: SystemRepo) {
     val appLifecycle: PublishSubject<Lifecycle.Event> = PublishSubject.create()
 
     fun onAppCreate() {
+        DEBUG_APP = BuildConfig.DEBUG
+
         attachDebug(app, Runnable {
             verifyWorkThread()
 
@@ -40,7 +42,7 @@ class AppInitializer @Inject constructor(private val app: App,
                     }
                 }
             })
-        })
+        }, DEBUG_APP)
     }
 
     fun onAppTerminate() {

@@ -13,13 +13,6 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-
-        // fix AutoValue build path
-        javaCompileOptions {
-            annotationProcessorOptions {
-                includeCompileClasspath false
-            }
-        }
     }
 
     signingConfigs {
@@ -99,6 +92,8 @@ android {
         resolutionStrategy.force dep.annotationApi
         resolutionStrategy.force dep.multidex
         resolutionStrategy.force dep.mockito
+        resolutionStrategy.force dep.errorProne
+        resolutionStrategy.force dep.multidexInstrumentation
     }
 }
 

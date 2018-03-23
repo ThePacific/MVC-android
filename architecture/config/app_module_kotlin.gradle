@@ -14,12 +14,6 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
-        // fix AutoValue build path for kotlin-apt
-        javaCompileOptions {
-            annotationProcessorOptions {
-                includeCompileClasspath false
-            }
-        }
     }
 
     signingConfigs {
@@ -35,15 +29,14 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', '../config/proguard-rules.pro'
         }
 
         debug {
             signingConfig signingConfigs.release
         }
-
     }
 
     lintOptions {
@@ -103,6 +96,8 @@ android {
         resolutionStrategy.force dep.annotationApi
         resolutionStrategy.force dep.multidex
         resolutionStrategy.force dep.mockito
+        resolutionStrategy.force dep.errorProne
+        resolutionStrategy.force dep.multidexInstrumentation
     }
 
     dataBinding {

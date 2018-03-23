@@ -13,7 +13,7 @@ allprojects {
 ext {
     groupId = "com.github.thepacific"
     compile = 27
-    buildTools = "27.0.3"
+    buildTools = "28.0.0-rc1"
     min = "16"
     target = "27"
     versionCode = 1
@@ -23,20 +23,20 @@ ext {
     junit = "4.12"
     espresso = "3.0.2-alpha1"
     support = "27.1.0"
-    mockito = "2.13.0"
-    truth = "0.37"
+    mockito = "2.16.0"
+    truth = "0.39"
 
-    constraint = "1.1.0-beta4"
+    constraint = "1.1.0-beta5"
     lifecycle = "1.1.0"
-    room = "1.1.0-alpha1"
+    room = "1.1.0-alpha3"
     paging = "1.0.0-alpha6"
 
     findBugsJrs305 = "3.0.2"
     okhttp3 = "3.10.0"
     okio = "1.14.0"
-    retrofit2 = "2.3.0"
+    retrofit2 = "2.4.0"
     moshi = "1.5.0"
-    rxjava = "2.1.10"
+    rxjava = "2.1.11"
     rxandroid = "2.0.2"
 
     inject = "1"
@@ -44,18 +44,18 @@ ext {
     errorProne = "2.2.0"
     jetAnnotations = "15.0"
     dagger2 = "2.15"
-    autoValue = "1.5.3"
+    autoValue = "1.6rc1"
 
     dispose = "0.6.1"
     timber = "4.6.0"
     permissions = "0.9.5"
-    parceler = "1.1.9"
+    parceler = "1.1.10"
     glide = "4.6.1"
     leakcanary = "1.5.4"
-    multidex = "1.0.2"
+    multidex = "1.0.3"
     phoenix = "2.0.0"
     reflection = "0.9.7"
-    androidJob = "1.2.2"
+    androidJob = "1.2.5"
     connection = "1.0.1"
     stetho = "1.5.0"
 
@@ -110,7 +110,7 @@ ext {
             errorProne             : "com.google.errorprone:error_prone_annotations:$errorProne",
             jetAnnotations         : "org.jetbrains:annotations:$jetAnnotations",
             inject                 : "javax.inject:javax.inject:$inject",
-            autoValue              : "com.google.auto.value:auto-value:$autoValue",
+            autoValue              : "com.google.auto.value:auto-value-annotations:$autoValue",
             autoValueCompiler      : "com.google.auto.value:auto-value:$autoValue",
             dagger                 : "com.google.dagger:dagger:$dagger2",
             daggerAndroid          : "com.google.dagger:dagger-android:$dagger2",
