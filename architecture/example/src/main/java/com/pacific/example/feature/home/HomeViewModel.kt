@@ -1,7 +1,7 @@
 package com.pacific.example.feature.home
 
 import com.pacific.arch.data.Source
-import com.pacific.arch.example.App
+import com.pacific.example.App
 import com.pacific.arch.rx.applyNewThread
 import com.pacific.example.base.RxAwareViewModel
 import com.pacific.example.model.Apk

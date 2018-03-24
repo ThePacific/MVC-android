@@ -8,8 +8,8 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
-import com.pacific.arch.example.R
-import com.pacific.arch.example.databinding.ActivityMainBinding
+import com.pacific.example.R
+import com.pacific.example.databinding.ActivityMainBinding
 import com.pacific.arch.presentation.activityViewModel
 import com.pacific.arch.presentation.contentView
 import com.pacific.arch.views.widget.OnTabSelected

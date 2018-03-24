@@ -2,8 +2,8 @@ package com.pacific.example.common
 
 import android.support.annotation.StringRes
 import android.widget.Toast
-import com.pacific.arch.example.App
 import com.pacific.arch.presentation.dismiss
+import com.pacific.example.App
 
 private var toast: Toast? = null
 

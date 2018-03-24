@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.widget.AutoCompleteTextView
-import com.pacific.arch.example.R
+import com.pacific.example.R
 import com.pacific.example.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_search.*
 import org.joor.Reflect
@@ -32,7 +32,7 @@ class SearchActivity : BaseActivity() {
         handleIntent(intent)
     }
 
-    private fun handleIntent(intent: Intent) {
+    override fun handleIntent(intent: Intent) {
         if (Intent.ACTION_SEARCH == intent.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)
         }

@@ -1,8 +1,7 @@
-package com.pacific.arch.example
+package com.pacific.example
 
 import android.content.Context
 import android.support.multidex.MultiDex
-import com.pacific.example.AppInitializer
 import com.pacific.example.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication

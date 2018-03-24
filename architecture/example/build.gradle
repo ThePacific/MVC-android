@@ -2,7 +2,7 @@ apply from: "../config/app_module_kotlin.gradle"
 
 android {
     defaultConfig {
-        applicationId "com.pacific.arch.example"
+        applicationId "com.pacific.example"
     }
 
     sourceSets {

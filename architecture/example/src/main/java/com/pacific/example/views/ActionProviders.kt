@@ -5,7 +5,7 @@ import android.support.v4.view.ActionProvider
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import com.pacific.arch.example.R
+import com.pacific.example.R
 
 @SuppressWarnings("unused")
 class SyncActionProvider(context: Context) : ActionProvider(context) {

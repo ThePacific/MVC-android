@@ -5,7 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.widget.ProgressBar
-import com.pacific.arch.example.R
+import com.pacific.example.R
 import com.pacific.arch.presentation.activityViewModel
 import com.pacific.arch.presentation.jumpTo
 import com.pacific.arch.views.widget.verifySDK

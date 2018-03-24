@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.pacific.arch.example.R;
+import com.pacific.example.R;
 
 public class GridDividerDecoration extends RecyclerView.ItemDecoration {
 

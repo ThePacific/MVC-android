@@ -7,15 +7,17 @@ import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.SharedPreferences
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.pacific.arch.example.App
+import com.pacific.example.service.LocalSocketService
+import com.pacific.example.service.RemoteSocketService
+import com.pacific.example.App
 import com.pacific.arch.presentation.ViewModelFactory
 import com.pacific.arch.presentation.ViewModelKey
 import com.pacific.example.common.DEBUG_APP
 import com.pacific.example.common.DEBUG_BASE_URL
 import com.pacific.example.common.OS_PREFS
 import com.pacific.example.common.RELEASE_BASE_URL
-import com.pacific.example.data.DataService
 import com.pacific.example.data.SystemDatabase
+import com.pacific.example.data.WebService
 import com.pacific.example.feature.about.AboutActivity
 import com.pacific.example.feature.book.BookFragment
 import com.pacific.example.feature.book.BookViewModel
@@ -140,8 +142,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideDataService(retrofit: Retrofit): DataService {
-        return retrofit.create(DataService::class.java)
+    fun provideWebService(retrofit: Retrofit): WebService {
+        return retrofit.create(WebService::class.java)
     }
 
     @Provides
@@ -226,6 +228,13 @@ abstract class AppBinder {
 
 
     ////Global Fragment and FragmentDialog binders
+
+    ////Service binders(Everything is like Activity)
+    @ContributesAndroidInjector
+    abstract fun localSocketService(): LocalSocketService
+
+    @ContributesAndroidInjector
+    abstract fun remoteSocketService(): RemoteSocketService
 }
 
 

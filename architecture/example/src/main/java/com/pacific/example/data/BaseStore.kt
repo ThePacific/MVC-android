@@ -3,7 +3,7 @@ package com.pacific.example.data
 import com.pacific.arch.data.*
 import com.squareup.moshi.Moshi
 
-abstract class BaseStore<in K, V> constructor(@JvmField protected val dataService: DataService,
+abstract class BaseStore<in K, V> constructor(@JvmField protected val webService: WebService,
                                               moshi: Moshi,
                                               diskCache: DiskCache,
                                               memoryCache: MemoryCache)

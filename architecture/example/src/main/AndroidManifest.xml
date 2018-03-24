@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pacific.arch.example">
+    package="com.pacific.example">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.pacific.example.feature.zygote.SplashActivity"
+            android:name=".feature.zygote.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Splash">
             <intent-filter>
@@ -35,16 +35,16 @@
         </activity>
 
         <activity
-            android:name="com.pacific.example.feature.main.MainActivity"
+            android:name=".feature.main.MainActivity"
             android:screenOrientation="portrait">
 
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.pacific.example.feature.search.SearchActivity" />
+                android:value=".feature.search.SearchActivity" />
         </activity>
 
         <activity
-            android:name="com.pacific.example.feature.search.SearchActivity"
+            android:name=".feature.search.SearchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -57,9 +57,18 @@
         </activity>
 
         <activity
-            android:name="com.pacific.example.feature.about.AboutActivity"
+            android:name=".feature.about.AboutActivity"
             android:label="@string/title_activity_about"
             android:screenOrientation="portrait"></activity>
+
+        <service
+            android:name=".service.LocalSocketService"
+            android:exported="false"></service>
+
+        <service
+            android:name=".service.RemoteSocketService"
+            android:exported="true"
+            android:process=":socket"></service>
     </application>
 
 </manifest>

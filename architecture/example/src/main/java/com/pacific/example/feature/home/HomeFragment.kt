@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.pacific.adapter.RecyclerAdapter
 import com.pacific.arch.data.Status
-import com.pacific.arch.example.R
-import com.pacific.arch.example.databinding.FragmentHomeBinding
+import com.pacific.example.R
+import com.pacific.example.databinding.FragmentHomeBinding
 import com.pacific.arch.presentation.fragmentDataBinding
 import com.pacific.arch.presentation.fragmentViewModel
 import com.pacific.example.di.GlideApp

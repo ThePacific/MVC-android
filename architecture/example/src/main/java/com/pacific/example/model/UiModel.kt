@@ -2,8 +2,8 @@ package com.pacific.example.model
 
 import com.pacific.adapter.SimpleRecyclerItem
 import com.pacific.adapter.ViewHolder
-import com.pacific.arch.example.R
-import com.pacific.arch.example.databinding.ItemHomeApkBinding
+import com.pacific.example.R
+import com.pacific.example.databinding.ItemHomeApkBinding
 
 class Apk(val iconUrl: String) : SimpleRecyclerItem() {
 

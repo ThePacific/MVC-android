@@ -1,7 +1,7 @@
 package com.pacific.example.feature.main
 
 import android.support.v4.app.Fragment
-import com.pacific.arch.example.R
+import com.pacific.example.R
 import com.pacific.example.feature.book.BookFragment
 import com.pacific.example.feature.film.FilmFragment
 import com.pacific.example.feature.game.GameFragment
