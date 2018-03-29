@@ -39,8 +39,7 @@ public class GridDividerDecoration extends RecyclerView.ItemDecoration {
 
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
-            final RecyclerView.LayoutParams params =
-                    (RecyclerView.LayoutParams) child.getLayoutParams();
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
             final int left = child.getLeft() - params.leftMargin - mInsets;
             final int right = child.getRight() + params.rightMargin + mInsets;
@@ -57,8 +56,7 @@ public class GridDividerDecoration extends RecyclerView.ItemDecoration {
 
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
-            final RecyclerView.LayoutParams params =
-                    (RecyclerView.LayoutParams) child.getLayoutParams();
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
 
             final int left = child.getRight() + params.rightMargin + mInsets;
             final int right = left + mDivider.getIntrinsicWidth();

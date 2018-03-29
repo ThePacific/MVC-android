@@ -96,7 +96,7 @@ fun attachDebug(app: Application, runnable: Runnable?, isDebug: Boolean) {
                 runnable?.run()
 
                 // see https://github.com/square/okhttp/issues/3537 on Android O
-                if (verifySDK(Build.VERSION_CODES.O) || verifySDK(Build.VERSION_CODES.O_MR1)) {
+                if (verifySDK(Build.VERSION_CODES.O)) {
                     StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
                             .detectAll()
                             .penaltyLog()
@@ -108,11 +108,6 @@ fun attachDebug(app: Application, runnable: Runnable?, isDebug: Boolean) {
                             .penaltyDeath()
                             .build())
                 }
-                StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                        .detectAll()
-                        .penaltyLog()
-                        .penaltyDeath()
-                        .build())
                 LeakCanary.install(app)
             }
             .compose(CompletableUtil.newThread())
