@@ -1,0 +1,18 @@
+package com.square.core.storage
+
+const val PREFS_DEVICE_ID = "deviceId"
+const val PREFS_TOKEN1 = "token1"
+const val PREFS_TOKEN2 = "token2"
+const val PREFS_TOKEN3 = "token3"
+const val PREFS_TOKEN4 = "token4"
+const val PREFS_LOGIN_NAME = "loginName"
+const val PREFS_LOGIN_PASSWORD = "loginPassword"
+const val PREFS_SWITCH1 = "switch1"
+const val PREFS_SWITCH2 = "switch2"
+const val PREFS_SWITCH3 = "switch3"
+const val PREFS_SWITCH4 = "switch4"
+const val PREFS_SWITCH5 = "switch5"
+const val PREFS_SWITCH6 = "switch6"
+const val PREFS_SWITCH7 = "switch7"
+const val PREFS_SWITCH8 = "switch8"
+const val PREFS_SWITCH9 = "switch9"

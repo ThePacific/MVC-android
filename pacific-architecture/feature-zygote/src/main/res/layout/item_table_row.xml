@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_32dp"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/name1"
+        android:layout_width="@dimen/size_84dp"
+        android:layout_height="@dimen/size_32dp"
+        android:gravity="center"
+        android:text="name1" />
+
+    <TextView
+        android:id="@+id/name2"
+        android:layout_width="@dimen/size_84dp"
+        android:layout_height="@dimen/size_32dp"
+        android:gravity="center"
+        android:text="name2" />
+
+    <TextView
+        android:id="@+id/name3"
+        android:layout_width="@dimen/size_84dp"
+        android:layout_height="@dimen/size_32dp"
+        android:gravity="center"
+        android:text="name3" />
+
+    <TextView
+        android:id="@+id/name4"
+        android:layout_width="@dimen/size_84dp"
+        android:layout_height="@dimen/size_32dp"
+        android:gravity="center"
+        android:text="name4" />
+
+    <TextView
+        android:id="@+id/name5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="name5" />
+
+    <TextView
+        android:id="@+id/name6"
+        android:layout_width="@dimen/size_84dp"
+        android:layout_height="@dimen/size_32dp"
+        android:gravity="center"
+        android:text="name6" />
+
+    <TextView
+        android:id="@+id/name7"
+        android:layout_width="@dimen/size_84dp"
+        android:layout_height="@dimen/size_32dp"
+        android:gravity="center"
+        android:text="name7" />
+
+    <TextView
+        android:id="@+id/name8"
+        android:layout_width="@dimen/size_84dp"
+        android:layout_height="@dimen/size_32dp"
+        android:gravity="center"
+        android:text="name8" />
+
+    <TextView
+        android:id="@+id/name9"
+        android:layout_width="@dimen/size_84dp"
+        android:layout_height="@dimen/size_32dp"
+        android:gravity="center"
+        android:text="name9" />
+
+    <TextView
+        android:id="@+id/name10"
+        android:layout_width="@dimen/size_84dp"
+        android:layout_height="@dimen/size_32dp"
+        android:gravity="center"
+        android:text="name10" />
+
+    <TextView
+        android:id="@+id/name11"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="name11" />
+
+    <TextView
+        android:id="@+id/name12"
+        android:layout_width="@dimen/size_84dp"
+        android:layout_height="@dimen/size_32dp"
+        android:gravity="center"
+        android:text="name12" />
+</LinearLayout>

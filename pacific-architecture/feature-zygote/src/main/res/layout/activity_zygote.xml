@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout_zygote"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".ZygoteActivity">
+
+        <ImageView
+            android:id="@+id/img_zygote"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:fitsSystemWindows="true"
+            tools:src="@drawable/zygote_bg" />
+
+        <ProgressBar
+            android:layout_width="@dimen/size_36dp"
+            android:layout_height="@dimen/size_36dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/colorAccent" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

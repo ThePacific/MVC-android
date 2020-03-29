@@ -1,0 +1,85 @@
+import com.square.buildsrc.Libs
+import com.square.buildsrc.BuildPlugins
+
+apply plugin: BuildPlugins.kotlin
+apply plugin: BuildPlugins.kotlinxSerialization
+apply plugin: BuildPlugins.kotlinKapt
+apply plugin: BuildPlugins.mavenPublishPlugin
+
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+
+    javacOptions {
+        option("-Xmaxerrs", 1000)
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly Libs.injectAnnotation
+    compileOnly Libs.errorProne
+    compileOnly Libs.jetAnnotation
+    compileOnly Libs.javaxAnnotation
+    compileOnly Libs.findBugsJrs305
+
+    implementation Libs.Kotlin.stdlibJdk8
+    implementation Libs.Kotlin.stdlibJdk7
+    implementation Libs.Kotlin.reflect
+    implementation Libs.Kotlin.serializationRuntime
+    implementation Libs.Coroutines.core
+    implementation Libs.Coroutines.rxJava
+
+    implementation Libs.OkHttp.okHttp
+    implementation Libs.OkHttp.loggingInterceptor
+    implementation Libs.okio
+    implementation Libs.Retrofit.retrofit
+    implementation Libs.Retrofit.rxJavaAdapter
+    implementation Libs.Retrofit.moshiConverter
+    implementation Libs.Moshi.moshi
+    implementation Libs.Moshi.kotlin
+    kapt Libs.Moshi.codegen
+
+    implementation Libs.RxJava.rxJava
+    implementation Libs.RxJava.stream
+
+    compileOnly Libs.AutoValue.autoValue
+    kapt Libs.AutoValue.compiler
+    implementation Libs.Dagger.dagger
+    kapt Libs.Dagger.compiler
+
+    implementation Libs.threeTenBpNoTzdb
+
+    implementation Libs.AndroidX.annotation
+    implementation Libs.AndroidX.Collection.collection
+    implementation Libs.AndroidX.Collection.ktx
+    implementation Libs.AndroidX.Room.common
+    implementation Libs.AndroidX.Room.migration
+
+    testImplementation Libs.Kotlin.test
+    testImplementation Libs.Kotlin.testJunit
+    testImplementation Libs.junit
+    testImplementation Libs.mockito
+    testImplementation Libs.truth
+    testImplementation Libs.threeTenBp
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+mavenPublish {
+    releaseSigningEnabled = true
+    targets {
+        uploadArchives {
+            releaseRepositoryUrl = properties.getProperty("RELEASE_REPOSITORY_URL")
+            snapshotRepositoryUrl = properties.getProperty("SNAPSHOT_REPOSITORY_URL")
+            repositoryUsername = properties.getProperty("SONATYPE_NEXUS_USERNAME")
+            repositoryPassword = properties.getProperty("SONATYPE_NEXUS_PASSWORD")
+        }
+
+        installArchives {
+            releaseRepositoryUrl = file("${rootProject.buildDir}/localMaven").toURI().toString()
+            snapshotRepositoryUrl = file("${rootProject.buildDir}/localMaven").toURI().toString()
+        }
+    }
+}

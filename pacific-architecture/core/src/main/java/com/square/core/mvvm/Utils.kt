@@ -1,0 +1,1 @@
+package com.square.core.mvvm
