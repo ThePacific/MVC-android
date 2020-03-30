@@ -5,6 +5,5 @@ apply from: "../gradle/jvm_module.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation Libs.Square.guava
-    implementation Libs.Square.domain
+    implementation Libs.Pacific.guava
 }

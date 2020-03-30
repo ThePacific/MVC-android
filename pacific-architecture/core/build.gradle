@@ -4,8 +4,6 @@ apply from: "../gradle/android_lib_module.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation Libs.Square.guava
-    implementation Libs.Square.guavaAndroid
-    implementation Libs.Square.domain
-    implementation Libs.Square.data
+    implementation Libs.Pacific.guava
+    implementation Libs.Pacific.guavaAndroid
 }

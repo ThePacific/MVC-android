@@ -1,12 +1,10 @@
 package com.pacific.guava.domain
 
-fun isLogin1(): Boolean = CoreJdk.token1.isNotEmpty() && CoreJdk.token1.length > 8
+fun isLogin1(): Boolean = Values.token1.isNotEmpty() && Values.token1.length > 8
 
-fun isLogin2(): Boolean = CoreJdk.token2.isNotEmpty() && CoreJdk.token1.length > 8
+fun isLogin2(): Boolean = Values.token2.isNotEmpty() && Values.token1.length > 8
 
-fun isLogin3(): Boolean = CoreJdk.token3.isNotEmpty() && CoreJdk.token1.length > 8
-
-fun isLogin4(): Boolean = CoreJdk.token4.isNotEmpty() && CoreJdk.token4.length > 8
+fun isLogin3(): Boolean = Values.token3.isNotEmpty() && Values.token1.length > 8
 
 @JvmOverloads
 fun Throwable.toSourceException(code: Int = -1): SourceException {

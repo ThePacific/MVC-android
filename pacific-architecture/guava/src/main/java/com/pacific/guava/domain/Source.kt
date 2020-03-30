@@ -25,5 +25,5 @@ sealed class Source<T> {
         override fun get(): T = data
     }
 
-    data class Error<T>(val e: Throwable) : Source<T>()
+    data class Error<T>(val throwable: Throwable) : Source<T>()
 }
