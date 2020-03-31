@@ -5,14 +5,13 @@ import com.pacific.guava.GOOGLE
 import com.pacific.guava.domain.Values
 import retrofit2.Retrofit
 
-fun setupTestSuite(): Retrofit {
+fun createTestRetrofit(): Retrofit {
     Values.isDebug = true
     Values.baseUrl1 = GOOGLE
     Values.baseUrl2 = GOOGLE
     Values.baseUrl3 = GOOGLE
-    
+
     val dataModule = DataHttpModule()
-    val moshi = dataModule.provideMoshi()
     val poorX509TrustManager = dataModule.providePoorX509TrustManager()
     val poorSSLContext = dataModule.providePoorSSLContext(poorX509TrustManager)
     val httpLoggingInterceptorLogger = dataModule.provideHttpLoggingInterceptorLogger()
@@ -25,5 +24,5 @@ fun setupTestSuite(): Retrofit {
         httpLoggingInterceptor,
         httpLoggingInterceptorLogger
     )
-    return dataModule.provideRetrofit(okHttpClient, moshi)
+    return dataModule.provideRetrofit(okHttpClient, dataModule.provideMoshi())
 }
