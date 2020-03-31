@@ -1,13 +1,13 @@
 package com.pacific.data.http
 
-import com.pacific.guava.domain.Values
 import com.pacific.data.http.okhttp3.ApiConverterFactory
-import com.pacific.data.http.okhttp3.HeadersInterceptor
-import com.pacific.data.http.okhttp3.HostInterceptor
+import com.pacific.data.http.okhttp3.FixHeadersInterceptor
+import com.pacific.data.http.okhttp3.FixHostInterceptor
 import com.pacific.data.http.okhttp3.WarnIfSlowInterceptor
 import com.pacific.data.http.service.ApiService
-import com.pacific.data.http.service.RxJavaApiService
 import com.pacific.data.http.service.SuspendApiService
+import com.pacific.guava.GOOGLE
+import com.pacific.guava.domain.Values
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -96,8 +96,8 @@ class DataHttpModule {
         httpLoggingInterceptorLogger: HttpLoggingInterceptor.Logger
     ): OkHttpClient {
         return OkHttpClient().newBuilder()
-            .addInterceptor(HostInterceptor())
-            .addInterceptor(HeadersInterceptor())
+            .addInterceptor(FixHostInterceptor())
+            .addInterceptor(FixHeadersInterceptor())
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(WarnIfSlowInterceptor())
             // See https://github.com/square/okhttp/issues/5464
@@ -120,7 +120,7 @@ class DataHttpModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://www.google.com/")
+            .baseUrl(GOOGLE)
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(ApiConverterFactory.create())
@@ -132,12 +132,6 @@ class DataHttpModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideRxJavaApiService(retrofit: Retrofit): RxJavaApiService {
-        return retrofit.create(RxJavaApiService::class.java)
     }
 
     @Provides

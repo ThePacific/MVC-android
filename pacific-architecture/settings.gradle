@@ -7,4 +7,4 @@ include ':guava-android'
 include ':data'
 include ':core'
 //include ':app'
-
+include ':app'

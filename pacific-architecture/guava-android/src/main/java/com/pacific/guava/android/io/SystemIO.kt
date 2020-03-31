@@ -3,12 +3,11 @@ package com.pacific.guava.android.io
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Environment
 import android.provider.MediaStore
 import android.text.TextUtils
 import androidx.annotation.WorkerThread
 import com.pacific.guava.android.ensureWorkThread
-import com.pacific.guava.io.fileSeparator
+import com.pacific.guava.io.ensureFileSeparator
 import com.pacific.guava.io.mkdirs
 import okhttp3.internal.closeQuietly
 import okhttp3.internal.io.FileSystem
@@ -19,15 +18,11 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 
-val sdcard: String by lazy {
-    fileSeparator(Environment.getExternalStorageDirectory().absolutePath)
-}
-
 @WorkerThread
 fun copyFromAsset(context: Context, name: String, path: String, overwrite: Boolean) {
     ensureWorkThread()
     try {
-        val file = File(fileSeparator(mkdirs(path).absolutePath) + name)
+        val file = File(ensureFileSeparator(mkdirs(path).absolutePath) + name)
         if (FileSystem.SYSTEM.exists(file)) {
             if (overwrite) {
                 FileSystem.SYSTEM.delete(file)
@@ -55,7 +50,7 @@ fun copyFromAsset(context: Context, name: String, path: String, overwrite: Boole
 fun readFromAsset(context: Context, name: String, path: String): String {
     ensureWorkThread()
     var localPath = path
-    localPath = fileSeparator(localPath)
+    localPath = ensureFileSeparator(localPath)
     mkdirs(localPath)
     val assetManager = context.assets
     var content = ""
@@ -70,7 +65,7 @@ fun readFromAsset(context: Context, name: String, path: String): String {
 }
 
 @WorkerThread
-fun saveBimapToGallery(context: Context, bitmap: Bitmap, directory: File, imageName: String) {
+fun saveBitmapToGallery(context: Context, bitmap: Bitmap, directory: File, imageName: String) {
     ensureWorkThread()
     var saveImageName = imageName
     if (!FileSystem.SYSTEM.exists(directory) || !directory.isDirectory) {

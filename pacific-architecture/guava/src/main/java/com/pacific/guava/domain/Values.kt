@@ -1,15 +1,16 @@
 package com.pacific.guava.domain
 
 import androidx.collection.ArrayMap
+import com.pacific.guava.GOOGLE
 
 object Values {
 
     private val cache: ArrayMap<String, Any> = ArrayMap()
 
     var isDebug = false
-    var baseUrl1 = "https://www.google.com/"
-    var baseUrl2 = "https://www.google.com/"
-    var baseUrl3 = "https://www.google.com/"
+    var baseUrl1 = GOOGLE
+    var baseUrl2 = GOOGLE
+    var baseUrl3 = GOOGLE
     var token1 = ""
     var token2 = ""
     var token3 = ""

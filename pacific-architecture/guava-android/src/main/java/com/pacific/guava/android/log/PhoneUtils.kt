@@ -40,7 +40,7 @@ fun getIMEI(context: Context): String? {
         telephonyManager.deviceId
     }
     if (uuid.isNullOrEmpty()) {
-        Log.d("Square", "No IMEI")
+        Log.d("Pacific", "No IMEI")
     }
     return uuid
 }
@@ -62,7 +62,7 @@ fun getPhoneNumber(context: Context): String? {
     val telephonyManager = ContextCompat.getSystemService(context, TelephonyManager::class.java)!!
     val number = telephonyManager.line1Number
     if (number.isNullOrEmpty()) {
-        Log.d("Square", "No Phone Number")
+        Log.d("Pacific", "No Phone Number")
     }
     return number
 }
@@ -78,7 +78,7 @@ fun getICCID(context: Context): String? {
     val telephonyManager = ContextCompat.getSystemService(context, TelephonyManager::class.java)!!
     val uuid = telephonyManager.subscriberId
     if (uuid.isNullOrEmpty()) {
-        Log.d("Square", "No ICCID")
+        Log.d("Pacific", "No ICCID")
     }
     return uuid
 }
@@ -92,7 +92,7 @@ fun getICCID(context: Context): String? {
 fun getAndroidId(context: Context): String? {
     val uniqueId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
     if (uniqueId.isNullOrEmpty()) {
-        Log.d("Square", "No ANDROID_ID")
+        Log.d("Pacific", "No ANDROID_ID")
     }
     return uniqueId
 }
@@ -130,11 +130,11 @@ fun getBuildConfigValue(context: Context, key: String): Any? {
         val field = clazz.getField(key)
         return field.get(null)
     } catch (e: ClassNotFoundException) {
-        Log.d("Square", "Unable to get the BuildConfig, is this built with ANT?")
+        Log.d("Pacific", "Unable to get the BuildConfig, is this built with ANT?")
     } catch (e: NoSuchFieldException) {
-        Log.d("Square", "$key is not a valid field. Check your build.gradle")
+        Log.d("Pacific", "$key is not a valid field. Check your build.gradle")
     } catch (e: IllegalAccessException) {
-        Log.d("Square", "Illegal Access Exception: Let's print a stack trace")
+        Log.d("Pacific", "Illegal Access Exception: Let's print a stack trace")
     }
     return null
 }
