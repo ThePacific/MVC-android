@@ -192,7 +192,6 @@ object AppManager : AppInitializer, LifecycleObserver, Application.ActivityLifec
             override fun onReceive(context: Context, intent: Intent) {
                 when (intent.action) {
                     ConnectivityManager.CONNECTIVITY_ACTION -> {
-                        require(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                         // on some devices ConnectivityManager.getActiveNetworkInfo() does not provide the correct network state
                         // https://issuetracker.google.com/issues/37137911
                         val info: NetworkInfo? = cm.activeNetworkInfo
