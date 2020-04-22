@@ -1,29 +1,50 @@
-/*
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.pacific.guava.domain
 
-sealed class Source<T> {
+sealed class Source<out T> {
 
-    open fun get(): T? = null
-
-    data class Success<T>(val data: T) : Source<T>() {
-
-        override fun get(): T = data
-    }
+    data class Success<T>(val data: T) : Source<T>()
 
     data class Error<T>(val throwable: Throwable) : Source<T>()
+
+    /**
+     * Returns the available data or throws [NullPointerException] if there is no data.
+     */
+    fun requireData(): T {
+        return when (this) {
+            is Success -> data
+            is Error -> throw throwable
+        }
+    }
+
+    /**
+     * If this [Source] is of type [Source.Error], throws the exception
+     * Otherwise, does nothing.
+     */
+    fun throwIfError() {
+        if (this is Error) {
+            throw throwable
+        }
+    }
+
+    /**
+     * If this [Source] is of type [Source.Error], returns the available error
+     * from it. Otherwise, returns `null`.
+     */
+    fun errorOrNull(): Throwable? = when (this) {
+        is Error -> throwable
+        else -> null
+    }
+
+    /**
+     * If there is data available, returns it; otherwise returns null.
+     */
+    fun dataOrNull(): T? = when (this) {
+        is Success -> data
+        else -> null
+    }
+
+    internal fun <R> swapType(): Source<R> = when (this) {
+        is Error -> Error(throwable)
+        is Success -> throw IllegalStateException("cannot swap type for Success.Data")
+    }
 }

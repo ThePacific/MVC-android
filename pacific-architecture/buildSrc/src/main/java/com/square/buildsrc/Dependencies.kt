@@ -2,12 +2,12 @@ package com.square.buildsrc
 
 object Versions {
     const val ktLint = "0.31.0"
-    const val kotlin = "1.3.61"
+    const val kotlin = "1.3.72"
 }
 
 object BuildPlugins {
 
-    const val androidGradle = "com.android.tools.build:gradle:3.6.1"
+    const val androidGradle = "com.android.tools.build:gradle:3.6.3"
     const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val kSerializationGradle = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
     const val androidApplication = "com.android.application"
@@ -32,18 +32,17 @@ object Libs {
     val mvRx = "com.airbnb.android:mvrx:1.3.0"
     val coordinators = "com.squareup.coordinators:coordinators:0.4"
 
-    val threeTenBp = "org.threeten:threetenbp:1.4.0"
+    val threeTenBp = "org.threeten:threetenbp:1.4.2"
     val threeTenBpNoTzdb = "$threeTenBp:no-tzdb"
-    val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.2.0"
+    val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.2.3"
 
     val gravitySnapHelper = "com.github.rubensousa:gravitysnaphelper:2.0"
-    val rxLint = "nl.littlerobots.rxlint:rxlint:1.7.3"
 
     val leakcanary = "com.squareup.leakcanary:leakcanary-android:2.0-beta-3"
 
     val javaxAnnotation = "javax.annotation:javax.annotation-api:1.3.2"
     val errorProne = "com.google.errorprone:error_prone_annotations:2.3.3"
-    val jetAnnotation = "org.jetbrains:annotations:17.0.0"
+    val jetAnnotation = "org.jetbrains:annotations:19.0.0"
     val injectAnnotation = "javax.inject:javax.inject:1"
     val findBugsJrs305 = "com.google.code.findbugs:jsr305:3.0.2"
     val reflection = "org.jooq:joor-java-6:0.9.12"
@@ -64,7 +63,7 @@ object Libs {
     }
 
     object Google {
-        val material = "com.google.android.material:material:1.1.0"
+        val material = "com.google.android.material:material:1.2.0-alpha06"
         val firebaseCore = "com.google.firebase:firebase-core:16.0.8"
         val crashlytics = "com.crashlytics.sdk.android:crashlytics:2.9.9"
         val gmsGoogleServices = "com.google.gms:google-services:4.2.0"
@@ -88,10 +87,9 @@ object Libs {
     }
 
     object RxJava {
-        val rxJava = "io.reactivex.rxjava2:rxjava:2.2.12"
-        val rxKotlin = "io.reactivex.rxjava2:rxkotlin:2.3.0"
+        val rxJava = "io.reactivex.rxjava2:rxjava:2.2.19"
         val rxAndroid = "io.reactivex.rxjava2:rxandroid:2.1.1"
-        val stream = "org.reactivestreams:reactive-streams:1.0.2"
+        val stream = "org.reactivestreams:reactive-streams:1.0.3"
     }
 
     object Dagger {
@@ -103,7 +101,7 @@ object Libs {
     }
 
     object AutoValue {
-        const val version = "1.6.5"
+        const val version = "1.7"
         val autoValue = "com.google.auto.value:auto-value-annotations:$version"
         val compiler = "com.google.auto.value:auto-value:$version"
     }
@@ -162,7 +160,7 @@ object Libs {
     object AndroidX {
 
         object Activity {
-            private const val version = "1.1.0"
+            private const val version = "1.2.0-alpha03"
             val activity = "androidx.activity:activity:$version"
             val ktx = "androidx.activity:activity-ktx:$version"
         }
@@ -172,7 +170,7 @@ object Libs {
 
 
         object Appcompat {
-            private const val version = "1.1.0"
+            private const val version = "1.2.0-beta01"
             val appcompat = "androidx.appcompat:appcompat:$version"
             val resource = "androidx.appcompat:appcompat-resource:$version"
         }
@@ -225,10 +223,10 @@ object Libs {
 
         val contentpager = "androidx.contentpager:contentpager:1.0.0"
 
-        val coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.1.0-beta01"
+        val coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
 
         object Core {
-            private const val version = "1.2.0"
+            private const val version = "1.3.0-beta01"
             val core = "androidx.core:core:$version"
             val ktx = "androidx.core:core-ktx:$version"
         }
@@ -238,6 +236,7 @@ object Libs {
         val customview = "androidx.customview:customview:1.1.0-alpha01"
 
         val drawerlayout = "androidx.drawerlayout:drawerlayout:1.1.0-alpha04"
+        val exifinterface = "androidx.exifinterface:exifinterface:1.2.0"
 
         object Dynamicanimation {
             private const val version = "1.1.0-alpha03"
@@ -253,7 +252,7 @@ object Libs {
         }
 
         object Fragment {
-            const val version = "1.2.3"
+            const val version = "1.3.0-alpha03"
             val fragment = "androidx.fragment:fragment:$version"
             val ktx = "androidx.fragment:fragment-ktx:$version"
             val testing = "androidx.fragment:fragment-testing:$version"
