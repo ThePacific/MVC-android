@@ -34,7 +34,7 @@ dependencies {
     implementation Libs.OkHttp.loggingInterceptor
     implementation Libs.okio
     implementation Libs.Retrofit.retrofit
-    implementation Libs.Retrofit.rxJavaAdapter
+    // implementation Libs.Retrofit.rxJavaAdapter
     implementation Libs.Retrofit.moshiConverter
     implementation Libs.Moshi.moshi
     implementation Libs.Moshi.kotlin

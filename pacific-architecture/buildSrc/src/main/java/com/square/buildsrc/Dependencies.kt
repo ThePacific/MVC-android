@@ -29,12 +29,12 @@ object Libs {
     val truth = "com.google.truth:truth:0.42"
 
     val mmkv = "com.tencent:mmkv:1.0.23"
-    val mvRx = "com.airbnb.android:mvrx:1.3.0"
+    val mvRx = "com.airbnb.android:mvrx:1.4.0"
     val coordinators = "com.squareup.coordinators:coordinators:0.4"
 
-    val threeTenBp = "org.threeten:threetenbp:1.4.2"
+    val threeTenBp = "org.threeten:threetenbp:1.4.4"
     val threeTenBpNoTzdb = "$threeTenBp:no-tzdb"
-    val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.2.3"
+    val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.2.4"
 
     val gravitySnapHelper = "com.github.rubensousa:gravitysnaphelper:2.0"
 
@@ -87,6 +87,8 @@ object Libs {
     }
 
     object RxJava {
+        val rxJava3 = "io.reactivex.rxjava3:rxjava:3.0.2"
+        val rxAndroid3 = "io.reactivex.rxjava3:rxandroid:3.0.0"
         val rxJava = "io.reactivex.rxjava2:rxjava:2.2.19"
         val rxAndroid = "io.reactivex.rxjava2:rxandroid:2.1.1"
         val stream = "org.reactivestreams:reactive-streams:1.0.3"
@@ -117,6 +119,7 @@ object Libs {
         private const val version = "2.8.1"
         val retrofit = "com.squareup.retrofit2:retrofit:$version"
         val rxJavaAdapter = "com.squareup.retrofit2:adapter-rxjava2:$version"
+        val rxJava3Adapter = "com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0"
         val gsonConverter = "com.squareup.retrofit2:converter-gson:$version"
         val moshiConverter = "com.squareup.retrofit2:converter-moshi:$version"
         val simpleXmlConverter = "com.squareup.retrofit2:converter-simplexml:$version"
@@ -127,7 +130,7 @@ object Libs {
     }
 
     object OkHttp {
-        private const val version = "4.4.1"
+        private const val version = "4.5.0"
         val okHttp = "com.squareup.okhttp3:okhttp:$version"
         val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
     }
@@ -190,11 +193,12 @@ object Libs {
         val autofill = "androidx.autofill:autofill:1.0.0-beta01"
 
         object Camera {
-            private const val version = "1.0.0-alpha06"
+            private const val version = "1.0.0-beta03"
             val camera2 = "androidx.camera:camera-camera2:$version"
             val core = "androidx.camera:camera-core:$version"
-            val extensions = "androidx.camera:camera-extensions:1.0.0-alpha03"
-            val view = "androidx.camera:camera-view:1.0.0-alpha03"
+            val lifecycle = "androidx.camera:camera-lifecycle:$version"
+            val extensions = "androidx.camera:camera-extensions:1.0.0-alpha10"
+            val view = "androidx.camera:camera-view:1.0.0-alpha10"
         }
 
         val cardview = "androidx.cardview:cardview:1.0.0"
@@ -206,12 +210,9 @@ object Libs {
         }
 
         object Concurrent {
-            private const val version = "1.0.0"
-            val concurrentFutures = "androidx.concurrent:concurrent-futures:$version"
-            val listenablefuture = "androidx.concurrent:concurrent-listenablefuture:$version"
-            val listenablefutureCallback =
-                "androidx.concurrent:concurrent-listenablefuture-callback:$version"
-            val futures = "androidx.concurrent:futures:$version"
+            private const val version = "1.0.0-beta01"
+            val future = "androidx.concurrent:concurrent-listenablefuture:$version"
+            val callback = "androidx.concurrent:concurrent-listenablefuture-callback:$version"
         }
 
         object Constraintlayout {
@@ -373,7 +374,7 @@ object Libs {
         }
 
         val slidingpanelayout = "androidx.slidingpanelayout:slidingpanelayout:1.0.0"
-        val sharetarget = "androidx.sharetarget:sharetarget:1.0.0-beta01"
+        val sharetarget = "androidx.sharetarget:sharetarget:1.0.0-rc01"
 
         object Sqlite {
             private const val version = "2.1.0"
@@ -467,5 +468,6 @@ object Libs {
         val guava = "com.github.thepacific:guava:$version"
         val guavaAndroid = "com.github.thepacific:guava-android:$version"
         val core = "com.github.thepacific:core:$version"
+        val adapter = "com.github.thepacific:adapter:3.0.0"
     }
 }

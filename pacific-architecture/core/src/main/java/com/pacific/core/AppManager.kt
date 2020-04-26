@@ -44,12 +44,10 @@ object AppManager : AppInitializer, LifecycleObserver, Application.ActivityLifec
         createNetworkCallback()
     }
 
-    private lateinit var contextApp: Application
     private var weakCurrentActivity: WeakReference<Activity?>? = null
 
     @SuppressLint("MissingPermission")
     override fun initialize(app: Application) {
-        contextApp = app
         contextApp.registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         notifyNetworkChanged(isNetworkConnected())
@@ -98,7 +96,7 @@ object AppManager : AppInitializer, LifecycleObserver, Application.ActivityLifec
     }
 
     fun currentActivity(): Activity? {
-        return weakCurrentActivity?.get() ?: null
+        return weakCurrentActivity?.get()
     }
 
     @Suppress("DEPRECATION")

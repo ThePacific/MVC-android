@@ -16,7 +16,6 @@ import okhttp3.internal.platform.Platform
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.LoggingEventListener
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
@@ -122,7 +121,6 @@ class DataHttpModule {
         return Retrofit.Builder()
             .baseUrl(GOOGLE)
             .client(okHttpClient)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(ApiConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()

@@ -8,6 +8,6 @@ inline fun <reified T> JsonAdapter<T>.gentle(): JsonAdapter<T> {
 }
 
 @Suppress("UNCHECKED_CAST")
-fun Moshi.retrofitMap(obj: Any): Map<String, String> {
-    return (this.adapter(Any::class.java).gentle().toJsonValue(obj)) as Map<String, String>
+fun Moshi.retrofitMap(any: Any): Map<String, String> {
+    return (this.adapter(Any::class.java).gentle().toJsonValue(any)) as Map<String, String>
 }

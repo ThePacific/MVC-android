@@ -58,7 +58,7 @@ dependencies {
     implementation Libs.OkHttp.loggingInterceptor
     implementation Libs.okio
     implementation Libs.Retrofit.retrofit
-    implementation Libs.Retrofit.rxJavaAdapter
+    // implementation Libs.Retrofit.rxJavaAdapter
     implementation Libs.Retrofit.moshiConverter
     implementation Libs.Moshi.moshi
     implementation Libs.Moshi.kotlin
@@ -141,8 +141,9 @@ dependencies {
     implementation Libs.AndroidX.versionedparcelable
     implementation Libs.AndroidX.Work.runtime
     implementation Libs.AndroidX.Work.runtimeKtx
-    implementation Libs.AndroidX.Work.rxJava
-    implementation Libs.AndroidX.Concurrent.concurrentFutures
+    // implementation Libs.AndroidX.Work.rxJava
+    implementation Libs.AndroidX.Concurrent.future
+    implementation Libs.AndroidX.Concurrent.callback
     implementation Libs.AndroidX.Navigation.fragment
     implementation Libs.AndroidX.Navigation.fragmentKtx
     implementation Libs.AndroidX.Navigation.ui
@@ -159,12 +160,12 @@ dependencies {
     implementation Libs.AndroidX.Arch.runtime
     implementation Libs.AndroidX.Paging.common
     implementation Libs.AndroidX.Paging.commonKtx
-    implementation Libs.AndroidX.Paging.rxJava
-    implementation Libs.AndroidX.Paging.rxJavaKtx
+    // implementation Libs.AndroidX.Paging.rxJava
+    // implementation Libs.AndroidX.Paging.rxJavaKtx
     implementation Libs.AndroidX.Room.common
     implementation Libs.AndroidX.Room.runtime
     // implementation Libs.AndroidX.Room.coroutines
-    implementation Libs.AndroidX.Room.rxJava
+    // implementation Libs.AndroidX.Room.rxJava
     implementation Libs.AndroidX.Room.migration
     implementation Libs.AndroidX.Room.ktx
     kapt Libs.AndroidX.Room.compiler
@@ -176,6 +177,7 @@ dependencies {
 
     implementation Libs.AndroidX.Camera.core
     implementation Libs.AndroidX.Camera.camera2
+    implementation Libs.AndroidX.Camera.lifecycle
     implementation Libs.AndroidX.Camera.extensions
     implementation Libs.AndroidX.Camera.view
 
