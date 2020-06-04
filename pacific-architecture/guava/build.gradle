@@ -1,5 +1,5 @@
-import com.square.buildsrc.BuildPlugins
-import com.square.buildsrc.Libs
+import com.pacific.buildsrc.BuildPlugins
+import com.pacific.buildsrc.Libs
 
 apply from: "../gradle/jvm_module.gradle"
 

@@ -1,8 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-import com.square.buildsrc.BuildPlugins
-import com.square.buildsrc.Libs
-import com.square.buildsrc.Versions
+import com.pacific.buildsrc.BuildPlugins
+import com.pacific.buildsrc.Libs
+import com.pacific.buildsrc.Versions
 
 buildscript {
 
@@ -48,7 +48,6 @@ allprojects {
             eachDependency { details ->
                 def group = details.requested.group
                 def name = details.requested.name
-                def version = details.requested.version
 
                 if (group == 'org.jetbrains.kotlin' && name.startsWith('kotlin-stdlib')) {
                     details.useVersion Versions.kotlin
@@ -64,10 +63,8 @@ allprojects {
                     details.useVersion Libs.AutoValue.version
                 } else if (group == 'androidx.fragment') {
                     details.useVersion Libs.AndroidX.Fragment.version
-                } else if (group == 'com.google.guava' && version.endsWith('jre')) {
-                    details.useVersion "29.0-jre"
-                }else if (group == 'com.google.guava' && version.endsWith('android')) {
-                    details.useVersion "29.0-android"
+                }else if (group == 'com.google.android.material') {
+                    details.useVersion "1.2.0-alpha06"
                 }
             }
         }
