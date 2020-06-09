@@ -8,9 +8,9 @@ object Values {
     private val cache: ArrayMap<String, Any> = ArrayMap()
 
     var isDebug = false
-    var baseUrl1 = GOOGLE
-    var baseUrl2 = GOOGLE
-    var baseUrl3 = GOOGLE
+    var apiUrl1 = GOOGLE
+    var apiUrl2 = GOOGLE
+    var apiUrl3 = GOOGLE
     var token1 = ""
     var token2 = ""
     var token3 = ""
@@ -25,20 +25,16 @@ object Values {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> get(key: String): T? {
-        return cache[key] as T
-    }
+    fun <T> get(key: String): T? = cache[key] as T
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> take(key: String): T? {
-        return cache.remove(key) as T
-    }
+    fun <T> take(key: String): T? = cache.remove(key) as T
+
+    fun clear() = cache.clear()
 
     fun remove(vararg keys: String) {
-        keys.forEach { cache.remove(it) }
-    }
-
-    fun clear() {
-        cache.clear()
+        keys.forEach {
+            cache.remove(it)
+        }
     }
 }

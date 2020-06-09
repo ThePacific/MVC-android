@@ -7,7 +7,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface ApiService {
+interface OurApi {
 
     @FormUrlEncoded
     @POST("/merchant/freetf_merchant_user/memberLogin")

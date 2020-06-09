@@ -7,9 +7,9 @@ import retrofit2.Retrofit
 
 fun createTestRetrofit(): Retrofit {
     Values.isDebug = true
-    Values.baseUrl1 = GOOGLE
-    Values.baseUrl2 = GOOGLE
-    Values.baseUrl3 = GOOGLE
+    Values.apiUrl1 = GOOGLE
+    Values.apiUrl2 = GOOGLE
+    Values.apiUrl3 = GOOGLE
 
     val dataModule = DataHttpModule()
     val poorX509TrustManager = dataModule.providePoorX509TrustManager()

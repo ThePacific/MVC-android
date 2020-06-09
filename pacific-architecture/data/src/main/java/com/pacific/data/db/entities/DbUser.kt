@@ -9,13 +9,11 @@ import androidx.room.PrimaryKey
 )
 data class DbUser(
 
-    @ColumnInfo(name = "userId") @PrimaryKey val userId: Long,
+    @ColumnInfo(name = "_id") @PrimaryKey(autoGenerate = true) val _id: Long,
 
     @ColumnInfo(name = "loginName") val loginName: String,
 
     @ColumnInfo(name = "loginPassword") val loginPassword: String,
 
-    @ColumnInfo(name = "firstName") val firstName: String,
-
-    @ColumnInfo(name = "lastName") val lastName: String
+    @ColumnInfo(name = "isSelected") val isSelected: Boolean
 )

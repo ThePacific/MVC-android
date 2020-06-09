@@ -5,9 +5,8 @@ import androidx.room.Query
 import com.pacific.data.db.entities.DbUser
 
 @Dao
-interface UserDao :
-    AppDao<DbUser> {
+interface UserDao : AppDao<DbUser> {
 
-    @Query("SELECT * FROM user WHERE userId =:userId")
-    fun get(userId: Int): DbUser?
+    @Query("SELECT * FROM user WHERE _id =:id")
+    fun get(id: Int): DbUser?
 }

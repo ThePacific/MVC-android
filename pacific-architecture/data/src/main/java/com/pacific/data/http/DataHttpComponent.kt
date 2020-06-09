@@ -1,7 +1,6 @@
 package com.pacific.data.http
 
-import com.pacific.data.http.service.ApiService
-import com.pacific.data.http.service.SuspendApiService
+import com.pacific.data.http.service.OurApi
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,7 +24,5 @@ interface DataHttpComponent {
 
     fun provideRetrofit(): Retrofit
 
-    fun provideApiService(): ApiService
-
-    fun provideSuspendApiService(): SuspendApiService
+    fun provideOurApi(): OurApi
 }

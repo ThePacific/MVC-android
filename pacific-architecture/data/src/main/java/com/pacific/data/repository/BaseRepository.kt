@@ -1,11 +1,9 @@
 package com.pacific.data.repository
 
 import com.pacific.data.db.AppDatabase
-import com.pacific.data.http.service.ApiService
-import com.pacific.data.http.service.SuspendApiService
+import com.pacific.data.http.service.OurApi
 
 abstract class BaseRepository(
-    protected val apiService: ApiService,
-    protected val suspendApiService: SuspendApiService,
+    protected val ourApi: OurApi,
     protected val db: AppDatabase
 )

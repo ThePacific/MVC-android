@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
-import com.pacific.guava.domain.AssertUtilsKt;
 
 public class ManifestUtils {
 
     private ManifestUtils() {
-        AssertUtilsKt.unsupportedOperationException("");
     }
 
     public static String getString(Context context, String key, String defValue) {

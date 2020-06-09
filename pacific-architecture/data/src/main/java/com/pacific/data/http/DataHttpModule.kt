@@ -1,13 +1,13 @@
 package com.pacific.data.http
 
 import com.pacific.data.http.okhttp3.ApiConverterFactory
-import com.pacific.data.http.okhttp3.FixHeadersInterceptor
-import com.pacific.data.http.okhttp3.FixHostInterceptor
+import com.pacific.data.http.okhttp3.CommonHeadersInterceptor
+import com.pacific.data.http.okhttp3.HostSelectionInterceptor
 import com.pacific.data.http.okhttp3.WarnIfSlowInterceptor
-import com.pacific.data.http.service.ApiService
-import com.pacific.data.http.service.SuspendApiService
+import com.pacific.data.http.service.OurApi
 import com.pacific.guava.GOOGLE
 import com.pacific.guava.domain.Values
+import com.pacific.guava.jdkTimber
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -67,7 +67,7 @@ class DataHttpModule {
     fun provideHttpLoggingInterceptorLogger(): HttpLoggingInterceptor.Logger {
         return object : HttpLoggingInterceptor.Logger {
             override fun log(message: String) {
-                println("OkHttp $message")
+                jdkTimber.d("OkHttp", message)
             }
         }
     }
@@ -95,8 +95,8 @@ class DataHttpModule {
         httpLoggingInterceptorLogger: HttpLoggingInterceptor.Logger
     ): OkHttpClient {
         return OkHttpClient().newBuilder()
-            .addInterceptor(FixHostInterceptor())
-            .addInterceptor(FixHeadersInterceptor())
+            .addInterceptor(HostSelectionInterceptor())
+            .addInterceptor(CommonHeadersInterceptor())
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(WarnIfSlowInterceptor())
             // See https://github.com/square/okhttp/issues/5464
@@ -128,13 +128,5 @@ class DataHttpModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSuspendApiService(retrofit: Retrofit): SuspendApiService {
-        return retrofit.create(SuspendApiService::class.java)
-    }
+    fun provideOurApi(retrofit: Retrofit): OurApi = retrofit.create(OurApi::class.java)
 }

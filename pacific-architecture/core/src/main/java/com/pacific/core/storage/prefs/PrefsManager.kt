@@ -1,8 +1,8 @@
 package com.pacific.core.storage.prefs
 
+import com.pacific.core.*
 import com.pacific.guava.android.log.uniqueId
 import com.pacific.guava.domain.Values
-import com.pacific.core.*
 import com.tencent.mmkv.MMKV
 
 object PrefsManager {
@@ -36,16 +36,16 @@ object PrefsManager {
 
     fun getToken2(): String = mmvk.decodeString(PREFS_TOKEN2, "")
 
-    fun setToken2(token: String): Boolean {
-        Values.token2 = token
-        return mmvk.encode(PREFS_TOKEN2, token)
+    fun setToken2(token2: String): Boolean {
+        Values.token2 = token2
+        return mmvk.encode(PREFS_TOKEN2, token2)
     }
 
     fun getToken3(): String = mmvk.decodeString(PREFS_TOKEN3, "")
 
-    fun setToken3(token: String): Boolean {
-        Values.token3 = token
-        return mmvk.encode(PREFS_TOKEN3, token)
+    fun setToken3(token3: String): Boolean {
+        Values.token3 = token3
+        return mmvk.encode(PREFS_TOKEN3, token3)
     }
 
     fun getLoginName(): String = mmvk.decodeString(PREFS_LOGIN_NAME, "")

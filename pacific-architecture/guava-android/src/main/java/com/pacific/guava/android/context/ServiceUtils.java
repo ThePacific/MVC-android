@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
 
-import com.pacific.guava.domain.AssertUtilsKt;
 import com.pacific.guava.android.SdkUtilsKt;
 
 import java.io.BufferedReader;
@@ -26,7 +25,6 @@ import static android.content.pm.PackageManager.GET_SERVICES;
 public final class ServiceUtils {
 
     private ServiceUtils() {
-        AssertUtilsKt.unsupportedOperationException("");
     }
 
     public static boolean isInServiceProcess(
