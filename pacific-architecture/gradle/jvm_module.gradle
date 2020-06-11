@@ -1,5 +1,5 @@
-import com.pacific.buildsrc.Libs
-import com.pacific.buildsrc.BuildPlugins
+import com.android.buildsrc.Libs
+import com.android.buildsrc.BuildPlugins
 
 apply plugin: BuildPlugins.kotlin
 apply plugin: BuildPlugins.kotlinxSerialization
@@ -27,7 +27,7 @@ dependencies {
     implementation Libs.Kotlin.reflect
     implementation Libs.Kotlin.serializationRuntime
     implementation Libs.Coroutines.core
-    implementation Libs.Coroutines.rxJava
+    // implementation Libs.Coroutines.rxJava
 
     implementation Libs.OkHttp.okHttp
     implementation Libs.OkHttp.loggingInterceptor

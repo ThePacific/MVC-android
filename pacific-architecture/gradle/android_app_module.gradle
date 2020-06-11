@@ -1,4 +1,4 @@
-import com.pacific.buildsrc.BuildPlugins
+import com.android.buildsrc.BuildPlugins
 
 apply plugin: BuildPlugins.androidApplication
 apply from: "../gradle/android_module.gradle"

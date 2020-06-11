@@ -1,5 +1,5 @@
-import com.pacific.buildsrc.BuildPlugins
-import com.pacific.buildsrc.Libs
+import com.android.buildsrc.BuildPlugins
+import com.android.buildsrc.Libs
 
 apply plugin: BuildPlugins.kotlinAndroid
 apply plugin: BuildPlugins.kotlinAndroidExtensions
@@ -47,14 +47,14 @@ dependencies {
     implementation Libs.Kotlin.reflect
     implementation Libs.Kotlin.serializationRuntime
     implementation Libs.Coroutines.core
-    implementation Libs.Coroutines.rxJava
+    // implementation Libs.Coroutines.rxJava
     implementation Libs.Coroutines.android
 
     implementation Libs.OkHttp.okHttp
     implementation Libs.OkHttp.loggingInterceptor
     implementation Libs.okio
     implementation Libs.Retrofit.retrofit
-    // implementation Libs.Retrofit.rxJavaAdapter
+    implementation Libs.Retrofit.rxJavaAdapter
     implementation Libs.Retrofit.moshiConverter
     implementation Libs.Moshi.moshi
     implementation Libs.Moshi.kotlin
@@ -139,7 +139,7 @@ dependencies {
     implementation Libs.AndroidX.versionedparcelable
     implementation Libs.AndroidX.Work.runtime
     implementation Libs.AndroidX.Work.runtimeKtx
-    // implementation Libs.AndroidX.Work.rxJava
+    implementation Libs.AndroidX.Work.rxJava
     implementation Libs.AndroidX.Concurrent.future
     implementation Libs.AndroidX.Concurrent.callback
     implementation Libs.AndroidX.Navigation.fragment

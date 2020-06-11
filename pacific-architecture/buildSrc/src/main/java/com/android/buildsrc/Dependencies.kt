@@ -1,13 +1,14 @@
-package com.pacific.buildsrc
+package com.android.buildsrc
 
 object Versions {
     const val ktLint = "0.31.0"
     const val kotlin = "1.3.72"
+    const val androidGradle = "4.0.0"
 }
 
 object BuildPlugins {
 
-    const val androidGradle = "com.android.tools.build:gradle:4.0.0"
+    const val androidGradle = "com.android.tools.build:gradle:${Versions.androidGradle}"
     const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val kSerializationGradle = "org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}"
     const val androidApplication = "com.android.application"
@@ -25,8 +26,8 @@ object BuildPlugins {
 
 object Libs {
     val junit = "junit:junit:4.12"
-    val mockito = "org.mockito:mockito-core:2.23.0"
-    val truth = "com.google.truth:truth:0.42"
+    val mockito = "org.mockito:mockito-core:3.3.3"
+    val truth = "com.google.truth:truth:1.0.1"
 
     val mmkv = "com.tencent:mmkv:1.0.23"
     val mvRx = "com.airbnb.android:mvrx:1.3.0"
@@ -36,39 +37,36 @@ object Libs {
     val threeTenBpNoTzdb = "$threeTenBp:no-tzdb"
     val threeTenAbp = "com.jakewharton.threetenabp:threetenabp:1.2.3"
 
-    val gravitySnapHelper = "com.github.rubensousa:gravitysnaphelper:2.0"
+    val gravitySnapHelper = "com.github.rubensousa:gravitysnaphelper:2.2.1"
 
-    val leakcanary = "com.squareup.leakcanary:leakcanary-android:2.0-beta-3"
+    val leakcanary = "com.squareup.leakcanary:leakcanary-android:2.3"
 
     val javaxAnnotation = "javax.annotation:javax.annotation-api:1.3.2"
-    val errorProne = "com.google.errorprone:error_prone_annotations:2.3.3"
+    val errorProne = "com.google.errorprone:error_prone_annotations:2.4.0"
     val jetAnnotation = "org.jetbrains:annotations:19.0.0"
     val injectAnnotation = "javax.inject:javax.inject:1"
     val findBugsJrs305 = "com.google.code.findbugs:jsr305:3.0.2"
     val reflection = "org.jooq:joor-java-6:0.9.12"
 
-    val matisse = "com.zhihu.android:matisse:0.5.3-beta2"
+    val matisse = "com.zhihu.android:matisse:0.5.3-beta3"
     val lubanTurbo = "top.zibin:Luban-turbo:1.0.0"
-    val paho = "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.1"
-    val flexbox = "com.google.android:flexbox:1.1.0"
+    val paho = "org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.4"
+    val flexbox = "com.google.android:flexbox:2.0.1"
+    val fabric = "io.fabric.sdk.android:gradle:1.4.8"
 
     object AndroidSdk {
         const val compileSdkVersion = 29
-        const val buildToolsVersion = "29.0.3"
-
+        const val buildToolsVersion = "30.0.0"
         const val minSdkVersion = 21
-        const val targetSdkVersion =
-            compileSdkVersion
+        const val targetSdkVersion = compileSdkVersion
         const val versionCode = 1
         const val versionName = "1.0"
     }
 
+
     object Google {
-        val material = "com.google.android.material:material:1.2.0-alpha06"
-        val firebaseCore = "com.google.firebase:firebase-core:16.0.8"
-        val crashlytics = "com.crashlytics.sdk.android:crashlytics:2.9.9"
-        val gmsGoogleServices = "com.google.gms:google-services:4.2.0"
-        val fabric = "io.fabric.tools:gradle:1.28.1"
+        val material = "com.google.android.material:material:1.2.0-beta01"
+        val gmsGoogleServices = "com.google.gms:google-services:4.3.3"
     }
 
     object Kotlin {
@@ -81,20 +79,20 @@ object Libs {
     }
 
     object Coroutines {
-        private const val version = "1.3.5"
+        private const val version = "1.3.7"
         val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
-        val rxJava = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$version"
+        val rxJava = "org.jetbrains.kotlinx:kotlinx-coroutines-rx3:$version"
         val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
     }
 
     object RxJava {
-        val rxJava = "io.reactivex.rxjava2:rxjava:2.2.19"
-        val rxAndroid = "io.reactivex.rxjava2:rxandroid:2.1.1"
+        val rxJava = "io.reactivex.rxjava3:rxjava:3.0.4"
+        val rxAndroid = "io.reactivex.rxjava3:rxandroid:3.0.0"
         val stream = "org.reactivestreams:reactive-streams:1.0.3"
     }
 
     object Dagger {
-        private const val version = "2.27"
+        private const val version = "2.28"
         val dagger = "com.google.dagger:dagger:$version"
         val androidSupport = "com.google.dagger:dagger-android-support:$version"
         val compiler = "com.google.dagger:dagger-compiler:$version"
@@ -102,7 +100,7 @@ object Libs {
     }
 
     object AutoValue {
-        const val version = "1.7"
+        const val version = "1.7.3"
         val autoValue = "com.google.auto.value:auto-value-annotations:$version"
         val compiler = "com.google.auto.value:auto-value:$version"
     }
@@ -115,9 +113,9 @@ object Libs {
     }
 
     object Retrofit {
-        private const val version = "2.8.1"
+        private const val version = "2.9.0"
         val retrofit = "com.squareup.retrofit2:retrofit:$version"
-        val rxJavaAdapter = "com.squareup.retrofit2:adapter-rxjava2:$version"
+        val rxJavaAdapter = "com.squareup.retrofit2:adapter-rxjava3:$version"
         val gsonConverter = "com.squareup.retrofit2:converter-gson:$version"
         val moshiConverter = "com.squareup.retrofit2:converter-moshi:$version"
         val simpleXmlConverter = "com.squareup.retrofit2:converter-simplexml:$version"
@@ -128,7 +126,7 @@ object Libs {
     }
 
     object OkHttp {
-        private const val version = "4.4.1"
+        private const val version = "4.7.2"
         val okHttp = "com.squareup.okhttp3:okhttp:$version"
         val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$version"
     }
@@ -140,10 +138,10 @@ object Libs {
         val codegen = "com.squareup.moshi:moshi-kotlin-codegen:$version"
     }
 
-    val okio = "com.squareup.okio:okio:2.5.0"
+    val okio = "com.squareup.okio:okio:2.6.0"
 
     object Epoxy {
-        private const val version = "3.8.0"
+        private const val version = "4.0.0-beta4"
         val epoxy = "com.airbnb.android:epoxy:$version"
         val paging = "com.airbnb.android:epoxy-paging:$version"
         val dataBinding = "com.airbnb.android:epoxy-databinding:$version"
@@ -161,17 +159,18 @@ object Libs {
     object AndroidX {
 
         object Activity {
-            private const val version = "1.2.0-alpha04"
+            private const val version = "1.2.0-alpha06"
             val activity = "androidx.activity:activity:$version"
             val ktx = "androidx.activity:activity-ktx:$version"
         }
 
         val annotation = "androidx.annotation:annotation:1.1.0"
         val annotationExperimental = "androidx.annotation:annotation-experimental:1.0.0"
+        val annotationExperimentalLint = "androidx.annotation:annotation-experimental-lint:1.0.0"
 
 
         object Appcompat {
-            private const val version = "1.2.0-beta01"
+            private const val version = "1.2.0-rc01"
             val appcompat = "androidx.appcompat:appcompat:$version"
             val resource = "androidx.appcompat:appcompat-resource:$version"
         }
@@ -185,18 +184,18 @@ object Libs {
 
         val asynclayoutinflater = "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"
 
-        val browser = "androidx.browser:browser:1.0.0"
+        val browser = "androidx.browser:browser:1.2.0"
 
-        val biometric = "androidx.biometric:biometric:1.0.0-rc01"
-        val autofill = "androidx.autofill:autofill:1.0.0-beta01"
+        val biometric = "androidx.biometric:biometric:1.0.1"
+        val autofill = "androidx.autofill:autofill:1.0.0"
 
         object Camera {
-            private const val version = "1.0.0-beta03"
+            private const val version = "1.0.0-beta05"
             val camera2 = "androidx.camera:camera-camera2:$version"
             val core = "androidx.camera:camera-core:$version"
             val lifecycle = "androidx.camera:camera-lifecycle:$version"
-            val extensions = "androidx.camera:camera-extensions:1.0.0-alpha10"
-            val view = "androidx.camera:camera-view:1.0.0-alpha10"
+            val extensions = "androidx.camera:camera-extensions:1.0.0-alpha12"
+            val view = "androidx.camera:camera-view:1.0.0-alpha12"
         }
 
         val cardview = "androidx.cardview:cardview:1.0.0"
@@ -214,7 +213,7 @@ object Libs {
         }
 
         object Constraintlayout {
-            private const val version = "2.0.0-beta4"
+            private const val version = "2.0.0-beta6"
             val constraintlayout = "androidx.constraintlayout:constraintlayout:$version"
             val constraintlayoutSolver =
                 "androidx.constraintlayout:constraintlayout-solver:$version"
@@ -225,18 +224,19 @@ object Libs {
         val coordinatorlayout = "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
 
         object Core {
-            private const val version = "1.3.0-rc01"
+            private const val version = "1.3.0"
             val core = "androidx.core:core:$version"
-            val animation = "androidx.core:core-animation:1.0.0-alpha01"
-            val role = "androidx.core:core-role:1.0.0-rc01"
             val ktx = "androidx.core:core-ktx:$version"
+            val animation = "androidx.core:core-animation:1.0.0-alpha01"
+            val animationTesting = "androidx.core:core-animation-testing:1.0.0-alpha01"
+            val role = "androidx.core:core-role:1.0.0-rc01"
         }
 
         val cursoradapter = "androidx.cursoradapter:cursoradapter:1.0.0"
 
-        val customview = "androidx.customview:customview:1.1.0-beta01"
+        val customview = "androidx.customview:customview:1.1.0-rc01"
 
-        val drawerlayout = "androidx.drawerlayout:drawerlayout:1.1.0-beta01"
+        val drawerlayout = "androidx.drawerlayout:drawerlayout:1.1.0-rc01"
         val exifinterface = "androidx.exifinterface:exifinterface:1.2.0"
 
         object Dynamicanimation {
@@ -253,18 +253,16 @@ object Libs {
         }
 
         object Fragment {
-            const val version = "1.3.0-alpha04"
+            const val version = "1.3.0-alpha06"
             val fragment = "androidx.fragment:fragment:$version"
             val ktx = "androidx.fragment:fragment-ktx:$version"
             val testing = "androidx.fragment:fragment-testing:$version"
         }
 
-        val gridlayout = "androidx.gridlayout:gridlayout:1.0.0"
-
         val interpolator = "androidx.interpolator:interpolator:1.0.0"
 
         object Lifecycle {
-            const val version = "2.3.0-alpha02"
+            const val version = "2.3.0-alpha04"
             val common = "androidx.lifecycle:lifecycle-common:$version"
             val commonJava8 = "androidx.lifecycle:lifecycle-common-java8:$version"
             val compiler = "androidx.lifecycle:lifecycle-compiler:$version"
@@ -293,7 +291,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.3.0-alpha06"
+            private const val version = "2.3.0-rc01"
             val common = "androidx.navigation:navigation-common:$version"
             val commonKtx = "androidx.navigation:navigation-common-ktx:$version"
             val fragment = "androidx.navigation:navigation-fragment:$version"
@@ -312,8 +310,8 @@ object Libs {
             val runtimeKtx = "androidx.paging:paging-runtime-ktx:$version"
             val common = "androidx.paging:paging-common:$version"
             val commonKtx = "androidx.paging:paging-common-ktx:$version"
-            val rxJava = "androidx.paging:paging-rxjava2:$version"
-            val rxJavaKtx = "androidx.paging:paging-rxjava2-ktx:$version"
+            val rxJava = "androidx.paging:paging-rxjava3:$version"
+            val rxJavaKtx = "androidx.paging:paging-rxjava3-ktx:$version"
         }
 
         object Palette {
@@ -347,7 +345,7 @@ object Libs {
             val coroutines = "androidx.room:room-coroutines:2.1.0-alpha04"
             val ktx = "androidx.room:room-ktx:$version"
             val migration = "androidx.room:room-migration:$version"
-            val rxJava = "androidx.room:room-rxjava2:$version"
+            val rxJava = "androidx.room:room-rxjava3:$version"
             val runtime = "androidx.room:room-runtime:$version"
             val testing = "androidx.room:room-testing:$version"
         }
@@ -373,7 +371,7 @@ object Libs {
             val builderKtx = "androidx.slice:slice-builder-ktx:$version"
         }
 
-        val slidingpanelayout = "androidx.slidingpanelayout:slidingpanelayout:1.1.0-beta01"
+        val slidingpanelayout = "androidx.slidingpanelayout:slidingpanelayout:1.1.0-rc01"
         val sharetarget = "androidx.sharetarget:sharetarget:1.0.0-beta01"
 
         object Sqlite {
@@ -395,11 +393,11 @@ object Libs {
 
         val viewpager = "androidx.viewpager:viewpager:1.0.0"
         val viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
-        val webkit = "androidx.webkit:webkit:1.3.0-alpha02"
+        val webkit = "androidx.webkit:webkit:1.3.0-beta01"
         val versionedparcelable = "androidx.versionedparcelable:versionedparcelable:1.1.1"
 
         object Test {
-            private const val version = "1.3.0-beta01"
+            private const val version = "1.3.0-rc01"
             val core = "androidx.test:core:$version"
             val coreKtx = "androidx.test:core-ktx:$version"
             val monitor = "androidx.test:monitor:$version"
@@ -409,7 +407,7 @@ object Libs {
         }
 
         object Espresso {
-            private const val version = "3.3.0-beta01"
+            private const val version = "3.3.0-rc01"
             val accessibility = "androidx.test.espresso:espresso-accessibility:$version"
             val contrib = "androidx.test.espresso:espresso-contrib:$version"
             val core = "androidx.test.espresso:espresso-core:$version"
@@ -420,33 +418,30 @@ object Libs {
         }
 
         object EspressoIdling {
-            private const val version = "3.3.0-beta01"
+            private const val version = "3.3.0-rc01"
             val concurrent = "androidx.test.espresso.idling:idling-concurrent:$version"
             val net = "androidx.test.espresso.idling:idling-net:$version"
         }
 
         object TestExt {
-            private const val version = "1.1.2-beta01"
+            private const val version = "1.1.2-rc01"
             val junit = "androidx.test.ext:junit:$version"
             val junitKtx = "androidx.test.ext:junit-ktx:$version"
-            val truth = "androidx.test.ext:truth:1.3.0-beta01"
+            val truth = "androidx.test.ext:truth:1.3.0-rc01"
         }
 
         object TestService {
-            private const val version = "1.3.0-beta01"
-            val junit = "androidx.test.ext:junit:$version"
-            val junitKtx = "androidx.test.ext:junit-ktx:$version"
-            val truth = "androidx.test.ext:truth:$version"
+            private const val version = "1.3.0-rc01"
+            val test = "androidx.test.services:test-services:$version"
+            val storage = "androidx.test.services:storage:$version"
         }
 
-        val testServices = "androidx.test.services:test-services:1.2.0"
-
-        val textclassifier = "androidx.textclassifier:textclassifier:1.0.0-alpha02"
+        val textclassifier = "androidx.textclassifier:textclassifier:1.0.0-alpha03"
 
         object Janktesthelper {
             private const val version = "1.0.1"
             val janktesthelper = "androidx.test.janktesthelper:janktesthelper:$version"
-            val v23 = "androidx.test.janktesthelper:janktesthelper-v23:1.0.1-alpha1"
+            val v23 = "androidx.test.janktesthelper:janktesthelper-v23:1.0.1"
         }
 
         object Uiautomator {
@@ -456,10 +451,10 @@ object Libs {
         }
 
         object Work {
-            private const val version = "2.4.0-alpha03"
+            private const val version = "2.4.0-beta01"
             val runtime = "androidx.work:work-runtime:$version"
             val runtimeKtx = "androidx.work:work-runtime-ktx:$version"
-            val rxJava = "androidx.work:work-rxjava2:$version"
+            val rxJava = "androidx.work:work-rxjava3:$version"
             val testing = "androidx.work:work-testing:$version"
         }
     }
