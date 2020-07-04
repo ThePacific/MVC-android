@@ -1,14 +1,14 @@
 package com.pacific.core.initializer
 
 import android.app.Application
-import com.pacific.guava.domain.Values
+import com.pacific.guava.Guava
 import timber.log.Timber
 import javax.inject.Inject
 
 class TimberInitializer @Inject constructor() : AppInitializer {
 
     override fun initialize(app: Application) {
-        if (Values.isDebug) {
+        if (Guava.isDebug) {
             Timber.plant(Timber.DebugTree())
         } else {
             Timber.plant(BugTree())

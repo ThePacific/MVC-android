@@ -1,40 +1,47 @@
 package com.pacific.core.mvvm
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.doOnPreDraw
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.pacific.guava.android.context.hideSoftInput
-import com.pacific.guava.coroutines.Bus
 import com.pacific.core.BUS_EXIT_APP
 import com.pacific.core.isAppInForeground
+import com.pacific.guava.android.context.hideSoftInput
+import com.pacific.guava.coroutines.Bus
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 abstract class BaseActivity(
-    @LayoutRes contentLayoutId: Int = 0
+        @LayoutRes contentLayoutId: Int = 0
 ) : AppCompatActivity(contentLayoutId) {
 
     private var postponedTransition = false
 
+    val permissionsContract = ActivityResultContracts.RequestMultiplePermissions()
+    val startActivityContract = ActivityResultContracts.StartActivityForResult()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        isAppInForeground.observe(this) {
-            if (it == true) {
-                onMoveToForeground()
-            } else {
-                onMoveToBackground()
-            }
-        }
+        isAppInForeground.observe(
+                this,
+                Observer {
+                    if (it == true) {
+                        onMoveToForeground()
+                    } else {
+                        onMoveToBackground()
+                    }
+                }
+        )
 
         Bus.subscribe()
-            .onEach { pair -> if (pair.first == BUS_EXIT_APP) finish() else onBusEvent(pair) }
-            .catch { e -> e.printStackTrace() }
-            .launchIn(lifecycleScope)
+                .onEach { pair -> if (pair.first == BUS_EXIT_APP) finish() else onBusEvent(pair) }
+                .catch { e -> e.printStackTrace() }
+                .launchIn(lifecycleScope)
     }
 
     override fun onDestroy() {
@@ -62,24 +69,12 @@ abstract class BaseActivity(
         super.startPostponedEnterTransition()
     }
 
-    override fun finishAfterTransition() {
-        val resultData = Intent()
-        val resultCode = onPopulateResultIntent(resultData)
-        setResult(resultCode, resultData)
-
-        super.finishAfterTransition()
-    }
-
     fun scheduleStartPostponedTransitions() {
         if (postponedTransition) {
             this.window.decorView.doOnPreDraw {
                 startPostponedEnterTransition()
             }
         }
-    }
-
-    open fun onPopulateResultIntent(resultData: Intent): Int {
-        return Activity.RESULT_OK
     }
 
     open fun handleIntent(intent: Intent) {}

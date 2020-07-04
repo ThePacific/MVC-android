@@ -16,6 +16,13 @@ sealed class Source<out T> {
         }
     }
 
+    fun requireError(): Throwable {
+        return when (this) {
+            is Success -> throw IllegalStateException("no throwable for Success.Data")
+            is Error -> throwable
+        }
+    }
+
     /**
      * If this [Source] is of type [Source.Error], throws the exception
      * Otherwise, does nothing.
@@ -43,7 +50,7 @@ sealed class Source<out T> {
         else -> null
     }
 
-    internal fun <R> swapType(): Source<R> = when (this) {
+    fun <R> swapType(): Source<R> = when (this) {
         is Error -> Error(throwable)
         is Success -> throw IllegalStateException("cannot swap type for Success.Data")
     }

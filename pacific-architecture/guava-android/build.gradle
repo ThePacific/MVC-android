@@ -1,7 +1,5 @@
-import com.android.buildsrc.BuildPlugins
-import com.android.buildsrc.Libs
-
-apply from: "../gradle/android_lib_module.gradle"
+apply plugin: 'com.android.library'
+apply from: "../gradle/android_module.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

@@ -17,11 +17,12 @@
 
 package com.pacific.guava.android.ime;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Build;
-import android.os.ResultReceiver;
 import android.text.InputType;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -37,18 +38,17 @@ public class ImeUtils {
     private ImeUtils() {
     }
 
+    public static void showIme(@NonNull View view, @NonNull Dialog dialog, int mode) {
+        dialog.getWindow().setSoftInputMode(mode);
+        view.requestFocus();
+    }
+
     public static void showIme(@NonNull View view) {
-        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService
-                (Context.INPUT_METHOD_SERVICE);
-        // the public methods don't seem to work for me, so… reflection.
-        try {
-            Method showSoftInputUnchecked = InputMethodManager.class.getMethod(
-                    "showSoftInputUnchecked", int.class, ResultReceiver.class);
-            showSoftInputUnchecked.setAccessible(true);
-            showSoftInputUnchecked.invoke(imm, 0, null);
-        } catch (Exception e) {
-            // ho hum
-        }
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE
+        );
+        imm.showSoftInput(view, 0);
+        view.requestFocus();
     }
 
     public static void hideIme(@NonNull View view) {

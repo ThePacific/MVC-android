@@ -1,6 +1,3 @@
-import com.android.buildsrc.BuildPlugins
-import com.android.buildsrc.Libs
-
 apply from: "../gradle/jvm_module.gradle"
 
 dependencies {

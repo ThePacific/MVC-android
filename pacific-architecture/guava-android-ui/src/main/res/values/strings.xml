@@ -1,0 +1,5 @@
+<resources>
+    <string name="alert_confirm">确定</string>
+    <string name="alert_cancel">取消</string>
+    <string name="alert_known">知道了</string>
+</resources>

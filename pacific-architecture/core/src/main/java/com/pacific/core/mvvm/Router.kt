@@ -60,7 +60,6 @@ fun showDialogFragmentAllowingStateLoss(fm: FragmentManager, dialogFragment: Dia
     Reflect.on(dialogFragment).set("mBackStackId", ft.commitAllowingStateLoss())
 }
 
-@JvmOverloads
 fun Activity.newStartActivity(to: Class<*>, extras: Bundle? = null) {
     val intent = Intent()
     intent.setClass(this, to)
@@ -70,17 +69,6 @@ fun Activity.newStartActivity(to: Class<*>, extras: Bundle? = null) {
     this.startActivity(intent)
 }
 
-@JvmOverloads
-fun Activity.newStartActivityForResult(to: Class<*>, requestCode: Int, extras: Bundle? = null) {
-    val intent = Intent()
-    intent.setClass(this, to)
-    if (extras != null) {
-        intent.putExtras(extras)
-    }
-    this.startActivityForResult(intent, requestCode)
-}
-
-@JvmOverloads
 fun Fragment.newStartActivity(to: Class<*>, extras: Bundle? = null) {
     val intent = Intent()
     intent.setClass(this.requireActivity(), to)
@@ -90,19 +78,8 @@ fun Fragment.newStartActivity(to: Class<*>, extras: Bundle? = null) {
     this.startActivity(intent)
 }
 
-@JvmOverloads
-fun Fragment.newStartActivityForResult(to: Class<*>, requestCode: Int, extras: Bundle? = null) {
-    val intent = Intent()
-    intent.setClass(this.requireActivity(), to)
-    if (extras != null) {
-        intent.putExtras(extras)
-    }
-    this.startActivityForResult(intent, requestCode)
-}
-
 fun Activity.getExtras(): Bundle = this.intent.extras!!
 
-@JvmOverloads
 fun Activity.finishWithResultOk(intent: Intent? = null) {
     if (intent == null) {
         this.setResult(Activity.RESULT_OK)
@@ -144,6 +121,6 @@ fun dismiss(vararg targets: Any?) {
             target.dismissAllowingStateLoss()
             continue
         }
-        throw AssertionError()
+        throw RuntimeException()
     }
 }

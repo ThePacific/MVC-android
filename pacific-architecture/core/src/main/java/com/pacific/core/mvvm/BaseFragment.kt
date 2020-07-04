@@ -11,7 +11,7 @@ import androidx.transition.TransitionInflater
 import com.pacific.core.R
 
 abstract class BaseFragment(
-    @LayoutRes contentLayoutId: Int = 0
+        @LayoutRes contentLayoutId: Int = 0
 ) : Fragment(contentLayoutId) {
 
     private var postponedTransition = false

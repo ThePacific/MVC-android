@@ -2,32 +2,33 @@ package com.pacific.core.dagger
 
 import android.app.Application
 import android.content.Context
-import com.pacific.data.http.DataHttpComponent
-import com.pacific.data.http.DataHttpModule
 import com.pacific.core.initializer.AppInitializerManager
-import com.pacific.core.storage.db.RoomAppDatabase
+import com.pacific.data.files.AppPrefsManager
+import com.pacific.data.DataComponent
+import com.pacific.data.DataModule
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
 @Component(
-    modules = [
-        CoreModule::class,
-        DataHttpModule::class
-    ]
+        modules = [
+            CoreModule::class,
+            DataModule::class
+        ]
 )
 @Singleton
-interface CoreComponent : DataHttpComponent {
+interface CoreComponent : DataComponent {
 
-    fun provideAppInitializerManager(): AppInitializerManager
+    fun appInitializerManager(): AppInitializerManager
 
-    fun provideContext(): Context
-
-    fun provideAppDatabase(): RoomAppDatabase
+    fun context(): Context
 
     @Component.Factory
     interface Factory {
 
-        fun create(@BindsInstance app: Application): CoreComponent
+        fun create(
+                @BindsInstance app: Application,
+                @BindsInstance prefsManager: AppPrefsManager
+        ): CoreComponent
     }
 }

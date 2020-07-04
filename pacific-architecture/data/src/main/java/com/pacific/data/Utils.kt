@@ -1,17 +1,46 @@
+/**
+ *
+ */
 package com.pacific.data
 
-import com.pacific.data.http.DataHttpModule
-import com.pacific.guava.GOOGLE
-import com.pacific.guava.domain.Values
+import com.pacific.guava.Guava
+import com.pacific.guava.domain.SourceException
 import retrofit2.Retrofit
 
-fun createTestRetrofit(): Retrofit {
-    Values.isDebug = true
-    Values.apiUrl1 = GOOGLE
-    Values.apiUrl2 = GOOGLE
-    Values.apiUrl3 = GOOGLE
+lateinit var dataComponent: DataComponent
 
-    val dataModule = DataHttpModule()
+const val GOOGLE = "https://www.google.com/"
+const val ALPHA = 1
+const val BETA = 2
+const val RELEASE = 3
+
+val sourceException404 = SourceException("404", 404)
+val sourceException403 = SourceException("403", 403)
+
+fun String.isLogin(): Boolean = isNotEmpty() && length > 8
+
+fun Throwable.toSourceException(code: Int = -1): SourceException {
+    return if (this is SourceException) {
+        this
+    } else {
+        SourceException(this.message, this.cause, code)
+    }
+}
+
+fun Throwable.is404(): Boolean = this == sourceException404
+
+fun Throwable.is403(): Boolean = this == sourceException403
+
+fun isLogin1(): Boolean = dataComponent.appPrefsManager().getToken1().isLogin()
+
+fun isLogin2(): Boolean = dataComponent.appPrefsManager().getToken2().isLogin()
+
+fun isLogin3(): Boolean = dataComponent.appPrefsManager().getToken3().isLogin()
+
+fun createTestRetrofit(): Retrofit {
+    Guava.isDebug = true
+
+    val dataModule = DataModule()
     val poorX509TrustManager = dataModule.providePoorX509TrustManager()
     val poorSSLContext = dataModule.providePoorSSLContext(poorX509TrustManager)
     val httpLoggingInterceptorLogger = dataModule.provideHttpLoggingInterceptorLogger()

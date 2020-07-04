@@ -2,13 +2,11 @@ package com.pacific.core.dagger
 
 import android.app.Application
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
-import com.pacific.data.db.AppDatabase
 import com.pacific.core.initializer.AppInitializer
 import com.pacific.core.initializer.ThreeTenBpInitializer
 import com.pacific.core.initializer.TimberInitializer
-import com.pacific.core.lifecycle.ViewModelFactory
 import com.pacific.core.storage.db.RoomAppDatabase
+import com.pacific.data.db.AppDatabase
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoSet
@@ -21,9 +19,9 @@ abstract class CoreBinder {
     @Singleton
     abstract fun provideContext(it: Application): Context
 
-    @Binds
-    @Singleton
-    abstract fun provideViewModelFactory(it: ViewModelFactory): ViewModelProvider.Factory
+    // @Binds
+    // @Singleton
+    // abstract fun provideViewModelFactory(it: ViewModelFactory): ViewModelProvider.Factory
 
     @Binds
     @Singleton

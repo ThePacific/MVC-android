@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Looper
 import androidx.arch.core.executor.ArchTaskExecutor
-import io.reactivex.android.MainThreadDisposable
+import io.reactivex.rxjava3.android.MainThreadDisposable
 
 fun isMainThread() = Looper.getMainLooper().thread == Thread.currentThread()
 
