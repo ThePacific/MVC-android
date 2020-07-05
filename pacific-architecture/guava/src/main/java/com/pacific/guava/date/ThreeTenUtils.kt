@@ -123,3 +123,24 @@ fun toEpochMilli2(yyyy_mm_dd_hh_mm: String): Long {
 fun toEpochMilli3(dd_mm_yyyy: String): Long {
     return toInstant3(dd_mm_yyyy).toEpochMilli()
 }
+
+fun ago(start: Instant, end: Instant): String {
+    require(start.isBefore(end))
+    val duration = Duration.between(start, end)
+    val days = duration.toDays()
+    val hours = duration.toHours()
+    val minutes = duration.toMinutes()
+    val millis = duration.toMillis()
+    return when {
+        days > 0L -> when {
+            days >= 365L -> (days / 365L).toString() + "年前"
+            days >= 30L -> (days / 30L).toString() + "月前"
+            else -> days.toString() + "天前"
+        }
+        hours > 0L -> hours.toString() + "小时前"
+        minutes > 0L -> minutes.toString() + "分钟前"
+        else -> (millis / 1000L).toString() + "秒前"
+    }
+}
+
+fun ago(start: Long, end: Long): String = ago(start.toInstant(), end.toInstant())
