@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.pacific.data
 
 import com.pacific.guava.Guava
@@ -10,9 +7,12 @@ import retrofit2.Retrofit
 lateinit var dataComponent: DataComponent
 
 const val GOOGLE = "https://www.google.com/"
-const val ALPHA = 1
-const val BETA = 2
-const val RELEASE = 3
+
+val hosts = mapOf(
+    100 to "http://101.36.181.108:8001",
+    200 to "http://101.36.181.108:8000",
+    300 to "http://101.36.181.108:8000"
+)
 
 val sourceException404 = SourceException("404", 404)
 val sourceException403 = SourceException("403", 403)

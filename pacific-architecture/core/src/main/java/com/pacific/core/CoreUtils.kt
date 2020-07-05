@@ -1,12 +1,15 @@
 package com.pacific.core
 
 import android.app.Application
+import android.os.StrictMode
 import androidx.lifecycle.MutableLiveData
 import com.pacific.core.dagger.CoreComponent
 import com.pacific.core.dagger.DaggerCoreComponent
-import com.pacific.core.initializer.enableStrictMode
-import com.pacific.core.initializer.loadValues
 import com.pacific.core.storage.prefs.PrefsManager
+import com.pacific.guava.Guava
+import com.pacific.guava.domain.JdkTimber
+import com.tencent.mmkv.MMKV
+import timber.log.Timber
 
 const val APK_PACKAGE_ARCHIVE_TYPE = "application/vnd.android.package-archive"
 const val SQL_DB3 = "sql.db3"
@@ -30,7 +33,6 @@ lateinit var contextApp: Application
 
 lateinit var coreComponent: CoreComponent
     private set
-
 
 val isNetworkConnected: MutableLiveData<Boolean> by lazy { MutableLiveData(false) }
 
@@ -57,13 +59,48 @@ fun setupCoreModule(
     isDebug: Boolean,
     appComponent: CoreComponent = DaggerCoreComponent.factory().create(app, PrefsManager)
 ) {
+    Guava.isDebug = isDebug
+    Guava.timber = object : JdkTimber {
+
+        override fun d(tag: String, message: String) {
+            Timber.tag(tag).d(message)
+        }
+
+        override fun d(e: Throwable) {
+            Timber.d(e)
+        }
+
+        override fun e(e: Throwable) {
+            Timber.e(e)
+        }
+
+        override fun e(tag: String, message: String) {
+            Timber.tag(tag).e(message)
+        }
+    }
+
     contextApp = app
-    loadValues(app, isDebug)
     coreComponent = appComponent
-    coreComponent.appInitializerManager().initialize(app)
+
+    appComponent.appInitializerManager().initialize(app)
     AppManager.initialize(app)
 
     if (isDebug) {
         enableStrictMode()
     }
+}
+
+private fun enableStrictMode() {
+    StrictMode.setThreadPolicy(
+        StrictMode.ThreadPolicy.Builder()
+            .detectAll()
+            .penaltyLog()
+            .build()
+    )
+    StrictMode.setVmPolicy(
+        StrictMode.VmPolicy.Builder()
+            .detectAll()
+            .penaltyLog()
+            .build()
+    )
 }

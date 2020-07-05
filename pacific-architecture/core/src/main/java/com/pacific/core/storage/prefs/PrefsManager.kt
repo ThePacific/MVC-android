@@ -9,7 +9,10 @@ import java.util.*
 
 object PrefsManager : AppPrefsManager {
 
-    private val mmvk: MMKV by lazy { MMKV.defaultMMKV() }
+    private val mmvk: MMKV by lazy {
+        MMKV.initialize(contextApp)
+        return@lazy MMKV.defaultMMKV()
+    }
 
     override fun getUserId(): Long {
         return mmvk.decodeLong(PREFS_USER_ID, 0L)

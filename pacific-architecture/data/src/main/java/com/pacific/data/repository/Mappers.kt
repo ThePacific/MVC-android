@@ -1,9 +1,7 @@
 package com.pacific.data.repository
 
-const val PAGE_SIZE = 10
-
 @JvmOverloads
-fun <T> List<T>.forPage(requestPage: Int, pageSize: Int = PAGE_SIZE): List<T> {
+fun <T> List<T>.forPage(requestPage: Int, pageSize: Int): List<T> {
     require(requestPage > 0)
     val expectSize = requestPage * pageSize
     val prePageExpectSize = (requestPage - 1) * pageSize

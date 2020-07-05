@@ -6,8 +6,6 @@ object Values {
 
     private val cache: ArrayMap<String, Any> = ArrayMap()
 
-    var flavorId = 0
-
     fun put(key: String, obj: Any) {
         cache[key] = obj
     }

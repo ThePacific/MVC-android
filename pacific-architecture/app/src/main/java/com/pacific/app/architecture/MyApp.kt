@@ -7,10 +7,6 @@ class MyApp : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        setupCoreModule(
-            this,
-            BuildConfig.DEBUG,
-            BuildConfig.APPLICATION_ID
-        )
+        setupCoreModule(this, BuildConfig.DEBUG)
     }
 }

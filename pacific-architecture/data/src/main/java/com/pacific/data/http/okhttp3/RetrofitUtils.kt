@@ -15,9 +15,9 @@ fun <T> Response<T>.bodyOrThrowException(): T {
 fun <T> Response<T>.toException() = HttpException(this)
 
 suspend inline fun <T> Call<T>.executeWithRetry(
-        defaultDelay: Long = 100,
-        maxAttempts: Int = 3,
-        shouldRetry: (Exception) -> Boolean = ::defaultShouldRetry
+    defaultDelay: Long = 100,
+    maxAttempts: Int = 3,
+    shouldRetry: (Exception) -> Boolean = ::defaultShouldRetry
 ): Response<T> {
     repeat(maxAttempts) { attempt ->
         var nextDelay = attempt * attempt * defaultDelay
@@ -55,9 +55,9 @@ suspend inline fun <T> Call<T>.executeWithRetry(
 }
 
 suspend inline fun <T> Call<T>.fetchBodyWithRetry(
-        firstDelay: Long = 100,
-        maxAttempts: Int = 3,
-        shouldRetry: (Exception) -> Boolean = ::defaultShouldRetry
+    firstDelay: Long = 100,
+    maxAttempts: Int = 3,
+    shouldRetry: (Exception) -> Boolean = ::defaultShouldRetry
 ): T {
     return executeWithRetry(firstDelay, maxAttempts, shouldRetry).bodyOrThrowException()
 }
@@ -78,7 +78,7 @@ fun <T> Response<T>.isFromCache(): Boolean {
 
 suspend fun <T> Response<T>.toSourceUnit(): Source<Unit> = toSource { Unit }
 
-suspend fun <T> Response<T>.toSource(): Source<T> = toSource { return@toSource it }
+suspend fun <T> Response<T>.toSource(): Source<T> = toSource { it }
 
 suspend fun <T, E> Response<T>.toSource(mapper: suspend (T) -> E): Source<E> {
     return try {

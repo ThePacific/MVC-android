@@ -8,9 +8,23 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepository @Inject constructor(
-        dataService: DataService,
-        appDatabase: AppDatabase,
-        appPrefsManager: AppPrefsManager
+    dataService: DataService,
+    appDatabase: AppDatabase,
+    appPrefsManager: AppPrefsManager
 ) : BaseRepository(dataService, appDatabase, appPrefsManager) {
 
+    fun login() {
+    }
+
+    fun register() {
+    }
+
+    fun logout() {
+    }
+
+    fun okLogin() {
+    }
+
+    fun user(){
+    }
 }
