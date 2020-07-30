@@ -8,5 +8,5 @@ import com.pacific.data.db.entities.DbUser
 interface UserDao : AppDao<DbUser> {
 
     @Query("SELECT * FROM user WHERE _id =:id")
-    fun get(id: Int): DbUser?
+    fun get(id: Long): DbUser?
 }
