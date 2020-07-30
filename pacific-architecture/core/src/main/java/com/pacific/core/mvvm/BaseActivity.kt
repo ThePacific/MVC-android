@@ -21,7 +21,7 @@ abstract class BaseActivity(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isAppInForeground.observe(this, Observer {
-            if (it == true) {
+            if (true == it) {
                 onMoveToForeground()
             } else {
                 onMoveToBackground()

@@ -1,5 +1,7 @@
 package com.pacific.data.http.okhttp3;
 
+import com.pacific.guava.Guava;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -26,7 +28,8 @@ public class WarnIfSlowInterceptor implements Interceptor {
 
         WarnIfSlow warnIfSlow = invocation.method().getAnnotation(WarnIfSlow.class);
         if (warnIfSlow != null && elapsedNanos > warnIfSlow.timeUnit().toNanos(warnIfSlow.max())) {
-            System.out.println(
+            Guava.INSTANCE.getTimber().d(
+                    "OkHttp",
                     String.format("SLOW METHOD WARNING: %s.%s %s HTTP %s (%.0f ms)%n",
                             invocation.method().getDeclaringClass().getSimpleName(),
                             invocation.method().getName(),

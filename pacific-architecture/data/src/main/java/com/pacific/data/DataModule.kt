@@ -1,5 +1,6 @@
 package com.pacific.data
 
+import com.pacific.data.http.okhttp3.ApiConverterFactory
 import com.pacific.data.http.okhttp3.CommonHeadersInterceptor
 import com.pacific.data.http.okhttp3.HostSelectionInterceptor
 import com.pacific.data.http.okhttp3.WarnIfSlowInterceptor
@@ -118,8 +119,9 @@ class DataModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(GOOGLE)
+            .baseUrl("https://www.google.com/")
             .client(okHttpClient)
+            .addConverterFactory(ApiConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }

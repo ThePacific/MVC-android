@@ -4,6 +4,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ImageSpan;
 
 /**
@@ -107,6 +108,9 @@ public class MySpannable extends SpannableStringBuilder {
      * @return {@code MySpannable}.
      */
     public MySpannable findAndSpanFirst(String textToSpan, GetSpan getSpan) {
+        if (TextUtils.isEmpty(textToSpan)) {
+            return this;
+        }
         int lastIndex = toString().indexOf(textToSpan);
         if (lastIndex != -1) {
             setSpan(getSpan.getSpan(), lastIndex, lastIndex + textToSpan.length());
@@ -124,6 +128,9 @@ public class MySpannable extends SpannableStringBuilder {
      * @return {@code MySpannable}.
      */
     public MySpannable findAndSpanLast(String textToSpan, GetSpan getSpan) {
+        if (TextUtils.isEmpty(textToSpan)) {
+            return this;
+        }
         int lastIndex = toString().lastIndexOf(textToSpan);
         if (lastIndex != -1) {
             setSpan(getSpan.getSpan(), lastIndex, lastIndex + textToSpan.length());
@@ -141,6 +148,9 @@ public class MySpannable extends SpannableStringBuilder {
      * @return {@code MySpannable}.
      */
     public MySpannable findAndSpan(CharSequence textToSpan, GetSpan getSpan) {
+        if (TextUtils.isEmpty(textToSpan)) {
+            return this;
+        }
         int lastIndex = 0;
         while (lastIndex != -1) {
             lastIndex = toString().indexOf(textToSpan.toString(), lastIndex);

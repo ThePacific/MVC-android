@@ -9,15 +9,15 @@ class SourceException : RuntimeException {
         this.code = code
     }
 
-    constructor(message: String?, code: Int) : super(message) {
+    constructor(s: String, code: Int) : super(s) {
         this.code = code
     }
 
-    constructor(throwable: Throwable?, code: Int) : super(throwable) {
+    constructor(s: String, throwable: Throwable, code: Int) : super(s, throwable) {
         this.code = code
     }
 
-    constructor(message: String?, throwable: Throwable? , code: Int) : super(message, throwable) {
+    constructor(throwable: Throwable, code: Int) : super(throwable) {
         this.code = code
     }
 }

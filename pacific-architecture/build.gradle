@@ -13,13 +13,12 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:4.0.1'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.androidX.navigation}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "org.jetbrains.kotlin:kotlin-serialization:${versions.kotlin}"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:${versions.ktlint}"
-        classpath "com.vanniktech:gradle-maven-publish-plugin:${versions.mavenPublish}"
-        
+        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
     }
 }
 
@@ -44,6 +43,7 @@ allprojects { project ->
 
     plugins.withType(com.android.build.gradle.BasePlugin).configureEach { plugin ->
         plugin.extension.compileOptions {
+            coreLibraryDesugaringEnabled true
             sourceCompatibility = JavaVersion.VERSION_1_8
             targetCompatibility = JavaVersion.VERSION_1_8
         }
@@ -54,9 +54,10 @@ allprojects { project ->
         task.targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile).configureEach { task ->
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach { task ->
         task.kotlinOptions {
             jvmTarget = "1.8"
+            suppressWarnings = true
         }
     }
 
@@ -118,7 +119,9 @@ subprojects { project ->
         if (project.plugins.hasPlugin('android') || project.plugins.hasPlugin('android-library')) {
 
             boolean isAndroidLibrary = project.plugins.hasPlugin('android-library')
-            boolean isRelease = project.hasProperty("assembleRelease")
+            boolean isRelease = project.gradle.startParameter.taskNames.any {
+                it.toLowerCase().contains('release')
+            }
 
             android {
                 compileSdkVersion buildConfig.compileSdk
@@ -141,7 +144,7 @@ subprojects { project ->
 
                 buildTypes {
                     release {
-                        minifyEnabled isRelease && !isAndroidLibrary
+                        minifyEnabled(isRelease && !isAndroidLibrary)
                         proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
                     }
                 }
@@ -150,7 +153,7 @@ subprojects { project ->
                     abi {
                         enable true
                         reset()
-                        include "arm64-v8a","armeabi-v7a", "x86"
+                        include "armeabi-v7a", "x86"
                         universalApk true
                     }
                 }
@@ -184,23 +187,25 @@ subprojects { project ->
 
                     exclude 'META-INF/*.properties.txt'
                     exclude 'META-INF/*.DEPENDENCIES.txt'
-                    exclude 'META-INF/properties'
+                    exclude 'META-INF/dependencies'
+                    exclude 'META-INF/dependencies.txt'
                     exclude 'META-INF/DEPENDENCIES'
+                    exclude 'META-INF/DEPENDENCIES.txt'
 
                     exclude 'META-INF/LGPL2.1'
                     exclude 'META-INF/ASL2.0'
+
+                    exclude 'META-INF/proguard/**'
+                    exclude 'META-INF/*.version'
+
+                    exclude 'version.txt'
+                    exclude 'androidsupportmultidexversion.txt'
                 }
             }
         } else {
             println("JVM project")
         }
     }
-}
-
-tasks.named('wrapper') {
-    distributionType = Wrapper.DistributionType.BIN
-    distributionUrl = "https\\://services.gradle.org/distributions/gradle-6.5.1-bin.zip"
-    gradleVersion = "6.5.1"
 }
 
 task clean(type: Delete) {

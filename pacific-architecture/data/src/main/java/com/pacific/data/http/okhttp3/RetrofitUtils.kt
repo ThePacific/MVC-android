@@ -76,8 +76,6 @@ fun <T> Response<T>.isFromCache(): Boolean {
     return raw().cacheResponse != null
 }
 
-suspend fun <T> Response<T>.toSourceUnit(): Source<Unit> = toSource { Unit }
-
 suspend fun <T> Response<T>.toSource(): Source<T> = toSource { it }
 
 suspend fun <T, E> Response<T>.toSource(mapper: suspend (T) -> E): Source<E> {

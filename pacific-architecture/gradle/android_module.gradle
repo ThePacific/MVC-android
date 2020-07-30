@@ -8,6 +8,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'dep', include: ['*.jar'])
+
+    coreLibraryDesugaring dep.desugaring
+
     compileOnly dep.injectAnnotation
     compileOnly dep.jetAnnotation
     compileOnly dep.javaxAnnotation
@@ -59,22 +62,19 @@ dependencies {
     kapt dep.dagger.compiler
 
     implementation dep.mmkv
-    // implementation dep.mvRx
+    implementation dep.mvRx
     implementation dep.coordinators
     implementation dep.reflection
     implementation dep.timber
-    implementation dep.threeTenAbp
     implementation dep.gravitySnapHelper
     debugImplementation dep.leakcanary
 
     implementation dep.flexbox
-    // implementation dep.epoxy.epoxy
-    // implementation dep.epoxy.paging
-    // implementation dep.epoxy.dataBinding
-    // kapt dep.epoxy.processor
+    implementation dep.epoxy.epoxy
+    kapt dep.epoxy.processor
 
+    compileOnly dep.androidX.annotation.annotation
     implementation dep.androidX.material
-    implementation dep.androidX.annotation.annotation
     implementation dep.androidX.collection.collection
     implementation dep.androidX.collection.ktx
     implementation dep.androidX.activity.activity
@@ -87,10 +87,8 @@ dependencies {
     implementation dep.androidX.core.role
     implementation dep.androidX.core.ktx
 
-
     implementation dep.androidX.savedstate.savedstate
-    // implementation dep.androidX.savedstate.bundle
-    // implementation dep.androidX.savedstate.common
+    implementation dep.androidX.savedstate.savedstateKtx
     implementation dep.androidX.constraintlayout.constraintlayout
     implementation dep.androidX.preference.preference
     implementation dep.androidX.preference.ktx
@@ -144,12 +142,10 @@ dependencies {
     implementation dep.androidX.arch.runtime
     implementation dep.androidX.paging.common
     implementation dep.androidX.paging.commonKtx
-    // implementation dep.androidX.paging.rxJava
-    // implementation dep.androidX.paging.rxJavaKtx
+    implementation dep.androidX.paging.runtime
+    implementation dep.androidX.paging.runtimeKtx
     implementation dep.androidX.room.common
     implementation dep.androidX.room.runtime
-    // implementation dep.androidX.Room.coroutines
-    // implementation dep.androidX.Room.rxJava
     implementation dep.androidX.room.migration
     implementation dep.androidX.room.ktx
     kapt dep.androidX.room.compiler

@@ -14,28 +14,6 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
 import org.joor.Reflect
 
-fun FragmentActivity.showDialogFragment(dialogFragment: DialogFragment) {
-    showDialogFragment(this.supportFragmentManager, dialogFragment)
-}
-
-fun Fragment.showDialogFragment(dialogFragment: DialogFragment) {
-    showDialogFragment(this.childFragmentManager, dialogFragment)
-}
-
-fun FragmentActivity.showDialogFragmentAllowingStateLoss(dialogFragment: DialogFragment) {
-    showDialogFragmentAllowingStateLoss(
-        this.supportFragmentManager,
-        dialogFragment
-    )
-}
-
-fun Fragment.showDialogFragmentAllowingStateLoss(dialogFragment: DialogFragment) {
-    showDialogFragmentAllowingStateLoss(
-        this.childFragmentManager,
-        dialogFragment
-    )
-}
-
 fun showDialogFragment(fm: FragmentManager, dialogFragment: DialogFragment) {
     val tag = dialogFragment.javaClass.simpleName
     val ft = fm.beginTransaction()
@@ -60,6 +38,28 @@ fun showDialogFragmentAllowingStateLoss(fm: FragmentManager, dialogFragment: Dia
     Reflect.on(dialogFragment).set("mBackStackId", ft.commitAllowingStateLoss())
 }
 
+fun FragmentActivity.showDialogFragment(dialogFragment: DialogFragment) {
+    showDialogFragment(this.supportFragmentManager, dialogFragment)
+}
+
+fun Fragment.showDialogFragment(dialogFragment: DialogFragment) {
+    showDialogFragment(this.childFragmentManager, dialogFragment)
+}
+
+fun FragmentActivity.showDialogFragmentAllowingStateLoss(dialogFragment: DialogFragment) {
+    showDialogFragmentAllowingStateLoss(
+        this.supportFragmentManager,
+        dialogFragment
+    )
+}
+
+fun Fragment.showDialogFragmentAllowingStateLoss(dialogFragment: DialogFragment) {
+    showDialogFragmentAllowingStateLoss(
+        this.childFragmentManager,
+        dialogFragment
+    )
+}
+
 fun Activity.newStartActivity(to: Class<*>, extras: Bundle? = null) {
     val intent = Intent()
     intent.setClass(this, to)
@@ -78,7 +78,7 @@ fun Fragment.newStartActivity(to: Class<*>, extras: Bundle? = null) {
     this.startActivity(intent)
 }
 
-fun Activity.getExtras(): Bundle = this.intent.extras!!
+fun Activity.ofExtras(): Bundle = this.intent.extras!!
 
 fun Activity.finishWithResultOk(intent: Intent? = null) {
     if (intent == null) {

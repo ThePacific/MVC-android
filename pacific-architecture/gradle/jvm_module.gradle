@@ -4,6 +4,7 @@ apply plugin: 'kotlinx-serialization'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
     compileOnly dep.injectAnnotation
     compileOnly dep.jetAnnotation
     compileOnly dep.javaxAnnotation
@@ -14,7 +15,6 @@ dependencies {
     testImplementation dep.junit
     testImplementation dep.mockito
     testImplementation dep.truth
-    testImplementation dep.threeTenBp
 
     implementation dep.kotlin.stdlibJdk8
     implementation dep.kotlin.stdlibJdk7
@@ -43,12 +43,13 @@ dependencies {
     implementation dep.dagger.dagger
     kapt dep.dagger.compiler
 
-    implementation dep.androidX.annotation.annotation
+    compileOnly dep.androidX.annotation.annotation
     implementation dep.androidX.collection.collection
     implementation dep.androidX.collection.ktx
-    implementation dep.store
     implementation dep.androidX.room.common
     implementation dep.androidX.room.migration
+    implementation dep.androidX.paging.common
+    implementation dep.androidX.paging.commonKtx
 
-    implementation dep.threeTenBpNoTzdb
+    implementation dep.store
 }

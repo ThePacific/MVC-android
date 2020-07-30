@@ -22,9 +22,6 @@ class UserRepository @Inject constructor(
     fun logout() {
     }
 
-    fun okLogin() {
-    }
-
-    fun user(){
+    fun user() {
     }
 }

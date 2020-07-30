@@ -36,7 +36,3 @@ package com.pacific.guava.extension
  */
 val <T> T.exhaustive: T
     get() = this
-
-
-@Suppress("UNCHECKED_CAST")
-fun <T> Any.doMap(): T = this as T

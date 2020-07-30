@@ -8,4 +8,3 @@ object Guava {
 
     var isDebug = false
 }
-

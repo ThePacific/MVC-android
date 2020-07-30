@@ -70,7 +70,7 @@ class EndlessRecyclerViewScrollListener(
         }
     }
 
-    fun reset(){
+    fun reset() {
         previousItemCount = 0
         loading = false
     }

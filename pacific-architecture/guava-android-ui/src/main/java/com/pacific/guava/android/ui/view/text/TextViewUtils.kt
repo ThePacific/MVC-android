@@ -26,6 +26,11 @@ fun EditText.setPasswordVisibility(isVisible: Boolean) {
 
 fun EditText.moveCursorToLast() = this.setSelection(this.text.length)
 
+fun EditText.backspace(count: Int = 1) {
+    val index = this.selectionStart
+    text.delete(index - count, index)
+}
+
 fun EditText.disableEditable() {
     this.clearFocus()
     this.isFocusable = false
@@ -143,7 +148,7 @@ fun TextView.applyColorSpan(text: String, start: Int, end: Int, @ColorRes color:
 }
 
 fun TextView.applyColorSpan(text: String, matcher: String, @ColorRes color: Int) {
-    this.text = MySpannable(text).findAndSpan(matcher) {
+    this.text = MySpannable(text + matcher).findAndSpan(text) {
         ForegroundColorSpan(this.context.toColor(color))
     }
 }
@@ -153,7 +158,7 @@ fun TextView.applyColorSpan2(text: String, start: Int, end: Int, @ColorRes color
 }
 
 fun TextView.applyColorSpan2(text: String, matcher: String, @ColorRes color: Int) {
-    this.text = MySpannable(text).findAndSpanLast(matcher) {
+    this.text = MySpannable(text + matcher).findAndSpanLast(text) {
         ForegroundColorSpan(this.context.toColor(color))
     }
 }

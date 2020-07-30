@@ -32,8 +32,11 @@ import java.lang.ref.WeakReference
  */
 object AppManager : AppInitializer, LifecycleObserver, Application.ActivityLifecycleCallbacks {
 
+    var dialogCount = 0
+        private set
+
     private val cm by lazy {
-        contextApp.getSystemService<ConnectivityManager>()!!
+        myApp.getSystemService<ConnectivityManager>()!!
     }
 
     private val networkBroadcastReceiver by lazy {
@@ -48,7 +51,7 @@ object AppManager : AppInitializer, LifecycleObserver, Application.ActivityLifec
 
     @SuppressLint("MissingPermission")
     override fun initialize(app: Application) {
-        contextApp.registerActivityLifecycleCallbacks(this)
+        myApp.registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         notifyNetworkChanged(isNetworkConnected())
         monitorNetworkConnectivity()
@@ -115,7 +118,7 @@ object AppManager : AppInitializer, LifecycleObserver, Application.ActivityLifec
                     networkCallback
                 )
             }
-            else -> contextApp.registerReceiver(
+            else -> myApp.registerReceiver(
                 networkBroadcastReceiver,
                 IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
             )
@@ -231,5 +234,17 @@ object AppManager : AppInitializer, LifecycleObserver, Application.ActivityLifec
             val info: NetworkInfo? = cm.activeNetworkInfo
             info?.isConnectedOrConnecting ?: false
         }
+    }
+
+    fun showDialog() {
+        dialogCount++
+        Bus.offer(BUS_DIALOG_COUNT)
+        appDialogCount.postValue(dialogCount)
+    }
+
+    fun dismissDialog() {
+        dialogCount--
+        Bus.offer(BUS_DIALOG_COUNT)
+        appDialogCount.postValue(dialogCount)
     }
 }

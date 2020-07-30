@@ -2,23 +2,31 @@ package com.pacific.core.mvvm
 
 import android.os.Bundle
 import android.view.View
-import androidx.transition.TransitionInflater
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.pacific.core.R
+import com.pacific.core.AppManager
 
 abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
+    var applyDialogCount = false
+        protected set
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        TransitionInflater.from(requireContext()).run {
-            enterTransition = inflateTransition(R.transition.fragment_enter)
-            exitTransition = inflateTransition(R.transition.fragment_exit)
+        if (applyDialogCount) {
+            AppManager.showDialog()
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.isClickable = true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (applyDialogCount) {
+            AppManager.dismissDialog()
+        }
     }
 
     open fun onBackPressed(): Boolean = false

@@ -13,11 +13,11 @@ class HostSelectionInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val flavorId = dataComponent.appPrefsManager().getFlavorId()
-        val dynamicHttpUrl = hosts.getValue(flavorId).toHttpUrl()
+        val selectedHttpUrl = hosts.getValue(flavorId).toHttpUrl()
         val realHttpUrl = request.url.newBuilder()
-            .host(dynamicHttpUrl.host)
-            .scheme(dynamicHttpUrl.scheme)
-            .port(dynamicHttpUrl.port)
+            .host(selectedHttpUrl.host)
+            .scheme(selectedHttpUrl.scheme)
+            .port(selectedHttpUrl.port)
             .build()
 
         return chain.proceed(request.newBuilder().url(realHttpUrl).build())

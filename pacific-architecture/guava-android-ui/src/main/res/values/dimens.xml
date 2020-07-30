@@ -28,10 +28,10 @@
     <dimen name="font_34sp">34sp</dimen>
     <dimen name="font_36sp">36sp</dimen>
 
-    <dimen name="size_soft_keyboard">263dp</dimen>
     <dimen name="size_0dp">0dp</dimen>
     <dimen name="size_01dp">0.1dp</dimen>
     <dimen name="size_02dp">0.2dp</dimen>
+    <dimen name="size_03dp">0.3dp</dimen>
     <dimen name="size_04dp">0.4dp</dimen>
     <dimen name="size_05dp">0.5dp</dimen>
     <dimen name="size_06dp">0.6dp</dimen>
@@ -94,6 +94,7 @@
     <dimen name="size_128dp">128dp</dimen>
     <dimen name="size_132dp">132dp</dimen>
     <dimen name="size_144dp">144dp</dimen>
+    <dimen name="size_150dp">150dp</dimen>
     <dimen name="size_156dp">156dp</dimen>
     <dimen name="size_164dp">164dp</dimen>
     <dimen name="size_172dp">172dp</dimen>
@@ -112,4 +113,7 @@
     <dimen name="size_540dp">540dp</dimen>
     <dimen name="size_600dp">600dp</dimen>
     <dimen name="size_640dp">640dp</dimen>
+    <dimen name="height_soft_keyboard">263dp</dimen>
+    <dimen name="height_toolbar">48dp</dimen>
+    <dimen name="height_toolbar_x">56dp</dimen>
 </resources>

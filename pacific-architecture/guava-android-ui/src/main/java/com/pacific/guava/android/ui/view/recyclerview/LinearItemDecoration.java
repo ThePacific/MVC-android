@@ -168,7 +168,7 @@ public final class LinearItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     private int getAdapterPosition(View view) {
-        return ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewAdapterPosition();
+        return ((RecyclerView.LayoutParams) view.getLayoutParams()).getBindingAdapterPosition();
     }
 
     private Drawable getDivider(int position) {

@@ -11,10 +11,28 @@ object Values {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> get(key: String): T = cache[key] as T
+    fun <T : Any> get(key: String): T {
+        val value = cache[key]!!
+        return value as T
+    }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T> take(key: String): T = cache.remove(key) as T
+    fun <T : Any> take(key: String): T {
+        val value = cache.remove(key)!!
+        return value as T
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Any> getNullable(key: String): T {
+        val value = cache[key]
+        return value as T
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Any> takeNullable(key: String): T {
+        val value = cache.remove(key)
+        return value as T
+    }
 
     fun clear() = cache.clear()
 
