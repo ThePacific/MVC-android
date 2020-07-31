@@ -12,6 +12,6 @@ class CoreInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.pacific.core.test", appContext.packageName)
+        assertEquals("com.pacific.core.features.test", appContext.packageName)
     }
 }
