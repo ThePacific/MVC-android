@@ -14,6 +14,6 @@ class TestModule {
     @Provides
     @Named("appExternalCacheDir")
     fun provideAppExternalCacheDir(): File {
-        return mkdirs("externalCacheDir")
+        return mkdirs("cache")
     }
 }
