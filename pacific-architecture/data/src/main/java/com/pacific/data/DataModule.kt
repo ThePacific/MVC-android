@@ -10,18 +10,21 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.internal.platform.Platform
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.LoggingEventListener
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.File
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
@@ -91,7 +94,8 @@ class DataModule {
         x509TrustManager: X509TrustManager,
         sslContext: SSLContext,
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        httpLoggingInterceptorLogger: HttpLoggingInterceptor.Logger
+        httpLoggingInterceptorLogger: HttpLoggingInterceptor.Logger,
+        okHttpCache: Cache
     ): OkHttpClient {
         return OkHttpClient().newBuilder()
             .addInterceptor(HostSelectionInterceptor())
@@ -99,6 +103,7 @@ class DataModule {
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(WarnIfSlowInterceptor())
             .eventListenerFactory(LoggingEventListener.Factory(httpLoggingInterceptorLogger))
+            .cache(okHttpCache)
             .sslSocketFactory(sslContext.socketFactory, x509TrustManager)
             .hostnameVerifier(HostnameVerifier { _, _ -> true })
             .connectTimeout(10, TimeUnit.SECONDS)
@@ -130,5 +135,11 @@ class DataModule {
     @Singleton
     fun provideDataService(retrofit: Retrofit): DataService {
         return retrofit.create(DataService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpCache(@Named("appExternalCacheDir") file: File): Cache {
+        return Cache(File(file, "http_manager_disk_cache"), 250 * 1024 * 1024)
     }
 }

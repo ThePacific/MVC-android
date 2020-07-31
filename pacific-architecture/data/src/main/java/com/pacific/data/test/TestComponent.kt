@@ -19,7 +19,6 @@ import javax.inject.Singleton
 @Singleton
 interface TestComponent : DataComponent {
 
-
     @Component.Factory
     interface Factory {
 

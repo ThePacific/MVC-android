@@ -6,9 +6,10 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Update
 
 /**
- *  1. SELECT * FROM TABLE_NAME LIMIT offset_count , row_count
- *  2. SELECT * FROM TABLE_NAME LIMIT row_count OFFSET offset_count
- *  3. SELECT * FROM TABLE_NAME LIMIT row_count
+ *  1. SELECT * FROM table LIMIT offset_count , row_count
+ *  2. SELECT * FROM table LIMIT row_count OFFSET offset_count
+ *  3. SELECT * FROM table LIMIT row_count
+ *  4. SELECT * FROM table ORDER BY column_1 ASC/DESC
  */
 interface AppDao<E> {
 
@@ -16,10 +17,10 @@ interface AppDao<E> {
     fun insert(entity: E): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg entity: E)
+    fun insertAll(vararg entity: E): List<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(entities: List<E>)
+    fun insertAll(entities: List<E>): List<Long>
 
     @Delete
     fun delete(entity: E): Int

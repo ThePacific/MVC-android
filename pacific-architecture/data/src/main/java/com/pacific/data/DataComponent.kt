@@ -5,9 +5,12 @@ import com.pacific.data.files.AppPrefsManager
 import com.pacific.data.http.service.DataService
 import com.pacific.data.repository.UserRepository
 import com.squareup.moshi.Moshi
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import java.io.File
+import javax.inject.Named
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
@@ -34,4 +37,9 @@ interface DataComponent {
     fun appDatabase(): AppDatabase
 
     fun appPrefsManager(): AppPrefsManager
+
+    fun okHttpCache(): Cache
+
+    @Named("appExternalCacheDir")
+    fun appExternalCacheDir(): File
 }

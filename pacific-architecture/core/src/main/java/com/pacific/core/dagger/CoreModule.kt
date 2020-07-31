@@ -9,6 +9,8 @@ import com.pacific.data.db.AppDatabase
 import com.pacific.data.files.AppPrefsManager
 import dagger.Module
 import dagger.Provides
+import java.io.File
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module(includes = [CoreBinder::class])
@@ -24,5 +26,11 @@ class CoreModule {
     @Singleton
     fun provideAppPrefsManager(): AppPrefsManager {
         return PrefsManager
+    }
+
+    @Provides
+    @Named("appExternalCacheDir")
+    fun provideAppExternalCacheDir(app: Application): File {
+        return app.externalCacheDir ?: throw IllegalStateException()
     }
 }

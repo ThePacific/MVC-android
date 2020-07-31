@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.pacific.core.dagger.CoreComponent
 import com.pacific.core.dagger.DaggerCoreComponent
 import com.pacific.core.initializer.AndroidTimber
-import com.pacific.core.storage.prefs.PrefsManager
 import com.pacific.data.dataComponent
 import com.pacific.guava.Guava
 
@@ -49,6 +48,7 @@ fun setupCoreModule(
 ) {
     Guava.isDebug = isDebug
     Guava.timber = AndroidTimber
+
     myApp = app
     coreComponent = appComponent
     dataComponent = appComponent

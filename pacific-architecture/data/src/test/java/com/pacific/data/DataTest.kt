@@ -25,5 +25,6 @@ class DataTest {
         Truth.assertThat(dataComponent).isNotNull()
         Truth.assertThat(dataComponent.appPrefsManager()).isEqualTo(TestPrefsManager)
         Truth.assertThat(dataComponent.appDatabase()).isEqualTo(TestAppDatabase)
+        Truth.assertThat(dataComponent.appExternalCacheDir().name).isEqualTo("externalCacheDir")
     }
 }
