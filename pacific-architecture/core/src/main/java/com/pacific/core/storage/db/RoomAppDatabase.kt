@@ -3,7 +3,7 @@ package com.pacific.core.storage.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.pacific.data.db.AppDatabase
-import com.pacific.data.db.entities.DbUser
+import com.pacific.data.db.DbUser
 
 @Database(
     entities = [

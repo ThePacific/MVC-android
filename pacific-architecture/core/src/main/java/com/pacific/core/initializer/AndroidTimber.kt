@@ -1,9 +1,9 @@
 package com.pacific.core.initializer
 
-import com.pacific.guava.domain.JdkTimber
+import com.pacific.guava.domain.AppTimber
 import timber.log.Timber
 
-object AndroidTimber : JdkTimber {
+object AndroidTimber : AppTimber {
 
     override fun d(tag: String, message: String) {
         Timber.tag(tag).d(message)

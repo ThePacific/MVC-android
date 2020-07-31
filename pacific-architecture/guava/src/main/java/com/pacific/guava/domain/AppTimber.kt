@@ -1,6 +1,6 @@
 package com.pacific.guava.domain
 
-interface JdkTimber {
+interface AppTimber {
 
     fun d(tag: String, message: String)
 
@@ -13,7 +13,7 @@ interface JdkTimber {
     companion object {
 
         @JvmField
-        val SYSTEM: JdkTimber = object : JdkTimber {
+        val SYSTEM: AppTimber = object : AppTimber {
 
             override fun d(tag: String, message: String) {
                 println("$tag->$message")

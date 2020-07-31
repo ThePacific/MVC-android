@@ -1,10 +1,10 @@
 package com.pacific.guava
 
-import com.pacific.guava.domain.JdkTimber
+import com.pacific.guava.domain.AppTimber
 
 object Guava {
 
-    var timber = JdkTimber.SYSTEM
+    var timber = AppTimber.SYSTEM
 
     var isDebug = false
 }

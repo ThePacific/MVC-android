@@ -1,9 +1,7 @@
-package com.pacific.data.test
+package com.pacific.data
 
-import androidx.annotation.VisibleForTesting
 import com.pacific.data.files.AppPrefsManager
 
-@VisibleForTesting
 object TestPrefsManager : AppPrefsManager {
 
     override fun getUserId(): Long {

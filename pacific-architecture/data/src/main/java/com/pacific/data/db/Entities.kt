@@ -1,4 +1,4 @@
-package com.pacific.data.db.entities
+package com.pacific.data.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

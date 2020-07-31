@@ -2,8 +2,6 @@ package com.pacific.data
 
 import com.google.common.truth.Truth
 import com.pacific.data.test.DaggerTestComponent
-import com.pacific.data.test.TestAppDatabase
-import com.pacific.data.test.TestPrefsManager
 import com.pacific.guava.Guava
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
@@ -16,7 +14,10 @@ class DataTest {
     @BeforeTest
     fun beforeTest() {
         Guava.isDebug = true
-        dataComponent = DaggerTestComponent.factory().create()
+        dataComponent = DaggerTestComponent.factory().create(
+            TestAppDatabase,
+            TestPrefsManager
+        )
     }
 
     @Test
