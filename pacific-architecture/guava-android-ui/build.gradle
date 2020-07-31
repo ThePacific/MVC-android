@@ -1,8 +1,9 @@
-apply plugin: 'com.android.library'
-apply from: "../gradle/android_module.gradle"
+apply from: "../gradle/android_lib_module.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(":guava")
-    implementation project(":guava-android")
+    implementation 'com.github.thepacific:guava:2.0.0'
+    implementation 'com.github.thepacific:guava-android:2.0.0'
+    // implementation project(":guava")
+    // implementation project(":guava-android")
 }

@@ -1,6 +1,15 @@
 # Project
 This is one kind of boilerplate for writing android apps using the android official architecture component approach. You can download it, modify it and start building your apps on top of it.
 
+[![Download](https://img.shields.io/maven-central/v/com.github.thepacific/guava.svg)](https://search.maven.org/artifact/com.github.thepacific/guava)
+
+### Setup
+```groovy
+implementation 'com.github.thepacific:guava:2.0.0'
+implementation 'com.github.thepacific:guava-android:2.0.0'
+implementation 'com.github.thepacific:guava-android-ui:2.0.0'
+```
+
 ### Dependencies
 
 -   [Jetpack](https://developer.android.com/jetpack):
