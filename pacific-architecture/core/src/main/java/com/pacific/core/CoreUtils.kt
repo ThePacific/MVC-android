@@ -36,6 +36,7 @@ val isAppInForeground: MutableLiveData<Boolean> by lazy { MutableLiveData(false)
 
 fun setupCoreModule(app: Application, isDebug: Boolean) {
     myApp = app
+
     Guava.isDebug = isDebug
     Guava.timber = AndroidTimber
 
