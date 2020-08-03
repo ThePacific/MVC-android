@@ -1,11 +1,13 @@
 package com.pacific.data.repository
 
+import com.pacific.data.base.AppContext
 import com.pacific.data.db.AppDatabase
 import com.pacific.data.file.AppPrefsManager
 import com.pacific.data.http.service.DataService
 
 abstract class BaseRepository(
     protected val dataService: DataService,
+    protected val appContext: AppContext,
     protected val appDatabase: AppDatabase,
     protected val appPrefsManager: AppPrefsManager
 ) {

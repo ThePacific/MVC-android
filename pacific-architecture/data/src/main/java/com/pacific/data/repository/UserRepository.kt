@@ -1,5 +1,6 @@
 package com.pacific.data.repository
 
+import com.pacific.data.base.AppContext
 import com.pacific.data.db.AppDatabase
 import com.pacific.data.file.AppPrefsManager
 import com.pacific.data.http.service.DataService
@@ -10,9 +11,10 @@ import javax.inject.Singleton
 @Singleton
 class UserRepository @Inject constructor(
     dataService: DataService,
+    appContext: AppContext,
     appDatabase: AppDatabase,
     appPrefsManager: AppPrefsManager
-) : BaseRepository(dataService, appDatabase, appPrefsManager) {
+) : BaseRepository(dataService, appContext, appDatabase, appPrefsManager) {
 
     fun login() {
         require(!isLogin())
