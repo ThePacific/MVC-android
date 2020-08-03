@@ -2,11 +2,11 @@ package com.pacific.core.lifecycle
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.pacific.core.dagger.AppScope
 import javax.inject.Inject
 import javax.inject.Provider
-import javax.inject.Singleton
 
-@Singleton
+@AppScope
 class ViewModelFactory @Inject constructor(
     @JvmSuppressWildcards
     private val creators: MutableMap<Class<out ViewModel>, Provider<ViewModel>>

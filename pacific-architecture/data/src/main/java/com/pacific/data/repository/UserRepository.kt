@@ -1,7 +1,7 @@
 package com.pacific.data.repository
 
 import com.pacific.data.db.AppDatabase
-import com.pacific.data.files.AppPrefsManager
+import com.pacific.data.file.AppPrefsManager
 import com.pacific.data.http.service.DataService
 import com.pacific.guava.Guava
 import javax.inject.Inject

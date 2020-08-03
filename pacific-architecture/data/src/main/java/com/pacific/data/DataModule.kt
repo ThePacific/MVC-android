@@ -1,5 +1,6 @@
 package com.pacific.data
 
+import com.pacific.data.base.AppContext
 import com.pacific.data.http.okhttp3.ApiConverterFactory
 import com.pacific.data.http.okhttp3.CommonHeadersInterceptor
 import com.pacific.data.http.okhttp3.HostSelectionInterceptor
@@ -24,7 +25,6 @@ import java.security.SecureRandom
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
 import javax.inject.Singleton
 import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
@@ -95,7 +95,7 @@ class DataModule {
         sslContext: SSLContext,
         httpLoggingInterceptor: HttpLoggingInterceptor,
         httpLoggingInterceptorLogger: HttpLoggingInterceptor.Logger,
-        okHttpCache: Cache
+        appContext: AppContext
     ): OkHttpClient {
         return OkHttpClient().newBuilder()
             .addInterceptor(HostSelectionInterceptor())
@@ -103,7 +103,12 @@ class DataModule {
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(WarnIfSlowInterceptor())
             .eventListenerFactory(LoggingEventListener.Factory(httpLoggingInterceptorLogger))
-            .cache(okHttpCache)
+            .cache(
+                Cache(
+                    File(appContext.getExternalCacheDir(), "http_manager_disk_cache"),
+                    250 * 1024 * 1024
+                )
+            )
             .sslSocketFactory(sslContext.socketFactory, x509TrustManager)
             .hostnameVerifier(HostnameVerifier { _, _ -> true })
             .connectTimeout(10, TimeUnit.SECONDS)
@@ -135,11 +140,5 @@ class DataModule {
     @Singleton
     fun provideDataService(retrofit: Retrofit): DataService {
         return retrofit.create(DataService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideOkHttpCache(@Named("appExternalCacheDir") file: File): Cache {
-        return Cache(File(file, "http_manager_disk_cache"), 250 * 1024 * 1024)
     }
 }

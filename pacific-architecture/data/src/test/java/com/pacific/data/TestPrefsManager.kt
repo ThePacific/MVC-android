@@ -1,6 +1,6 @@
 package com.pacific.data
 
-import com.pacific.data.files.AppPrefsManager
+import com.pacific.data.file.AppPrefsManager
 
 object TestPrefsManager : AppPrefsManager {
 

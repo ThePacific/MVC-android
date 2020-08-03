@@ -1,13 +1,23 @@
-package com.pacific.core.storage.prefs
+package com.pacific.core.base
 
-import com.pacific.core.*
-import com.pacific.data.files.AppPrefsManager
+import com.pacific.core.myApp
+import com.pacific.data.file.AppPrefsManager
 import com.pacific.guava.android.log.uniqueId
 import com.tencent.mmkv.MMKV
 import timber.log.Timber
 import java.util.*
 
 object PrefsManager : AppPrefsManager {
+
+    private const val PREFS_DEVICE_ID = "deviceId"
+    private const val PREFS_USER_ID = "userId"
+    private const val PREFS_TOKEN1 = "token1"
+    private const val PREFS_TOKEN2 = "token2"
+    private const val PREFS_TOKEN3 = "token3"
+    private const val PREFS_LOGIN_NAME = "loginName"
+    private const val PREFS_LOGIN_PASSWORD = "loginPassword"
+    private const val PREFS_SOFT_KEYBOARD_HEIGHT = "softKeyboardHeight"
+    private const val PREFS_FLAVOR_ID = "flavorId"
 
     private val prefs: MMKV by lazy {
         MMKV.initialize(myApp)

@@ -1,4 +1,4 @@
-package com.pacific.core
+package com.pacific.core.base
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -17,7 +17,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.pacific.core.initializer.AppInitializer
+import com.pacific.core.BUS_DIALOG_COUNT
+import com.pacific.core.appDialogCount
+import com.pacific.core.isAppInForeground
+import com.pacific.core.myApp
 import com.pacific.guava.coroutines.Bus
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.catch
@@ -30,7 +33,7 @@ import java.lang.ref.WeakReference
  * https://proandroiddev.com/connectivity-network-internet-state-change-on-android-10-and-above-311fb761925
  * https://github.com/YarikSOffice/ConnectivityPlayground
  */
-object AppManager : AppInitializer, LifecycleObserver, Application.ActivityLifecycleCallbacks {
+object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
 
     var dialogCount = 0
         private set
@@ -50,7 +53,7 @@ object AppManager : AppInitializer, LifecycleObserver, Application.ActivityLifec
     private var weakCurrentActivity: WeakReference<Activity?>? = null
 
     @SuppressLint("MissingPermission")
-    override fun initialize(app: Application) {
+    fun initialize(app: Application) {
         myApp.registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         notifyNetworkChanged(isNetworkConnected())
@@ -107,7 +110,9 @@ object AppManager : AppInitializer, LifecycleObserver, Application.ActivityLifec
     private fun monitorNetworkConnectivity() {
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
-                cm.registerDefaultNetworkCallback(networkCallback)
+                cm.registerDefaultNetworkCallback(
+                    networkCallback
+                )
             }
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> {
                 cm.registerNetworkCallback(
@@ -201,13 +206,17 @@ object AppManager : AppInitializer, LifecycleObserver, Application.ActivityLifec
                         )
                         // a set of dirty workarounds
                         if (info?.isConnectedOrConnecting == true) {
-                            notifyNetworkChanged(info.isConnectedOrConnecting)
+                            notifyNetworkChanged(
+                                info.isConnectedOrConnecting
+                            )
                         } else if (
                             info != null &&
                             fallbackInfo != null &&
                             info.isConnectedOrConnecting != fallbackInfo.isConnectedOrConnecting
                         ) {
-                            notifyNetworkChanged(fallbackInfo.isConnectedOrConnecting)
+                            notifyNetworkChanged(
+                                fallbackInfo.isConnectedOrConnecting
+                            )
                         } else {
                             notifyNetworkChanged(
                                 (info ?: fallbackInfo)?.isConnectedOrConnecting == true
@@ -222,13 +231,15 @@ object AppManager : AppInitializer, LifecycleObserver, Application.ActivityLifec
 
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     private fun notifyNetworkChanged(isConnected: Boolean) {
-        isNetworkConnected.postValue(isConnected)
+        com.pacific.core.isNetworkConnected.postValue(isConnected)
     }
 
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     private fun isNetworkConnected(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val capabilities: NetworkCapabilities? = cm.getNetworkCapabilities(cm.activeNetwork)
+            val capabilities: NetworkCapabilities? = cm.getNetworkCapabilities(
+                cm.activeNetwork
+            )
             capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) ?: false
         } else {
             val info: NetworkInfo? = cm.activeNetworkInfo

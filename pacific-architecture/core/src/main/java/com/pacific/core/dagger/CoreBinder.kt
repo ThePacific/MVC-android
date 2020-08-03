@@ -2,25 +2,27 @@ package com.pacific.core.dagger
 
 import android.app.Application
 import android.content.Context
-import com.pacific.core.initializer.AppInitializer
-import com.pacific.core.initializer.TimberInitializer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.pacific.core.lifecycle.NopeViewModel
+import com.pacific.core.lifecycle.ViewModelFactory
 import dagger.Binds
 import dagger.Module
-import dagger.multibindings.IntoSet
-import javax.inject.Singleton
+import dagger.multibindings.IntoMap
 
 @Module
 abstract class CoreBinder {
 
     @Binds
-    @Singleton
+    @AppScope
     abstract fun provideContext(it: Application): Context
 
     @Binds
-    @IntoSet
-    abstract fun provideTimberInitializer(it: TimberInitializer): AppInitializer
+    @AppScope
+    abstract fun provideVewModelFactory(it: ViewModelFactory): ViewModelProvider.Factory
 
-    // @Binds
-    // @Singleton
-    // abstract fun provideVewModelFactory(it: ViewModelFactory): ViewModelProvider.Factory
+    @Binds
+    @IntoMap
+    @ViewModelKey(NopeViewModel::class)
+    abstract fun bindNopeViewModel(it: NopeViewModel): ViewModel
 }

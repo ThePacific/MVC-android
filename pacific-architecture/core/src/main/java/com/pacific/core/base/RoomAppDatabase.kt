@@ -1,4 +1,4 @@
-package com.pacific.core.storage.db
+package com.pacific.core.base
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

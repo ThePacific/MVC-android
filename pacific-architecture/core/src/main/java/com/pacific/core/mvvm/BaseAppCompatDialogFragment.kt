@@ -3,7 +3,7 @@ package com.pacific.core.mvvm
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDialogFragment
-import com.pacific.core.AppManager
+import com.pacific.core.base.AppManager
 
 abstract class BaseAppCompatDialogFragment : AppCompatDialogFragment() {
 

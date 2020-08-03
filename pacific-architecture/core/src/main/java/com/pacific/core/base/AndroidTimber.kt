@@ -1,4 +1,4 @@
-package com.pacific.core.initializer
+package com.pacific.core.base
 
 import com.pacific.guava.domain.AppTimber
 import timber.log.Timber

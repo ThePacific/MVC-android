@@ -1,19 +1,26 @@
 package com.pacific.data
 
+import com.pacific.data.base.AppContext
 import com.pacific.data.db.AppDatabase
-import com.pacific.data.files.AppPrefsManager
+import com.pacific.data.file.AppPrefsManager
 import com.pacific.data.http.service.DataService
 import com.pacific.data.repository.UserRepository
 import com.squareup.moshi.Moshi
-import okhttp3.Cache
+import dagger.BindsInstance
+import dagger.Component
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import java.io.File
-import javax.inject.Named
+import javax.inject.Singleton
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
+@Component(
+    modules = [
+        DataModule::class
+    ]
+)
+@Singleton
 interface DataComponent {
 
     fun poorX509TrustManager(): X509TrustManager
@@ -38,8 +45,15 @@ interface DataComponent {
 
     fun appPrefsManager(): AppPrefsManager
 
-    fun okHttpCache(): Cache
+    fun appContext(): AppContext
 
-    @Named("appExternalCacheDir")
-    fun appExternalCacheDir(): File
+    @Component.Factory
+    interface Factory {
+
+        fun create(
+            @BindsInstance appContext: AppContext,
+            @BindsInstance appDatabase: AppDatabase,
+            @BindsInstance appPrefsManager: AppPrefsManager
+        ): DataComponent
+    }
 }

@@ -5,14 +5,13 @@ import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.pacific.core.BUS_EXIT_APP
 import com.pacific.guava.coroutines.Bus
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 abstract class BaseFragment(
-        @LayoutRes contentLayoutId: Int = 0
+    @LayoutRes contentLayoutId: Int = 0
 ) : Fragment(contentLayoutId) {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.pacific.data.files
+package com.pacific.data.file
 
 interface AppPrefsManager {
 

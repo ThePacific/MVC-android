@@ -3,7 +3,7 @@ package com.pacific.core.mvvm
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.pacific.core.AppManager
+import com.pacific.core.base.AppManager
 
 abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 

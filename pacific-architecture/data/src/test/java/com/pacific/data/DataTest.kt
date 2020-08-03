@@ -1,7 +1,6 @@
 package com.pacific.data
 
 import com.google.common.truth.Truth
-import com.pacific.data.test.DaggerTestComponent
 import com.pacific.guava.Guava
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
@@ -14,17 +13,14 @@ class DataTest {
     @BeforeTest
     fun beforeTest() {
         Guava.isDebug = true
-        dataComponent = DaggerTestComponent.factory().create(
-            TestAppDatabase,
-            TestPrefsManager
-        )
+        setupDataModule(TestContext, TestDatabase, TestPrefsManager)
     }
 
     @Test
     fun test() {
         Truth.assertThat(dataComponent).isNotNull()
         Truth.assertThat(dataComponent.appPrefsManager()).isEqualTo(TestPrefsManager)
-        Truth.assertThat(dataComponent.appDatabase()).isEqualTo(TestAppDatabase)
-        Truth.assertThat(dataComponent.appExternalCacheDir().name).isEqualTo("cache")
+        Truth.assertThat(dataComponent.appDatabase()).isEqualTo(TestDatabase)
+        Truth.assertThat(dataComponent.appContext()).isEqualTo(TestContext)
     }
 }
