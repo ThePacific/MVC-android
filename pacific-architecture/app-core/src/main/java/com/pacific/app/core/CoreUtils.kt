@@ -40,11 +40,7 @@ fun setupCoreModule(app: Application, isDebug: Boolean) {
     Guava.isDebug = isDebug
     Guava.timber = AndroidTimber
 
-    setupDataModule(
-        AndroidContext,
-        createRoomDatabase(),
-        PrefsManager
-    )
+    setupDataModule(AndroidContext, createRoomDatabase(), PrefsManager)
     coreComponent = DaggerCoreComponent.factory().create(dataComponent, app)
 
     initializeTimber()
