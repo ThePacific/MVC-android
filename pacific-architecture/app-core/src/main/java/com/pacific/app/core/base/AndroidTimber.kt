@@ -1,0 +1,23 @@
+package com.pacific.app.core.base
+
+import com.pacific.guava.jvm.domain.AppTimber
+import timber.log.Timber
+
+object AndroidTimber : AppTimber {
+
+    override fun d(tag: String, message: String) {
+        Timber.tag(tag).d(message)
+    }
+
+    override fun d(e: Throwable) {
+        Timber.d(e)
+    }
+
+    override fun e(e: Throwable) {
+        Timber.e(e)
+    }
+
+    override fun e(tag: String, message: String) {
+        Timber.tag(tag).e(message)
+    }
+}
