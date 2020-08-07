@@ -110,9 +110,7 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
     private fun monitorNetworkConnectivity() {
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
-                cm.registerDefaultNetworkCallback(
-                    networkCallback
-                )
+                cm.registerDefaultNetworkCallback(networkCallback)
             }
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> {
                 cm.registerNetworkCallback(
@@ -123,10 +121,12 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
                     networkCallback
                 )
             }
-            else -> myApp.registerReceiver(
-                networkBroadcastReceiver,
-                IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-            )
+            else -> {
+                myApp.registerReceiver(
+                    networkBroadcastReceiver,
+                    IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+                )
+            }
         }
     }
 

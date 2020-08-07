@@ -86,23 +86,17 @@ fun Date.toJdk8Instant(): Instant {
 }
 
 fun toZonedDateTime1(yyyy_mm_dd_hh_mm_ss: String): ZonedDateTime {
-    return LocalDateTime.parse(yyyy_mm_dd_hh_mm_ss,
-        FORMATTER_DD_MM_YYYY_HH_MM_SS
-    )
+    return LocalDateTime.parse(yyyy_mm_dd_hh_mm_ss, FORMATTER_DD_MM_YYYY_HH_MM_SS)
         .atZone(jdk8Zone)
 }
 
 fun toZonedDateTime2(yyyy_mm_dd_hh_mm: String): ZonedDateTime {
-    return LocalDateTime.parse(yyyy_mm_dd_hh_mm,
-        FORMATTER_DD_MM_YYYY_HH_MM
-    )
+    return LocalDateTime.parse(yyyy_mm_dd_hh_mm, FORMATTER_DD_MM_YYYY_HH_MM)
         .atZone(jdk8Zone)
 }
 
 fun toZonedDateTime3(dd_mm_yyyy: String): ZonedDateTime {
-    return LocalDateTime.parse(dd_mm_yyyy,
-        FORMATTER_DD_MM_YYYY
-    )
+    return LocalDateTime.parse(dd_mm_yyyy, FORMATTER_DD_MM_YYYY)
         .atZone(jdk8Zone)
 }
 
@@ -149,5 +143,4 @@ fun ago(start: Instant, end: Instant): String {
     }
 }
 
-fun ago(start: Long, end: Long): String =
-    ago(start.toInstant(), end.toInstant())
+fun ago(start: Long, end: Long): String = ago(start.toInstant(), end.toInstant())

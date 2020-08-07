@@ -51,10 +51,7 @@ fun setupCoreModule(app: Application, isDebug: Boolean) {
 }
 
 private fun createRoomDatabase(): RoomAppDatabase {
-    return Room.databaseBuilder(
-        myApp, RoomAppDatabase::class.java,
-        SQL_DB3
-    )
+    return Room.databaseBuilder(myApp, RoomAppDatabase::class.java, SQL_DB3)
         .addCallback(RoomDatabaseCallback())
         .addMigrations()
         .build()
