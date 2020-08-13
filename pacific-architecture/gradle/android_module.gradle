@@ -129,7 +129,7 @@ dependencies {
     implementation dep.androidX.navigation.fragmentKtx
     implementation dep.androidX.navigation.ui
     implementation dep.androidX.navigation.uiKtx
-    implementation dep.androidX.lifecycle.extensions
+    implementation dep.androidX.lifecycle.process
     implementation dep.androidX.lifecycle.commonJava8
     implementation dep.androidX.lifecycle.viewmodelKtx
     implementation dep.androidX.lifecycle.runtimeKtx

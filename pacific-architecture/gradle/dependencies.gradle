@@ -321,7 +321,7 @@ buildscript {
                             'common'             : "androidx.lifecycle:lifecycle-common:${versions.androidX.lifecycle}",
                             'commonJava8'        : "androidx.lifecycle:lifecycle-common-java8:${versions.androidX.lifecycle}",
                             'compiler'           : "androidx.lifecycle:lifecycle-compiler:${versions.androidX.lifecycle}",
-                            'extensions'         : "androidx.lifecycle:lifecycle-extensions:${versions.androidX.lifecycleExt}",
+                            'process'         : "androidx.lifecycle:lifecycle-process:${versions.androidX.lifecycleExt}",
                             'livedata'           : "androidx.lifecycle:lifecycle-livedata:${versions.androidX.lifecycle}",
                             'livedataKtx'        : "androidx.lifecycle:lifecycle-livedata-ktx:${versions.androidX.lifecycle}",
                             'livedataCore'       : "androidx.lifecycle:lifecycle-livedata-core:${versions.androidX.lifecycle}",
