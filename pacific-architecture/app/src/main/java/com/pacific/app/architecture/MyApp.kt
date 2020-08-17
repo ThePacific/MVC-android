@@ -1,12 +1,12 @@
 package com.pacific.app.architecture
 
 import androidx.multidex.MultiDexApplication
-import com.pacific.app.core.setupCoreModule
+import com.pacific.app.core.CoreLib
 
 class MyApp : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        setupCoreModule(this, BuildConfig.DEBUG)
+        CoreLib.setup(this, BuildConfig.DEBUG)
     }
 }

@@ -13,18 +13,14 @@ class DataTest {
     @BeforeTest
     fun beforeTest() {
         Guava.isDebug = true
-        setupDataModule(
-            TestContext,
-            TestDatabase,
-            TestPrefsManager
-        )
+        DataLib.setup(TestContext, TestDatabase, TestPrefsManager)
     }
 
     @Test
     fun test() {
-        Truth.assertThat(dataComponent).isNotNull()
-        Truth.assertThat(dataComponent.appPrefsManager()).isEqualTo(TestPrefsManager)
-        Truth.assertThat(dataComponent.appDatabase()).isEqualTo(TestDatabase)
-        Truth.assertThat(dataComponent.appContext()).isEqualTo(TestContext)
+        Truth.assertThat(DataLib.component).isNotNull()
+        Truth.assertThat(DataLib.component.appPrefsManager()).isEqualTo(TestPrefsManager)
+        Truth.assertThat(DataLib.component.appDatabase()).isEqualTo(TestDatabase)
+        Truth.assertThat(DataLib.component.appContext()).isEqualTo(TestContext)
     }
 }

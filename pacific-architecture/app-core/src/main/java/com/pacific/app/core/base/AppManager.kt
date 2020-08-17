@@ -17,10 +17,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.pacific.app.core.BUS_DIALOG_COUNT
-import com.pacific.app.core.appDialogCount
-import com.pacific.app.core.isAppInForeground
-import com.pacific.app.core.myApp
+import com.pacific.app.core.*
 import com.pacific.guava.jvm.coroutines.Bus
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.catch
@@ -35,9 +32,6 @@ import java.lang.ref.WeakReference
  */
 object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
 
-    var dialogCount = 0
-        private set
-
     private val cm by lazy {
         myApp.getSystemService<ConnectivityManager>()!!
     }
@@ -51,12 +45,16 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
     }
 
     private var weakCurrentActivity: WeakReference<Activity?>? = null
+    private var isFirstOnActivityResumed = true
+
+    var dialogCount = 0
+        private set
 
     @SuppressLint("MissingPermission")
-    fun initialize(app: Application) {
+    fun initialize() {
         myApp.registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-        notifyNetworkChanged(isNetworkConnected())
+        notifyNetChanged(isNetConnected())
         monitorNetworkConnectivity()
         Bus.subscribe()
             .onEach { onBusEvent(it) }
@@ -79,31 +77,33 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
         isAppInForeground.postValue(false)
     }
 
-    override fun onActivityPaused(activity: Activity?) {
+    override fun onActivityPaused(activity: Activity) {
     }
 
-    override fun onActivityResumed(activity: Activity?) {
+    override fun onActivityResumed(activity: Activity) {
         weakCurrentActivity = WeakReference(activity)
+        if (isFirstOnActivityResumed) {
+            isFirstOnActivityResumed = false
+            onFirstActivityResumed()
+        }
     }
 
-    override fun onActivityStarted(activity: Activity?) {
+    override fun onActivityStarted(activity: Activity) {
     }
 
-    override fun onActivityDestroyed(activity: Activity?) {
+    override fun onActivityDestroyed(activity: Activity) {
     }
 
-    override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
     }
 
-    override fun onActivityStopped(activity: Activity?) {
+    override fun onActivityStopped(activity: Activity) {
     }
 
-    override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
     }
 
-    fun currentActivity(): Activity? {
-        return weakCurrentActivity?.get()
-    }
+    fun currentActivity(): Activity? = weakCurrentActivity?.get() ?: null
 
     @Suppress("DEPRECATION")
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
@@ -148,7 +148,7 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
             ) {
                 super.onCapabilitiesChanged(network, networkCapabilities)
                 Timber.d("Network->onCapabilitiesChanged")
-                notifyNetworkChanged(
+                notifyNetChanged(
                     networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                 )
             }
@@ -157,7 +157,7 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
             override fun onLost(network: Network) {
                 super.onLost(network)
                 Timber.d("Network->onLost")
-                notifyNetworkChanged(false)
+                notifyNetChanged(false)
             }
 
             @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
@@ -206,7 +206,7 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
                         )
                         // a set of dirty workarounds
                         if (info?.isConnectedOrConnecting == true) {
-                            notifyNetworkChanged(
+                            notifyNetChanged(
                                 info.isConnectedOrConnecting
                             )
                         } else if (
@@ -214,11 +214,11 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
                             fallbackInfo != null &&
                             info.isConnectedOrConnecting != fallbackInfo.isConnectedOrConnecting
                         ) {
-                            notifyNetworkChanged(
+                            notifyNetChanged(
                                 fallbackInfo.isConnectedOrConnecting
                             )
                         } else {
-                            notifyNetworkChanged(
+                            notifyNetChanged(
                                 (info ?: fallbackInfo)?.isConnectedOrConnecting == true
                             )
                         }
@@ -230,12 +230,14 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
     }
 
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
-    private fun notifyNetworkChanged(isConnected: Boolean) {
-        com.pacific.app.core.isNetworkConnected.postValue(isConnected)
+    private fun notifyNetChanged(isConnected: Boolean) {
+        if (isConnected != isNetworkConnected.value) {
+            isNetworkConnected.postValue(isConnected)
+        }
     }
 
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
-    private fun isNetworkConnected(): Boolean {
+    private fun isNetConnected(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             val capabilities: NetworkCapabilities? = cm.getNetworkCapabilities(
                 cm.activeNetwork
@@ -245,6 +247,9 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
             val info: NetworkInfo? = cm.activeNetworkInfo
             info?.isConnectedOrConnecting ?: false
         }
+    }
+
+    private fun onFirstActivityResumed() {
     }
 
     fun showDialog() {
