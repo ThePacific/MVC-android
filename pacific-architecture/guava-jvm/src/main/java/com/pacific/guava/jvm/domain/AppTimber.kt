@@ -13,8 +13,7 @@ interface AppTimber {
     companion object {
 
         @JvmField
-        val SYSTEM: AppTimber = object :
-            AppTimber {
+        val SYSTEM: AppTimber = object : AppTimber {
 
             override fun d(tag: String, message: String) {
                 println("$tag->$message")

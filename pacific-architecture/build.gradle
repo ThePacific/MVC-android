@@ -108,6 +108,8 @@ allprojects { project ->
                     details.useVersion versions.androidX.customview
                 } else if (group == 'androidx.arch.core') {
                     details.useVersion versions.androidX.arch
+                } else if (group == 'androidx.annotation' && name == 'annotation') {
+                    details.useVersion versions.androidX.annotation
                 }
             }
         }
