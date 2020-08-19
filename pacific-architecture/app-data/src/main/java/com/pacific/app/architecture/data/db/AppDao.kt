@@ -9,7 +9,7 @@ import androidx.room.Update
  *  1. SELECT * FROM table LIMIT offset_count , row_count
  *  2. SELECT * FROM table LIMIT row_count OFFSET offset_count
  *  3. SELECT * FROM table LIMIT row_count
- *  4. SELECT * FROM table ORDER BY column_1 ASC/DESC
+ *  4. SELECT * FROM table ORDER BY column ASC/DESC
  */
 interface AppDao<E> {
 
