@@ -1,7 +1,7 @@
 package com.pacific.app.architecture
 
 import androidx.multidex.MultiDexApplication
-import com.pacific.app.core.CoreLib
+import com.pacific.app.architecture.core.CoreLib
 
 class MyApp : MultiDexApplication() {
 
