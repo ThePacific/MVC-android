@@ -2,5 +2,6 @@ apply from: "../gradle/jvm_module.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(":guava-jvm")
+    implementation 'com.github.thepacific:guava-jvm:2.0.1'
+    // implementation project(":guava-jvm")
 }

@@ -3,8 +3,11 @@ apply from: "../gradle/android_module.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api project(":guava-jvm")
-    api project(":guava-android")
-    api project(":guava-android-ui")
+    api 'com.github.thepacific:guava-jvm:2.0.1'
+    api 'com.github.thepacific:guava-android:2.0.1'
+    api 'com.github.thepacific:guava-android-ui:2.0.1'
+    // api project(":guava-jvm")
+    // api project(":guava-android")
+    // api project(":guava-android-ui")
     api project(":app-data")
 }
