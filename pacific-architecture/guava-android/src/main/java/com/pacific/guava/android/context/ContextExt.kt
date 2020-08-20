@@ -12,7 +12,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.content.res.ResourcesCompat
-import com.pacific.guava.math.MathUtils
+import com.pacific.guava.jvm.math.MathUtils
 
 fun Context.putTextToClipboard(text: String) {
     val manager: ClipboardManager = getSystemService()!!

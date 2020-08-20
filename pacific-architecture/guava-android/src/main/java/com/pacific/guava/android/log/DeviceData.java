@@ -20,7 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.pacific.guava.date.DateUtils;
+import com.pacific.guava.jvm.date.DateUtils;
 
 import java.io.File;
 import java.util.Date;

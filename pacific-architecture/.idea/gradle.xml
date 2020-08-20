@@ -11,9 +11,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/app-core" />
-            <option value="$PROJECT_DIR$/app-data" />
             <option value="$PROJECT_DIR$/guava-android" />
             <option value="$PROJECT_DIR$/guava-android-ui" />
             <option value="$PROJECT_DIR$/guava-jvm" />

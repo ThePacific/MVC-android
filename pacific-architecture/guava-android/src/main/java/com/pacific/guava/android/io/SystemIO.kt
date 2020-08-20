@@ -7,8 +7,8 @@ import android.provider.MediaStore
 import android.text.TextUtils
 import androidx.annotation.WorkerThread
 import com.pacific.guava.android.ensureWorkThread
-import com.pacific.guava.io.ensureFileSeparator
-import com.pacific.guava.io.mkdirs
+import com.pacific.guava.jvm.io.ensureFileSeparator
+import com.pacific.guava.jvm.io.mkdirs
 import okhttp3.internal.closeQuietly
 import okhttp3.internal.io.FileSystem
 import okio.buffer

@@ -1,13 +1,13 @@
 # Project
 This is one kind of boilerplate for writing android apps using the android official architecture component approach. You can download it, modify it and start building your apps on top of it.
 
-[![Download](https://img.shields.io/maven-central/v/com.github.thepacific/guava.svg)](https://search.maven.org/artifact/com.github.thepacific/guava)
+[![Download](https://img.shields.io/maven-central/v/com.github.thepacific/guava-jvm.svg)](https://search.maven.org/artifact/com.github.thepacific/guava-jvm)
 
 ### Setup
 ```groovy
-implementation 'com.github.thepacific:guava:2.0.0'
-implementation 'com.github.thepacific:guava-android:2.0.0'
-implementation 'com.github.thepacific:guava-android-ui:2.0.0'
+implementation 'com.github.thepacific:guava-jvm:2.0.1'
+implementation 'com.github.thepacific:guava-android:2.0.1'
+implementation 'com.github.thepacific:guava-android-ui:2.0.1'
 ```
 
 ### Dependencies
@@ -111,7 +111,7 @@ Google Developers Codelabs provide a guided, tutorial, hands-on coding experienc
 ## License
 
 ```license
-Copyright 2019 thepacific.com
+Copyright 2020 thepacific.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
