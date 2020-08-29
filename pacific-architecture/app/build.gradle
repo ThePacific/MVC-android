@@ -5,6 +5,22 @@ android {
     defaultConfig {
         applicationId "com.pacific.app.architecture"
     }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a'
+            universalApk true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 dependencies {

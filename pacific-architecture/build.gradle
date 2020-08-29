@@ -26,7 +26,7 @@ buildscript {
 }
 
 allprojects { project ->
-    apply plugin: 'org.jlleitschuh.gradle.ktlint'
+
     repositories {
         google()
         jcenter()
@@ -36,48 +36,9 @@ allprojects { project ->
         maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
         maven { url "https://jitpack.io" }
         mavenLocal()
-    }
 
-    repositories {
         flatDir {
             dirs 'libs'
-        }
-    }
-
-    plugins.withType(com.android.build.gradle.BasePlugin).configureEach { plugin ->
-        plugin.extension.compileOptions {
-            coreLibraryDesugaringEnabled true
-            sourceCompatibility = JavaVersion.VERSION_1_8
-            targetCompatibility = JavaVersion.VERSION_1_8
-        }
-    }
-
-    tasks.withType(JavaCompile).configureEach { task ->
-        task.sourceCompatibility = JavaVersion.VERSION_1_8
-        task.targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach { task ->
-        task.kotlinOptions {
-            jvmTarget = "1.8"
-            suppressWarnings = true
-        }
-    }
-
-    if (project.plugins.hasPlugin('kotlin-android-extensions')) {
-        androidExtensions {
-            experimental = true
-        }
-    }
-
-    if (project.plugins.hasPlugin('kotlin-kapt')) {
-        kapt {
-            correctErrorTypes = true
-            useBuildCache = true
-
-            javacOptions {
-                option("-Xmaxerrs", 1000)
-            }
         }
     }
 
@@ -117,17 +78,28 @@ allprojects { project ->
             }
         }
     }
+
+    if (project.plugins.hasPlugin('kotlin-android-extensions')) {
+        androidExtensions {
+            experimental = true
+        }
+    }
+
+    if (project.plugins.hasPlugin('kotlin-kapt')) {
+        kapt {
+            correctErrorTypes = true
+            useBuildCache = true
+
+            javacOptions {
+                option("-Xmaxerrs", 1000)
+            }
+        }
+    }
 }
 
 subprojects { project ->
     afterEvaluate {
         if (project.plugins.hasPlugin('android') || project.plugins.hasPlugin('android-library')) {
-
-            boolean isAndroidLibrary = project.plugins.hasPlugin('android-library')
-            boolean isRelease = project.gradle.startParameter.taskNames.any {
-                it.toLowerCase().contains('release')
-            }
-
             android {
                 compileSdkVersion buildConfig.compileSdk
                 buildToolsVersion buildConfig.buildTools
@@ -147,20 +119,14 @@ subprojects { project ->
                     dataBinding = true
                 }
 
-                buildTypes {
-                    release {
-                        minifyEnabled(isRelease && !isAndroidLibrary)
-                        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-                    }
+                compileOptions {
+                    coreLibraryDesugaringEnabled true
+                    sourceCompatibility JavaVersion.VERSION_1_8
+                    targetCompatibility JavaVersion.VERSION_1_8
                 }
 
-                splits {
-                    abi {
-                        enable true
-                        reset()
-                        include "armeabi-v7a", 'arm64-v8a', "x86"
-                        universalApk true
-                    }
+                kotlinOptions {
+                    jvmTarget = '1.8'
                 }
 
                 lintOptions {
@@ -175,6 +141,8 @@ subprojects { project ->
                 }
 
                 packagingOptions {
+                    pickFirst 'lib/*/libc++_shared.so'
+
                     exclude 'META-INF/README'
                     exclude 'META-INF/README.txt'
                     exclude 'META-INF/readme'
@@ -209,7 +177,16 @@ subprojects { project ->
                 }
             }
         } else {
-            println("JVM project")
+            compileJava {
+                targetCompatibility = "1.8"
+                sourceCompatibility = "1.8"
+            }
+
+            compileKotlin {
+                kotlinOptions {
+                    jvmTarget = "1.8"
+                }
+            }
         }
     }
 }

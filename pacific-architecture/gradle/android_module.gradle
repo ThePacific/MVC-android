@@ -2,6 +2,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlinx-serialization'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
 
 android {
 }
@@ -62,16 +63,12 @@ dependencies {
     kapt dep.dagger.compiler
 
     implementation dep.mmkv
-    implementation dep.mvRx
-    implementation dep.coordinators
     implementation dep.reflection
     implementation dep.timber
     implementation dep.gravitySnapHelper
     debugImplementation dep.leakcanary
 
     implementation dep.flexbox
-    implementation dep.epoxy.epoxy
-    kapt dep.epoxy.processor
 
     compileOnly dep.androidX.annotation.annotation
     implementation dep.androidX.material
