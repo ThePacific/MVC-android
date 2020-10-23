@@ -51,9 +51,7 @@ sealed class Source<out T> {
     }
 
     fun <R> swapType(): Source<R> = when (this) {
-        is Error -> Error(
-            throwable
-        )
+        is Error -> Error(throwable)
         is Success -> throw IllegalStateException("cannot swap type for Success.Data")
     }
 }

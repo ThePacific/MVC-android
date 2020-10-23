@@ -1,0 +1,9 @@
+apply from: "../gradle/android_lib_module.gradle"
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(":guava-jvm")
+    api project(":guava-data")
+    api project(":guava-android")
+    api project(":guava-android-ui")
+}

@@ -1,5 +1,5 @@
 /**
- * 1. link@ https://handstandsam.com/2017/05/04/identifying-an-android-device/
+ * link@ https://handstandsam.com/2017/05/04/identifying-an-android-device/
  */
 package com.pacific.guava.android.log
 
@@ -29,8 +29,8 @@ const val MIPS_64 = 7
  * Returns the unique device ID, for example, the IMEI for GSM and the MEID or ESN for CDMA phones.
  * Return null if device ID is not available
  */
-@SuppressLint("all")
 @SuppressWarnings("deprecation")
+@SuppressLint("MissingPermission")
 @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
 fun getIMEI(context: Context): String? {
     val telephonyManager = ContextCompat.getSystemService(context, TelephonyManager::class.java)!!
@@ -50,7 +50,7 @@ fun getIMEI(context: Context): String? {
  * Returns the phone number string for line 1, for example, the MSISDN or a GSM phone.
  * Return null if it is unavailable.
  */
-@SuppressLint("all")
+@SuppressLint("MissingPermission")
 @RequiresPermission(
     anyOf = [
         Manifest.permission.READ_PHONE_STATE,
@@ -72,7 +72,7 @@ fun getPhoneNumber(context: Context): String? {
  * Returns the serial number of the SIM, if applicable.
  * Return null if it is unavailable
  */
-@SuppressLint("all")
+@SuppressLint("MissingPermission")
 @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
 fun getICCID(context: Context): String? {
     val telephonyManager = ContextCompat.getSystemService(context, TelephonyManager::class.java)!!
@@ -97,6 +97,7 @@ fun getAndroidId(context: Context): String? {
     return uniqueId
 }
 
+@SuppressLint("MissingPermission")
 fun uniqueId(context: Context): String {
     var uniqueId: String? = getIMEI(context)
     if (uniqueId.isNullOrEmpty()) {

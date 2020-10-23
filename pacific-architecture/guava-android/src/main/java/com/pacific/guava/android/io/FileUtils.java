@@ -1,9 +1,5 @@
 package com.pacific.guava.android.io;
 
-/**
- * @link https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/os/FileUtils.java
- */
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,7 +9,6 @@ import android.provider.DocumentsContract.Document;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -74,7 +69,7 @@ public class FileUtils {
     }
 
     /**
-     * Perform an fsync on the given FileOutputStream.  The stream at this
+     * Perform an f-sync on the given FileOutputStream.  The stream at this
      * point must be flushed but not yet closed.
      */
     public static boolean sync(FileOutputStream stream) {
@@ -109,6 +104,7 @@ public class FileUtils {
      * @return the contents of the file, possibly truncated
      * @throws IOException if something goes wrong reading the file
      */
+    @NonNull
     public static String readTextFile(File file, int max, String ellipsis) throws IOException {
         InputStream input = new FileInputStream(file);
         // wrapping a BufferedInputStream around it because when reading /proc with unbuffered
@@ -347,6 +343,7 @@ public class FileUtils {
      * Mutate the given filename to make it valid for an ext4 filesystem,
      * replacing any invalid characters with "_".
      */
+    @NonNull
     public static String buildValidExtFilename(String name) {
         if (TextUtils.isEmpty(name) || ".".equals(name) || "..".equals(name)) {
             return "(invalid)";
@@ -396,6 +393,7 @@ public class FileUtils {
      * Mutate the given filename to make it valid for a FAT filesystem,
      * replacing any invalid characters with "_".
      */
+    @NonNull
     public static String buildValidFatFilename(String name) {
         if (TextUtils.isEmpty(name) || ".".equals(name) || "..".equals(name)) {
             return "(invalid)";
@@ -434,12 +432,14 @@ public class FileUtils {
         }
     }
 
+    @NonNull
     public static String rewriteAfterRename(File beforeDir, File afterDir, String path) {
         if (path == null) return null;
         final File result = rewriteAfterRename(beforeDir, afterDir, new File(path));
         return (result != null) ? result.getAbsolutePath() : null;
     }
 
+    @NonNull
     public static String[] rewriteAfterRename(File beforeDir, File afterDir, String[] paths) {
         if (paths == null) return null;
         final String[] result = new String[paths.length];
@@ -454,6 +454,7 @@ public class FileUtils {
      * "after" directory. For example, {@code /before/foo/bar.txt} would become
      * {@code /after/foo/bar.txt}.
      */
+    @NonNull
     public static File rewriteAfterRename(File beforeDir, File afterDir, File file) {
         if (file == null || beforeDir == null || afterDir == null) return null;
         if (contains(beforeDir, file)) {
@@ -489,6 +490,7 @@ public class FileUtils {
      *
      * @throws FileNotFoundException
      */
+    @NonNull
     public static File buildUniqueFile(File parent, String mimeType, String displayName)
             throws FileNotFoundException {
         final String[] parts = splitFileName(mimeType, displayName);
@@ -499,8 +501,8 @@ public class FileUtils {
      * Generates a unique file name under the given parent directory, keeping
      * any extension intact.
      */
-    public static File buildUniqueFile(File parent, String displayName)
-            throws FileNotFoundException {
+    @NonNull
+    public static File buildUniqueFile(File parent, String displayName) throws FileNotFoundException {
         final String name;
         final String ext;
         // Extract requested extension from display name
@@ -521,6 +523,7 @@ public class FileUtils {
      * extension is regarded as a part of filename and default extension for that MIME type is
      * appended.
      */
+    @NonNull
     public static String[] splitFileName(String mimeType, String displayName) {
         String name;
         String ext;
@@ -560,6 +563,7 @@ public class FileUtils {
         return new String[]{name, ext};
     }
 
+    @NonNull
     private static File buildFile(File parent, String name, String ext) {
         if (TextUtils.isEmpty(ext)) {
             return new File(parent, name);
@@ -568,8 +572,8 @@ public class FileUtils {
         }
     }
 
-    public static @NonNull
-    String[] listOrEmpty(@Nullable File dir) {
+    @NonNull
+    public static String[] listOrEmpty(@Nullable File dir) {
         if (dir == null) return new String[0];
         final String[] res = dir.list();
         if (res != null) {
@@ -579,8 +583,8 @@ public class FileUtils {
         }
     }
 
-    public static @NonNull
-    File[] listFilesOrEmpty(@Nullable File dir) {
+    @NonNull
+    public static File[] listFilesOrEmpty(@Nullable File dir) {
         if (dir == null) return EMPTY;
         final File[] res = dir.listFiles();
         if (res != null) {
@@ -590,8 +594,8 @@ public class FileUtils {
         }
     }
 
-    public static @NonNull
-    File[] listFilesOrEmpty(@Nullable File dir, FilenameFilter filter) {
+    @NonNull
+    public static File[] listFilesOrEmpty(@Nullable File dir, FilenameFilter filter) {
         if (dir == null) return EMPTY;
         final File[] res = dir.listFiles(filter);
         if (res != null) {
@@ -601,8 +605,8 @@ public class FileUtils {
         }
     }
 
-    public static @Nullable
-    File newFileOrNull(@Nullable String path) {
+    @Nullable
+    public static File newFileOrNull(@Nullable String path) {
         return (path != null) ? new File(path) : null;
     }
 
@@ -611,8 +615,8 @@ public class FileUtils {
      * Returns a {@code File} object representing the directory on success, {@code null} on
      * failure.
      */
-    public static @Nullable
-    File createDir(File baseDir, String name) {
+    @Nullable
+    public static File createDir(File baseDir, String name) {
         final File dir = new File(baseDir, name);
         if (dir.exists()) {
             return dir.isDirectory() ? dir : null;
@@ -638,9 +642,6 @@ public class FileUtils {
         return val * pow;
     }
 
-    /**
-     * {}
-     */
     @TargetApi(21)
     public static int translateModePfdToPosix(int mode) {
         int res = 0;
@@ -673,108 +674,38 @@ public class FileUtils {
         return dir != null && dir.exists() && dir.isDirectory();
     }
 
-    public static boolean isSdCardAvailable() {
-        String externalStorageState = Environment.getExternalStorageState();
-        return "mounted".equals(externalStorageState);
-    }
-
+    @Nullable
     public static File createFile(Bitmap bitmap, Context context, String fileName) {
-        if (!FileUtils.isSdCardAvailable()) {
-            Toast.makeText(context, "您的sd卡不可用!", Toast.LENGTH_LONG).show();
-            return null;
-        } else {
-            System.out.println("createFile1:" + bitmap.getRowBytes() * bitmap.getHeight() / 1024 + "kb");
-            File file = new File(getIndividualCacheDirectory(context), fileName);
-            if (file.exists()) {
-                file.delete();
-            }
-
-            int quality = 90;
-
-            try {
-                file.createNewFile();
-                FileOutputStream e = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, e);
-                System.out.println("createFile2:第一次/" + file.length() / 1024L + "kb");
-
-                while (file.length() / 1024L > 100L && quality > 0) {
-                    //先重置FileOutputStream
-                    e.close();
-                    e = new FileOutputStream(file);
-
-                    quality -= 10;
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, e);
-                }
-
-                System.out.println("createFile2:最后一次/" + file.length() / 1024L + "kb");
-            } catch (IOException var5) {
-                var5.printStackTrace();
-            }
-
-            return file;
+        File file = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), fileName);
+        if (file.exists()) {
+            file.delete();
         }
+
+        int quality = 90;
+
+        try {
+            file.createNewFile();
+            FileOutputStream e = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, e);
+
+            while (file.length() / 1024L > 100L && quality > 0) {
+                e.close();
+                e = new FileOutputStream(file);
+
+                quality -= 10;
+                bitmap.compress(Bitmap.CompressFormat.JPEG, quality, e);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return file;
     }
 
+    @Nullable
     public static File createFile(Bitmap bitmap, Context context) {
         return createFile(bitmap, context, System.currentTimeMillis() + ".jpg");
-    }
-
-    public static File getCacheDirectory(Context context) {
-        return getCacheDirectory(context, true);
-    }
-
-    public static File getIndividualCacheDirectory(Context context) {
-        File cacheDir = getCacheDirectory(context);
-        File individualCacheDir = new File(cacheDir, "uil-images");
-        if (!individualCacheDir.isDirectory()) {
-            individualCacheDir.delete();
-        }
-
-        if (!individualCacheDir.exists() && !individualCacheDir.mkdir()) {
-            individualCacheDir = cacheDir;
-        }
-
-        return individualCacheDir;
-    }
-
-    public static File getCacheDirectory(Context context, boolean preferExternal) {
-        File appCacheDir = null;
-        if (preferExternal && "mounted".equals(Environment.getExternalStorageState()) && hasExternalStoragePermission(context)) {
-            appCacheDir = getExternalCacheDir(context);
-        }
-
-        if (appCacheDir == null) {
-            appCacheDir = context.getCacheDir();
-        }
-
-        if (appCacheDir == null) {
-            String cacheDirPath = "/data/data/" + context.getPackageName() + "/cache/";
-            appCacheDir = new File(cacheDirPath);
-        }
-
-        return appCacheDir;
-    }
-
-    private static File getExternalCacheDir(Context context) {
-        File dataDir = new File(new File(Environment.getExternalStorageDirectory(), "Android"), "data");
-        File appCacheDir = new File(new File(dataDir, context.getPackageName()), "cache");
-        if (!appCacheDir.exists()) {
-            if (!appCacheDir.mkdirs()) {
-                return null;
-            }
-
-            try {
-                (new File(appCacheDir, ".nomedia")).createNewFile();
-            } catch (IOException var4) {
-            }
-        }
-
-        return appCacheDir;
-    }
-
-    private static boolean hasExternalStoragePermission(Context context) {
-        int perm = context.checkCallingOrSelfPermission("android.permission.WRITE_EXTERNAL_STORAGE");
-        return perm == 0;
     }
 }
 

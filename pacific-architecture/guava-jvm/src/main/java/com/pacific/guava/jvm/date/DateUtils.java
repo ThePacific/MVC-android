@@ -9,9 +9,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/**
- * @link https://github.com/urbanairship/android-library/blob/master/urbanairship-core/src/main/java/com/urbanairship/util/DateUtils.java
- */
 public class DateUtils {
 
     private DateUtils() {
@@ -80,7 +77,7 @@ public class DateUtils {
     }
 
     public static Date fromIso8601(@NonNull String timeStamp) throws ParseException {
-        //noinspection ConstantConditions
+        // noinspection ConstantConditions
         if (timeStamp == null) {
             throw new ParseException("Unable to parse null timestamp", -1);
         }

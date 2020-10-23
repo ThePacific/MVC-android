@@ -19,6 +19,41 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 @WorkerThread
+fun copy(targetDir: String, sourceFile: String, overwrite: Boolean): File? {
+    return copy(targetDir, File(sourceFile), overwrite)
+}
+
+@WorkerThread
+fun copy(targetDir: String, sourceFile: File, overwrite: Boolean): File? {
+    ensureWorkThread()
+    try {
+        val file = File(ensureFileSeparator(mkdirs(targetDir).absolutePath) + sourceFile.name)
+        if (FileSystem.SYSTEM.exists(file)) {
+            if (overwrite) {
+                FileSystem.SYSTEM.delete(file)
+            } else {
+                return file
+            }
+        }
+        file.createNewFile()
+        val source = sourceFile.source().buffer()
+        val sink = FileSystem.SYSTEM.sink(file).buffer()
+        val bytes = ByteArray(1024)
+        var nRead: Int = source.read(bytes)
+        while (nRead != -1) {
+            sink.write(bytes, 0, nRead)
+            nRead = source.read(bytes)
+        }
+        source.closeQuietly()
+        sink.closeQuietly()
+        return file
+    } catch (e: IOException) {
+        e.printStackTrace()
+        return null
+    }
+}
+
+@WorkerThread
 fun copyFromAsset(context: Context, name: String, path: String, overwrite: Boolean) {
     ensureWorkThread()
     try {

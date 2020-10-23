@@ -21,7 +21,7 @@ fun RecyclerView.disableDefaultItemAnimator() {
     }
 }
 
-fun RecyclerView.keepItemViewVisible(position: Int) {
+fun RecyclerView.keepItemViewVisible(position: Int, smoothScroll: Boolean) {
     if (position < 0) return
     this.layoutManager?.let {
         val itemView = it.findViewByPosition(position)
@@ -30,7 +30,11 @@ fun RecyclerView.keepItemViewVisible(position: Int) {
             return
         }
         if (it.isViewPartiallyVisible(itemView, false, true)) {
-            this.scrollToPosition(position)
+            if (smoothScroll) {
+                this.smoothScrollToPosition(position)
+            } else {
+                this.scrollToPosition(position)
+            }
         }
     }
 }

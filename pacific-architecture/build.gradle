@@ -3,7 +3,9 @@
 buildscript {
     apply from: file('gradle/dependencies.gradle')
     ext {
-        kotlin_version = '1.4.0'
+        kotlin_version = '1.4.10'
+        versions.kotlin = '1.4.10'
+        versions.kotlin = '1.4.10'
     }
     repositories {
         google()
@@ -16,18 +18,20 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath "com.android.tools.build:gradle:4.2.0-alpha14"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.androidX.navigation}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "org.jetbrains.kotlin:kotlin-serialization:${versions.kotlin}"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:${versions.ktLint}"
         classpath "com.vanniktech:gradle-maven-publish-plugin:${versions.mavenPublish}"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${versions.kotlin}"
     }
 }
 
 allprojects { project ->
 
     repositories {
+        mavenLocal()
         google()
         jcenter()
         mavenCentral()
@@ -35,7 +39,6 @@ allprojects { project ->
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
         maven { url "https://jitpack.io" }
-        mavenLocal()
 
         flatDir {
             dirs 'libs'

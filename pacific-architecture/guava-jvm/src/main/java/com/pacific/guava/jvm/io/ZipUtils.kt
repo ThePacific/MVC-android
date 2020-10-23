@@ -52,7 +52,6 @@ fun unzip(zipFile: File, directory: String) {
             zipEntry = zipInputStream.nextEntry
         }
         source.closeQuietly()
-        source.closeQuietly()
     } catch (e: IOException) {
         e.printStackTrace()
     }

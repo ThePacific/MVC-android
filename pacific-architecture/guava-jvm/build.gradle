@@ -1,4 +1,4 @@
-apply from: "../gradle/jvm_lib_module.gradle"
+apply from: "../gradle/jvm_module.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

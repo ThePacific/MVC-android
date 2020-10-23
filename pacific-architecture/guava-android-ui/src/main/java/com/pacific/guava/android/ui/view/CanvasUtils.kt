@@ -1,5 +1,3 @@
-@file:JvmName("CanvasUtils")
-
 package com.pacific.guava.android.ui.view
 
 import android.graphics.Canvas
