@@ -27,10 +27,8 @@ fun createPoorSSLOkHttpClient(loggerTag: String): OkHttpClient {
     val dataModule = SimpleDataModule()
     val poorX509TrustManager = dataModule.providePoorX509TrustManager()
     val poorSSLContext = dataModule.providePoorSSLContext(poorX509TrustManager)
-    val httpLoggingInterceptorLogger = object : HttpLoggingInterceptor.Logger {
-        override fun log(message: String) {
-            Guava.timber.d(loggerTag, message)
-        }
+    val httpLoggingInterceptorLogger = HttpLoggingInterceptor.Logger { message ->
+        Guava.timber.d(loggerTag, message)
     }
     val httpLoggingInterceptor = dataModule.provideHttpLoggingInterceptor(
         httpLoggingInterceptorLogger
