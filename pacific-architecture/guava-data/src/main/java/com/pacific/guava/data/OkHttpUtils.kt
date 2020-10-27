@@ -24,15 +24,15 @@ fun cancelOkHttp3Request(client: OkHttpClient) {
 }
 
 fun createPoorSSLOkHttpClient(loggerTag: String): OkHttpClient {
-    val httpsModule = SimpleDataModule()
-    val poorX509TrustManager = httpsModule.providePoorX509TrustManager()
-    val poorSSLContext = httpsModule.providePoorSSLContext(poorX509TrustManager)
+    val dataModule = SimpleDataModule()
+    val poorX509TrustManager = dataModule.providePoorX509TrustManager()
+    val poorSSLContext = dataModule.providePoorSSLContext(poorX509TrustManager)
     val httpLoggingInterceptorLogger = object : HttpLoggingInterceptor.Logger {
         override fun log(message: String) {
             Guava.timber.d(loggerTag, message)
         }
     }
-    val httpLoggingInterceptor = httpsModule.provideHttpLoggingInterceptor(
+    val httpLoggingInterceptor = dataModule.provideHttpLoggingInterceptor(
         httpLoggingInterceptorLogger
     )
     return OkHttpClient().newBuilder()
