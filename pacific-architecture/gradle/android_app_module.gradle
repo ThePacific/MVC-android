@@ -5,6 +5,48 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'org.jlleitschuh.gradle.ktlint'
 
+Properties localProperties = new Properties()
+localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+android {
+
+    signingConfigs {
+        debug {
+            storeFile file(localProperties.getProperty("RELEASE_STORE_FILE"))
+            storePassword localProperties.getProperty("RELEASE_STORE_PASSWORD")
+            keyAlias localProperties.getProperty("RELEASE_KEY_ALIAS")
+            keyPassword localProperties.getProperty("RELEASE_KEY_PASSWORD")
+        }
+    }
+
+    buildTypes {
+
+        debug {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            ndk {
+                abiFilters 'arm64-v8a', 'x86'
+            }
+        }
+
+        release {
+            signingConfig signingConfigs.debug
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            ndk {
+                abiFilters 'arm64-v8a'
+            }
+        }
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'dep', include: ['*.jar'])
 
@@ -156,13 +198,12 @@ dependencies {
     implementation dep.androidX.compose.material
     implementation dep.androidX.compose.uiTooling
 
+    implementation dep.pacificAdapter
+
+
     // implementation dep.company.guavaJvm
     // implementation dep.company.guavaAndroid
     // implementation dep.company.guavaMvvm
     // implementation dep.company.guavaAndroidUi
     // implementation dep.company.guavaData
-
-    // implementation dep.company.extGlide
-    // implementation dep.company.extRxjava3
-    // implementation dep.company.extExo
 }

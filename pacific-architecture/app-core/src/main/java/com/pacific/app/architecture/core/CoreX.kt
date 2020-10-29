@@ -3,18 +3,23 @@ package com.pacific.app.architecture.core
 import android.app.Application
 import android.os.StrictMode
 import androidx.room.Room
+import com.pacific.app.architecture.core.base.AppDatabase
 import com.pacific.app.architecture.core.base.AppPrefs
 import com.pacific.app.architecture.core.base.BugTree
-import com.pacific.app.architecture.core.base.AppDatabase
 import com.pacific.app.architecture.store.StoreX
 import com.pacific.guava.android.mvvm.AndroidX
 import com.pacific.guava.android.mvvm.AppContext
 import com.pacific.guava.android.mvvm.AppManager
+import com.pacific.guava.jvm.domain.LibX
 import timber.log.Timber
 
-object CoreX {
+object CoreX : LibX {
 
     fun setup(app: Application, isDebug: Boolean) {
+        if (isAlreadyInitialized) {
+            return
+        }
+
         if (isDebug) {
             enableStrictMode()
         } else {
@@ -28,9 +33,9 @@ object CoreX {
     }
 
     private fun createAppDatabase(): AppDatabase {
-        return Room.databaseBuilder(AndroidX.myApp, AppDatabase::class.java, "sql_core.db3")
-            .addCallback(AppDatabase.Callback())
-            .addMigrations()
+        return Room.databaseBuilder(AndroidX.myApp, AppDatabase::class.java, "coreX_v1.db3")
+            .addCallback(AppDatabase.DbCallback())
+            .addMigrations(AppDatabase.DbMigration(1, 1))
             .build()
     }
 
@@ -48,5 +53,8 @@ object CoreX {
                 .build()
         )
     }
+
+    override val isAlreadyInitialized: Boolean
+        get() = AndroidX.isAlreadyInitialized || StoreX.isAlreadyInitialized
 }
 

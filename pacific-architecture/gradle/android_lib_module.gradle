@@ -5,6 +5,9 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'com.vanniktech.maven.publish'
 
+Properties localProperties = new Properties()
+localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
 
     libraryVariants.all {
@@ -160,17 +163,14 @@ dependencies {
     implementation dep.androidX.multidex.multidex
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
 mavenPublish {
     releaseSigningEnabled = true
     targets {
         uploadArchives {
-            releaseRepositoryUrl = properties.getProperty("RELEASE_REPOSITORY_URL")
-            snapshotRepositoryUrl = properties.getProperty("SNAPSHOT_REPOSITORY_URL")
-            repositoryUsername = properties.getProperty("SONATYPE_NEXUS_USERNAME")
-            repositoryPassword = properties.getProperty("SONATYPE_NEXUS_PASSWORD")
+            releaseRepositoryUrl = localProperties.getProperty("RELEASE_REPOSITORY_URL")
+            snapshotRepositoryUrl = localProperties.getProperty("SNAPSHOT_REPOSITORY_URL")
+            repositoryUsername = localProperties.getProperty("SONATYPE_NEXUS_USERNAME")
+            repositoryPassword = localProperties.getProperty("SONATYPE_NEXUS_PASSWORD")
         }
 
         installArchives {

@@ -13,13 +13,13 @@ object Values {
     @Suppress("UNCHECKED_CAST")
     fun <T> get(key: String): T? {
         val v = cache[key]
-        return if (null == v) null else (v as T)
+        return if (v == null) null else (v as T)
     }
 
     @Suppress("UNCHECKED_CAST")
     fun <T> take(key: String): T? {
         val v = cache.remove(key)
-        return if (null == v) null else (v as T)
+        return if (v == null) null else (v as T)
     }
 
     fun clear() = cache.clear()
