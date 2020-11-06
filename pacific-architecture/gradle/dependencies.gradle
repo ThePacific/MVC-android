@@ -253,7 +253,7 @@ buildscript {
                     'guavaAndroid'  : "com.github.thepacific:guava-android:${versions.theGuava}",
                     'guavaAndroidUi': "com.github.thepacific:guava-android-ui:${versions.theGuava}",
                     'guavaData'     : "com.github.thepacific:guava-data:${versions.theGuava}",
-                    'guavaMvvm'     : "com.github.thepacific:guava-android-mvvm:${versions.theGuava}"
+                    'guavaAndroidMvvm'     : "com.github.thepacific:guava-android-mvvm:${versions.theGuava}"
             ],
             'androidX'         : [
                     'compose'            : [
