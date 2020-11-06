@@ -5,9 +5,8 @@ import com.pacific.app.architecture.store.dagger.StoreComponent
 import com.pacific.app.architecture.store.db.PlatformDatabase
 import com.pacific.app.architecture.store.file.PlatformPrefs
 import com.pacific.guava.data.PlatformContext
-import com.pacific.guava.jvm.domain.LibX
 
-object StoreX : LibX {
+object StoreX {
 
     @get:JvmName("component")
     lateinit var component: StoreComponent
@@ -24,7 +23,7 @@ object StoreX : LibX {
         platformContext: PlatformContext,
         platformPrefs: PlatformPrefs
     ) {
-        if (isAlreadyInitialized) {
+        if (::component.isInitialized) {
             return
         }
 
@@ -34,8 +33,5 @@ object StoreX : LibX {
             platformPrefs
         )
     }
-
-    override val isAlreadyInitialized: Boolean
-        get() = ::component.isInitialized
 }
 

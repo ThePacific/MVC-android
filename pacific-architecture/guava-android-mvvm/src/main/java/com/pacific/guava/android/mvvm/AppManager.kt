@@ -41,7 +41,9 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
 
     @SuppressLint("MissingPermission")
     fun initialize() {
-        if (isInitialized) return
+        if (isInitialized) {
+            return
+        }
 
         isInitialized = true
         AndroidX.myApp.registerActivityLifecycleCallbacks(this)

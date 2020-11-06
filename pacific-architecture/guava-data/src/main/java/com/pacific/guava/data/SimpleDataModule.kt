@@ -25,10 +25,12 @@ class SimpleDataModule : DataModule {
         return object : X509TrustManager {
             override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()
 
+            @Suppress("TrustAllX509TrustManager")
             @Throws(CertificateException::class)
             override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
             }
 
+            @Suppress("TrustAllX509TrustManager")
             @Throws(CertificateException::class)
             override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
             }

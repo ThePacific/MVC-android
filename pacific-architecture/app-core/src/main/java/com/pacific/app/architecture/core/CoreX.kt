@@ -10,16 +10,11 @@ import com.pacific.app.architecture.store.StoreX
 import com.pacific.guava.android.mvvm.AndroidX
 import com.pacific.guava.android.mvvm.AppContext
 import com.pacific.guava.android.mvvm.AppManager
-import com.pacific.guava.jvm.domain.LibX
 import timber.log.Timber
 
-object CoreX : LibX {
+object CoreX {
 
     fun setup(app: Application, isDebug: Boolean) {
-        if (isAlreadyInitialized) {
-            return
-        }
-
         if (isDebug) {
             enableStrictMode()
         } else {
@@ -53,8 +48,5 @@ object CoreX : LibX {
                 .build()
         )
     }
-
-    override val isAlreadyInitialized: Boolean
-        get() = AndroidX.isAlreadyInitialized || StoreX.isAlreadyInitialized
 }
 
