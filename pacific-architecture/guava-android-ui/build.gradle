@@ -2,6 +2,8 @@ apply from: "../gradle/android_lib_module.gradle"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(":guava-jvm")
-    implementation project(":guava-android")
+    // implementation project(":guava-jvm")
+    // implementation project(":guava-android")
+    implementation dep.pacific.guavaJvm
+    implementation dep.pacific.guavaAndroid
 }

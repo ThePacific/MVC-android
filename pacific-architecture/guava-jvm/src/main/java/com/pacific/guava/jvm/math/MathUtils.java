@@ -210,6 +210,7 @@ public final class MathUtils {
         return divide(a, b, scale, BigDecimal.ROUND_DOWN);
     }
 
+    @SuppressWarnings("deprecation")
     public static double divide(double a, double b, int scale, int roundingMode) {
         BigDecimal b1 = double2BigDecimal(a);
         BigDecimal b2 = double2BigDecimal(b);
@@ -224,6 +225,7 @@ public final class MathUtils {
         return divide(a, b, scale, BigDecimal.ROUND_DOWN);
     }
 
+    @SuppressWarnings("deprecation")
     public static float divide(float a, float b, int scale, int roundingMode) {
         BigDecimal b1 = float2BigDecimal(a);
         BigDecimal b2 = float2BigDecimal(b);

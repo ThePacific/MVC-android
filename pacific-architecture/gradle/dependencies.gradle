@@ -59,7 +59,7 @@ buildscript {
             'flexbox'          : '2.0.1',
             'fabric'           : '1.4.8',
             'store'            : '4.0.0-beta01',
-            'theGuava'         : '0.0.1',
+            'theGuava'         : '2.1.0',
             'pacificAdapter'   : '3.0.3',
             'exoplayer'        : '2.12.0',
 
@@ -249,11 +249,11 @@ buildscript {
                     'okhttp'         : "com.google.android.exoplayer:extension-okhttp:${versions.exoplayer}"
             ],
             'pacific'          : [
-                    'guavaJvm'      : "com.pacific.guava:guava-jvm:${versions.theGuava}",
-                    'guavaAndroid'  : "com.pacific.guava:guava-android:${versions.theGuava}",
-                    'guavaAndroidUi': "com.pacific.guava:guava-android-ui:${versions.theGuava}",
-                    'guavaData'     : "com.pacific.guava:guava-data:${versions.theGuava}",
-                    'guavaMvvm'     : "com.pacific.guava:guava-android-mvvm:${versions.theGuava}"
+                    'guavaJvm'      : "com.github.thepacific:guava-jvm:${versions.theGuava}",
+                    'guavaAndroid'  : "com.github.thepacific:guava-android:${versions.theGuava}",
+                    'guavaAndroidUi': "com.github.thepacific:guava-android-ui:${versions.theGuava}",
+                    'guavaData'     : "com.github.thepacific:guava-data:${versions.theGuava}",
+                    'guavaMvvm'     : "com.github.thepacific:guava-android-mvvm:${versions.theGuava}"
             ],
             'androidX'         : [
                     'compose'            : [
