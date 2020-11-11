@@ -38,7 +38,9 @@ class StoreModule : DataModule {
 
     @Singleton
     @Provides
-    override fun provideHttpLoggingInterceptor(httpLoggingInterceptorLogger: HttpLoggingInterceptor.Logger): HttpLoggingInterceptor {
+    override fun provideHttpLoggingInterceptor(
+        httpLoggingInterceptorLogger: HttpLoggingInterceptor.Logger
+    ): HttpLoggingInterceptor {
         return delegate.provideHttpLoggingInterceptor(httpLoggingInterceptorLogger)
     }
 

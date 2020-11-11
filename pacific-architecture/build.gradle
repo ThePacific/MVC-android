@@ -17,7 +17,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.0-alpha15"
+        classpath 'com.android.tools.build:gradle:4.2.0-alpha16'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.androidX.navigation}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "org.jetbrains.kotlin:kotlin-serialization:${versions.kotlin}"
@@ -38,10 +38,6 @@ allprojects { project ->
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
         maven { url "https://jitpack.io" }
-
-        flatDir {
-            dirs 'libs'
-        }
     }
 
     configurations.all {
