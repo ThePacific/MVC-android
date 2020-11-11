@@ -17,6 +17,10 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.pacific.guava.android.net.isNetworkAvailable
+import com.pacific.guava.android.postToMainThread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.ref.WeakReference
 
@@ -214,7 +218,9 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     private fun notifyNetworkChanged(isConnected: Boolean) {
         if (isConnected != AndroidX.isNetworkConnected.value) {
-            AndroidX.isNetworkConnected.value = isConnected
+            postToMainThread {
+                AndroidX.isNetworkConnected.value = isConnected
+            }
         }
     }
 }

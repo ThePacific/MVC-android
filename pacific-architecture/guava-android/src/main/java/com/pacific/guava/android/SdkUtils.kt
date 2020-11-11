@@ -1,10 +1,11 @@
 package com.pacific.guava.android
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Looper
-import androidx.arch.core.executor.ArchTaskExecutor
 import io.reactivex.rxjava3.android.MainThreadDisposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 fun isMainThread() = Looper.getMainLooper().thread == Thread.currentThread()
 
@@ -14,14 +15,16 @@ fun ensureWorkThread() {
     check(!isMainThread()) { "Expected to be called on work thread" }
 }
 
-@SuppressLint("RestrictedApi")
-fun postToMainThread(runnable: Runnable) {
-    ArchTaskExecutor.getInstance().postToMainThread(runnable)
+fun postToMainThread(runnable: Runnable) = GlobalScope.launch(Dispatchers.Main) {
+    runnable.run()
 }
 
-@SuppressLint("RestrictedApi")
-fun executeOnDiskIO(runnable: Runnable) {
-    ArchTaskExecutor.getInstance().executeOnDiskIO(runnable)
+fun executeOnDiskIO(runnable: Runnable) = GlobalScope.launch(Dispatchers.IO) {
+    runnable.run()
+}
+
+fun executeOnWorkThread(runnable: Runnable) = GlobalScope.launch(Dispatchers.Default) {
+    runnable.run()
 }
 
 fun verifySdk(version: Int): Boolean = Build.VERSION.SDK_INT >= version
