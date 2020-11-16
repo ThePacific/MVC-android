@@ -59,7 +59,7 @@ buildscript {
             'flexbox'          : '2.0.1',
             'fabric'           : '1.4.8',
             'store'            : '4.0.0-beta01',
-            'pacificGuava'     : '2.1.1',
+            'pacificGuava'     : '2.1.2',
             'pacificAdapter'   : '3.0.3',
             'exoplayer'        : '2.12.0',
 

@@ -218,7 +218,7 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     private fun notifyNetworkChanged(isConnected: Boolean) {
         if (isConnected != AndroidX.isNetworkConnected.value) {
-            postToMainThread {
+            GlobalScope.launch(Dispatchers.Main) {
                 AndroidX.isNetworkConnected.value = isConnected
             }
         }
