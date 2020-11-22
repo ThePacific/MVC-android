@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
+import kotlin.jvm.Throws
 
 class SimpleDataModule : DataModule {
 

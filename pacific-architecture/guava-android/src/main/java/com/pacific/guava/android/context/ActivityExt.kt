@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import com.pacific.guava.android.ime.ImeUtils
 import android.content.pm.ActivityInfo
 import android.view.WindowManager
+import androidx.annotation.ColorRes
 
 fun FragmentActivity.instantiate(className: String): Fragment {
     return supportFragmentManager.fragmentFactory.instantiate(classLoader, className)
@@ -38,3 +39,11 @@ fun Activity.requestNormalScreenWithPortrait() {
 }
 
 fun Activity.isLandscape(): Boolean = requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
+fun Activity.applyStatusBarColor(@ColorRes colorRes: Int) {
+    window.statusBarColor = this.toColor(colorRes)
+}
+
+fun Activity.applyNavigationBarColor(@ColorRes colorRes: Int) {
+    window.navigationBarColor = this.toColor(colorRes)
+}

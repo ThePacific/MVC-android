@@ -2,10 +2,11 @@
 
 buildscript {
     apply from: file('gradle/dependencies.gradle')
+
     ext {
         kotlin_version = '1.4.10'
     }
-    
+
     repositories {
         google()
         jcenter()
@@ -17,7 +18,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.0-alpha16'
+        classpath "com.android.tools.build:gradle:4.1.1"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.androidX.navigation}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
         classpath "org.jetbrains.kotlin:kotlin-serialization:${versions.kotlin}"
@@ -30,10 +31,10 @@ buildscript {
 allprojects { project ->
 
     repositories {
-        mavenLocal()
+        mavenCentral()
         google()
         jcenter()
-        mavenCentral()
+
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://kotlin.bintray.com/kotlinx" }
         maven { url "https://dl.bintray.com/kotlin/kotlin-eap" }
@@ -77,12 +78,6 @@ allprojects { project ->
         }
     }
 
-    if (project.plugins.hasPlugin('kotlin-android-extensions')) {
-        androidExtensions {
-            experimental = true
-        }
-    }
-
     if (project.plugins.hasPlugin('kotlin-kapt')) {
         kapt {
             correctErrorTypes = true
@@ -96,8 +91,11 @@ allprojects { project ->
 }
 
 subprojects { project ->
+
     afterEvaluate {
+
         if (project.plugins.hasPlugin('android') || project.plugins.hasPlugin('android-library')) {
+
             android {
                 compileSdkVersion buildConfig.compileSdk
                 buildToolsVersion buildConfig.buildTools

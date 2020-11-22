@@ -194,16 +194,14 @@ dependencies {
     kapt dep.androidX.remotecallback.processor
     implementation dep.androidX.multidex.multidex
 
-    implementation dep.androidX.compose.ui
-    implementation dep.androidX.compose.material
-    implementation dep.androidX.compose.uiTooling
+    implementation dep.pacific.adapter
+    implementation dep.pacific.guavaJvm
+    implementation dep.pacific.guavaData
+    implementation dep.pacific.guavaAndroid
+    implementation dep.pacific.guavaAndroidUi
+    implementation dep.pacific.guavaAndroidMvvm
 
-    implementation dep.pacificAdapter
-
-
-    // implementation dep.company.guavaJvm
-    // implementation dep.company.guavaAndroid
-    // implementation dep.company.guavaMvvm
-    // implementation dep.company.guavaAndroidUi
-    // implementation dep.company.guavaData
+    implementation dep.insetter.insetter
+    implementation dep.insetter.ktx
+    implementation dep.insetter.widgets
 }

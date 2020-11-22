@@ -5,11 +5,11 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import com.pacific.guava.jvm.math.MathUtils
@@ -68,15 +68,15 @@ fun Context.px2sp2(pxValue: Float): Int {
     return (px2sp(pxValue) + 0.5f).toInt()
 }
 
-fun Context.getStatusBarHeight(): Int {
-    val identifier = resources.getIdentifier(
-        "status_bar_height", "dimen", "android"
-    )
-    return if (identifier > 0) resources.getDimensionPixelSize(identifier) else 0
-}
-
 @ColorInt
-fun Context.toColor(@ColorRes id: Int): Int = ContextCompat.getColor(this, id)
+@SuppressWarnings("deprecation")
+fun Context.toColor(@ColorRes colorRes: Int): Int {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        resources.getColor(colorRes, theme)
+    } else {
+        resources.getColor(colorRes)
+    }
+}
 
 fun Context.toColorDrawable(@ColorRes id: Int) = ColorDrawable(toColor(id))
 

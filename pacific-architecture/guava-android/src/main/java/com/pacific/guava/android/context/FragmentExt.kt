@@ -1,6 +1,7 @@
 package com.pacific.guava.android.context
 
 import android.app.Activity
+import androidx.annotation.ColorRes
 import androidx.fragment.app.Fragment
 import com.pacific.guava.android.ime.ImeUtils
 
@@ -18,3 +19,12 @@ fun <T : Activity> Fragment.ofActivity() = requireActivity() as T
 
 @Suppress("UNCHECKED_CAST")
 fun <T : Fragment> Fragment.ofParent() = requireParentFragment() as T
+
+fun Fragment.applyStatusBarColor(@ColorRes colorRes: Int) {
+    requireActivity().applyStatusBarColor(colorRes)
+}
+
+
+fun Fragment.applyNavigationBarColor(@ColorRes colorRes: Int) {
+    requireActivity().applyStatusBarColor(colorRes)
+}

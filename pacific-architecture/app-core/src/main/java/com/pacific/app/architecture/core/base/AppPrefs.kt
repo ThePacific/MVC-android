@@ -11,5 +11,9 @@ object AppPrefs : AppOAuth2Prefs(), PlatformPrefs {
             dataStore.encode("softKeyboardHeight", value)
         }
 
-    fun verifyToken(): Boolean = token.length >= 16
+    override var statusBarHeight: Int
+        get() = dataStore.decodeInt("statusBarHeight", 0)
+        set(value) {
+            dataStore.encode("statusBarHeight", value)
+        }
 }

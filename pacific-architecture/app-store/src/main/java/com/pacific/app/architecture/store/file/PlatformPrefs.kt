@@ -5,4 +5,6 @@ import com.pacific.guava.data.OAuth2Prefs
 interface PlatformPrefs : OAuth2Prefs {
 
     var softKeyboardHeight: Int
+
+    var statusBarHeight: Int
 }
