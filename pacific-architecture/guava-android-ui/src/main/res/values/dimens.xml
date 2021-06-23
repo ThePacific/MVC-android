@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <dimen name="font_8sp">8sp</dimen>
     <dimen name="font_9sp">9sp</dimen>
     <dimen name="font_10sp">10sp</dimen>
@@ -35,7 +36,10 @@
     <dimen name="size_04dp">0.4dp</dimen>
     <dimen name="size_05dp">0.5dp</dimen>
     <dimen name="size_06dp">0.6dp</dimen>
+    <dimen name="size_07dp">0.7dp</dimen>
     <dimen name="size_08dp">0.8dp</dimen>
+    <dimen name="size_09dp">0.9dp</dimen>
+
     <dimen name="size_1dp">1dp</dimen>
     <dimen name="size_2dp">2dp</dimen>
     <dimen name="size_3dp">3dp</dimen>
@@ -46,73 +50,216 @@
     <dimen name="size_8dp">8dp</dimen>
     <dimen name="size_9dp">9dp</dimen>
     <dimen name="size_10dp">10dp</dimen>
+
+    <dimen name="size_11dp">11dp</dimen>
     <dimen name="size_12dp">12dp</dimen>
+    <dimen name="size_13dp">13dp</dimen>
     <dimen name="size_14dp">14dp</dimen>
+    <dimen name="size_15dp">15dp</dimen>
     <dimen name="size_16dp">16dp</dimen>
+    <dimen name="size_17dp">17dp</dimen>
     <dimen name="size_18dp">18dp</dimen>
+    <dimen name="size_19dp">19dp</dimen>
+
     <dimen name="size_20dp">20dp</dimen>
+    <dimen name="size_21dp">21dp</dimen>
     <dimen name="size_22dp">22dp</dimen>
+    <dimen name="size_23dp">23dp</dimen>
     <dimen name="size_24dp">24dp</dimen>
+    <dimen name="size_25dp">25dp</dimen>
     <dimen name="size_26dp">26dp</dimen>
+    <dimen name="size_27dp">27dp</dimen>
     <dimen name="size_28dp">28dp</dimen>
+    <dimen name="size_29dp">29dp</dimen>
     <dimen name="size_30dp">30dp</dimen>
+
+    <dimen name="size_31dp">31dp</dimen>
     <dimen name="size_32dp">32dp</dimen>
+    <dimen name="size_33dp">33dp</dimen>
     <dimen name="size_34dp">34dp</dimen>
+    <dimen name="size_35dp">35dp</dimen>
     <dimen name="size_36dp">36dp</dimen>
+    <dimen name="size_37dp">37dp</dimen>
     <dimen name="size_38dp">38dp</dimen>
+    <dimen name="size_39dp">39dp</dimen>
     <dimen name="size_40dp">40dp</dimen>
+
+    <dimen name="size_41dp">41dp</dimen>
     <dimen name="size_42dp">42dp</dimen>
+    <dimen name="size_43dp">43dp</dimen>
     <dimen name="size_44dp">44dp</dimen>
+    <dimen name="size_45dp">45dp</dimen>
     <dimen name="size_46dp">46dp</dimen>
+    <dimen name="size_47dp">47dp</dimen>
     <dimen name="size_48dp">48dp</dimen>
+    <dimen name="size_49dp">49dp</dimen>
     <dimen name="size_50dp">50dp</dimen>
+
+    <dimen name="size_51dp">51dp</dimen>
     <dimen name="size_52dp">52dp</dimen>
+    <dimen name="size_53dp">53dp</dimen>
     <dimen name="size_54dp">54dp</dimen>
+    <dimen name="size_55dp">55dp</dimen>
     <dimen name="size_56dp">56dp</dimen>
+    <dimen name="size_57dp">57dp</dimen>
     <dimen name="size_58dp">58dp</dimen>
+    <dimen name="size_59dp">59dp</dimen>
     <dimen name="size_60dp">60dp</dimen>
+
+    <dimen name="size_61dp">61dp</dimen>
     <dimen name="size_62dp">62dp</dimen>
+    <dimen name="size_63dp">63dp</dimen>
     <dimen name="size_64dp">64dp</dimen>
+    <dimen name="size_65dp">65dp</dimen>
     <dimen name="size_66dp">66dp</dimen>
+    <dimen name="size_67dp">67dp</dimen>
     <dimen name="size_68dp">68dp</dimen>
+    <dimen name="size_69dp">69dp</dimen>
     <dimen name="size_70dp">70dp</dimen>
+
+    <dimen name="size_71dp">71dp</dimen>
     <dimen name="size_72dp">72dp</dimen>
+    <dimen name="size_73dp">73dp</dimen>
     <dimen name="size_74dp">74dp</dimen>
+    <dimen name="size_75dp">75dp</dimen>
     <dimen name="size_76dp">76dp</dimen>
+    <dimen name="size_77dp">77dp</dimen>
     <dimen name="size_78dp">78dp</dimen>
+    <dimen name="size_79dp">79dp</dimen>
     <dimen name="size_80dp">80dp</dimen>
+
+    <dimen name="size_81dp">81dp</dimen>
     <dimen name="size_82dp">82dp</dimen>
+    <dimen name="size_83dp">83dp</dimen>
     <dimen name="size_84dp">84dp</dimen>
+    <dimen name="size_85dp">85dp</dimen>
     <dimen name="size_86dp">86dp</dimen>
+    <dimen name="size_87dp">87dp</dimen>
     <dimen name="size_88dp">88dp</dimen>
+    <dimen name="size_89dp">89dp</dimen>
     <dimen name="size_90dp">90dp</dimen>
+
+    <dimen name="size_91dp">91dp</dimen>
+    <dimen name="size_92dp">92dp</dimen>
+    <dimen name="size_93dp">93dp</dimen>
+    <dimen name="size_94dp">94dp</dimen>
+    <dimen name="size_95dp">95dp</dimen>
     <dimen name="size_96dp">96dp</dimen>
+    <dimen name="size_97dp">97dp</dimen>
+    <dimen name="size_98dp">98dp</dimen>
+    <dimen name="size_99dp">99dp</dimen>
     <dimen name="size_100dp">100dp</dimen>
+
+    <dimen name="size_101dp">101dp</dimen>
+    <dimen name="size_102dp">102dp</dimen>
+    <dimen name="size_103dp">103dp</dimen>
+    <dimen name="size_104dp">104dp</dimen>
+    <dimen name="size_105dp">105dp</dimen>
+    <dimen name="size_106dp">106dp</dimen>
+    <dimen name="size_107dp">107dp</dimen>
     <dimen name="size_108dp">108dp</dimen>
+    <dimen name="size_109dp">109dp</dimen>
+    <dimen name="size_110dp">110dp</dimen>
+
+    <dimen name="size_111dp">111dp</dimen>
+    <dimen name="size_112dp">112dp</dimen>
+    <dimen name="size_113dp">113dp</dimen>
+    <dimen name="size_114dp">114dp</dimen>
+    <dimen name="size_115dp">115dp</dimen>
+    <dimen name="size_116dp">116dp</dimen>
+    <dimen name="size_117dp">117dp</dimen>
+    <dimen name="size_118dp">118dp</dimen>
+    <dimen name="size_119dp">119dp</dimen>
+
     <dimen name="size_120dp">120dp</dimen>
+    <dimen name="size_121dp">121dp</dimen>
+    <dimen name="size_122dp">122dp</dimen>
+    <dimen name="size_123dp">123dp</dimen>
     <dimen name="size_124dp">124dp</dimen>
+    <dimen name="size_125dp">125dp</dimen>
+    <dimen name="size_126dp">126dp</dimen>
+    <dimen name="size_127dp">127dp</dimen>
     <dimen name="size_128dp">128dp</dimen>
+    <dimen name="size_129dp">129dp</dimen>
+    <dimen name="size_130dp">130dp</dimen>
+
+    <dimen name="size_131dp">131dp</dimen>
     <dimen name="size_132dp">132dp</dimen>
+    <dimen name="size_133dp">133dp</dimen>
+    <dimen name="size_134dp">134dp</dimen>
+    <dimen name="size_135dp">135dp</dimen>
+    <dimen name="size_136dp">136dp</dimen>
+    <dimen name="size_137dp">137dp</dimen>
+    <dimen name="size_138dp">138dp</dimen>
+    <dimen name="size_139dp">139dp</dimen>
+    <dimen name="size_140dp">140dp</dimen>
+
+    <dimen name="size_141dp">141dp</dimen>
+    <dimen name="size_142dp">142dp</dimen>
+    <dimen name="size_143dp">143dp</dimen>
     <dimen name="size_144dp">144dp</dimen>
+    <dimen name="size_145dp">145dp</dimen>
+    <dimen name="size_146dp">146dp</dimen>
+    <dimen name="size_147dp">147dp</dimen>
+    <dimen name="size_148dp">148dp</dimen>
+    <dimen name="size_149dp">149dp</dimen>
     <dimen name="size_150dp">150dp</dimen>
+
+    <dimen name="size_151dp">151dp</dimen>
+    <dimen name="size_152dp">152dp</dimen>
+    <dimen name="size_153dp">153dp</dimen>
+    <dimen name="size_154dp">154dp</dimen>
+    <dimen name="size_155dp">155dp</dimen>
     <dimen name="size_156dp">156dp</dimen>
+    <dimen name="size_157dp">157dp</dimen>
+    <dimen name="size_158dp">158dp</dimen>
+    <dimen name="size_159dp">159dp</dimen>
+    <dimen name="size_160dp">160dp</dimen>
+
+    <dimen name="size_161dp">161dp</dimen>
+    <dimen name="size_162dp">162dp</dimen>
+    <dimen name="size_163dp">163dp</dimen>
     <dimen name="size_164dp">164dp</dimen>
+    <dimen name="size_165dp">165dp</dimen>
+    <dimen name="size_166dp">166dp</dimen>
+    <dimen name="size_167dp">167dp</dimen>
+    <dimen name="size_168dp">168dp</dimen>
+    <dimen name="size_169dp">169dp</dimen>
+    <dimen name="size_170dp">170dp</dimen>
+
+    <dimen name="size_171dp">171dp</dimen>
     <dimen name="size_172dp">172dp</dimen>
+    <dimen name="size_173dp">173dp</dimen>
+    <dimen name="size_174dp">174dp</dimen>
+    <dimen name="size_175dp">175dp</dimen>
+    <dimen name="size_176dp">176dp</dimen>
+    <dimen name="size_177dp">177dp</dimen>
+    <dimen name="size_178dp">178dp</dimen>
+    <dimen name="size_179dp">179dp</dimen>
+    <dimen name="size_180dp">180dp</dimen>
+
+    <dimen name="size_181dp">181dp</dimen>
+    <dimen name="size_182dp">182dp</dimen>
+    <dimen name="size_183dp">183dp</dimen>
     <dimen name="size_184dp">184dp</dimen>
+    <dimen name="size_185dp">185dp</dimen>
+    <dimen name="size_186dp">186dp</dimen>
+    <dimen name="size_187dp">187dp</dimen>
+    <dimen name="size_188dp">188dp</dimen>
+    <dimen name="size_189dp">189dp</dimen>
+    <dimen name="size_190dp">190dp</dimen>
+
+    <dimen name="size_191dp">191dp</dimen>
     <dimen name="size_192dp">192dp</dimen>
-    <dimen name="size_240dp">240dp</dimen>
-    <dimen name="size_256dp">256dp</dimen>
-    <dimen name="size_270dp">270dp</dimen>
-    <dimen name="size_300dp">300dp</dimen>
-    <dimen name="size_320dp">320dp</dimen>
-    <dimen name="size_350dp">350dp</dimen>
-    <dimen name="size_375dp">375dp</dimen>
-    <dimen name="size_400dp">400dp</dimen>
-    <dimen name="size_460dp">460dp</dimen>
-    <dimen name="size_480dp">480dp</dimen>
-    <dimen name="size_540dp">540dp</dimen>
-    <dimen name="size_600dp">600dp</dimen>
-    <dimen name="size_640dp">640dp</dimen>
+    <dimen name="size_193dp">193dp</dimen>
+    <dimen name="size_194dp">194dp</dimen>
+    <dimen name="size_195dp">195dp</dimen>
+    <dimen name="size_196dp">196dp</dimen>
+    <dimen name="size_197dp">197dp</dimen>
+    <dimen name="size_198dp">198dp</dimen>
+    <dimen name="size_199dp">199dp</dimen>
+    <dimen name="size_200dp">200dp</dimen>
+
     <dimen name="height_soft_keyboard">263dp</dimen>
     <dimen name="height_toolbar">48dp</dimen>
     <dimen name="height_toolbar_x">56dp</dimen>
