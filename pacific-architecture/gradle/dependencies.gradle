@@ -50,7 +50,7 @@ buildscript {
             'insetter'         : '0.5.0',
             'emoji'            : '0.7.0',
             'mavericks'        : '2.1.0',
-            'theGuava'         : '2.1.2',
+            'theGuava'         : '2.2.0',
 
             'androidX'         : [
                     'compose'                   : '1.0.0-beta08',
