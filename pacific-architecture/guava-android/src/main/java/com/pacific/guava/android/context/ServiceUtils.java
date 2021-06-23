@@ -1,5 +1,7 @@
 package com.pacific.guava.android.context;
 
+import static android.content.pm.PackageManager.GET_SERVICES;
+
 import android.app.ActivityManager;
 import android.app.Service;
 import android.content.ComponentName;
@@ -7,7 +9,6 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,13 +21,18 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 
-import static android.content.pm.PackageManager.GET_SERVICES;
-
 public final class ServiceUtils {
 
     private ServiceUtils() {
     }
 
+    /**
+     * 是否在某进程中
+     *
+     * @param context
+     * @param serviceClass 进程
+     * @return
+     */
     public static boolean isInServiceProcess(
             @NonNull Context context,
             @NonNull Class<? extends Service> serviceClass
@@ -51,10 +57,6 @@ public final class ServiceUtils {
         }
 
         if (serviceInfo.processName.equals(mainProcess)) {
-            Log.i(
-                    "ServiceUtils",
-                    "Did not expect service " + serviceClass.toString() + "to run in main process" + mainProcess
-            );
             // Technically we are in the service process, but we're not in the service dedicated process.
             return false;
         }
@@ -80,18 +82,30 @@ public final class ServiceUtils {
             }
         }
         if (myProcess == null) {
-            Log.i("ServiceUtils", "Could not find running process for " + myPid);
             return false;
         }
 
         return myProcess.processName.equals(serviceInfo.processName);
     }
 
+    /**
+     * 获取进程名字
+     *
+     * @param context
+     * @return
+     */
     @Nullable
     public static String getProcessName(@NonNull Context context) {
         return getProcessName(context, android.os.Process.myPid());
     }
 
+    /**
+     * 获取进程名字
+     *
+     * @param context
+     * @param pid
+     * @return
+     */
     @Nullable
     public static String getProcessName(@NonNull Context context, int pid) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -107,6 +121,11 @@ public final class ServiceUtils {
         return null;
     }
 
+    /**
+     * 获取当前进程名字
+     *
+     * @return
+     */
     @Nullable
     @WorkerThread
     public static String getProcessName() {

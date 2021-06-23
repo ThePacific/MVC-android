@@ -4,6 +4,10 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 
+/**
+ * 预定义几种线程对象池
+ */
+
 val scheduledExecutorService: ScheduledExecutorService by lazy {
     Executors.newScheduledThreadPool(4)
 }

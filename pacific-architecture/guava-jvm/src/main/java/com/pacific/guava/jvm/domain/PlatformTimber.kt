@@ -1,5 +1,8 @@
 package com.pacific.guava.jvm.domain
 
+/**
+ * java层日志打印抽象，用于android层实现
+ */
 interface PlatformTimber {
 
     fun d(tag: String, message: String)

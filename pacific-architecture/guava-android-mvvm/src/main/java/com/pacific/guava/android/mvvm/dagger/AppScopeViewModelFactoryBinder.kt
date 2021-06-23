@@ -5,6 +5,9 @@ import com.pacific.guava.android.mvvm.lifecycle.ViewModelFactory
 import dagger.Binds
 import dagger.Module
 
+/**
+ * ViewModelFactory工厂类，用于app中
+ */
 @Module
 abstract class AppScopeViewModelFactoryBinder {
 

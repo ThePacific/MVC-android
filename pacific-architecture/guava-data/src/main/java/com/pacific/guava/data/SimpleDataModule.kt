@@ -19,18 +19,19 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
+/**
+ * 数据层Module dagger实现
+ */
 class SimpleDataModule : DataModule {
 
     override fun providePoorX509TrustManager(): X509TrustManager {
         return object : X509TrustManager {
             override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()
 
-            @Suppress("TrustAllX509TrustManager")
             @Throws(CertificateException::class)
             override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
             }
 
-            @Suppress("TrustAllX509TrustManager")
             @Throws(CertificateException::class)
             override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
             }

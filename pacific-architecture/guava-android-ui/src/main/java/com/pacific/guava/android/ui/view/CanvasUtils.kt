@@ -4,6 +4,12 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 
+/**
+ * 绘制文本在正中央
+ *
+ * @param text 文本内容
+ * @param textPaint 画笔
+ */
 fun Canvas.drawTextInCenter(text: String, textPaint: Paint) {
     val textBounds = Rect().also {
         textPaint.getTextBounds(text, 0, text.length, it)

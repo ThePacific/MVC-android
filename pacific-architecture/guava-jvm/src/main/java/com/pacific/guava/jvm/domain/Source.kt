@@ -1,5 +1,8 @@
 package com.pacific.guava.jvm.domain
 
+/**
+ * 业务数据包裹
+ */
 sealed class Source<out T> {
 
     data class Success<T>(val data: T) : Source<T>()
@@ -54,4 +57,8 @@ sealed class Source<out T> {
         is Error -> Error(throwable)
         is Success -> throw IllegalStateException("cannot swap type for Success.Data")
     }
+
+    fun isSuccess(): Boolean = this is Success
+
+    fun isError(): Boolean = this is Error
 }

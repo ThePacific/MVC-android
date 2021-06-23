@@ -3,10 +3,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlinx-serialization'
-apply plugin: 'com.vanniktech.maven.publish'
-
-Properties localProperties = new Properties()
-localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+apply plugin: 'kotlin-parcelize'
 
 android {
 
@@ -16,7 +13,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'dep', include: ['*.jar'])
 
     coreLibraryDesugaring dep.desugaring
 
@@ -37,7 +34,7 @@ dependencies {
     androidTestImplementation dep.androidX.multidex.multidex
     androidTestImplementation dep.androidX.multidex.instrumentation
 
-    implementation dep.kotlin.stdlibJdk8
+    implementation dep.kotlin.stdlib
     implementation dep.kotlin.reflect
     implementation dep.ktSerialization
     implementation dep.ktCoroutines.core
@@ -76,12 +73,15 @@ dependencies {
     debugImplementation dep.leakcanary
 
     implementation dep.flexbox
+    implementation dep.adapter
+    implementation dep.coil
 
     compileOnly dep.androidX.annotation.annotation
     implementation dep.androidX.material
     implementation dep.androidX.collection.collection
     implementation dep.androidX.collection.ktx
     implementation dep.androidX.activity.activity
+    implementation dep.androidX.activity.compose
     implementation dep.androidX.activity.ktx
     implementation dep.androidX.fragment.fragment
     implementation dep.androidX.fragment.ktx
@@ -108,7 +108,8 @@ dependencies {
     implementation dep.androidX.transition.transition
     implementation dep.androidX.transition.transitionKtx
     implementation dep.androidX.window.window
-    implementation dep.androidX.window.windowExt
+    implementation dep.androidX.window.java
+    implementation dep.androidX.window.rxjava
 
     implementation dep.androidX.dynamicanimation.dynamicanimation
     implementation dep.androidX.dynamicanimation.ktx
@@ -121,7 +122,8 @@ dependencies {
     implementation dep.androidX.customview
     implementation dep.androidX.asynclayoutinflater
     implementation dep.androidX.browser
-    implementation dep.androidX.biometric
+    implementation dep.androidX.biometric.biometric
+    implementation dep.androidX.biometric.biometricKtx
     implementation dep.androidX.autofill
     implementation dep.androidX.contentpager
     implementation dep.androidX.loader
@@ -145,6 +147,7 @@ dependencies {
     implementation dep.androidX.lifecycle.livedataKtx
     implementation dep.androidX.lifecycle.livedataCoreKtx
     implementation dep.androidX.lifecycle.viewmodelSavedstate
+    implementation dep.androidX.lifecycle.compose
     implementation dep.androidX.arch.common
     implementation dep.androidX.arch.runtime
     implementation dep.androidX.paging.common
@@ -161,8 +164,25 @@ dependencies {
     implementation dep.androidX.remotecallback.remotecallback
     kapt dep.androidX.remotecallback.processor
     implementation dep.androidX.multidex.multidex
+
+    implementation dep.insetter.insetter
+    implementation dep.insetter.widgets
+
+    implementation dep.mavericks
+
+    implementation dep.androidX.compose.ui
+    implementation dep.androidX.compose.material
+    implementation dep.androidX.compose.uiTooling
+    implementation dep.androidX.compose.foundation
+    implementation dep.androidX.compose.theme
+    implementation dep.androidX.compose.livedata
+    implementation dep.androidX.compose.rxjava3
 }
 
+Properties localProperties = new Properties()
+localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+apply plugin: 'com.vanniktech.maven.publish'
 mavenPublish {
     releaseSigningEnabled = true
     targets {

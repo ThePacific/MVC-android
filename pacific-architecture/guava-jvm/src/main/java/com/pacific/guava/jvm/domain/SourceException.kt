@@ -1,5 +1,8 @@
 package com.pacific.guava.jvm.domain
 
+/**
+ * 业务异常对象
+ */
 class SourceException : RuntimeException {
 
     @get:JvmName("code")

@@ -7,6 +7,9 @@ import retrofit2.Retrofit
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
+/**
+ * 数据层Module dagger对外接口
+ */
 interface DataModule {
 
     fun providePoorX509TrustManager(): X509TrustManager

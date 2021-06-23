@@ -3,12 +3,16 @@ package com.pacific.guava.android.mvvm
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.pacific.guava.jvm.coroutines.Bus
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+/**
+ * AppCompatDialogFragment基类
+ */
 abstract class BaseAppCompatDialogFragment : AppCompatDialogFragment() {
 
     var applyDialogCount = false
@@ -19,17 +23,30 @@ abstract class BaseAppCompatDialogFragment : AppCompatDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Bus.subscribe()
-            .onEach { pair ->
-                when (pair.first) {
-                    AndroidX.BUS_LOGIN -> onLogin()
-                    AndroidX.BUS_LOGOUT -> onLogout()
-                    AndroidX.BUS_DIALOG_CLOSE -> dismissAllowingStateLoss()
-                    else -> onBusEvent(pair)
-                }
+        AndroidX.isAppInForeground.asLiveData().observe(this, {
+            if (it == true) {
+                onMoveToForeground()
+            } else {
+                onMoveToBackground()
             }
-            .catch { e -> e.printStackTrace() }
-            .launchIn(lifecycleScope)
+        })
+
+        AndroidX.isNetworkConnected.asLiveData().observe(this, {
+            if (it == true) {
+                onNetworkConnected()
+            } else {
+                onNetworkDisconnected()
+            }
+        })
+
+        AndroidX.dialogCount.asLiveData().observe(this, {
+            onDialogCount(it)
+        })
+
+        Bus.subscribe()
+                .onEach { pair -> onBusEvent(pair) }
+                .catch { e -> e.printStackTrace() }
+                .launchIn(lifecycleScope)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,15 +69,15 @@ abstract class BaseAppCompatDialogFragment : AppCompatDialogFragment() {
         }
     }
 
-    open fun onBackPressed(): Boolean = false
-
     open fun onMoveToForeground() {}
 
     open fun onMoveToBackground() {}
 
-    open fun onLogin() {}
+    open fun onNetworkConnected() {}
 
-    open fun onLogout() {}
+    open fun onNetworkDisconnected() {}
+
+    open fun onDialogCount(count: Int) {}
 
     open fun onBusEvent(event: Pair<Int, Any>) {}
 }

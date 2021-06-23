@@ -2,6 +2,9 @@ package com.pacific.guava.android.mvvm.lifecycle
 
 import android.content.res.Configuration
 
+/**
+ * 生命周期回调函数融合了activity和fragment
+ */
 abstract class SimplePresenter : ViewLifecycle {
 
     override fun onCreate() {

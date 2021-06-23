@@ -4,6 +4,10 @@ import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+/**
+ * java8时间转换工具类
+ */
+
 val FORMATTER_DD_MM_YYYY_HH_MM_SS: DateTimeFormatter by lazy {
     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 }
@@ -124,6 +128,9 @@ fun toEpochMilli3(dd_mm_yyyy: String): Long {
     return toInstant3(dd_mm_yyyy).toEpochMilli()
 }
 
+/**
+ * 多少时间前
+ */
 fun ago(start: Instant, end: Instant): String {
     require(start.isBefore(end))
     val duration = Duration.between(start, end)

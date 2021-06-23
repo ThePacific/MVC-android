@@ -5,6 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import kotlin.math.abs
 
+/**
+ * 在ViewPager2中使用，减少华东冲突
+ */
 internal class SingleScrollDirectionEnforcer : RecyclerView.OnScrollListener(), OnItemTouchListener {
 
     private var scrollState = RecyclerView.SCROLL_STATE_IDLE

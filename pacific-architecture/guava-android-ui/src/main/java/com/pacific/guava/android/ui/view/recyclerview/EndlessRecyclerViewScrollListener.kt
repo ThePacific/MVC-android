@@ -5,9 +5,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
+/**
+ * 列表无线加载逻辑
+ *
+ * @param layoutManager rv布局
+ * @param loadMore 加载数据接口
+ */
 class EndlessRecyclerViewScrollListener(
-        private val layoutManager: RecyclerView.LayoutManager,
-        private val loadMore: (totalItemsCount: Int, view: RecyclerView) -> Unit
+    private val layoutManager: RecyclerView.LayoutManager,
+    private val loadMore: (totalItemsCount: Int, view: RecyclerView) -> Unit
 ) : RecyclerView.OnScrollListener() {
 
     private var loadMoreThreshold = 3

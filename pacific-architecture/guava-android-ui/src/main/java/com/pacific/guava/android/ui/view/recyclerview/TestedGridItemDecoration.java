@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pacific.guava.android.context.ContextExtKt;
 
+/**
+ * Grid分割线示例，方便改源码
+ */
 public class TestedGridItemDecoration extends RecyclerView.ItemDecoration {
 
     private Drawable mDivider;

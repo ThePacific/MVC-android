@@ -1,23 +1,36 @@
 package com.pacific.guava.data
 
+import com.pacific.guava.jvm.Guava
 import com.pacific.guava.jvm.domain.Source
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
 
+/**
+ * 强制获取http返回体
+ */
 fun <T> Response<T>.bodyOrThrowException(): T {
-    if (!isSuccessful) throw HttpException(this)
+    if (!isSuccessful) {
+        throw HttpException(this)
+    }
     return body()!!
 }
 
-fun <T> Response<T>.toException() = HttpException(this)
+/**
+ * 二级封装网络错误
+ */
+fun <T> Response<T>.toException(): HttpException = HttpException(this)
 
-suspend inline fun <T> Call<T>.executeWithRetry(
-        defaultDelay: Long = 100,
-        maxAttempts: Int = 3,
-        shouldRetry: (Exception) -> Boolean = ::defaultShouldRetry
+/**
+ * 自动重试
+ */
+suspend fun <T> Call<T>.executeWithRetry(
+    defaultDelay: Long = 1000,
+    maxAttempts: Int = 3,
+    shouldRetry: (Exception) -> Boolean = ::defaultShouldRetry
 ): Response<T> {
     repeat(maxAttempts) { attempt ->
         var nextDelay = attempt * attempt * defaultDelay
@@ -47,53 +60,110 @@ suspend inline fun <T> Call<T>.executeWithRetry(
             }
         }
 
-        delay(nextDelay)
+        runBlocking {
+            delay(nextDelay)
+        }
     }
 
     // We should never hit here
     throw IllegalStateException("Unknown exception from executeWithRetry")
 }
 
-suspend inline fun <T> Call<T>.fetchBodyWithRetry(
-        firstDelay: Long = 100,
-        maxAttempts: Int = 3,
-        shouldRetry: (Exception) -> Boolean = ::defaultShouldRetry
+/**
+ * 强制获取http返回体
+ */
+suspend fun <T> Call<T>.fetchBodyWithRetry(
+    firstDelay: Long = 100,
+    maxAttempts: Int = 3,
+    shouldRetry: (Exception) -> Boolean = ::defaultShouldRetry
 ): T {
     return executeWithRetry(firstDelay, maxAttempts, shouldRetry).bodyOrThrowException()
 }
 
+/**
+ * 判定是否需要重试
+ */
 fun defaultShouldRetry(exception: Exception) = when (exception) {
     is HttpException -> exception.code() == 429
     is IOException -> true
     else -> false
 }
 
+/**
+ * 是否来自网络
+ */
 fun <T> Response<T>.isFromNetwork(): Boolean {
     return raw().cacheResponse == null
 }
 
+/**
+ * 是否来缓存
+ */
 fun <T> Response<T>.isFromCache(): Boolean {
     return raw().cacheResponse != null
 }
 
+/**
+ * 转化为业务Source结构
+ */
 suspend fun <T> Call<T>.toSource(): Source<T> {
-    return execute().toSource()
+    return try {
+        execute().toSource()
+    } catch (e: Exception) {
+        Guava.timber.d(e)
+        Source.Error(e)
+    }
 }
 
+/**
+ * 转化为业务Source结构
+ */
 suspend fun <T, E> Call<T>.toSource(mapper: suspend (T) -> E): Source<E> {
-    return execute().toSource(mapper)
+    return try {
+        execute().toSource(mapper)
+    } catch (e: Exception) {
+        Guava.timber.d(e)
+        Source.Error(e)
+    }
 }
 
+/**
+ * 转化为业务Source结构
+ */
 suspend fun <T> Response<T>.toSource(): Source<T> = toSource { it }
 
+/**
+ * 转化为业务Source结构
+ */
 suspend fun <T, E> Response<T>.toSource(mapper: suspend (T) -> E): Source<E> {
+    delay(0)
+    return if (isSuccessful) {
+        Source.Success(mapper(bodyOrThrowException()))
+    } else {
+        Source.Error(toException())
+    }
+}
+
+/**
+ * 转化为业务Source结构
+ */
+suspend fun <T> Call<T>.sourceWith(obj: T): Source<T> {
     return try {
-        if (isSuccessful) {
-            Source.Success(mapper(bodyOrThrowException()))
-        } else {
-            Source.Error(toException())
-        }
+        execute().sourceWith(obj)
     } catch (e: Exception) {
+        Guava.timber.d(e)
         Source.Error(e)
+    }
+}
+
+/**
+ * 转化为业务Source结构
+ */
+suspend fun <T, E> Response<T>.sourceWith(obj: E): Source<E> {
+    delay(0)
+    return if (isSuccessful) {
+        Source.Success(obj)
+    } else {
+        Source.Error(toException())
     }
 }

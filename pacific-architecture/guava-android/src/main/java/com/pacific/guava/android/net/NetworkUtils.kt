@@ -9,13 +9,16 @@ import android.os.Build
 import android.telephony.TelephonyManager
 import androidx.annotation.RequiresPermission
 
-const val NETWORK_TYPE_UNKNOWN = 0
-const val NETWORK_TYPE_WIFI = 1
-const val NETWORK_TYPE_2_G = 2
-const val NETWORK_TYPE_3_G = 3
-const val NETWORK_TYPE_4_G = 4
-const val NETWORK_TYPE_5_G = 5
+const val NETWORK_TYPE_UNKNOWN = 0// 未知网络类型
+const val NETWORK_TYPE_WIFI = 1// WIFI
+const val NETWORK_TYPE_2_G = 2// 2G
+const val NETWORK_TYPE_3_G = 3// 3G
+const val NETWORK_TYPE_4_G = 4// 4G
+const val NETWORK_TYPE_5_G = 5// 5G
 
+/**
+ * 判断是否网络可用
+ */
 @SuppressWarnings("deprecation")
 @SuppressLint("MissingPermission")
 @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
@@ -23,7 +26,7 @@ fun isNetworkAvailable(context: Context): Boolean {
     val connectivityManager = context.getSystemService(
         Context.CONNECTIVITY_SERVICE
     ) as ConnectivityManager
-
+    // android 7+ 使用NetworkCapabilities接口
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
             ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
@@ -33,6 +36,9 @@ fun isNetworkAvailable(context: Context): Boolean {
     }
 }
 
+/**
+ * 网络运营商名字
+ */
 fun operatorName(context: Context): String {
     val telephonyManager = context.getSystemService(
         Context.TELEPHONY_SERVICE
@@ -40,6 +46,9 @@ fun operatorName(context: Context): String {
     return telephonyManager.simOperatorName
 }
 
+/**
+ * 网络运营商名字，中文
+ */
 fun operatorNameZh(context: Context): String {
     val operatorName = operatorName(context).toLowerCase()
     return when {
@@ -51,6 +60,9 @@ fun operatorNameZh(context: Context): String {
     }
 }
 
+/**
+ * 获取当前网络类型，WIFI, 2G, 3G, 4G, 5G
+ */
 @SuppressWarnings("deprecation")
 @SuppressLint("MissingPermission")
 @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
@@ -85,6 +97,9 @@ fun networkType(context: Context): Int {
     }
 }
 
+/**
+ * 网络类型中
+ */
 fun networkTypeName(networkClass: Int): String {
     return when (networkClass) {
         NETWORK_TYPE_WIFI -> "wifi"

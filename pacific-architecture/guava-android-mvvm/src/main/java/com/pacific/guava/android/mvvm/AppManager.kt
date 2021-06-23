@@ -3,10 +3,7 @@ package com.pacific.guava.android.mvvm
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.net.*
 import android.os.Build
 import android.os.Bundle
@@ -20,6 +17,9 @@ import com.pacific.guava.android.net.isNetworkAvailable
 import timber.log.Timber
 import java.lang.ref.WeakReference
 
+/**
+ * app管理类
+ */
 object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
 
     @Volatile
@@ -29,22 +29,23 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
         AndroidX.myApp.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
-    private val networkBroadcastReceiver by lazy {
-        createNetworkBroadcastReceiver()
-    }
-
     private val networkCallback by lazy {
         createNetworkCallback()
     }
 
     private var weakCurrentActivity: WeakReference<Activity>? = null
 
+    /**
+     * 所有Activity列表
+     */
+    private var sActivities = ArrayList<Activity>()
+    val activities: List<Activity> get() = sActivities
+
     @SuppressLint("MissingPermission")
     fun initialize() {
         if (isInitialized) {
             return
         }
-
         isInitialized = true
         AndroidX.myApp.registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
@@ -52,12 +53,18 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
         monitorNetworkConnectivity()
     }
 
+    /**
+     * 转入前台回调
+     */
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onMoveToForeground() {
         Timber.d("isAppInForeground true")
         AndroidX.isAppInForeground.value = true
     }
 
+    /**
+     * 转入后台回调
+     */
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onMoveToBackground() {
         Timber.d("isAppInForeground false")
@@ -65,6 +72,7 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+        sActivities.add(activity)
     }
 
     override fun onActivityStarted(activity: Activity) {
@@ -84,12 +92,32 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityDestroyed(activity: Activity) {
+        require(sActivities.remove(activity))
     }
 
+    /**
+     * 获取当前Activity
+     */
     fun currentActivity(): Activity? {
         return weakCurrentActivity?.get()
     }
 
+    /**
+     * 获取某个Activity
+     */
+    fun getActivity(predicate: (Activity) -> Boolean): Activity? {
+        val list = sActivities.filter {
+            predicate.invoke(it)
+        }
+        if (list.isEmpty()) {
+            return null
+        }
+        return list[0]
+    }
+
+    /**
+     * 开始监听网络状态
+     */
     @Suppress("DEPRECATION")
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     private fun monitorNetworkConnectivity() {
@@ -97,7 +125,7 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
                 cm.registerDefaultNetworkCallback(networkCallback)
             }
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> {
+            else -> {
                 cm.registerNetworkCallback(
                     NetworkRequest.Builder()
                         .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
@@ -107,15 +135,12 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
                     networkCallback
                 )
             }
-            else -> {
-                AndroidX.myApp.registerReceiver(
-                    networkBroadcastReceiver,
-                    IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-                )
-            }
         }
     }
 
+    /**
+     * 网络监听回调
+     */
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun createNetworkCallback(): ConnectivityManager.NetworkCallback {
 
@@ -175,42 +200,9 @@ object AppManager : LifecycleObserver, Application.ActivityLifecycleCallbacks {
         }
     }
 
-    private fun createNetworkBroadcastReceiver(): BroadcastReceiver {
-
-        return object : BroadcastReceiver() {
-
-            @Suppress("DEPRECATION")
-            @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
-            override fun onReceive(context: Context, intent: Intent) {
-                when (intent.action) {
-                    ConnectivityManager.CONNECTIVITY_ACTION -> {
-                        // on some devices ConnectivityManager.getActiveNetworkInfo() does not provide the correct network state
-                        // https://issuetracker.google.com/issues/37137911
-                        val info: NetworkInfo? = cm.activeNetworkInfo
-                        val fallbackInfo: NetworkInfo? = intent.getParcelableExtra(
-                            ConnectivityManager.EXTRA_NETWORK_INFO
-                        )
-                        // a set of dirty workarounds
-                        if (info?.isConnectedOrConnecting == true) {
-                            notifyNetworkChanged(info.isConnectedOrConnecting)
-                        } else if (
-                            info != null &&
-                            fallbackInfo != null &&
-                            info.isConnectedOrConnecting != fallbackInfo.isConnectedOrConnecting
-                        ) {
-                            notifyNetworkChanged(fallbackInfo.isConnectedOrConnecting)
-                        } else {
-                            notifyNetworkChanged(
-                                (info ?: fallbackInfo)?.isConnectedOrConnecting == true
-                            )
-                        }
-                    }
-                    else -> return
-                }
-            }
-        }
-    }
-
+    /**
+     * 推送网络状态改变
+     */
     @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
     private fun notifyNetworkChanged(isConnected: Boolean) {
         if (isConnected != AndroidX.isNetworkConnected.value) {

@@ -1,5 +1,8 @@
 package com.pacific.guava.data
 
+/**
+ * 用户基本数据抽象
+ */
 interface OAuth2Prefs {
 
     var loginName: String

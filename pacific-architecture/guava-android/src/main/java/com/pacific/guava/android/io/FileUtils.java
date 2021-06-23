@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
@@ -66,6 +67,18 @@ public class FileUtils {
 
     public interface ProgressListener {
         void onProgress(long progress);
+    }
+
+    public static void transfer(
+            InputStream inputStream,
+            OutputStream outputStream,
+            int buffer
+    ) throws IOException {
+
+        byte[] read = new byte[buffer];
+        while (0 < (buffer = inputStream.read(read))) {
+            outputStream.write(read, 0, buffer);
+        }
     }
 
     /**

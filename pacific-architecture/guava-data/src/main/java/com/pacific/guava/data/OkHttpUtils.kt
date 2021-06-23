@@ -7,6 +7,9 @@ import okhttp3.logging.LoggingEventListener
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.HostnameVerifier
 
+/**
+ * 取消tag对应的网络请求
+ */
 fun cancelOkHttp3Request(client: OkHttpClient, tag: Any) {
     client.dispatcher.queuedCalls()
         .filter { tag == it.request().tag() }
@@ -16,6 +19,9 @@ fun cancelOkHttp3Request(client: OkHttpClient, tag: Any) {
         .forEach { it.cancel() }
 }
 
+/**
+ * 取消所有网络请求
+ */
 fun cancelOkHttp3Request(client: OkHttpClient) {
     client.dispatcher.queuedCalls()
         .forEach { it.cancel() }
@@ -23,19 +29,21 @@ fun cancelOkHttp3Request(client: OkHttpClient) {
         .forEach { it.cancel() }
 }
 
+/**
+ * 创建OkHttpClient，忽略证书验证
+ */
 fun createPoorSSLOkHttpClient(loggerTag: String): OkHttpClient {
-    val dataModule = SimpleDataModule()
-    val poorX509TrustManager = dataModule.providePoorX509TrustManager()
-    val poorSSLContext = dataModule.providePoorSSLContext(poorX509TrustManager)
+    val httpsModule = SimpleDataModule()
+    val poorX509TrustManager = httpsModule.providePoorX509TrustManager()
+    val poorSSLContext = httpsModule.providePoorSSLContext(poorX509TrustManager)
     val httpLoggingInterceptorLogger = HttpLoggingInterceptor.Logger { message ->
         Guava.timber.d(loggerTag, message)
     }
-    val httpLoggingInterceptor = dataModule.provideHttpLoggingInterceptor(
+    val httpLoggingInterceptor = httpsModule.provideHttpLoggingInterceptor(
         httpLoggingInterceptorLogger
     )
     return OkHttpClient().newBuilder()
         .addInterceptor(httpLoggingInterceptor)
-        .eventListenerFactory(LoggingEventListener.Factory(httpLoggingInterceptorLogger))
         .sslSocketFactory(poorSSLContext.socketFactory, poorX509TrustManager)
         .hostnameVerifier(HostnameVerifier { _, _ -> true })
         .connectTimeout(10, TimeUnit.SECONDS)

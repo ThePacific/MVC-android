@@ -97,13 +97,32 @@ fun getAndroidId(context: Context): String? {
     return uniqueId
 }
 
+/**
+ * 设备唯一id号，
+ */
 @SuppressLint("MissingPermission")
 fun uniqueId(context: Context): String {
-    var uniqueId: String? = getIMEI(context)
+    var uniqueId: String? = try {
+        getIMEI(context)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
     if (uniqueId.isNullOrEmpty()) {
-        uniqueId = getICCID(context)
+        uniqueId = try {
+            getICCID(context)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
         if (uniqueId.isNullOrEmpty()) {
-            uniqueId = getAndroidId(context)
+            uniqueId = try {
+                getAndroidId(context)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+
             if (uniqueId.isNullOrEmpty() ||
                 uniqueId == "9774d56d682e549c" ||
                 uniqueId.contains("android", true)
@@ -115,6 +134,9 @@ fun uniqueId(context: Context): String {
     return uniqueId.encodeUtf8().md5().hex()
 }
 
+/**
+ * 是否模拟器
+ */
 fun isEmulator(context: Context): Boolean {
     val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
     val networkOperator = tm.networkOperatorName.toLowerCase()
@@ -125,6 +147,9 @@ fun isEmulator(context: Context): Boolean {
             || fingerPrint.contains("vbox")
 }
 
+/**
+ * 获取BuildConfig字段值
+ */
 fun getBuildConfigValue(context: Context, key: String): Any? {
     try {
         val clazz = Class.forName(context.packageName + ".BuildConfig")
@@ -140,6 +165,9 @@ fun getBuildConfigValue(context: Context, key: String): Any? {
     return null
 }
 
+/**
+ * 设备信息，包含品牌、模型、cpu架构、android版本
+ */
 fun deviceInfo(): String {
     return TextUtils.join(
         "-",
@@ -147,8 +175,14 @@ fun deviceInfo(): String {
     )
 }
 
+/**
+ * randomUUID 唯一识别号
+ */
 fun getRandomUUID(): String = UUID.randomUUID().toString()
 
+/**
+ * cpu架构
+ */
 fun getCupArch(): Int {
     val arch = System.getProperty("os.arch")!!.toLowerCase()
     if (arch.contains("mip")) {
@@ -175,6 +209,9 @@ fun getCupArch(): Int {
     throw AssertionError("Unknown CPU")
 }
 
+/**
+ * cpu架构名字
+ */
 fun getCupArchDescription(): String {
     return when (getCupArch()) {
         ARMEABI -> "armeabi"

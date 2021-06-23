@@ -15,70 +15,93 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
 import org.joor.Reflect
 
+// 选择文档
 val getContent: ActivityResultContracts.GetContent by lazy {
     ActivityResultContracts.GetContent()
 }
 
+// 打开多个文档
 val getMultipleContents: ActivityResultContracts.GetMultipleContents by lazy {
     ActivityResultContracts.GetMultipleContents()
 }
 
+// 创建文件
 val createDocument: ActivityResultContracts.CreateDocument by lazy {
     ActivityResultContracts.CreateDocument()
 }
 
+// 打开文件
 val openDocument: ActivityResultContracts.OpenDocument by lazy {
     ActivityResultContracts.OpenDocument()
 }
 
+// 打开文件
 val openDocumentTree: ActivityResultContracts.OpenDocumentTree by lazy {
     ActivityResultContracts.OpenDocumentTree()
 }
 
+// 选择多文件
 val openMultipleDocuments: ActivityResultContracts.OpenMultipleDocuments by lazy {
     ActivityResultContracts.OpenMultipleDocuments()
 }
 
+// 权限申请
 val requestMultiplePermissions: ActivityResultContracts.RequestMultiplePermissions by lazy {
     ActivityResultContracts.RequestMultiplePermissions()
 }
 
+// 权限申请
 val requestPermission: ActivityResultContracts.RequestPermission by lazy {
     ActivityResultContracts.RequestPermission()
 }
 
+// 选择联系人
 val pickContact: ActivityResultContracts.PickContact by lazy {
     ActivityResultContracts.PickContact()
 }
 
+// 启动app
 val startActivityForResult: ActivityResultContracts.StartActivityForResult by lazy {
     ActivityResultContracts.StartActivityForResult()
 }
 
+// 启动app
 val startIntentSenderForResult: ActivityResultContracts.StartIntentSenderForResult by lazy {
     ActivityResultContracts.StartIntentSenderForResult()
 }
 
+// 照相
 val takePicture: ActivityResultContracts.TakePicture by lazy {
     ActivityResultContracts.TakePicture()
 }
 
+// 照相预览
 val takePicturePreview: ActivityResultContracts.TakePicturePreview by lazy {
     ActivityResultContracts.TakePicturePreview()
 }
 
-val takeVideo: ActivityResultContracts.TakeVideo by lazy {
-    ActivityResultContracts.TakeVideo()
+// 拍视频
+val captureVideo: ActivityResultContracts.CaptureVideo by lazy {
+    ActivityResultContracts.CaptureVideo()
 }
 
+/**
+ * 显示DialogFragment
+ */
 fun FragmentActivity.showDialogFragment(dialogFragment: DialogFragment) {
     showDialogFragment(this.supportFragmentManager, dialogFragment)
 }
 
+/**
+ * 显示DialogFragment
+ */
 fun Fragment.showDialogFragment(dialogFragment: DialogFragment) {
     showDialogFragment(this.childFragmentManager, dialogFragment)
 }
 
+/**
+ * 显示DialogFragment
+ */
 fun FragmentActivity.showDialogFragmentAllowingStateLoss(dialogFragment: DialogFragment) {
     showDialogFragmentAllowingStateLoss(
         this.supportFragmentManager,
@@ -86,6 +109,9 @@ fun FragmentActivity.showDialogFragmentAllowingStateLoss(dialogFragment: DialogF
     )
 }
 
+/**
+ * 显示DialogFragment
+ */
 fun Fragment.showDialogFragmentAllowingStateLoss(dialogFragment: DialogFragment) {
     showDialogFragmentAllowingStateLoss(
         this.childFragmentManager,
@@ -93,6 +119,9 @@ fun Fragment.showDialogFragmentAllowingStateLoss(dialogFragment: DialogFragment)
     )
 }
 
+/**
+ * 显示DialogFragment
+ */
 fun showDialogFragment(fm: FragmentManager, dialogFragment: DialogFragment) {
     val tag = dialogFragment.javaClass.simpleName
     val ft = fm.beginTransaction()
@@ -103,6 +132,9 @@ fun showDialogFragment(fm: FragmentManager, dialogFragment: DialogFragment) {
     dialogFragment.show(ft, tag)
 }
 
+/**
+ * 显示DialogFragment
+ */
 fun showDialogFragmentAllowingStateLoss(fm: FragmentManager, dialogFragment: DialogFragment) {
     val tag = dialogFragment.javaClass.simpleName
     val ft = fm.beginTransaction()
@@ -117,6 +149,9 @@ fun showDialogFragmentAllowingStateLoss(fm: FragmentManager, dialogFragment: Dia
     Reflect.on(dialogFragment).set("mBackStackId", ft.commitAllowingStateLoss())
 }
 
+/**
+ * 启动Activity，带参数
+ */
 @JvmOverloads
 fun Activity.newStartActivity(to: Class<*>, extras: Bundle? = null) {
     val intent = Intent()
@@ -127,6 +162,9 @@ fun Activity.newStartActivity(to: Class<*>, extras: Bundle? = null) {
     this.startActivity(intent)
 }
 
+/**
+ * 启动Activity，带参数
+ */
 @JvmOverloads
 fun Fragment.newStartActivity(to: Class<*>, extras: Bundle? = null) {
     val intent = Intent()
@@ -137,8 +175,14 @@ fun Fragment.newStartActivity(to: Class<*>, extras: Bundle? = null) {
     this.startActivity(intent)
 }
 
+/**
+ * 获取Intent数据
+ */
 fun Activity.getExtras(): Bundle = this.intent.extras!!
 
+/**
+ * 成功关闭Activity
+ */
 @JvmOverloads
 fun Activity.finishWithResultOk(intent: Intent? = null) {
     if (intent == null) {
@@ -149,35 +193,38 @@ fun Activity.finishWithResultOk(intent: Intent? = null) {
     this.finish()
 }
 
+/**
+ * 关闭对话框
+ */
 fun dismiss(vararg targets: Any?) {
     if (targets.isEmpty()) return
     for (i in targets.indices) {
         val target = targets[i] ?: continue
-        if (target is Dialog) {
+        if (target is Dialog) {// Dialog
             target.dismiss()
             continue
         }
-        if (target is Toast) {
+        if (target is Toast) {// toast
             target.cancel()
             continue
         }
-        if (target is Snackbar) {
+        if (target is Snackbar) {// SnackBar
             target.dismiss()
             continue
         }
-        if (target is PopupWindow) {
+        if (target is PopupWindow) {// PopupWindow
             target.dismiss()
             continue
         }
-        if (target is PopupMenu) {
+        if (target is PopupMenu) {// PopupMenu
             target.dismiss()
             continue
         }
-        if (target is android.widget.PopupMenu) {
+        if (target is android.widget.PopupMenu) {// PopupMenu
             target.dismiss()
             continue
         }
-        if (target is DialogFragment) {
+        if (target is DialogFragment) {// DialogFragment
             target.dismissAllowingStateLoss()
             continue
         }

@@ -5,9 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 import javax.inject.Provider
 
+/**
+ * ViewModel工厂类，ViewModel的key遍历map
+ */
 class ViewModelFactory @Inject constructor(
-        @JvmSuppressWildcards
-        private val creators: MutableMap<Class<out ViewModel>, Provider<ViewModel>>
+    @JvmSuppressWildcards
+    private val creators: MutableMap<Class<out ViewModel>, Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

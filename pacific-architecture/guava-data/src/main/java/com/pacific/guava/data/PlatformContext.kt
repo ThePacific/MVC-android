@@ -1,6 +1,7 @@
 package com.pacific.guava.data
 
 import java.io.File
+import java.io.InputStream
 
 interface PlatformContext {
 
@@ -13,4 +14,8 @@ interface PlatformContext {
     fun getExternalCacheDir(): File
 
     fun getExternalFilesDir(type: String?): File
+
+    fun openAssert(fileName: String): InputStream
+
+    fun openAssert(fileName: String, accessMode: Int): InputStream
 }

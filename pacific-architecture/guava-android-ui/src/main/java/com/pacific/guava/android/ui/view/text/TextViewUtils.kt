@@ -11,10 +11,16 @@ import androidx.annotation.ColorRes
 import com.pacific.guava.android.context.toColor
 import com.pacific.guava.android.ime.ImeUtils
 
+/**
+ * 是否禁用系统软键盘
+ */
 fun EditText.enableSystemSoftKeyboard(enable: Boolean) {
     ImeUtils.enableSystemSoftKeyboard(this, enable)
 }
 
+/**
+ * 是否显示为密码格式
+ */
 fun EditText.setPasswordVisibility(isVisible: Boolean) {
     if (isVisible) {
         this.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
@@ -24,19 +30,31 @@ fun EditText.setPasswordVisibility(isVisible: Boolean) {
     this.moveCursorToLast()
 }
 
+/**
+ * 把光标移动到最后
+ */
 fun EditText.moveCursorToLast() = this.setSelection(this.text.length)
 
+/**
+ * 回退删除字符
+ */
 fun EditText.backspace(count: Int = 1) {
     val index = this.selectionStart
     text.delete(index - count, index)
 }
 
+/**
+ * 禁用编辑
+ */
 fun EditText.disableEditable() {
     this.clearFocus()
     this.isFocusable = false
     this.isFocusableInTouchMode = false
 }
 
+/**
+ * 恢复可编辑
+ */
 fun EditText.enableEditable(requestFocus: Boolean) {
     this.isFocusableInTouchMode = true
     this.isFocusable = true
@@ -46,6 +64,9 @@ fun EditText.enableEditable(requestFocus: Boolean) {
     }
 }
 
+/**
+ * 更新图标
+ */
 fun TextView.updateCompoundDrawables(
         start: Drawable? = null,
         top: Drawable? = null,
@@ -55,6 +76,9 @@ fun TextView.updateCompoundDrawables(
     setCompoundDrawables(start, top, end, bottom)
 }
 
+/**
+ * 更新图标
+ */
 fun TextView.updateCompoundDrawablesWithIntrinsicBounds(
         start: Drawable? = null,
         top: Drawable? = null,
@@ -64,6 +88,9 @@ fun TextView.updateCompoundDrawablesWithIntrinsicBounds(
     setCompoundDrawablesWithIntrinsicBounds(start, top, end, bottom)
 }
 
+/**
+ * 更新图标
+ */
 fun TextView.updateCompoundDrawablesRelativeWithIntrinsicBounds(
         start: Drawable? = null,
         top: Drawable? = null,
@@ -143,26 +170,41 @@ fun TextView.addTextChangedListener(
     })
 }
 
+/**
+ * 设置字体颜色
+ */
 fun TextView.applyColorSpan(text: String, start: Int, end: Int, @ColorRes color: Int) {
     this.applyColorSpan(text, text.substring(start, end), color)
 }
 
+/**
+ * 设置字体颜色
+ */
 fun TextView.applyColorSpan(text: String, matcher: String, @ColorRes color: Int) {
     this.text = MySpannable(text + matcher).findAndSpan(text) {
         ForegroundColorSpan(this.context.toColor(color))
     }
 }
 
+/**
+ * 设置字体颜色
+ */
 fun TextView.applyColorSpan2(text: String, start: Int, end: Int, @ColorRes color: Int) {
     this.applyColorSpan2(text, text.substring(start, end), color)
 }
 
+/**
+ * 设置字体颜色
+ */
 fun TextView.applyColorSpan2(text: String, matcher: String, @ColorRes color: Int) {
     this.text = MySpannable(text + matcher).findAndSpanLast(text) {
         ForegroundColorSpan(this.context.toColor(color))
     }
 }
 
+/**
+ * 设置字体颜色
+ */
 fun TextView.applyColor(@ColorRes color: Int) {
     this.setTextColor(this.context.toColor(color))
 }

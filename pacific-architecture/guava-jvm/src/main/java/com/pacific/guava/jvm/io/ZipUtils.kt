@@ -11,6 +11,9 @@ import java.io.IOException
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 
+/**
+ * 创建目录
+ */
 fun mkdirs(directory: String): File {
     val file = File(directory)
     if (!file.exists() || !file.isDirectory) {
@@ -19,6 +22,9 @@ fun mkdirs(directory: String): File {
     return file
 }
 
+/**
+ * 追加文件分隔符
+ */
 fun ensureFileSeparator(directory: String): String {
     return if (directory.endsWith(File.separator)) {
         directory
@@ -27,6 +33,9 @@ fun ensureFileSeparator(directory: String): String {
     }
 }
 
+/**
+ * 使用okio解压文件
+ */
 fun unzip(zipFile: File, directory: String) {
     var varDirectory = directory
     try {

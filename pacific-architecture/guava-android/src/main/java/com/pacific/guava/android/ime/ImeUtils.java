@@ -1,20 +1,3 @@
-/*
- *   Copyright 2018 Google LLC
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- *
- */
-
 package com.pacific.guava.android.ime;
 
 import android.app.Dialog;
@@ -37,11 +20,23 @@ public class ImeUtils {
     private ImeUtils() {
     }
 
+    /**
+     * 显示对话框的软键盘
+     *
+     * @param view
+     * @param dialog
+     * @param mode
+     */
     public static void showIme(@NonNull View view, @NonNull Dialog dialog, int mode) {
         dialog.getWindow().setSoftInputMode(mode);
         view.requestFocus();
     }
 
+    /**
+     * 显示软键盘
+     *
+     * @param view
+     */
     public static void showIme(@NonNull View view) {
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(
                 Context.INPUT_METHOD_SERVICE
@@ -50,6 +45,11 @@ public class ImeUtils {
         view.requestFocus();
     }
 
+    /**
+     * 隐藏软键盘
+     *
+     * @param view
+     */
     public static void hideIme(@NonNull View view) {
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(
                 Context.INPUT_METHOD_SERVICE
@@ -57,6 +57,11 @@ public class ImeUtils {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    /**
+     * 禁用/启动软键盘
+     *
+     * @param editText 目标view
+     */
     public static void enableSystemSoftKeyboard(@NonNull EditText editText, boolean enable) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             editText.setShowSoftInputOnFocus(false);

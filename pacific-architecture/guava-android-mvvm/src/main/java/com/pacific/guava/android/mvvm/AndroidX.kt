@@ -1,61 +1,59 @@
 package com.pacific.guava.android.mvvm
 
 import android.app.Application
-import androidx.lifecycle.MutableLiveData
 import com.pacific.guava.jvm.Guava
-import com.pacific.guava.jvm.coroutines.Bus
+import kotlinx.coroutines.flow.MutableStateFlow
 import timber.log.Timber
 
 object AndroidX {
 
-    const val APK_PACKAGE_ARCHIVE_TYPE = "application/vnd.android.package-archive"
-    const val ASSETS = "file:///android_asset/"
+    const val APK_PACKAGE_ARCHIVE_TYPE = "application/vnd.android.package-archive"// apk类型
+    const val ASSETS = "file:///android_asset/"// assert路径
 
-    const val BUS_EXIT = 9000
-    const val BUS_LOGOUT = 9001
-    const val BUS_LOGIN = 9002
-    const val BUS_DIALOG_COUNT = 9003
-    const val BUS_DIALOG_CLOSE = 9004
+    val dialogCount: MutableStateFlow<Int> = MutableStateFlow(0)// 当前app对话框数量
+    val isNetworkConnected: MutableStateFlow<Boolean> = MutableStateFlow(false)// 是否有网络
+    val isAppInForeground: MutableStateFlow<Boolean> = MutableStateFlow(false)// 是否前后台
+    val exitApp: MutableStateFlow<Boolean> = MutableStateFlow(false)// 退出app
 
-    @get:JvmName("appDialogCount")
-    val appDialogCount: MutableLiveData<Int> = MutableLiveData(0)
-
-    @get:JvmName("isNetworkConnected")
-    val isNetworkConnected: MutableLiveData<Boolean> = MutableLiveData()
-
-    @get:JvmName("isAppInForeground")
-    val isAppInForeground: MutableLiveData<Boolean> = MutableLiveData()
-
-    @get:JvmName("myApp")
     lateinit var myApp: Application
+        // 上下文
         private set
 
+    /**
+     * 初始化AndroidX模块
+     */
     fun setup(app: Application, isDebug: Boolean) {
         if (::myApp.isInitialized) {
             return
         }
 
         myApp = app
-        Guava.isDebug = isDebug
-        Guava.timber = AppTimber()
+        Guava.isDebug = isDebug// 是否debug
+        Guava.timber = AppTimber()// 调试log
         if (isDebug) {
             Timber.plant(Timber.DebugTree())
         }
     }
 
-    fun exitSystem() = Bus.offer(BUS_EXIT)
-
-    fun notifyLogin() = Bus.offer(BUS_LOGIN)
-
-    fun notifyLogout() = Bus.offer(BUS_LOGOUT)
-
-    fun notifyDialogShow() {
-        appDialogCount.value = appDialogCount.value!! + 1
-        Bus.offer(BUS_DIALOG_COUNT)
+    /**
+     * 推出app
+     */
+    fun exitSystem() {
+        exitApp.value = true
+        android.os.Process.killProcess(android.os.Process.myPid())
     }
 
+    /**
+     * dialog数量加
+     */
+    fun notifyDialogShow() {
+        dialogCount.value = dialogCount.value + 1
+    }
+
+    /**
+     * dialog数量减
+     */
     fun notifyDialogDismiss() {
-        appDialogCount.value = appDialogCount.value!! - 1
-        Bus.offer(BUS_DIALOG_COUNT)
+        dialogCount.value = dialogCount.value - 1
     }
 }

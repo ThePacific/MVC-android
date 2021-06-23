@@ -6,6 +6,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Update
 
 /**
+ * room数据库增删改查
+ *
  *  1. SELECT * FROM table LIMIT offset_count , row_count
  *  2. SELECT * FROM table LIMIT row_count OFFSET offset_count
  *  3. SELECT * FROM table LIMIT row_count
@@ -31,12 +33,12 @@ interface SqlDao<E> {
     @Delete
     fun deleteAll(entities: List<E>): Int
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(entity: E): Int
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateAll(vararg entity: E): Int
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateAll(entities: List<E>): Int
 }

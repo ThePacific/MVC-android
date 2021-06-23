@@ -17,24 +17,27 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * 列表水平方向分割线
+ */
 public final class LinearItemDecoration extends RecyclerView.ItemDecoration {
 
     private final Rect mBounds = new Rect();
-    private final boolean mVertical;
-    private final Drawable mDivider;
-    private final int mStrokeWidth;
-    private final int mLeftMargin;
-    private final int mRightMargin;
-    private final int mTopMargin;
-    private final int mBottomMargin;
-    private final boolean mHideLastDecoration;
+    private final boolean mVertical;// 垂直方向或者水平方向
+    private final Drawable mDivider;// 分割线
+    private final int mStrokeWidth;// 分割线宽度
+    private final int mLeftMargin;// 左边偏移量
+    private final int mRightMargin;// 右边偏移量
+    private final int mTopMargin;// 顶部偏移量
+    private final int mBottomMargin;// 底部偏移量
+    private final boolean mHideLastDecoration;// 是否显示最后各条分割线
 
-    private final MarginFactory mLeftMarginFactory;
-    private final MarginFactory mRightMarginFactory;
-    private final MarginFactory mTopMarginFactory;
-    private final MarginFactory mBottomMarginFactory;
-    private final DrawableFactory mDrawableFactory;
-    private final Visibility mVisibility;
+    private final MarginFactory mLeftMarginFactory;// 左边偏移量工厂类
+    private final MarginFactory mRightMarginFactory;// 右边偏移量工厂类
+    private final MarginFactory mTopMarginFactory;// 顶部偏移量工厂类
+    private final MarginFactory mBottomMarginFactory;// 底部偏移量工厂类
+    private final DrawableFactory mDrawableFactory;// 分割线工厂类
+    private final Visibility mVisibility;// 分割线是否可见
     private int lastPosition = -1;
 
     private LinearItemDecoration(Builder builder) {

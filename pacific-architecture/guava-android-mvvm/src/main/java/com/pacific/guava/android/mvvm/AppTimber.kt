@@ -3,6 +3,9 @@ package com.pacific.guava.android.mvvm
 import com.pacific.guava.jvm.domain.PlatformTimber
 import timber.log.Timber
 
+/**
+ * Timber日志抽象，用于数据层
+ */
 class AppTimber : PlatformTimber {
 
     override fun d(tag: String, message: String) {
